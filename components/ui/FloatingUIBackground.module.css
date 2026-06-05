@@ -1,0 +1,51 @@
+/* GPU-accelerated float animations — will-change: transform */
+
+@keyframes floatA {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-18px); }
+}
+
+@keyframes floatB {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(14px); }
+}
+
+@keyframes floatC {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+.float1 {
+  will-change: transform;
+  animation: floatA 8s ease-in-out infinite;
+}
+
+.float2 {
+  will-change: transform;
+  animation: floatB 10s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.float3 {
+  will-change: transform;
+  animation: floatC 12s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.float4 {
+  will-change: transform;
+  animation: floatA 9s ease-in-out infinite;
+  animation-delay: 3s;
+}
+
+.float5 {
+  will-change: transform;
+  animation: floatC 14s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float1, .float2, .float3, .float4, .float5 {
+    animation: none;
+  }
+}
