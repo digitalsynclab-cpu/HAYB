@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     type: 'website',
   },
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://hayb.dev' },
+  alternates: { canonical: 'https://www.hayb.com.tr' },
 };
 
 export default function RootLayout({
