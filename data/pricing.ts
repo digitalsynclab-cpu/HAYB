@@ -76,7 +76,7 @@ export const socialMediaPlans: PricingPlan[] = [
   {
     id: 'sosyal-haftalik',
     name: 'Haftalık Paket',
-    price: '1.500 TL / hafta',
+    price: '3.000 TL / hafta',
     recommended: false,
     ctaLabel: 'Hemen Başla',
     features: [
@@ -92,7 +92,7 @@ export const socialMediaPlans: PricingPlan[] = [
   {
     id: 'sosyal-aylik',
     name: 'Aylık Paket',
-    price: '4.500 TL / ay',
+    price: '10.000 TL / ay',
     recommended: true,
     ctaLabel: 'Projeyi Başlat',
     features: [
@@ -109,7 +109,7 @@ export const socialMediaPlans: PricingPlan[] = [
   {
     id: 'sosyal-3aylik',
     name: '3 Aylık Paket',
-    price: '11.500 TL / 3 ay',
+    price: '25.000 TL / 3 ay',
     recommended: false,
     ctaLabel: 'Teklif Al',
     features: [
