@@ -12,50 +12,65 @@ interface Message {
 
 /* ─── Tüm site bilgisi ─────────────────────────────── */
 const KNOWLEDGE = [
-  // Web paketleri
+  // Web paketleri — güncel fiyatlar
   {
-    k: ['web', 'site', 'internet', 'fiyat', 'paket', 'başlangıç', '2500', '5000', '10000', 'kurumsal', 'yazılım', 'ssl', 'vercel'],
-    a: `Web geliştirme paketlerimiz şunlar:\n\n• **Başlangıç – 2.500 TL**: Kurumsal kimlik, anasayfa/blog/iletişim sayfaları, mobil uyumlu, ücretsiz SSL sertifikası.\n• **Standart – 5.000 TL**: Kurumsal web sitesi, SEO, iletişim formu, ücretsiz SSL, Vercel yayınlama, 3 ay destek, 3 revizyon.\n• **Kurumsal – 10.000 TL**: Özel web uygulaması, UI/UX tasarım, backend API, Supabase veritabanı, yönetim paneli, ücretsiz SSL, Vercel, 6 ay destek, sınırsız revizyon.\n• **Özel Yazılım – Teklif Al**: Sıfırdan özel yazılım, yapay zeka entegrasyonu, DevOps/CI-CD, uzun vadeli bakım.`,
+    k: ['web', 'site', 'internet', 'fiyat', 'paket', 'starter', 'business', 'professional', 'premium', '5000', '10000', '15000', '20000', 'ssl', 'vercel', 'domain', 'alan adı'],
+    a: `HAYB Web Site Paketleri:\n\n• **STARTER – 5.000 ₺**: 3 günde teslim, 3 sayfa, .com.tr/.net.tr (1 Yıl) domain, SSL, Mobil & Tablet uyumlu, WhatsApp, İletişim Formu, Google Harita, KVKK, Modern UI/UX, Hız Optimizasyonu, CDN.\n\n• **BUSINESS – 10.000 ₺**: 4 günde teslim, 5 sayfaya kadar, .com.tr/.net.tr (2 Yıl) domain, Starter özellikleri +Dashboard, Ürün Yönetimi, Yönetim Paneli, Güçlü SEO, Gelişmiş SEO, Blog, Referanslar, Teklif Formu, XML Sitemap.\n\n• **PROFESSIONAL – 15.000 ₺** (Önerilen): 5 günde teslim, 10 sayfaya kadar, .com/.net/.org (2 Yıl) domain, Business özellikleri + Google Analytics, Schema SEO, Google Search Console.\n\n• **PREMIUM – 20.000 ₺**: 7 günde teslim, Sınırsız sayfa, .com/.net/.org (2 Yıl) domain, Professional özellikleri + Çoklu Dil Desteği, Premium Animasyonlar, Yapay Zeka Asistan, 7/24 Canlı Destek.`,
+  },
+  // Özel Proje
+  {
+    k: ['özel proje', 'özel yazılım', 'startup', 'girişim', 'sosyal ağ', 'platform', 'büyük proje', 'enterprise'],
+    a: `Özel Proje hizmetimiz büyük ölçekli ve özel ihtiyaçlar için tasarlandı:\n\n• Sosyal ağ ve topluluk platformları\n• Startup / girişim ürünleri\n• Tam kapsamlı UI/UX tasarım\n• Sıfırdan yazılım mimarisi\n• Backend API & veritabanı\n• Yapay zeka entegrasyonu\n• Otomasyon altyapısı\n• DevOps & CI/CD kurulumu\n• 7/24 teknik destek & SLA garantisi\n\nFiyat projenin kapsamına göre belirlenir. WhatsApp'tan bizimle iletişime geçin!`,
+  },
+  // Mobil uygulama
+  {
+    k: ['mobil', 'uygulama', 'ios', 'android', 'app', 'react native'],
+    a: `Mobil uygulama geliştirme hizmetimizde yapabileceklerimiz:\n\n• iOS & Android native tasarım\n• React Native cross-platform geliştirme\n• Swift (iOS) / Kotlin (Android) native seçeneği\n• Push notification sistemi\n• Ödeme sistemi entegrasyonu (iyzico, Stripe)\n• App Store & Google Play yayını\n• Yapay zeka özellikleri\n• Backend API entegrasyonu\n\nFiyat proje kapsamına göre belirlenir — ücretsiz keşif görüşmesi yapılır. WhatsApp'tan ulaşın!`,
   },
   // Sosyal medya
   {
-    k: ['sosyal', 'medya', 'instagram', 'post', 'story', 'reels', 'haftalık', 'aylık', '3 aylık', 'içerik', 'logo tasarım'],
-    a: `Sosyal medya yönetim paketlerimiz:\n\n• **Haftalık – 1.500 TL**: 6 post + 4 story + 2 reels + logo tasarımı, marka uyumlu, 2 revizyon.\n• **Aylık – 4.500 TL**: 20 post + 18 story + 8 reels + logo + marka kimlik rehberi + içerik takvimi, 8 revizyon.\n• **3 Aylık – 11.500 TL**: Aylık paketin tüm özellikleri + satış platformları logo/banner/mağaza tasarımı + kampanya içerikleri + haftalık rapor + öncelikli destek.`,
+    k: ['sosyal', 'medya', 'instagram', 'post', 'story', 'reels', 'haftalık', 'aylık', '3 aylık', 'içerik', 'tasarım'],
+    a: `Sosyal Medya Yönetim Paketleri:\n\n• **Haftalık – 3.000 ₺**: 6 post + 4 story + 2 reels + logo tasarımı, marka uyumlu, PNG + kaynak dosya, 2 revizyon.\n\n• **Aylık – 10.000 ₺** (Önerilen): 20 post + 18 story + 8 reels + logo + marka kimlik rehberi + içerik takvimi, 8 revizyon.\n\n• **3 Aylık – 25.000 ₺**: Aylık paketin tüm özellikleri + video/reels tasarımı + reklam görseli + satış platformları logo/banner + kampanya içerikleri + haftalık rapor + öncelikli destek.`,
   },
   // QR Menü
   {
-    k: ['qr', 'menü', 'menu', 'restoran', 'kafe', 'dijital menü', 'qr menü'],
-    a: `QR Menü sistemimiz 2 farklı pakette:\n\n• **QR Menü Temel – 1.500 TL**: QR kodlu dijital menü, kategori ve ürün yönetimi, anlık güncelleme, mobil uyumlu, 1 şube, 6 ay destek.\n• **QR Menü Premium – 3.500 TL**: Temel paketin tüm özellikleri + yapay zeka ile profesyonel ürün görselleri + marka rengi/logo entegrasyonu + çoklu şube + markalı QR kod tasarımı + sınırsız güncelleme + 1 yıl destek.`,
+    k: ['qr', 'menü', 'menu', 'restoran', 'kafe', 'dijital menü'],
+    a: `QR Menü Paketleri:\n\n• **QR Menü Temel – 1.500 ₺**: Dijital QR menü, mobil uyumlu, 1 şube, 6 ay destek.\n\n• **QR Menü Standart – 3.000 ₺**: Temel + kategori/ürün yönetimi, marka rengi/logo, çoklu şube, sınırsız güncelleme, 1 yıl destek.\n\n• **QR Menü Premium – 5.000 ₺** (Önerilen): Standart + yapay zeka ile profesyonel ürün görselleri + özel tema + sınırsız şube + öncelikli destek.`,
   },
-  // Destek / süre
+  // Destek / süre / teslim
   {
-    k: ['destek', 'süre', 'ne kadar', 'kaç gün', 'teslim', 'bakım'],
-    a: `Başlangıç ve Standart paketlerde 3 ay, Kurumsal pakette 6 ay destek dahildir. Başlangıç projeleri genellikle 3-5 iş gününde, kurumsal projeler 2-4 haftada teslim edilir. Yayın sonrası bakım için uzun vadeli anlaşmalar da yapılabilir.`,
+    k: ['destek', 'süre', 'ne kadar', 'kaç gün', 'teslim', 'bakım', 'revizyon'],
+    a: `Teslim süreleri pakete göre değişir:\n• Starter: 3 gün\n• Business: 4 gün\n• Professional: 5 gün\n• Premium: 7 gün\n\nPremium pakette 7/24 canlı destek dahildir. Diğer paketlerde yayın sonrası destek için anlaşma yapılabilir.`,
   },
   // Projeler / portfolyo
   {
-    k: ['proje', 'portfolyo', 'örnek', 'bebekler', 'ekotakip', 'qr', 'tekstil', 'inşaat', 'sosyal ajans'],
-    a: `Tamamladığımız projelerden bazıları:\n\n• **BebeklerSoruyor**: Anne ve anne adayları için topluluk platformu (bebeklersoruyor.com)\n• **EkoTakip Pro**: Su, enerji ve doğalgaz tüketim takip platformu\n• **QR Menü Sistemi**: Restoran ve kafeler için dijital menü\n• **Ev Tekstili Web Sitesi**: Kurumsal web sitesi\n• **İnşaat & Yapı Web Sitesi**: Referans portföylü kurumsal site\n• **Sosyal Medya Ajansı Web Sitesi**: Hizmet odaklı kurumsal site`,
+    k: ['proje', 'portfolyo', 'örnek', 'bebekler', 'ekotakip', 'qr menü sistemi'],
+    a: `Tamamladığımız projelerden bazıları:\n\n• **BebeklerSoruyor**: Anne ve anne adayları için topluluk platformu (bebeklersoruyor.com)\n• **EkoTakip Pro**: Enerji, su ve doğalgaz tüketim takip platformu\n• **QR Menü Sistemi**: Restoran ve kafeler için dijital menü altyapısı`,
   },
   // Hakkımda / kim
   {
-    k: ['kim', 'hayb', 'hakkında', 'siz', 'yunus', 'başkan', 'ne yapıyorsunuz', 'ne yapıyor'],
-    a: `HAYB, Yunus Emre Başkan tarafından yönetilen bir dijital ürün stüdyosudur. Web geliştirme, UI/UX tasarım, sosyal medya içerik üretimi, logo/marka tasarımı, QR menü sistemleri ve özel yazılım geliştirme hizmetleri sunuyoruz. Her projeyi bir büyüme sistemi olarak ele alıyoruz.`,
+    k: ['kim', 'hayb', 'hakkında', 'siz', 'ne yapıyorsunuz', 'ne yapıyor', 'teknoloji', 'şirket'],
+    a: `HAYB, işletmelere dijital sistem kuran bir teknoloji şirketidir. Web uygulamaları, mobil uygulamalar, yapay zeka sistemleri, otomasyon altyapıları ve özel yazılım geliştirme hizmetleri sunuyoruz. Her projeyi işletmenizin büyüme altyapısı olarak ele alıyoruz.`,
   },
   // İletişim
   {
-    k: ['iletişim', 'ulaş', 'whatsapp', 'telefon', 'mesaj', 'nasıl ulaşabilirim'],
-    a: `Bize WhatsApp üzerinden kolayca ulaşabilirsiniz! Aşağıdaki "WhatsApp ile Yaz" butonuna tıklamanız yeterli. İletişim formundan da mesaj bırakabilirsiniz.`,
+    k: ['iletişim', 'ulaş', 'whatsapp', 'telefon', 'mesaj', 'nasıl ulaşabilirim', 'görüşme'],
+    a: `WhatsApp üzerinden hızlıca ulaşabilirsiniz. Aşağıdaki "WhatsApp ile Yaz" butonuna tıklamanız yeterli. İletişim formundan da mesaj bırakabilirsiniz.`,
+  },
+  // SEO
+  {
+    k: ['seo', 'google', 'arama', 'optimizasyon', 'search console', 'analytics', 'schema'],
+    a: `SEO hizmetlerimiz pakete göre değişir:\n\n• **Business ve üstü**: Güçlü SEO, Gelişmiş SEO Optimizasyonu, XML Sitemap\n• **Professional ve üstü**: + Google Analytics, Schema SEO (Yapısal Veri), Google Search Console\n• **Premium**: Tüm SEO özellikleri dahil`,
   },
   // Yapay zeka
   {
-    k: ['yapay zeka', 'ai', 'artificial', 'gpt', 'zeka'],
-    a: `Projelerinize yapay zeka entegrasyonu yapıyoruz. QR Menü Premium paketinde ürün görselleri yapay zeka ile üretiliyor. Kurumsal yazılım projelerine özel AI modelleri entegre edebiliyoruz.`,
+    k: ['yapay zeka', 'ai', 'artificial', 'zeka', 'asistan', 'chatbot'],
+    a: `Yapay zeka hizmetlerimiz:\n\n• Premium web paketinde Yapay Zeka Asistan dahildir\n• QR Menü Premium'da yapay zeka ile otomatik ürün görseli üretimi\n• Özel projelerde AI model entegrasyonu ve chatbot geliştirme\n• Otomasyon sistemlerine AI entegrasyonu`,
   },
-  // UI/UX
+  // Alan adı / domain
   {
-    k: ['ui', 'ux', 'tasarım', 'arayüz', 'figma', 'prototiip', 'mobil'],
-    a: `UI/UX tasarım hizmetleri sunuyoruz: kullanıcı akışları, wireframe, yüksek kaliteli prototipler ve mobil uyumlu arayüzler. Tüm web projelerimiz mobil öncelikli tasarlanır.`,
+    k: ['domain', 'alan adı', '.com', '.tr', '.net', '.org'],
+    a: `Alan adı (domain) bilgileri:\n\n• **Starter**: .com.tr / .net.tr / .org.tr — 1 Yıl Ücretsiz\n• **Business**: .com.tr / .net.tr / .org.tr — 2 Yıl Ücretsiz\n• **Professional**: .com / .net / .org — 2 Yıl Ücretsiz\n• **Premium**: .com / .net / .org — 2 Yıl Ücretsiz`,
   },
 ];
 
@@ -191,7 +206,7 @@ export function HAYBAssistant() {
 
           {/* Hızlı sorular */}
           <div className="px-3 pb-2 flex gap-1.5 overflow-x-auto flex-shrink-0 scrollbar-none">
-            {['Web paketleri', 'Sosyal medya', 'QR Menü', 'İletişim'].map(q => (
+            {['Web paketleri', 'Sosyal medya', 'QR Menü', 'Mobil Uygulama', 'Özel Proje'].map(q => (
               <button
                 key={q}
                 onClick={() => { setInput(q); setTimeout(handleSend, 0); setMessages(prev => [...prev, { role: 'user', text: q }]); setTimeout(() => setMessages(prev => [...prev, { role: 'assistant', text: getAnswer(q) }]), 400); }}
