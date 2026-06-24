@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Menu, X, ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/lib/cart-context';
@@ -11,6 +12,27 @@ const navLinks = [
   { label: 'Hakkımda', href: '#hakkimda' },
   { label: 'İletişim', href: '#iletisim' },
 ] as const;
+
+function LogoMark() {
+  return (
+    <a href="#" aria-label="HAYB Ana Sayfa" className="flex items-center gap-2.5 group">
+      <div className="relative w-8 h-8 transition-transform duration-300 group-hover:scale-110">
+        <Image
+          src="/hayb-logo.png"
+          alt="HAYB Logo"
+          width={32}
+          height={32}
+          className="object-contain drop-shadow-[0_0_8px_rgba(37,99,235,0.5)]"
+          priority
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).style.display = 'none';
+          }}
+        />
+      </div>
+      <span className="text-[#F0F6FF] font-black text-lg tracking-wider">HAYB</span>
+    </a>
+  );
+}
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -45,9 +67,7 @@ export function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="text-[#F0F6FF] font-bold text-xl tracking-tight">
-          HAYB
-        </a>
+        <LogoMark />
 
         {/* Desktop nav */}
         <ul className="hidden md:flex items-center gap-8" role="list">

@@ -39,7 +39,7 @@ export function PricingCard({ plan, category, isInquiry = false }: PricingCardPr
   return (
     <article
       className={cn(
-        'relative flex flex-col p-5 rounded-2xl border bg-[#0D1526] transition-all duration-300',
+        'card-hover relative flex flex-col p-5 rounded-2xl border bg-[#0D1526] transition-all duration-300',
         plan.recommended
           ? 'border-[#2563EB]/40 shadow-lg shadow-[#2563EB]/10'
           : 'border-[#2563EB]/10'

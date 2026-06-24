@@ -14,15 +14,18 @@ export function HeroSection() {
       <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-[#2563EB]/[0.07] blur-[120px] pointer-events-none" />
       <div className="absolute top-1/3 right-0 w-[400px] h-[400px] rounded-full bg-[#818CF8]/[0.05] blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 left-1/3 w-[300px] h-[300px] rounded-full bg-[#0EA5E9]/[0.04] blur-[80px] pointer-events-none" />
+
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center py-20">
         {/* Sol: Metin */}
-        <div className="space-y-7">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#2563EB]/25 bg-[#2563EB]/[0.08]">
+        <div className="space-y-7 hero-content">
+          <div
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#2563EB]/25 bg-[#2563EB]/[0.08] hero-badge"
+          >
             <span className="w-1.5 h-1.5 rounded-full bg-[#3B82F6] animate-pulse" />
             <span className="text-xs text-[#8BA3C7] font-medium tracking-wide">Dijital Ürün Stüdyosu</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-[#F0F6FF] leading-[1.15] tracking-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-[#F0F6FF] leading-[1.15] tracking-tight hero-title">
             Fikirleri Gerçek{' '}
             <br className="hidden sm:block" />
             <span className="bg-gradient-to-r from-[#2563EB] to-[#60A5FA] bg-clip-text text-transparent">
@@ -32,12 +35,12 @@ export function HeroSection() {
             {' '}Dönüştürüyorum
           </h1>
 
-          <p className="text-base text-[#8BA3C7] leading-relaxed max-w-md">
+          <p className="text-base text-[#8BA3C7] leading-relaxed max-w-md hero-desc">
             Web sistemleri, sosyal medya yönetimi, yapay zeka çözümleri
             ve özel yazılım ürünleri geliştiriyorum.
           </p>
 
-          <div className="flex flex-wrap gap-3 pt-1">
+          <div className="flex flex-wrap gap-3 pt-1 hero-cta">
             <GradientButton onClick={() => scrollTo('#portfolyo')}>
               Projeleri İncele
             </GradientButton>
@@ -51,7 +54,7 @@ export function HeroSection() {
         </div>
 
         {/* Sağ: Mockup */}
-        <div className="relative lg:flex justify-end items-center">
+        <div className="relative lg:flex justify-end items-center hero-mockup">
           <FloatingMockup />
         </div>
       </div>

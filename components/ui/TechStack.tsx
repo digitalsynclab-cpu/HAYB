@@ -31,7 +31,7 @@ export function TechStack() {
         className="flex gap-4"
         animate={{ x: ['0%', '-50%'] }}
         transition={{
-          duration: 25,
+          duration: 10,
           repeat: Infinity,
           ease: 'linear',
         }}
