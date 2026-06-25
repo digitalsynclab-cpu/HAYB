@@ -15,7 +15,7 @@ const KNOWLEDGE = [
   // Web paketleri — güncel fiyatlar
   {
     k: ['web', 'site', 'internet', 'fiyat', 'paket', 'starter', 'business', 'professional', 'premium', '5000', '10000', '15000', '20000', 'ssl', 'vercel', 'domain', 'alan adı'],
-    a: `HAYB Web Site Paketleri:\n\n• **STARTER – 5.000 ₺**: 3 günde teslim, 3 sayfa, .com.tr/.net.tr (1 Yıl) domain, SSL, Mobil & Tablet uyumlu, WhatsApp, İletişim Formu, Google Harita, KVKK, Modern UI/UX, Hız Optimizasyonu, CDN.\n\n• **BUSINESS – 10.000 ₺**: 4 günde teslim, 5 sayfaya kadar, .com.tr/.net.tr (2 Yıl) domain, Starter özellikleri +Dashboard, Ürün Yönetimi, Yönetim Paneli, Güçlü SEO, Gelişmiş SEO, Blog, Referanslar, Teklif Formu, XML Sitemap.\n\n• **PROFESSIONAL – 15.000 ₺** (Önerilen): 5 günde teslim, 10 sayfaya kadar, .com/.net/.org (2 Yıl) domain, Business özellikleri + Google Analytics, Schema SEO, Google Search Console.\n\n• **PREMIUM – 20.000 ₺**: 7 günde teslim, Sınırsız sayfa, .com/.net/.org (1 Yıl) domain, Professional özellikleri + Çoklu Dil Desteği, Premium Animasyonlar, Yapay Zeka Asistan, 7/24 Canlı Destek.`,
+    a: `HAYB Web Site Paketleri:\n\n• **STARTER – 5.000 ₺**: 3 günde teslim, 3 sayfa, .com.tr/.net.tr (1 Yıl) domain, SSL, Mobil & Tablet uyumlu, WhatsApp, İletişim Formu, Google Harita, KVKK, Modern UI/UX, Hız Optimizasyonu, CDN.\n\n• **BUSINESS – 10.000 ₺**: 4 günde teslim, 5 sayfaya kadar, .com.tr/.net.tr (2 Yıl) domain, Starter özellikleri +Dashboard, Ürün Yönetimi, Yönetim Paneli, Güçlü SEO, Gelişmiş SEO, Blog, Referanslar, Teklif Formu, XML Sitemap.\n\n• **PROFESSIONAL – 15.000 ₺** (Önerilen): 5 günde teslim, 10 sayfaya kadar, .com/.net/.org (1 Yıl) domain, Business özellikleri + Google Analytics, Schema SEO, Google Search Console.\n\n• **PREMIUM – 20.000 ₺**: 7 günde teslim, Sınırsız sayfa, .com/.net/.org (1 Yıl) domain, Professional özellikleri + Çoklu Dil Desteği, Premium Animasyonlar, Yapay Zeka Asistan, 7/24 Canlı Destek.`,
   },
   // Özel Proje
   {
@@ -70,7 +70,7 @@ const KNOWLEDGE = [
   // Alan adı / domain
   {
     k: ['domain', 'alan adı', '.com', '.tr', '.net', '.org'],
-    a: `Alan adı (domain) bilgileri:\n\n• **Starter**: .com.tr / .net.tr / .org.tr — 1 Yıl Ücretsiz\n• **Business**: .com.tr / .net.tr / .org.tr — 2 Yıl Ücretsiz\n• **Professional**: .com / .net / .org — 2 Yıl Ücretsiz\n• **Premium**: .com / .net / .org — 1 Yıl Ücretsiz`,
+    a: `Alan adı (domain) bilgileri:\n\n• **Starter**: .com.tr / .net.tr / .org.tr — 1 Yıl Ücretsiz\n• **Business**: .com.tr / .net.tr / .org.tr — 2 Yıl Ücretsiz\n• **Professional**: .com / .net / .org — 1 Yıl Ücretsiz\n• **Premium**: .com / .net / .org — 1 Yıl Ücretsiz`,
   },
 ];
 

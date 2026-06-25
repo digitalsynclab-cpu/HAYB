@@ -12,7 +12,7 @@ export interface WebPricingRow {
 export const webPricingRows: WebPricingRow[] = [
   // Temel bilgiler
   { label: 'Teslim Süresi',              starter: '3 Gün',                              business: '4 Gün',                              professional: '5 Gün',                              premium: '7 Gün'                         },
-  { label: 'Alan Adı (Ücretsiz)',         starter: '.com.tr / .net.tr / .org.tr (1 Yıl)', business: '.com.tr / .net.tr / .org.tr (2 Yıl)', professional: '.com / .net / .org (2 Yıl)',         premium: '.com / .net / .org (1 Yıl)'    },
+  { label: 'Alan Adı (Ücretsiz)',         starter: '.com.tr / .net.tr / .org.tr (1 Yıl)', business: '.com.tr / .net.tr / .org.tr (2 Yıl)', professional: '.com / .net / .org (1 Yıl)',         premium: '.com / .net / .org (1 Yıl)'    },
   { label: 'Sayfa Sayısı',               starter: '3 Sayfa',                            business: '5 Sayfaya Kadar',                    professional: '10 Sayfaya Kadar',                   premium: 'Sınırsız Sayfa'                },
 
   // Teknik altyapı
