@@ -2,263 +2,381 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── HAYB design tokens ────────────────────────────────────────────────── */
 :root {
-  --color-bg: #060B14;
-  --color-surface: #0D1526;
-  --color-card: #111E35;
-  --color-card-hover: #172240;
-  --color-accent: #2563EB;
-  --color-accent-light: #3B82F6;
-  --color-accent-glow: rgba(37, 99, 235, 0.15);
-  --color-text-primary: #F0F6FF;
-  --color-text-secondary: #8BA3C7;
-  --color-border: rgba(59, 130, 246, 0.12);
-  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  /* Accent: HAYB Lime (logo ile aynı aile) */
+  --hayb-lime: 166 255 65; /* #a6ff41 */
+  --hayb-lime-soft: 200 255 128;
+  --hayb-lime-deep: 166 255 65; /* #a6ff41: açık zeminde de aynı vurgu rengi */
 
-  --font-weight-heading: 600;
-  --font-weight-body: 400;
+  /* Dark surface */
+  --hayb-ink-950: 17 17 17; /* #111111 */
+  --hayb-ink-900: 21 21 21; /* #151515 */
+  --hayb-ink-800: 27 27 27; /* #1B1B1B */
+  --hayb-ink-700: 34 34 34; /* #222222 */
+
+  /* Light surface */
+  --hayb-paper-50: 255 255 255; /* #FFFFFF */
+  --hayb-paper-100: 247 248 245; /* #F7F8F5 */
+  --hayb-paper-200: 241 243 238; /* #F1F3EE */
+
+  /* Metin: koyu zeminde / açık zeminde (WCAG AA üstü kontrast) */
+  --hayb-fg: 244 245 240;
+  --hayb-fg-muted: 178 184 170;
+  --hayb-on-light: 20 22 17;
+  --hayb-on-light-muted: 78 84 70;
+
+  --hayb-border-dark: 255 255 255 / 0.1;
+  --hayb-border-light: 20 22 17 / 0.1;
+
+  --hayb-curve: 2rem;
+  --hayb-header-h: 4.5rem;
+}
+@media (min-width: 1024px) {
+  :root {
+    --hayb-curve: 3.5rem;
+  }
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  background-color: var(--color-bg);
-  color: var(--color-text-primary);
-  font-size: 16px;
-  font-weight: var(--font-weight-body);
-}
-
-h1, h2, h3 {
-  font-weight: var(--font-weight-heading);
+/* Tanımsız grid kolonu içerik genişliğinde büyüyüp mobilde taşma yapar; varsayılanı tek esnek kolon yap. */
+@layer base {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--hayb-header-h) + 1rem);
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  background: rgb(var(--hayb-ink-950));
+  color: rgb(var(--hayb-fg));
+  font-size: 1.0625rem; /* 17px: 50+ okuyucu için rahat gövde metni */
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* Klavye odağı: her etkileşimli öğede görünür */
+:focus-visible {
+  outline: 2px solid rgb(var(--hayb-lime));
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.tone-light :focus-visible {
+  outline-color: rgb(var(--hayb-on-light));
 }
 
-/* ── Subtle dot grid ── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: radial-gradient(rgba(59, 130, 246, 0.08) 1px, transparent 1px);
-  background-size: 32px 32px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ── Film grain — statik, animasyonsuz ── */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.02;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* ── Animated gradient border ── */
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes border-spin {
-  to { --angle: 360deg; }
-}
-
-.animated-border {
-  border: 1px solid transparent;
-  background:
-    linear-gradient(var(--color-card), var(--color-card)) padding-box,
-    conic-gradient(from var(--angle), #2563EB, #60A5FA, #818CF8, #2563EB) border-box;
-  animation: border-spin 4s linear infinite;
-}
-
-/* ── Scrollbar ── */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-bg);
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(37, 99, 235, 0.3);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(37, 99, 235, 0.5);
-}
-
-/* ── Text selection ── */
 ::selection {
-  background: rgba(37, 99, 235, 0.3);
-  color: #F0F6FF;
+  background: rgb(var(--hayb-lime));
+  color: rgb(var(--hayb-ink-950));
 }
 
-/* ════════════════════════════════════════════════════════════════
-   PREMIUM ANIMATIONS — site geneli
-   ════════════════════════════════════════════════════════════════ */
+@layer components {
+  /* ── Yüzey tonları ── */
+  .tone-dark {
+    background: rgb(var(--hayb-ink-950));
+    color: rgb(var(--hayb-fg));
+    --muted: rgb(var(--hayb-fg-muted));
+  }
+  .tone-dark-2 {
+    background: rgb(var(--hayb-ink-900));
+    color: rgb(var(--hayb-fg));
+    --muted: rgb(var(--hayb-fg-muted));
+  }
+  .tone-light {
+    background: rgb(var(--hayb-paper-100));
+    color: rgb(var(--hayb-on-light));
+    --muted: rgb(var(--hayb-on-light-muted));
+  }
+  .tone-white {
+    background: rgb(var(--hayb-paper-50));
+    color: rgb(var(--hayb-on-light));
+    --muted: rgb(var(--hayb-on-light-muted));
+  }
+  .text-muted {
+    color: var(--muted);
+  }
+  /* Vurgu rengi: koyu zeminde lime, açık zeminde okunabilir koyu yeşil */
+  .accent-text {
+    color: rgb(var(--hayb-lime));
+  }
+  .tone-light .accent-text,
+  .tone-white .accent-text {
+    color: rgb(var(--hayb-lime-deep));
+  }
 
-/* ── Hero içerik giriş animasyonları ── */
-@keyframes heroFadeUp {
-  from { opacity: 0; transform: translateY(32px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+  /* ── Cam yüzey: yalnızca seçili yerlerde ── */
+  .glass {
+    background: rgb(255 255 255 / 0.05);
+    border: 1px solid rgb(255 255 255 / 0.12);
+    box-shadow: 0 10px 40px rgb(0 0 0 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.06);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+  .glass-lime {
+    border-color: rgb(var(--hayb-lime) / 0.5);
+    box-shadow: 0 10px 40px rgb(0 0 0 / 0.35), 0 0 24px rgb(var(--hayb-lime) / 0.14),
+      inset 0 1px 0 rgb(255 255 255 / 0.08);
+  }
+  .surface-light {
+    background: rgb(255 255 255 / 0.85);
+    border: 1px solid rgb(20 22 17 / 0.08);
+    box-shadow: 0 1px 2px rgb(20 24 16 / 0.04), 0 8px 24px rgb(20 24 16 / 0.06);
+  }
 
-.hero-badge    { animation: heroFadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s both; }
-.hero-title    { animation: heroFadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s both; }
-.hero-desc     { animation: heroFadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.35s both; }
-.hero-cta      { animation: heroFadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.5s both; }
-.hero-mockup   { animation: heroFadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s both; }
-
-/* ── Scroll reveal — tüm section başlıkları ── */
-@keyframes revealUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes revealFade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* ── Shimmer efekti — gradient border ── */
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-.shimmer-text {
-  background: linear-gradient(90deg, #8BA3C7 0%, #F0F6FF 40%, #60A5FA 60%, #8BA3C7 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 3s linear infinite;
-}
-
-/* ── Pulse glow — butonlar ve kartlar ── */
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
-  50%       { box-shadow: 0 0 20px 4px rgba(37,99,235,0.25); }
-}
-
-.glow-pulse {
-  animation: pulseGlow 3s ease-in-out infinite;
-}
-
-/* ── Floating card efekti ── */
-@keyframes floatCard {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-8px); }
-}
-
-/* ── Section reveal — Intersection Observer ile JS'den tetiklenir ── */
-.reveal-section {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
-              transform 0.7s cubic-bezier(0.16,1,0.3,1);
-}
-
-.reveal-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reveal-section.delay-1 { transition-delay: 0.1s; }
-.reveal-section.delay-2 { transition-delay: 0.2s; }
-.reveal-section.delay-3 { transition-delay: 0.3s; }
-
-/* ── Card hover lift ── */
-.card-hover {
-  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1),
-              box-shadow 0.25s ease,
-              border-color 0.25s ease;
-}
-.card-hover:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 12px 40px rgba(37,99,235,0.12);
-}
-
-/* ── Button premium ── */
-.btn-premium {
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1),
-              box-shadow 0.2s ease;
-}
-.btn-premium::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
-  pointer-events: none;
-}
-.btn-premium:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(37,99,235,0.3);
-}
-.btn-premium:active {
-  transform: translateY(0) scale(0.98);
-}
-
-/* ── Number counter animation ── */
-@keyframes countUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ── Stagger child animation ── */
-.stagger-children > * {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1),
-              transform 0.5s cubic-bezier(0.16,1,0.3,1);
-}
-.stagger-children.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.0s; }
-.stagger-children.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.1s; }
-.stagger-children.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.2s; }
-.stagger-children.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.3s; }
-.stagger-children.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.4s; }
-.stagger-children.visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.5s; }
-
-/* ── Gradient border animation ── */
-@keyframes gradientShift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.gradient-border-anim {
-  background: linear-gradient(270deg, #2563EB, #60A5FA, #818CF8, #2563EB);
-  background-size: 300% 300%;
-  animation: gradientShift 4s ease infinite;
-}
-
-/* ── prefers-reduced-motion ── */
-@media (prefers-reduced-motion: reduce) {
-  .hero-badge, .hero-title, .hero-desc, .hero-cta, .hero-mockup,
-  .reveal-section, .stagger-children > *,
-  .shimmer-text, .glow-pulse, .btn-premium {
-    animation: none !important;
-    transition: none !important;
-    opacity: 1 !important;
-    transform: none !important;
+  /* ── Bölüm eğrisi: bir sonraki bölüm üstten yuvarlanıp öncekinin üzerine biner ── */
+  .section-curve {
+    position: relative;
+    margin-top: calc(var(--hayb-curve) * -1);
+    border-top-left-radius: var(--hayb-curve);
+    border-top-right-radius: var(--hayb-curve);
+  }
+  .section-pad {
+    padding-block: 4.5rem;
+  }
+  @media (min-width: 1024px) {
+    .section-pad {
+      padding-block: 6.5rem;
+    }
   }
 }
+
+/* ── Dokunma ve hareket ── */
+/* Scroll reveal (JS yoksa içerik görünür kalır: yalnızca .js-reveal altında gizlenir) */
+.js-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 0.7s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+}
+.js-reveal [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Yavaş, tek seferlik giriş (hero) */
+@keyframes hayb-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: hayb-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.rise-2 {
+  animation-delay: 0.08s;
+}
+.rise-3 {
+  animation-delay: 0.16s;
+}
+.rise-4 {
+  animation-delay: 0.24s;
+}
+
+/* ─── Kelime kelime metin animasyonu (21st.dev "Words Stagger" mantığı: blur + yukarı kayma + opaklık) ─── */
+@keyframes word-in {
+  from { opacity: 0; transform: translateY(0.45em); filter: blur(10px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+.split-words .w { display: inline-block; }
+.js-reveal .split-words .w { opacity: 0; }
+.js-reveal .split-words.is-visible .w {
+  animation: word-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i) * 55ms + var(--d, 0ms));
+}
+/* Mobilde blur daha hafif: düşük güçlü cihazlarda akıcılık için */
+@media (max-width: 640px) {
+  @keyframes word-in {
+    from { opacity: 0; transform: translateY(0.4em); filter: blur(5px); }
+    to   { opacity: 1; transform: none; filter: blur(0); }
+  }
+  .js-reveal .split-words.is-visible .w { animation-delay: calc(var(--i) * 40ms + var(--d, 0ms)); }
+}
+
+/* ─── Spotlight kart: işaretçi/parmak konumunu izleyen ışık (tek global dinleyici) ─── */
+[data-spot] { position: relative; isolation: isolate; }
+[data-spot]::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  opacity: 0; transition: opacity 0.35s ease;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgb(var(--hayb-lime) / 0.16), transparent 62%);
+}
+[data-spot].spot-on::before { opacity: 1; }
+.tone-light [data-spot]::before {
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgb(var(--hayb-lime) / 0.35), transparent 62%);
+}
+
+/* ─── Sayfa üstü kaydırma çubuğu (yalnızca CSS; destek yoksa görünmez) ─── */
+@keyframes progress-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.scroll-progress {
+  position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 60; transform-origin: 0 50%; transform: scaleX(0);
+  background: rgb(var(--hayb-lime)); pointer-events: none;
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress { animation: progress-grow linear both; animation-timeline: scroll(root block); }
+}
+
+/* ─── Hero logosu: tek, çok yavaş süzülme (sürekli tek animasyon) ─── */
+@keyframes hero-float { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-14px) rotate(1.2deg); } }
+.hero-float { animation: hero-float 7s ease-in-out infinite; will-change: transform; }
+
+/* ─── Mobil menü: bağlantılar sırayla akar ─── */
+@keyframes menu-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.menu-item { animation: menu-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(var(--i) * 45ms + 80ms); }
+@keyframes menu-panel { from { opacity: 0; clip-path: inset(0 0 100% 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
+.menu-panel { animation: menu-panel 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* ─── Kayan hareket: dokunma cihazlarında basılı hissi ─── */
+@media (hover: none) {
+  .press:active { transform: scale(0.97); }
+}
+
+/* ─── Reveal: blur → net (görseller / kartlar) ─── */
+.js-reveal [data-reveal].reveal-blur { filter: blur(10px); transition-property: opacity, transform, filter; }
+.js-reveal [data-reveal].reveal-blur.is-visible { filter: none; }
+@media (max-width: 640px) { .js-reveal [data-reveal].reveal-blur { filter: blur(5px); } }
+
+/* ─── Sohbet demosu: mesaj balonu girişi + yazıyor noktaları ─── */
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+.msg-in { animation: msg-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; transform-origin: bottom left; }
+.msg-in.from-user { transform-origin: bottom right; }
+@keyframes dot-bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.45; } 30% { transform: translateY(-4px); opacity: 1; } }
+.typing-dot { animation: dot-bounce 1s ease-in-out infinite; }
+@keyframes check-in { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+.check-in { animation: check-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* ─── Sosyal şablon şeridi (sonsuz kayan kartlar; hover/dokunmada durur) ─── */
+@keyframes marquee-x { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee-track { display: flex; width: max-content; gap: 1rem; padding-right: 1rem; animation: marquee-x 55s linear infinite; will-change: transform; }
+.marquee:hover .marquee-track, .marquee:active .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
+
+/* ─── Açılış animasyonu (özel 3D logo): neon çizgiler, kayarak giriş, parlama, genişleyerek çıkış ─── */
+html.intro-active { overflow: hidden; }
+.intro-seen .intro { display: none; }
+.intro {
+  position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; overflow: hidden; cursor: pointer;
+  background: radial-gradient(60% 50% at 50% 50%, #12200a 0%, #0a0a0a 72%);
+  animation: intro-out 0.55s cubic-bezier(0.7, 0, 0.3, 1) 1.95s forwards;
+}
+@keyframes intro-out { to { opacity: 0; transform: scale(1.1); visibility: hidden; } }
+.intro-grid {
+  position: absolute; inset: 0; opacity: 0; animation: intro-fade 0.8s ease-out 0.1s forwards;
+  background-image: linear-gradient(rgb(var(--hayb-lime) / 0.14) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--hayb-lime) / 0.14) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000, transparent 65%); mask-image: radial-gradient(circle at 50% 50%, #000, transparent 65%);
+}
+@keyframes intro-fade { to { opacity: 1; } }
+.intro-beam {
+  position: absolute; left: 0; height: 2px; width: 70vw; opacity: 0; transform: translateX(-80vw);
+  background: linear-gradient(90deg, transparent, rgb(var(--hayb-lime)) 70%, #fff);
+  box-shadow: 0 0 18px 2px rgb(var(--hayb-lime) / 0.8);
+  animation: intro-beam 1s cubic-bezier(0.5, 0, 0.2, 1) both;
+}
+.intro-beam-1 { top: 36%; animation-delay: 0s; }
+.intro-beam-2 { top: 50%; height: 3px; animation-delay: 0.12s; }
+.intro-beam-3 { top: 64%; animation-delay: 0.24s; }
+@keyframes intro-beam { 0% { opacity: 0; transform: translateX(-80vw); } 15% { opacity: 1; } 100% { opacity: 0; transform: translateX(140vw); } }
+.intro-stage { position: relative; display: grid; place-items: center; }
+.intro-logo {
+  position: relative; width: min(58vw, 20rem);
+  animation: intro-logo-in 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both, intro-glow 0.8s ease-in-out 1.15s both, intro-logo-out 0.55s cubic-bezier(0.7, 0, 0.3, 1) 1.95s forwards;
+}
+.intro-logo img { display: block; width: 100%; height: auto; }
+@keyframes intro-logo-in {
+  from { opacity: 0; transform: translateX(-60vw) scale(0.78) skewX(-14deg); filter: blur(18px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes intro-glow {
+  0%, 100% { filter: drop-shadow(0 0 0 rgb(var(--hayb-lime) / 0)); }
+  50% { filter: drop-shadow(0 0 30px rgb(var(--hayb-lime) / 0.9)) drop-shadow(0 0 70px rgb(var(--hayb-lime) / 0.45)); }
+}
+@keyframes intro-logo-out { to { opacity: 0; transform: scale(2.3); filter: blur(8px); } }
+.intro-shine {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(105deg, transparent 40%, rgb(255 255 255 / 0.9) 50%, transparent 60%); background-size: 250% 100%; background-position: 150% 0;
+  -webkit-mask: url(/brand/hayb-3d.webp) center / contain no-repeat; mask: url(/brand/hayb-3d.webp) center / contain no-repeat;
+  animation: intro-shine 0.85s ease-in-out 1.1s both;
+}
+@keyframes intro-shine { from { background-position: 150% 0; } to { background-position: -50% 0; } }
+.intro-ring {
+  position: absolute; width: 14rem; height: 14rem; border-radius: 9999px; opacity: 0; pointer-events: none;
+  border: 2px solid rgb(var(--hayb-lime)); box-shadow: 0 0 24px rgb(var(--hayb-lime) / 0.6), inset 0 0 24px rgb(var(--hayb-lime) / 0.35);
+  animation: intro-ring 1.1s cubic-bezier(0.16, 1, 0.3, 1) 1s both;
+}
+.intro-ring-2 { animation-delay: 1.25s; }
+@keyframes intro-ring { 0% { opacity: 0.9; transform: scale(0.4); } 100% { opacity: 0; transform: scale(2.6); } }
+.intro-bar {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 3px; transform-origin: 0 50%; transform: scaleX(0);
+  background: rgb(var(--hayb-lime)); box-shadow: 0 0 16px rgb(var(--hayb-lime));
+  animation: intro-bar 1.95s linear both;
+}
+@keyframes intro-bar { to { transform: scaleX(1); } }
+
+/* ─── Pencere (paket detayları) ─── */
+@keyframes modal-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modal-up { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: none; } }
+@keyframes modal-pop { from { opacity: 0; transform: translateY(16px) scale(0.96); } to { opacity: 1; transform: none; } }
+.modal-backdrop { animation: modal-fade 0.25s ease-out both; }
+.modal-sheet { animation: modal-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@media (min-width: 640px) { .modal-sheet { animation-name: modal-pop; } }
+
+/* ─── Çerez penceresi: dönen neon çerçeve, yuvarlanarak gelen çerez ─── */
+.cookie-card { position: relative; overflow: hidden; border-radius: 1.5rem; padding: 1.5px; background: #1a1a1a; box-shadow: 0 24px 70px rgb(0 0 0 / 0.6); }
+.cookie-glow {
+  position: absolute; inset: -150%; pointer-events: none;
+  background: conic-gradient(from 0deg, transparent 0 68%, rgb(var(--hayb-lime)) 92%, transparent);
+  animation: cookie-spin 3.5s linear infinite;
+}
+@keyframes cookie-spin { to { transform: rotate(360deg); } }
+.cookie-body { position: relative; border-radius: calc(1.5rem - 1.5px); background: linear-gradient(160deg, #161616, #0a0a0a); color: #fff; padding: 1.15rem; }
+.cookie-in { animation: cookie-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.cookie-out { animation: cookie-out 0.38s ease-in both; }
+@keyframes cookie-in { from { opacity: 0; transform: translateY(46px) scale(0.94); } to { opacity: 1; transform: none; } }
+@keyframes cookie-out { to { opacity: 0; transform: translateY(30px) scale(0.96); } }
+.cookie-roll { display: block; width: 3.4rem; height: 3.4rem; flex: none; animation: cookie-roll 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+@keyframes cookie-roll { from { opacity: 0; transform: translateX(-4.5rem) rotate(-400deg); } to { opacity: 1; transform: none; } }
+
+/* ─── Kampanya penceresi ─── */
+.camp-card { overflow: hidden; border-radius: 1.75rem; padding: 2px; background: #1a1a1a; box-shadow: 0 30px 90px rgb(0 0 0 / 0.65), 0 0 60px rgb(var(--hayb-lime) / 0.18); max-height: calc(100dvh - 2rem); }
+.camp-body {
+  position: relative; overflow-y: auto; max-height: calc(100dvh - 2rem - 4px); border-radius: calc(1.75rem - 2px); padding: 1.5rem 1.25rem 1.25rem; color: #fff;
+  background: radial-gradient(90% 50% at 50% 0%, rgb(var(--hayb-lime) / 0.22), transparent 70%), linear-gradient(170deg, #151515, #0a0a0a);
+}
+.camp-in { animation: camp-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.camp-out { animation: camp-out 0.32s ease-in both; }
+.camp-fade-out { animation: modal-fade 0.32s ease-in reverse both; }
+@keyframes camp-in { from { opacity: 0; transform: translateY(40px) scale(0.86) rotate(-2deg); } to { opacity: 1; transform: none; } }
+@keyframes camp-out { to { opacity: 0; transform: translateY(24px) scale(0.94); } }
+.camp-tag { display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 9999px; padding: 0.35rem 0.8rem; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; background: rgb(var(--hayb-lime)); color: #0a0a0a; }
+.camp-pulse { animation: camp-pulse 1.2s ease-in-out infinite; }
+@keyframes camp-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.7); opacity: 0.4; } }
+.camp-percent {
+  display: inline-block; background: linear-gradient(100deg, rgb(var(--hayb-lime)) 30%, #fff 50%, rgb(var(--hayb-lime)) 70%); background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: camp-shimmer 3s linear 1.2s infinite;
+  filter: drop-shadow(0 0 22px rgb(var(--hayb-lime) / 0.45));
+}
+@keyframes camp-shimmer { from { background-position: 150% 0; } to { background-position: -100% 0; } }
+.camp-box { display: flex; flex-direction: column; align-items: center; border-radius: 0.9rem; border: 1px solid rgb(255 255 255 / 0.12); background: rgb(255 255 255 / 0.05); padding: 0.7rem 0.25rem; }
+.camp-cta { position: relative; overflow: hidden; box-shadow: 0 0 0 0 rgb(var(--hayb-lime) / 0.6); animation: camp-ring 2s ease-out 1.2s infinite; }
+.camp-cta::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.55) 50%, transparent 65%); transform: translateX(-120%); animation: camp-sweep 2.8s ease-in-out 1.5s infinite; }
+@keyframes camp-ring { 0% { box-shadow: 0 0 0 0 rgb(var(--hayb-lime) / 0.55); } 100% { box-shadow: 0 0 0 16px rgb(var(--hayb-lime) / 0); } }
+@keyframes camp-sweep { 0% { transform: translateX(-120%); } 55%, 100% { transform: translateX(120%); } }
+.camp-spark { position: absolute; width: 6px; height: 6px; border-radius: 9999px; background: rgb(var(--hayb-lime)); box-shadow: 0 0 12px 2px rgb(var(--hayb-lime) / 0.8); animation: camp-float 3.2s ease-in-out infinite; pointer-events: none; }
+@keyframes camp-float { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.9; } 50% { transform: translateY(-14px) scale(1.6); opacity: 0.3; } }
+.min-h-13 { min-height: 3.25rem; }
+
+/* ─── Marka logoları: yavaş süzülme (her kart farklı fazda) ─── */
+@keyframes brand-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.brand-tile { animation: brand-bob 5s ease-in-out infinite; }

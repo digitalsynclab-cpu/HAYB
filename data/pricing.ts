@@ -65,10 +65,10 @@ export const webPricingRows: WebPricingRow[] = [
 ];
 
 export const webPackages = [
-  { id: 'starter',      name: 'STARTER',      price: '5.000 ₺',  recommended: false, color: '#60A5FA' },
-  { id: 'business',     name: 'BUSINESS',     price: '10.000 ₺', recommended: false, color: '#A78BFA' },
-  { id: 'professional', name: 'PROFESSIONAL', price: '15.000 ₺', recommended: true,  color: '#FBBF24' },
-  { id: 'premium',      name: 'PREMIUM',      price: '20.000 ₺', recommended: false, color: '#F87171' },
+  { id: 'starter',      name: 'STARTER',      price: '5.000 ₺',  recommended: false},
+  { id: 'business',     name: 'BUSINESS',     price: '10.000 ₺', recommended: false},
+  { id: 'professional', name: 'PROFESSIONAL', price: '15.000 ₺', recommended: true },
+  { id: 'premium',      name: 'PREMIUM',      price: '20.000 ₺', recommended: false},
 ];
 
 // ─── Özel Proje Paketi ────────────────────────────────────────────────────────
@@ -159,7 +159,6 @@ export const socialMediaPlans: PricingPlan[] = [
     features: [
       '6 adet post tasarımı',
       '4 adet story tasarımı',
-      '2 adet reels tasarımı',
       'Logo tasarımı',
       'Marka renk ve font uyumu',
       'PNG + kaynak dosya teslimi',
@@ -175,7 +174,6 @@ export const socialMediaPlans: PricingPlan[] = [
     features: [
       '20 adet post tasarımı',
       '18 adet story tasarımı',
-      '8 adet reels tasarımı',
       'Logo tasarımı',
       'Marka kimlik rehberi',
       'İçerik takvimi planlaması',
@@ -191,7 +189,6 @@ export const socialMediaPlans: PricingPlan[] = [
     ctaLabel: 'Teklif Al',
     features: [
       'Aylık paketin tüm özellikleri',
-      'Video / reels tasarımı',
       'Reklam görseli tasarımı',
       'Satış platformları için logo',
       'Banner ve mağaza tasarımı',
@@ -207,7 +204,7 @@ export const qrMenuPlans: PricingPlan[] = [
   {
     id: 'qr-temel',
     name: 'QR Menü Temel',
-    price: '1.500 ₺',
+    price: '2.500 ₺',
     recommended: false,
     ctaLabel: 'Sepete Ekle',
     features: [
@@ -221,7 +218,7 @@ export const qrMenuPlans: PricingPlan[] = [
   {
     id: 'qr-standart',
     name: 'QR Menü Standart',
-    price: '3.000 ₺',
+    price: '5.000 ₺',
     recommended: false,
     ctaLabel: 'Sepete Ekle',
     features: [
@@ -236,7 +233,7 @@ export const qrMenuPlans: PricingPlan[] = [
   {
     id: 'qr-premium',
     name: 'QR Menü Premium',
-    price: '5.000 ₺',
+    price: '7.500 ₺',
     recommended: true,
     ctaLabel: 'Sepete Ekle',
     features: [
@@ -248,3 +245,69 @@ export const qrMenuPlans: PricingPlan[] = [
     ],
   },
 ];
+
+// ─── Logo Tasarımı ────────────────────────────────────────────────────────────
+export const logoPlan: PricingPlan = {
+  id: 'logo',
+  name: 'Logo Tasarımı',
+  price: '499 ₺',
+  recommended: false,
+  ctaLabel: 'Sepete Ekle',
+  features: [
+    'Markanıza özel logo tasarımı',
+    'Uygulama ikonu (app icon) sürümü',
+    'Şeffaf arka planlı PNG teslimi',
+    'Açık ve koyu zemin uyumu',
+    'Revizyon hakkı',
+  ],
+};
+
+// ─── Google & Meta Reklam Yönetimi ────────────────────────────────────────────
+// 3 aylık paket yalnızca Meta Ads içerir; 6 ve 12 aylık paketlerde Google Ads yönetimi HEDİYEDİR.
+// Reklam bütçesi hiçbir pakete dahil değildir.
+export const adsTerms = [
+  { months: 3, name: 'Kısa Dönem', monthly: 15000, googleGift: false, recommended: false, blurb: 'İlk strateji, kurulum, hedef kitle testleri ve optimizasyon süreci.' },
+  { months: 6, name: 'Büyüme', monthly: 13000, googleGift: true, recommended: true, blurb: 'Daha uzun optimizasyon süreci, A/B testleri, remarketing ve düzenli geliştirme.' },
+  { months: 12, name: 'Yıllık Yönetim', monthly: 10000, googleGift: true, recommended: false, blurb: 'Sürekli reklam yönetimi, optimizasyon, ölçeklendirme ve yıllık strateji.' },
+] as const;
+
+/** Değerler: [3 ay, 6 ay, 12 ay] */
+export const adsRows: { label: string; values: [boolean | string, boolean | string, boolean | string] }[] = [
+  { label: 'Meta Ads (Facebook ve Instagram) yönetimi', values: [true, true, true] },
+  { label: 'Google Ads yönetimi', values: [false, 'Hediye', 'Hediye'] },
+  { label: 'Reklam hesabı kurulumu', values: [true, true, true] },
+  { label: 'Kampanya oluşturma ve yönetimi', values: [true, true, true] },
+  { label: 'Hedef kitle / anahtar kelime çalışması', values: [true, true, true] },
+  { label: 'Pixel, dönüşüm ve ölçümleme kurulumu', values: [true, true, 'Gelişmiş'] },
+  { label: 'Kreatif yönlendirme', values: [true, true, true] },
+  { label: 'Bütçe ve teklif optimizasyonu', values: [true, true, true] },
+  { label: 'Performans takibi', values: [true, true, true] },
+  { label: 'Aylık raporlama', values: [true, true, true] },
+  { label: 'Remarketing', values: [false, true, true] },
+  { label: 'A/B testleri', values: [false, true, true] },
+  { label: 'Haftalık optimizasyon', values: [false, true, true] },
+  { label: 'Strateji görüşmesi', values: [false, 'Aylık', '2× / ay'] },
+  { label: 'Detaylı performans analizi', values: [false, true, true] },
+  { label: 'Ölçeklendirme', values: [false, false, true] },
+];
+
+const tl = (n: number) => `${n.toLocaleString('tr-TR')} ₺`;
+export const adsTotal = (i: number) => adsTerms[i].monthly * adsTerms[i].months;
+export const adsTotalLabel = (i: number) => tl(adsTotal(i));
+
+/** Sepet ve WhatsApp mesajı için paket. */
+export function adsPlan(i: number): PricingPlan {
+  const t = adsTerms[i];
+  return {
+    id: `reklam-${t.months}`,
+    name: `${t.googleGift ? 'Meta + Google' : 'Meta'} Reklam Yönetimi · ${t.months} Ay`,
+    price: `${tl(t.monthly)} / ay`,
+    recommended: t.recommended,
+    ctaLabel: 'Sepete Ekle',
+    features: [
+      `Toplam ${adsTotalLabel(i)} (${t.months} ay)`,
+      ...adsRows.filter((r) => r.values[i] !== false).map((r) => (typeof r.values[i] === 'string' ? `${r.label}: ${r.values[i]}` : r.label)),
+      'Reklam bütçesi dahil değildir',
+    ],
+  };
+}

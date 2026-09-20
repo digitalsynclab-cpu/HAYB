@@ -1,11 +1,7 @@
 'use client';
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import type { PricingPlan } from '@/types';
-
-interface CartItem {
-  plan: PricingPlan;
-  category: string;
-}
+import { addToCart, type CartItem } from '@/lib/messages';
 
 interface CartContextType {
   items: CartItem[];
@@ -22,26 +18,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const addItem = (plan: PricingPlan, category: string) => {
-    setItems(prev => {
-      const exists = prev.find(i => i.plan.id === plan.id);
-      if (exists) return prev;
-      return [...prev, { plan, category }];
-    });
+  const addItem = useCallback((plan: PricingPlan, category: string) => {
+    setItems((prev) => addToCart(prev, plan, category));
     setIsOpen(true);
-  };
+  }, []);
+  const removeItem = useCallback((id: string) => setItems((p) => p.filter((i) => i.plan.id !== id)), []);
+  const clearCart = useCallback(() => setItems([]), []);
 
-  const removeItem = (planId: string) => {
-    setItems(prev => prev.filter(i => i.plan.id !== planId));
-  };
-
-  const clearCart = () => setItems([]);
-
-  return (
-    <CartContext.Provider value={{ items, addItem, removeItem, clearCart, isOpen, setIsOpen }}>
-      {children}
-    </CartContext.Provider>
+  const value = useMemo(
+    () => ({ items, addItem, removeItem, clearCart, isOpen, setIsOpen }),
+    [items, addItem, removeItem, clearCart, isOpen],
   );
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
 export function useCart() {

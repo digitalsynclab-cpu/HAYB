@@ -1,0 +1,46 @@
+/* Örnek şablon sayfaları (/template/*) için stiller. Kapsam: .tp */
+.tp { min-height: 100dvh; overflow-x: clip; padding-bottom: 5rem; font-family: var(--tp-body); -webkit-font-smoothing: antialiased; line-height: 1.55; }
+.tp h1, .tp h2, .tp h3, .tp .tp-h { font-family: var(--tp-head); letter-spacing: -0.012em; }
+.tp button { font-family: inherit; }
+.tp-section { scroll-margin-top: 4rem; position: relative; }
+.tp .tp-btn { background: var(--b, var(--t-accent)); color: var(--bi, #fff); }
+.tp .tp-accent { color: var(--tp-accent); }
+.tp .tp-ico { background: color-mix(in srgb, currentColor 10%, transparent); }
+.tp .tp-hv:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+.tp .tp-bg07 { background: color-mix(in srgb, currentColor 8%, transparent); }
+.tp .tp-bg15 { background: color-mix(in srgb, currentColor 15%, transparent); }
+.tp .tp-bd10 { border-color: color-mix(in srgb, currentColor 10%, transparent); }
+.tp .tp-bd15 { border-color: color-mix(in srgb, currentColor 15%, transparent); }
+.tp .tp-bd20 { border-color: color-mix(in srgb, currentColor 20%, transparent); }
+.tp .tp-bd25 { border-color: color-mix(in srgb, currentColor 25%, transparent); }
+.tp .tp-bd40 { border-color: color-mix(in srgb, currentColor 40%, transparent); }
+.tp button:focus-visible, .tp a:focus-visible, .tp input:focus-visible, .tp select:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+/* Menü bağlantısı: alt çizgi soldan çizilir */
+.tp .tp-navlink { position: relative; padding-block: 0.4rem; }
+.tp .tp-navlink::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+.tp .tp-navlink:hover::after, .tp .tp-navlink.is-on::after { transform: scaleX(1); }
+
+/* Hero görseli: metne doğru yumuşak solma */
+.tp .tp-hero-media { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 24%); mask-image: linear-gradient(to bottom, transparent 0, #000 24%); }
+@media (min-width: 768px) {
+  .tp .tp-hero-media { -webkit-mask-image: linear-gradient(to right, transparent 0, #000 30%); mask-image: linear-gradient(to right, transparent 0, #000 30%); }
+}
+.tp .tp-hero-img { animation: tp-kenburns 22s ease-in-out infinite alternate; }
+@keyframes tp-kenburns { from { transform: scale(1); } to { transform: scale(1.07) translateX(-1.5%); } }
+
+/* Etkileşim animasyonları */
+@keyframes tp-pop { from { opacity: 0; transform: scale(0.7); } 60% { transform: scale(1.08); } to { opacity: 1; transform: none; } }
+.tp .tp-pop { animation: tp-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes tp-toast { from { opacity: 0; transform: translate(-50%, -14px) scale(0.96); } to { opacity: 1; transform: translate(-50%, 0); } }
+.tp .tp-toast { animation: tp-toast 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes tp-drop { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
+.tp .tp-drop { animation: tp-drop 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes tp-drop-item { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+.tp .tp-drop-item { animation: tp-drop-item 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes tp-slide-r { from { transform: translateX(100%); } to { transform: none; } }
+.tp .tp-slide-r { animation: tp-slide-r 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Şablon sayfalarında reveal yumuşak, mobilde hafif blur */
+.tp [data-reveal].reveal-blur { filter: blur(8px); }
+.tp [data-reveal].reveal-blur.is-visible { filter: none; }
