@@ -145,6 +145,58 @@ export function ServiceShowcase({ kind }: { kind: ShowcaseKind }) {
       return <AiChatDemo className="mx-auto max-w-3xl" />;
     case 'social':
       return <SocialTemplates />;
+    case 'data':
+      return (
+        <div className="space-y-8">
+          <figure>
+            <div className="overflow-hidden rounded-card border border-white/10 bg-ink-800 shadow-glass">
+              <Image src="/images/products/hayb-data-service.webp" alt="HAYB Data Service arayüzü: sektör arama, sonuç tablosu ve Excel olarak indirme" width={1200} height={1096} sizes="(min-width: 1024px) 1100px, 92vw" className="h-auto w-full" />
+            </div>
+            <figcaption className="mt-3 text-sm text-fg-muted">Örnek arayüz ve tanıtım görseli. Gösterilen firmalar ve sayılar demo veridir.</figcaption>
+          </figure>
+
+          <div className="grid gap-4 md:grid-cols-2 md:gap-5">
+            <div className="glass rounded-card p-5 sm:p-6">
+              <p className="text-lg font-bold">Elle araştırma</p>
+              <ul className="mt-3 space-y-2 text-[0.97rem] text-fg-muted">
+                {['İşletmeleri tek tek arama', 'Google’da sektör sektör araştırma', 'Bilgileri Excel’e aktarma', 'Telefon ve web sitelerini düzenleme', 'Tekrar eden kayıtları temizleme', 'Satış ekibine liste hazırlama'].map((i) => (
+                  <li key={i} className="flex gap-2">
+                    <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white/40" />
+                    {i}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-sm font-semibold">Saatler, hatta günler sürebilir.</p>
+            </div>
+            <div data-spot className="glass rounded-card border-lime/40 p-5 sm:p-6">
+              <p className="text-lg font-bold text-lime">HAYB Data Service ile</p>
+              <p className="mt-3 text-[0.97rem]">Bu süreç tek bir arama ve dışa aktarma akışına iner: sektörü yazın, sonuçları görün, Excel olarak indirin.</p>
+              <p className="mt-3 text-sm font-semibold">Saatlerce işletme aramayın. Veriyi tek yerden bulun.</p>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-xl font-bold">Kimler kullanabilir?</h3>
+            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                { t: 'Dijital pazarlama ajansları', d: '“Bursa’daki restoranlar” aramasıyla potansiyel müşteri listesi oluşturur; web sitesi, SEO, Google ve Meta reklamları, sosyal medya ve marka tasarımı hizmetleri için değerlendirir.' },
+                { t: 'Satış ekipleri', d: '“Türkiye → Otel” gibi seçimlerle işletmeleri listeler ve satış araştırmasını bu liste üzerinden yürütür.' },
+                { t: 'Yeni müşteri arayan ajanslar', d: 'Yalnızca “Güzellik Merkezi” ile çalışmak isteyen bir ajans, ilgili işletmeleri bulup liste çıkarır.' },
+                { t: 'Pazar araştırması', d: '“Bursa → Mobilya Mağazası” veya “Antalya → Otel” gibi aramalarla işletmelerin bölgelere dağılımını inceler.' },
+              ].map((c) => (
+                <li key={c.t} data-spot className="glass rounded-card p-5">
+                  <p className="font-bold">{c.t}</p>
+                  <p className="mt-2 text-[0.95rem] text-fg-muted">{c.d}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <p className="rounded-card border border-lime/40 bg-lime/[0.07] p-4 text-[0.95rem]">
+            <strong>Kapsam ve kullanım hakkında:</strong> Verinin kapsamı, kaynağı, güncelliği ve hangi alanların bulunduğu sektöre ve bölgeye göre değişebilir; her işletme için her alan yer almayabilir. Verileri pazarlama amacıyla kullanırken KVKK ve ticari elektronik ileti mevzuatına uymak kullanıcının sorumluluğundadır.
+          </p>
+        </div>
+      );
     case 'ads':
       return (
         <div className="space-y-6">

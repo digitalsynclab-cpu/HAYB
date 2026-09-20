@@ -57,7 +57,14 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         breadcrumb={[{ label: 'Hizmetler', href: '/hizmetler' }, { label: s.title }]}
         actions={
           <>
-            {s.slug === 'marka-tasarimi' ? (
+            {s.slug === 'hayb-data-service' ? (
+              <>
+                <Button href="/fiyatlandirma#data-service">Fiyatı Gör · 9.999 ₺</Button>
+                <Button href="/iletisim" variant="secondary">
+                  Bize Sorun
+                </Button>
+              </>
+            ) : s.slug === 'marka-tasarimi' ? (
               <>
                 <Button href="/fiyatlandirma#logo">Logo Sipariş Et · 499 ₺</Button>
                 <Button href="/proje-baslat" variant="secondary">

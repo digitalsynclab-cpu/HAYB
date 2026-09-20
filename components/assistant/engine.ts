@@ -5,6 +5,7 @@ import {
   socialMediaPlans,
   qrMenuPlans,
   logoPlan,
+  dataServicePlan,
   adsTerms,
   adsTotalLabel,
   specialProjectFeatures,
@@ -94,12 +95,19 @@ export const TOPICS: Topic[] = [
       `Mobil uygulama en çok yaptığımız işlerden biri. iOS ve Android için tasarım, geliştirme ve mağaza yayını dahil:\n\n• Giriş, profil, arama, bildirim gibi temel ekranlar\n• Ödeme entegrasyonu (iyzico, Stripe), harita ve konum servisleri\n• App Store ve Google Play yayını, sonrasında güncelleme ve destek\n\nÖrnekler:\n• BebeklerSoruyor: ebeveynler için soru-cevap topluluğu\n• EkoTakip Pro: bir müşterimiz için özel geliştirdiğimiz, yalnızca kendi cihazında çalışan bireysel ve işletme gelir-gider takip uygulaması (raporlama ve yapay zekâ analizi var)\n• Taleb-e: öğrencilerin burs talebi oluşturduğu, bağışçıların güvenle destek olduğu uygulama\n• Mobil oyunumuz ${GAME.name}\n\nUygulamaların ekran görüntülerini /projeler sayfasında tek tek inceleyebilirsiniz. Fiyat kapsama göre belirlenir; ücretsiz keşif görüşmesi yapılır.`,
   },
   {
+    id: 'data',
+    keywords: ['data service', 'hayb data', 'veri hizmeti', 'isletme verisi', 'isletme verileri', 'veri listesi', 'excel', 'potansiyel musteri', 'musteri listesi', 'firma listesi'],
+    strong: ['data service', 'hayb data', 'isletme verisi', 'isletme verileri'],
+    answer: () =>
+      `HAYB Data Service: sektörünüzü yazarak işletme kayıtlarını (firma adı, telefon, adres, web sitesi gibi mevcut alanlar) tek tabloda inceleyebileceğiniz ve Excel (.xlsx) olarak dışa aktarabileceğiniz bir işletme veri listeleme platformudur.\n\nAkış: sektörü yazın → bölgeyi belirleyin (Türkiye geneli veya il/ilçe) → verileri getirin → inceleyin → Excel olarak indirin.\n\nKimler kullanabilir: dijital pazarlama ajansları, satış ekipleri, yeni müşteri arayan ajanslar ve pazar araştırması yapanlar.\n\nTek seferlik satın alım ücreti: ${priceWithList(dataServicePlan.price)}.\n\nNot: Veri kapsamı, kaynağı ve güncelliği sektöre ve bölgeye göre değişebilir; verileri KVKK ve ticari elektronik ileti mevzuatına uygun kullanmak kullanıcının sorumluluğundadır.`,
+  },
+  {
     id: 'campaign',
     keywords: ['kampanya', 'indirim', 'indirimli', 'firsat', 'ucuz', 'promosyon'],
     strong: ['indirim', 'kampanyali', 'kampanya var', 'kampanya ne'],
     answer: () => {
       const end = new Date(campaign.endsAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Istanbul' });
-      return `${campaign.title}: web sitesi, sosyal medya, QR menü, logo ve reklam yönetimi paketlerinde %${campaign.rate} indirim vardır. Kampanya ${end} tarihine kadar geçerlidir.\n\nÖrnek: Starter web sitesi ${priceWithList(webPackages[0].price)}.\n\nTüm kampanyalı fiyatlar /fiyatlandirma sayfasında.`;
+      return `${campaign.title}: web sitesi, sosyal medya, QR menü, logo, reklam yönetimi ve HAYB Data Service paketlerinde %${campaign.rate} indirim vardır. Kampanya ${end} tarihine kadar geçerlidir.\n\nÖrnek: Starter web sitesi ${priceWithList(webPackages[0].price)}.\n\nTüm kampanyalı fiyatlar /fiyatlandirma sayfasında.`;
     },
   },
   {
@@ -185,7 +193,7 @@ export const TOPICS: Topic[] = [
     id: 'about',
     keywords: ['kimsiniz', 'hayb nedir', 'hakkinda', 'ne yapiyorsunuz', 'hizmet'],
     answer: () =>
-      'HAYB, mobil uygulama, mobil oyun, web sitesi, özel yazılım, yönetim paneli, yapay zeka, sosyal medya, marka/logo tasarımı ve Google & Meta reklam yönetimi hizmetleri sunan bir dijital ürün stüdyosudur.',
+      'HAYB, mobil uygulama, mobil oyun, web sitesi, özel yazılım, yönetim paneli, yapay zeka, sosyal medya, marka/logo tasarımı, Google & Meta reklam yönetimi hizmetleri ve HAYB Data Service işletme veri ürünü sunan bir dijital ürün stüdyosudur.',
   },
   {
     id: 'contact',
@@ -197,7 +205,7 @@ export const TOPICS: Topic[] = [
 const GREETING_WORDS = ['merhaba', 'selam', 'selamlar', 'hey', 'iyi gunler', 'gunaydin', 'iyi aksamlar'];
 const THANKS_WORDS = ['tesekkur', 'tesekkurler', 'sagol', 'sag olun', 'eyvallah', 'harika', 'tamam', 'anladim'];
 
-export const GREETING = 'Merhaba! Size nasıl yardımcı olabilirim? Mobil uygulama, mobil oyun, web sitesi ve şablonları, QR menü, sosyal medya, logo, reklam yönetimi, kampanya ve fiyatlar hakkında soru sorabilirsiniz.';
+export const GREETING = 'Merhaba! Size nasıl yardımcı olabilirim? Mobil uygulama, mobil oyun, web sitesi ve şablonları, QR menü, sosyal medya, logo, reklam yönetimi, HAYB Data Service, kampanya ve fiyatlar hakkında soru sorabilirsiniz.';
 export const THANKS = 'Rica ederim! Başka bir sorunuz olursa buradayım. İsterseniz WhatsApp\'tan da yazabilirsiniz.';
 export const FALLBACK = 'Bunu tam anlayamadım. Mobil uygulama, mobil oyun, web sitesi, şablonlar, QR menü, sosyal medya, logo, reklam yönetimi, kampanya veya teslim süreleri hakkında sorabilirsiniz; ya da WhatsApp\'tan bize yazın.';
 
@@ -257,6 +265,7 @@ const TOPIC_ACTIONS: Record<string, ReplyAction[]> = {
   web: [{ label: 'Paketleri gör', href: '/fiyatlandirma#web' }, { label: 'Şablonları dene', href: '/template' }],
   about: [{ label: 'Hizmetlerimiz', href: '/hizmetler' }, { label: 'Hakkımızda', href: '/hakkimizda' }],
   contact: [{ label: 'Proje başlat', href: '/proje-baslat' }],
+  data: [{ label: 'Ürünü incele', href: '/hizmetler/hayb-data-service' }, { label: 'Fiyatı gör', href: '/fiyatlandirma#data-service' }],
 };
 
 /** Konuya göre önerilen sonraki sorular (her biri asistanın yanıtlayabildiği bir soru). */
@@ -280,6 +289,7 @@ const TOPIC_FOLLOW_UPS: Record<string, string[]> = {
   web: ['Web şablonları', 'Kampanya', 'Teslim süresi'],
   about: ['Kampanya', 'Web şablonları', 'Mobil uygulama'],
   contact: ['Kampanya', 'Web şablonları', 'Web sitesi fiyatları'],
+  data: ['Reklam yönetimi', 'Web sitesi fiyatları', 'Kampanya'],
 };
 const DEFAULT_FOLLOW_UPS = ['Kampanya', 'Web şablonları', 'Mobil uygulama'];
 
@@ -293,6 +303,8 @@ export const START_TOPICS = [
   { label: 'Logo tasarımı', hint: '499 ₺' },
   { label: 'Mobil oyun', hint: 'BB Block' },
   { label: 'Yönetim paneli', hint: 'Örnek paneller' },
+  { label: 'HAYB Data Service', hint: 'İşletme verisi' },
+  { label: 'Teklif almak istiyorum', hint: 'WhatsApp veya form' },
 ] as const;
 
 function buildReply(text: string, topicId: string | null, question: string): Reply {

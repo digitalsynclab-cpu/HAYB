@@ -311,3 +311,20 @@ export function adsPlan(i: number): PricingPlan {
     ],
   };
 }
+
+// ─── HAYB Data Service (tek seferlik satın alım) ──────────────────────────────
+export const dataServicePlan: PricingPlan = {
+  id: 'hayb-data-service',
+  name: 'HAYB Data Service',
+  price: '9.999 ₺',
+  recommended: false,
+  ctaLabel: 'Sepete Ekle',
+  features: [
+    'Sektöre göre işletme arama (ör. Restoran, Otel, Diş Kliniği)',
+    'Türkiye geneli veya il / ilçe filtresi',
+    'Firma, telefon, adres ve web sitesi alanları (mevcut olanlar)',
+    'Sonuçları tek tabloda inceleme',
+    'Excel (.xlsx) ve desteklenen formatlarda dışa aktarma',
+    'Tek seferlik satın alım ücreti',
+  ],
+};

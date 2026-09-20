@@ -1,6 +1,6 @@
 import type { IconName } from '@/data/icons';
 
-export type ShowcaseKind = 'web' | 'architecture' | 'dashboard' | 'flow' | 'mobile' | 'game' | 'ai' | 'social' | 'brand' | 'ads';
+export type ShowcaseKind = 'web' | 'architecture' | 'dashboard' | 'flow' | 'mobile' | 'game' | 'ai' | 'social' | 'brand' | 'ads' | 'data';
 
 export interface ServiceDetail {
   slug: string;
@@ -345,6 +345,38 @@ export const services: ServiceDetail[] = [
     ],
     projectIds: [],
     pricingNote: 'Meta reklam yönetimi aylık 10.000 ₺’den başlar; 6 ve 12 aylık paketlerde Google Ads hediyedir. Reklam bütçesi dahil değildir.',
+  },
+  {
+    slug: 'hayb-data-service',
+    title: 'HAYB Data Service',
+    short: 'HAYB Data Service',
+    icon: 'veriyonetimi',
+    filter: 'Diğer',
+    summary: 'Sektörünü yaz, işletme kayıtlarını tek tabloda incele, Excel olarak dışa aktar.',
+    metaTitle: 'HAYB Data Service: İşletme Verilerini Keşfedin ve Excel’e Aktarın',
+    metaDescription:
+      'Sektöre göre işletme kayıtlarını (firma, telefon, adres, web sitesi) arayın, filtreleyin ve Excel olarak dışa aktarın. Potansiyel müşteri ve pazar araştırmasını hızlandırın. Tek seferlik 9.999 ₺.',
+    heroTitle: 'Potansiyel müşterilerinizi',
+    heroAccent: 'dakikalar içinde keşfedin.',
+    heroText:
+      'Sektörünü seç, işletmeleri keşfet, verilerini dışa aktar. Dijital pazarlama, satış ve iş geliştirme süreçleriniz için işletme verilerini daha hızlı keşfedin.',
+    showcase: 'data',
+    benefits: [
+      { icon: 'hedefodakli', title: 'Sektörünü seç', text: 'İstediğin sektörü yaz, bölgeyi belirle.' },
+      { icon: 'veriyonetimi', title: 'Verileri topla', text: 'Uygun işletme kayıtları tek tabloda listelenir.' },
+      { icon: 'raporlama', title: 'Excel olarak indir', text: 'Sonuçları .xlsx ve desteklenen formatlarda tek dosyada al.' },
+      { icon: 'hizliperformans', title: 'Zaman kazan', text: 'Saatler süren elle araştırmayı tek bir akışa indir.' },
+    ],
+    stepsTitle: 'Kullanımı çok basit',
+    steps: [
+      { title: 'Sektörü yaz', text: 'Örneğin “Restoran”, “Otel” veya “Diş Kliniği”.' },
+      { title: 'Bölgeyi belirle', text: 'Türkiye geneli veya belirli il / ilçe filtresi.' },
+      { title: 'Verileri getir', text: 'Sistem uygun işletme kayıtlarını tablo halinde gösterir.' },
+      { title: 'Verileri incele', text: 'Firma adı, telefon, adres ve web sitesi gibi mevcut bilgileri incelersiniz.' },
+      { title: 'Excel’e aktar', text: '“Excel Olarak İndir” ile sonuçları tek dosyada dışa aktarırsınız.' },
+    ],
+    projectIds: [],
+    pricingNote: 'HAYB Data Service tek seferlik satın alım ücretiyle 9.999 ₺’dir (kampanyalı fiyat).',
   },
 ];
 

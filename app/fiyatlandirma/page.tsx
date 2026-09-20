@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Check, Gift, Minus } from 'lucide-react';
 import { PageHero } from '@/components/ui/PageHero';
 import { Section } from '@/components/ui/Section';
@@ -22,6 +23,7 @@ import {
   adsRows,
   adsPlan,
   adsTotalLabel,
+  dataServicePlan,
 } from '@/data/pricing';
 import type { PricingPlan } from '@/types';
 import { buildMetadata } from '@/lib/metadata';
@@ -40,6 +42,7 @@ const anchors = [
   { href: '#qr-menu', label: 'QR Menü' },
   { href: '#logo', label: 'Logo Tasarımı' },
   { href: '#reklam', label: 'Google & Meta Reklamları' },
+  { href: '#data-service', label: 'HAYB Data Service' },
   { href: '#ozel-proje', label: 'Özel Proje ve Mobil' },
 ];
 
@@ -266,7 +269,20 @@ export default function PricingPage() {
         </p>
       </Section>
 
-      <Section tone="dark" labelledBy="ozel-proje">
+      <Section tone="dark" labelledBy="data-service">
+        <SectionHeading id="data-service" eyebrow="Yeni ürün" title="HAYB" accent="Data Service." text="Sektörünü seç, işletmeleri keşfet, verilerini dışa aktar. Potansiyel müşteri ve pazar araştırmasını hızlandırın." />
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,24rem)_1fr] lg:items-start">
+          <PlanCard plan={dataServicePlan} category="Veri Ürünü" variant="lime" example={{ href: '/hizmetler/hayb-data-service', label: 'Ürünü İncele' }} />
+          <figure>
+            <div className="overflow-hidden rounded-card border border-white/10 bg-ink-800 shadow-glass">
+              <Image src="/images/products/hayb-data-service.webp" alt="HAYB Data Service arayüzü: sektör arama, sonuç tablosu ve Excel olarak indirme" width={1200} height={1096} sizes="(min-width: 1024px) 640px, 92vw" className="h-auto w-full" />
+            </div>
+            <figcaption className="mt-3 text-sm text-fg-muted">Örnek arayüz. Gösterilen firmalar ve sayılar demo veridir. Veri kapsamı ve güncelliği sektöre ve bölgeye göre değişebilir; verileri KVKK ve ticari elektronik ileti mevzuatına uygun kullanmak kullanıcının sorumluluğundadır.</figcaption>
+          </figure>
+        </div>
+      </Section>
+
+      <Section tone="dark-2" labelledBy="ozel-proje">
         <SectionHeading id="ozel-proje" eyebrow="Özel Proje ve Mobil" title="Kapsamına göre" accent="teklif hazırlıyoruz." text="Özel yazılım, platform ve mobil uygulama fiyatı projenin kapsamına göre belirlenir. Ücretsiz keşif görüşmesiyle başlayalım." />
         <div className="grid gap-8 lg:grid-cols-2">
           <div className="glass rounded-card p-6">

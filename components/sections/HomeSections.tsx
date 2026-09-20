@@ -13,6 +13,8 @@ import { AiChatDemo } from '@/components/ui/AiChatDemo';
 import { SocialTemplates } from '@/components/ui/SocialTemplates';
 import { BrandLogos } from '@/components/ui/BrandLogos';
 import { Reveal } from '@/components/motion/Reveal';
+import { Price } from '@/components/ui/Price';
+import { dataServicePlan } from '@/data/pricing';
 import { TemplateMarquee } from '@/components/templates/TemplateShowcase';
 import { services } from '@/data/services';
 import { projectById, referenceSites } from '@/data/projects';
@@ -219,9 +221,44 @@ const trust = [
   { icon: 'surekligelisim', title: 'Uzun vadeli iş birliği', text: 'Yayından sonra da güncelleme ve destekle yanınızdayız.' },
 ] as const;
 
+export function HomeDataService() {
+  return (
+    <Section tone="dark" labelledBy="data-service">
+      <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.15fr] lg:gap-12">
+        <div>
+          <p className="mb-4 flex items-center gap-2.5 text-[0.8125rem] font-semibold uppercase tracking-[0.18em] text-muted">
+            <span aria-hidden className="h-2 w-2 rounded-full bg-lime" /> Yeni ürün
+          </p>
+          <h2 id="data-service" className="text-balance text-3xl font-extrabold leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl">
+            HAYB <span className="accent-text">Data Service</span>
+          </h2>
+          <p className="mt-4 text-xl font-semibold leading-snug">Sektörünü seç. İşletmeleri keşfet. Verilerini dışa aktar.</p>
+          <p className="mt-3 max-w-lg text-fg-muted">Dijital pazarlama, satış ve iş geliştirme süreçleriniz için işletme verilerini daha hızlı keşfedin. Saatlerce işletme aramak yerine sonuçları tek tabloda görün, Excel olarak indirin.</p>
+          <Price price={dataServicePlan.price} tone="dark" className="mt-6" />
+          <p className="mt-1 text-sm text-fg-muted">Tek seferlik satın alım ücreti</p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Button href="/hizmetler/hayb-data-service" arrow>
+              Ürünü İncele
+            </Button>
+            <Button href="/fiyatlandirma#data-service" variant="secondary">
+              Fiyatı ve Paketi Gör
+            </Button>
+          </div>
+        </div>
+        <Reveal blur>
+          <div className="overflow-hidden rounded-card border border-white/10 bg-ink-800 shadow-glass">
+            <Image src="/images/products/hayb-data-service.webp" alt="HAYB Data Service arayüzü: sektör arama, sonuç tablosu ve Excel olarak indirme" width={1200} height={1096} sizes="(min-width: 1024px) 620px, 92vw" className="h-auto w-full" />
+          </div>
+          <p className="mt-3 text-sm text-fg-muted">Örnek arayüz; gösterilen firmalar ve sayılar demo veridir.</p>
+        </Reveal>
+      </div>
+    </Section>
+  );
+}
+
 export function HomeTrust() {
   return (
-    <Section tone="dark" labelledBy="guven">
+    <Section tone="dark-2" labelledBy="guven">
       <SectionHeading id="guven" eyebrow="Neden HAYB?" title="Sadece proje değil," accent="uzun vadeli iş birliği." />
       <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
         {trust.map((t, i) => (

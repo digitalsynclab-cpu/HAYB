@@ -1,4 +1,4 @@
-import { HomeHero, HomeServices, HomeProducts, HomeProcess, HomeTrust } from '@/components/sections/HomeSections';
+import { HomeHero, HomeServices, HomeProducts, HomeProcess, HomeDataService, HomeTrust } from '@/components/sections/HomeSections';
 import { CTASection } from '@/components/sections/CTASection';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { site } from '@/data/site';
@@ -26,6 +26,7 @@ export default function Home() {
       <HomeServices />
       <HomeProducts />
       <HomeProcess />
+      <HomeDataService />
       <HomeTrust />
       <CTASection />
     </>
