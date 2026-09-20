@@ -13,8 +13,6 @@ import { AiChatDemo } from '@/components/ui/AiChatDemo';
 import { SocialTemplates } from '@/components/ui/SocialTemplates';
 import { BrandLogos } from '@/components/ui/BrandLogos';
 import { Reveal } from '@/components/motion/Reveal';
-import { Price } from '@/components/ui/Price';
-import { dataServicePlan } from '@/data/pricing';
 import { TemplateMarquee } from '@/components/templates/TemplateShowcase';
 import { services } from '@/data/services';
 import { projectById, referenceSites } from '@/data/projects';
@@ -182,26 +180,12 @@ export function HomeProducts() {
         </ProductTile>
 
         <ProductTile icon="veriyonetimi" title="HAYB Data Service" href="/hizmetler/hayb-data-service" className="lg:col-span-2">
-          <div className="grid items-center gap-5 md:grid-cols-[1.15fr_1fr] md:gap-8">
+          <figure>
             <div className="overflow-hidden rounded-xl border border-white/10 bg-ink-900">
-              <Image src="/images/products/hayb-data-service.webp" alt="HAYB Data Service arayüzü: sektör arama, sonuç tablosu ve Excel olarak indirme" width={1200} height={1096} sizes="(min-width: 1024px) 560px, 92vw" className="h-auto w-full" />
+              <Image src="/images/products/hayb-data-service.webp" alt="HAYB Data Service arayüzü: sektör arama, sonuç tablosu ve Excel olarak indirme" width={1200} height={1096} sizes="(min-width: 1024px) 1000px, 92vw" className="mx-auto h-auto w-full max-w-3xl" />
             </div>
-            <div>
-              <p className="text-xl font-extrabold leading-snug tracking-tight">Sektörünü seç. İşletmeleri keşfet. Verilerini dışa aktar.</p>
-              <p className="mt-2 text-fg-muted">Potansiyel müşteri ve pazar araştırmasını hızlandırın: sonuçları tek tabloda görün, Excel olarak indirin.</p>
-              <Price price={dataServicePlan.price} tone="dark" className="mt-4" />
-              <p className="text-sm text-fg-muted">Tek seferlik satın alım ücreti</p>
-              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                <Button href="/hizmetler/hayb-data-service" arrow>
-                  Ürünü İncele
-                </Button>
-                <Button href="/fiyatlandirma#data-service" variant="secondary">
-                  Fiyatı Gör
-                </Button>
-              </div>
-              <p className="mt-3 text-sm text-fg-muted">Örnek arayüz; gösterilen firmalar ve sayılar demo veridir.</p>
-            </div>
-          </div>
+            <figcaption className="mt-3 text-sm text-fg-muted">Örnek arayüz; gösterilen firmalar ve sayılar demo veridir.</figcaption>
+          </figure>
         </ProductTile>
       </div>
     </Section>
