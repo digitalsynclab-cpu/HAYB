@@ -7,6 +7,8 @@ import { Footer } from '@/components/layout/Footer';
 import { RevealObserver } from '@/components/motion/RevealObserver';
 import { IntroSplash } from '@/components/layout/IntroSplash';
 import { CookieConsent } from '@/components/layout/CookieConsent';
+import { CartProvider } from '@/lib/cart-context';
+import { CartPanel } from '@/components/pricing/CartPanel';
 import { SiteChrome } from '@/components/layout/SiteChrome';
 import { CampaignPopup } from '@/components/layout/CampaignPopup';
 import { AssistantLoader } from '@/components/assistant/AssistantLoader';
@@ -63,6 +65,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script dangerouslySetInnerHTML={{ __html: revealBootstrap }} />
       </head>
       <body className="font-sans">
+        <CartProvider>
         <SiteChrome>
         <IntroSplash />
         <a
@@ -78,8 +81,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Footer />
           <CookieConsent />
           <CampaignPopup />
+          <CartPanel />
           <AssistantLoader />
         </SiteChrome>
+        </CartProvider>
         <RevealObserver />
       </body>
     </html>

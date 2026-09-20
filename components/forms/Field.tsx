@@ -1,7 +1,7 @@
 import type { ComponentProps, ReactNode } from 'react';
 
 const control =
-  'min-h-12 w-full rounded-xl border bg-ink-950/60 px-4 text-[1.0625rem] text-fg placeholder:text-fg-muted/70 transition focus:border-lime';
+  'min-h-12 w-full rounded-xl border bg-ink-950/60 px-4 text-base text-fg placeholder:text-fg-muted/70 transition focus:border-lime';
 
 interface FieldProps {
   id: string;

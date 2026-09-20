@@ -28,7 +28,9 @@ const AUTOMATION = [
   { at: 6, text: 'Menü bilgisi veriden okundu' },
 ];
 
-const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+/** Demo hızı: 2x (tüm bekleme süreleri yarıya iner). */
+const SPEED = 2;
+const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms / SPEED));
 
 export function AiChatDemo({ className = '' }: { className?: string }) {
   const [shown, setShown] = useState(0);

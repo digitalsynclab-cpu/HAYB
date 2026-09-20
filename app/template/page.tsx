@@ -5,6 +5,7 @@ import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/motion/Reveal';
 import { CTASection } from '@/components/sections/CTASection';
+import { ReferenceSites } from '@/components/sections/HomeSections';
 import { TemplateCard } from '@/components/templates/TemplateShowcase';
 import { templates } from '@/data/templates';
 import { buildMetadata } from '@/lib/metadata';
@@ -55,6 +56,7 @@ export default function TemplatesPage() {
           </Link>
         </p>
       </Section>
+      <ReferenceSites tone="light" />
       <CTASection tone="dark" />
     </>
   );

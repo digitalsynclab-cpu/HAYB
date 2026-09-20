@@ -53,7 +53,7 @@ html {
 body {
   background: rgb(var(--hayb-ink-950));
   color: rgb(var(--hayb-fg));
-  font-size: 1.0625rem; /* 17px: 50+ okuyucu için rahat gövde metni */
+  font-size: 1rem; /* 16px: rahat gövde metni (iOS'ta girişlerde yakınlaştırmayı önler) */
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -249,12 +249,12 @@ body {
   from { opacity: 0; transform: translateY(10px) scale(0.96); }
   to   { opacity: 1; transform: none; }
 }
-.msg-in { animation: msg-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; transform-origin: bottom left; }
+.msg-in { animation: msg-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both; transform-origin: bottom left; }
 .msg-in.from-user { transform-origin: bottom right; }
 @keyframes dot-bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.45; } 30% { transform: translateY(-4px); opacity: 1; } }
-.typing-dot { animation: dot-bounce 1s ease-in-out infinite; }
+.typing-dot { animation: dot-bounce 0.55s ease-in-out infinite; }
 @keyframes check-in { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
-.check-in { animation: check-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.check-in { animation: check-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
 /* ─── Sosyal şablon şeridi (sonsuz kayan kartlar; hover/dokunmada durur) ─── */
 @keyframes marquee-x { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -380,3 +380,13 @@ html.intro-active { overflow: hidden; }
 /* ─── Marka logoları: yavaş süzülme (her kart farklı fazda) ─── */
 @keyframes brand-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 .brand-tile { animation: brand-bob 5s ease-in-out infinite; }
+
+/* ─── Üst menü sepet simgesi: belirir, rozet zıplar ─── */
+@keyframes cart-in { 0% { opacity: 0; transform: scale(0.4) rotate(-20deg); } 60% { transform: scale(1.15) rotate(6deg); } 100% { opacity: 1; transform: none; } }
+.cart-in { animation: cart-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes badge-pop { 0% { transform: scale(0.2); } 55% { transform: scale(1.35); } 100% { transform: scale(1); } }
+.cart-badge {
+  position: absolute; top: -0.4rem; right: -0.4rem; min-width: 1.3rem; height: 1.3rem; padding: 0 0.3rem; border-radius: 9999px;
+  display: grid; place-items: center; font-size: 0.72rem; font-weight: 800; line-height: 1; color: #fff; background: #ff3b30;
+  box-shadow: 0 0 0 2px rgb(var(--hayb-ink-950)); animation: badge-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}

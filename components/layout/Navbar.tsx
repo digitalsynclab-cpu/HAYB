@@ -7,6 +7,7 @@ import { nav, whatsappUrl } from '@/data/site';
 import { Logo } from '@/components/ui/Logo';
 import { Button } from '@/components/ui/Button';
 import { MenuToggleIcon } from '@/components/ui/MenuToggleIcon';
+import { CartButton } from '@/components/layout/CartButton';
 
 const isActive = (pathname: string, href: string) =>
   href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`);
@@ -111,6 +112,7 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <CartButton />
             <Button href="/proje-baslat" className="hidden min-h-11 px-5 text-[0.9375rem] sm:inline-flex">
               Teklif Al
             </Button>
@@ -152,7 +154,7 @@ export function Navbar() {
                     <Link
                       href={item.href}
                       aria-current={active ? 'page' : undefined}
-                      className={`flex min-h-[3.75rem] items-center justify-between text-[1.4rem] font-bold tracking-tight ${active ? 'text-lime' : 'text-fg'}`}
+                      className={`flex min-h-[3.75rem] items-center justify-between text-[1.3rem] font-bold tracking-tight ${active ? 'text-lime' : 'text-fg'}`}
                     >
                       {item.label}
                       <span aria-hidden className={`h-2 w-2 rounded-full ${active ? 'bg-lime' : 'bg-white/15'}`} />

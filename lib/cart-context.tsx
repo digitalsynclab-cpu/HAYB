@@ -19,8 +19,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const addItem = useCallback((plan: PricingPlan, category: string) => {
+    // Panel kendiliğinden açılmaz; üst menüdeki sepet simgesi ve kırmızı rozet güncellenir.
     setItems((prev) => addToCart(prev, plan, category));
-    setIsOpen(true);
   }, []);
   const removeItem = useCallback((id: string) => setItems((p) => p.filter((i) => i.plan.id !== id)), []);
   const clearCart = useCallback(() => setItems([]), []);

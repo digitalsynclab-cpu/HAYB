@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react';
 type Variant = 'primary' | 'secondary' | 'secondary-light';
 
 const base =
-  'group inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl px-6 text-[1.0625rem] font-semibold leading-none transition duration-200 ease-out active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50';
+  'group inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl px-6 text-base font-semibold leading-none transition duration-200 ease-out active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50';
 
 const variants: Record<Variant, string> = {
   primary:

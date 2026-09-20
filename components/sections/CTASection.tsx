@@ -26,7 +26,7 @@ export function CTASection({
             id="cta-baslik"
             title={title}
             accent={accent}
-            className="text-balance text-[1.9rem] font-extrabold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl"
+            className="text-balance text-[1.75rem] font-extrabold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl"
           />
           <p className="mt-5 max-w-xl text-lg text-fg-muted">{text}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">

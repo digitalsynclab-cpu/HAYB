@@ -5,17 +5,16 @@ import { ShoppingBag, Trash2, X } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { cartWhatsappUrl } from '@/lib/messages';
 
-/** Sepet: yüzen düğme + yan panel (role=dialog, Escape, focus tuzağı, scroll kilidi). */
+/** Sepet paneli (role=dialog, Escape, focus tuzağı, scroll kilidi). Açma düğmesi üst menüdeki CartButton'dadır. */
 export function CartPanel() {
   const { items, removeItem, clearCart, isOpen, setIsOpen } = useCart();
   const panelRef = useRef<HTMLDivElement>(null);
-  const openerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!isOpen) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    const opener = openerRef.current;
+    const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const panel = panelRef.current;
     const els = () => Array.from(panel?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])') ?? []);
     els()[0]?.focus();
@@ -43,18 +42,6 @@ export function CartPanel() {
 
   return (
     <>
-      {items.length > 0 && !isOpen && (
-        <button
-          ref={openerRef}
-          type="button"
-          onClick={() => setIsOpen(true)}
-          className="fixed bottom-4 left-4 z-40 inline-flex min-h-14 items-center gap-2.5 rounded-full border border-white/20 bg-ink-800 px-5 font-semibold shadow-glass sm:bottom-6 sm:left-6"
-        >
-          <ShoppingBag aria-hidden className="h-5 w-5 text-lime" />
-          Sepetim ({items.length})
-        </button>
-      )}
-
       {isOpen && (
         <>
           <div className="fixed inset-0 z-[80] bg-black/70 backdrop-blur-sm" onClick={() => setIsOpen(false)} aria-hidden />

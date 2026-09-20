@@ -17,7 +17,7 @@ export function Logo({ className = '', tone = 'dark', size = 40 }: LogoProps) {
     <Link href="/" aria-label="HAYB ana sayfa" className={`inline-flex items-center gap-2.5 rounded-md ${className}`}>
       <Image src="/brand/hayb-mark-small.png" alt="" width={size} height={size} className="shrink-0" style={{ width: size, height: size }} />
       <span
-        className={`whitespace-nowrap text-[1.65rem] font-extrabold leading-none tracking-tight ${tone === 'dark' ? 'text-fg' : 'text-on-light'}`}
+        className={`whitespace-nowrap text-[1.55rem] font-extrabold leading-none tracking-tight ${tone === 'dark' ? 'text-fg' : 'text-on-light'}`}
       >
         HAYB<span className="text-lime">.</span>
       </span>

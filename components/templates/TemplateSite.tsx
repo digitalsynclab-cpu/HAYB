@@ -88,7 +88,7 @@ function Heading({ kicker, title, text, className = '' }: { kicker?: string; tit
   return (
     <div className={className}>
       {kicker && <p className="tp-kicker mb-3 text-xs font-bold uppercase tracking-[0.22em] opacity-70">{kicker}</p>}
-      <h2 data-split className="split-words tp-h text-[2rem] font-bold leading-[1.08] sm:text-4xl lg:text-[2.6rem]" aria-label={title}>
+      <h2 data-split className="split-words tp-h text-[1.85rem] font-bold leading-[1.08] sm:text-4xl lg:text-[2.35rem]" aria-label={title}>
         <SplitWords text={title} />
       </h2>
       {text && <p className="mt-3 max-w-xl text-[1.02rem] leading-relaxed opacity-75">{text}</p>}
@@ -109,7 +109,7 @@ function Hero({ s, c }: { s: Extract<TSection, { type: 'hero' }>; c: Ctx }) {
               <p className="mb-4 text-[0.7rem] font-bold uppercase tracking-[0.24em] opacity-70">{s.kicker}</p>
             </R>
           )}
-          <h1 data-split className="split-words tp-h text-[2.7rem] font-bold leading-[1.02] tracking-tight sm:text-6xl lg:text-[4.4rem]" aria-label={s.title.join(' ')}>
+          <h1 data-split className="split-words tp-h text-[2.45rem] font-bold leading-[1.02] tracking-tight sm:text-5xl lg:text-[4rem]" aria-label={s.title.join(' ')}>
             {s.title.map((line, i) => {
               const start = offset;
               offset += line.split(/\s+/).filter(Boolean).length;
@@ -121,7 +121,7 @@ function Hero({ s, c }: { s: Extract<TSection, { type: 'hero' }>; c: Ctx }) {
             })}
           </h1>
           <R d={200}>
-            <p className="mt-5 max-w-md text-[1.05rem] leading-relaxed opacity-80">{s.text}</p>
+            <p className="mt-5 max-w-md text-base leading-relaxed opacity-80">{s.text}</p>
           </R>
           <R d={300} className="mt-7 flex flex-wrap gap-3">
             <button type="button" className={btn} onClick={() => c.go(s.primary.to ?? 'ust')}>
@@ -441,7 +441,7 @@ function Banner({ s, c }: { s: Extract<TSection, { type: 'banner' }>; c: Ctx }) 
         </div>
         <div className="flex flex-col justify-center px-5 py-10 sm:px-8 md:px-12 md:py-16">
           {s.kicker && <p className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.24em] opacity-70">{s.kicker}</p>}
-          <h2 data-split className="split-words tp-h text-[1.9rem] font-bold leading-[1.1] sm:text-4xl" aria-label={s.title}>
+          <h2 data-split className="split-words tp-h text-[1.75rem] font-bold leading-[1.1] sm:text-4xl" aria-label={s.title}>
             <SplitWords text={s.title} />
           </h2>
           <R d={150}>
@@ -542,7 +542,7 @@ function CtaSection({ s, c }: { s: Extract<TSection, { type: 'cta' }>; c: Ctx })
       <div className={`relative mx-auto max-w-[80rem] px-5 py-14 sm:px-8 sm:py-20 lg:px-10 ${wide ? 'flex flex-col items-center text-center' : 'grid items-center gap-8 md:grid-cols-2 md:gap-12'}`}>
         <div className={wide ? 'mb-6' : ''}>
           {s.kicker && <p className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.24em] opacity-70">{s.kicker}</p>}
-          <h2 data-split className="split-words tp-h text-[2rem] font-bold leading-[1.08] sm:text-4xl lg:text-5xl" aria-label={s.title}>
+          <h2 data-split className="split-words tp-h text-[1.85rem] font-bold leading-[1.08] sm:text-4xl lg:text-[2.75rem]" aria-label={s.title}>
             <SplitWords text={s.title} />
           </h2>
           <R d={120}><p className="mt-4 max-w-md leading-relaxed opacity-80">{s.text}</p></R>

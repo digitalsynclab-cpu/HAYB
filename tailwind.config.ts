@@ -31,6 +31,20 @@ const config: Config = {
         'on-light': 'rgb(var(--hayb-on-light) / <alpha-value>)',
         'on-light-muted': 'rgb(var(--hayb-on-light-muted) / <alpha-value>)',
       },
+      // Yazı ölçeği yaklaşık %5-7 küçültüldü (satır yükseklikleri korunur).
+      fontSize: {
+        xs: ['0.72rem', { lineHeight: '1rem' }],
+        sm: ['0.83rem', { lineHeight: '1.25rem' }],
+        base: ['0.96rem', { lineHeight: '1.5rem' }],
+        lg: ['1.06rem', { lineHeight: '1.75rem' }],
+        xl: ['1.17rem', { lineHeight: '1.75rem' }],
+        '2xl': ['1.4rem', { lineHeight: '2rem' }],
+        '3xl': ['1.75rem', { lineHeight: '2.25rem' }],
+        '4xl': ['2.1rem', { lineHeight: '2.5rem' }],
+        '5xl': ['2.8rem', { lineHeight: '1' }],
+        '6xl': ['3.5rem', { lineHeight: '1' }],
+        '7xl': ['4.2rem', { lineHeight: '1' }],
+      },
       fontFamily: {
         sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
