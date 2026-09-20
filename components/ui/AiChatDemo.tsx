@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { Check, Send } from 'lucide-react';
+import { Check, Loader2, Send } from 'lucide-react';
 
 interface Line {
   from: 'user' | 'ai';
@@ -20,7 +20,7 @@ const SCRIPT: Line[] = [
   { from: 'ai', text: 'Evet, menüde 6 glütensiz ürünümüz var. Listeyi hemen göndereyim mi?' },
 ];
 
-/** Hangi mesaj sayısında hangi otomasyon adımı tamamlanır */
+/** Hangi mesaj sayısında hangi otomasyon adımı başlar (adımlar sırayla, tek tek tamamlanır) */
 const AUTOMATION = [
   { at: 2, text: 'Müşteri talebi anlaşıldı' },
   { at: 4, text: 'Rezervasyon takvime eklendi' },
@@ -31,11 +31,15 @@ const AUTOMATION = [
 /** Demo hızı: 2x (tüm bekleme süreleri yarıya iner). */
 const SPEED = 2;
 const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms / SPEED));
+/** Bir otomasyon adımının "çalışıyor" süresi (ms). Adımlar art arda, üst üste binmeden işlenir. */
+const STEP_MS = 650;
 
 export function AiChatDemo({ className = '' }: { className?: string }) {
   const [shown, setShown] = useState(0);
   const [typing, setTyping] = useState<Line['from'] | null>(null);
   const [visible, setVisible] = useState(false);
+  const [done, setDone] = useState(0);
+  const [running, setRunning] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
   // Yalnızca ekranda görünürken oynat (pil ve performans)
@@ -74,6 +78,24 @@ export function AiChatDemo({ className = '' }: { className?: string }) {
 
   const count = shown;
   const lines = SCRIPT.slice(0, count);
+
+  // Otomasyon adımları: mesaj sayısı eşiği geçince kilit açılır, adımlar sırayla (çalışıyor → tamam) işlenir.
+  const unlocked = AUTOMATION.filter((a) => count >= a.at).length;
+  const idle = count === 0;
+  useEffect(() => {
+    if (idle) {
+      setDone(0);
+      setRunning(false);
+      return;
+    }
+    if (done >= unlocked) {
+      setRunning(false);
+      return;
+    }
+    setRunning(true);
+    const t = window.setTimeout(() => setDone((d) => d + 1), STEP_MS);
+    return () => window.clearTimeout(t);
+  }, [idle, unlocked, done]);
 
   return (
     <figure ref={rootRef} className={className}>
@@ -129,11 +151,19 @@ export function AiChatDemo({ className = '' }: { className?: string }) {
         <div>
           <p className="text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-fg-muted">Arka planda otomatik</p>
           <ul className="mt-3 space-y-2.5">
-            {AUTOMATION.map((a) => {
-              const done = count >= a.at;
+            {AUTOMATION.map((a, i) => {
+              const isDone = i < done;
+              const isRunning = running && i === done && i < unlocked;
               return (
-                <li key={a.text} className={`flex items-center gap-3 rounded-xl border px-3.5 py-3 text-[0.9rem] transition-colors duration-500 ${done ? 'border-lime/40 bg-lime/[0.07]' : 'border-white/10 opacity-50'}`}>
-                  <span className={`grid h-6 w-6 shrink-0 place-items-center rounded-full ${done ? 'check-in bg-lime text-ink-950' : 'border border-white/20'}`}>{done && <Check className="h-3.5 w-3.5" />}</span>
+                <li
+                  key={a.text}
+                  className={`flex items-center gap-3 rounded-xl border px-3.5 py-3 text-[0.9rem] transition-[background-color,border-color,opacity] duration-300 ${
+                    isDone ? 'border-lime/40 bg-lime/[0.07]' : isRunning ? 'border-lime/60 bg-white/[0.04]' : 'border-white/10 opacity-50'
+                  }`}
+                >
+                  <span className={`grid h-6 w-6 shrink-0 place-items-center rounded-full ${isDone ? 'check-in bg-lime text-ink-950' : isRunning ? 'text-lime' : 'border border-white/20'}`}>
+                    {isDone ? <Check className="h-3.5 w-3.5" /> : isRunning ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                  </span>
                   {a.text}
                 </li>
               );

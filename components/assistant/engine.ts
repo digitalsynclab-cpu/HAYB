@@ -13,7 +13,7 @@ import { projects, GAME } from '@/data/projects';
 import { campaign } from '@/data/campaign';
 import { templates } from '@/data/templates';
 import { panelSamples } from '@/data/panels';
-import { site } from '@/data/site';
+import { site, whatsappUrl } from '@/data/site';
 
 /**
  * Asistan motoru (saf fonksiyonlar, test edilebilir).
@@ -220,15 +220,104 @@ export function routeTopic(text: string): Topic | null {
   return best;
 }
 
-export function getAnswer(input: string): string {
+export interface ReplyAction {
+  label: string;
+  href: string;
+  /** Harici bağlantı (yeni sekme) */
+  external?: boolean;
+}
+
+export interface Reply {
+  text: string;
+  topicId: string | null;
+  /** Cevabın altında düğme olarak gösterilen kısayollar */
+  actions: ReplyAction[];
+  /** Cevaptan sonra önerilen sorular */
+  followUps: string[];
+}
+
+/** Konuya göre kısayol düğmeleri (site içi yollar). */
+const TOPIC_ACTIONS: Record<string, ReplyAction[]> = {
+  game: [{ label: 'Oyunu incele', href: '/projeler/bbblock' }],
+  mobile: [{ label: 'Uygulamaları incele', href: '/hizmetler/mobil-uygulama' }, { label: 'Projeler', href: '/projeler' }],
+  campaign: [{ label: 'Kampanyalı fiyatlar', href: '/fiyatlandirma' }],
+  templates: [{ label: 'Şablonları gör', href: '/template' }],
+  panel: [{ label: 'Örnek paneller', href: '/hizmetler/yonetim-paneli' }],
+  legal: [{ label: 'KVKK metni', href: '/kvkk' }, { label: 'Çerez politikası', href: '/cerez-politikasi' }],
+  qr: [{ label: 'QR menü fiyatları', href: '/fiyatlandirma#qr-menu' }, { label: 'Örnek QR menü', href: '/projeler/qrmenu' }],
+  ads: [{ label: 'Reklam paketleri', href: '/fiyatlandirma#reklam' }, { label: 'Hizmeti incele', href: '/hizmetler/reklam-yonetimi' }],
+  social: [{ label: 'Sosyal medya paketleri', href: '/fiyatlandirma#sosyal-medya' }, { label: 'Örnek tasarımlar', href: '/hizmetler/sosyal-medya' }],
+  logo: [{ label: 'Logo paketi', href: '/fiyatlandirma#logo' }, { label: 'Örnek logolar', href: '/hizmetler/marka-tasarimi' }],
+  custom: [{ label: 'Proje başlat', href: '/proje-baslat' }],
+  ai: [{ label: 'Yapay zeka hizmeti', href: '/hizmetler/yapay-zeka' }],
+  seo: [{ label: 'Web sitesi paketleri', href: '/fiyatlandirma#web' }],
+  domain: [{ label: 'Web sitesi paketleri', href: '/fiyatlandirma#web' }],
+  delivery: [{ label: 'Web sitesi paketleri', href: '/fiyatlandirma#web' }],
+  projects: [{ label: 'Tüm projeler', href: '/projeler' }],
+  web: [{ label: 'Paketleri gör', href: '/fiyatlandirma#web' }, { label: 'Şablonları dene', href: '/template' }],
+  about: [{ label: 'Hizmetlerimiz', href: '/hizmetler' }, { label: 'Hakkımızda', href: '/hakkimizda' }],
+  contact: [{ label: 'Proje başlat', href: '/proje-baslat' }],
+};
+
+/** Konuya göre önerilen sonraki sorular (her biri asistanın yanıtlayabildiği bir soru). */
+const TOPIC_FOLLOW_UPS: Record<string, string[]> = {
+  game: ['Mobil uygulama', 'Yönetim paneli', 'Teklif almak istiyorum'],
+  mobile: ['Mobil oyun', 'Yapay zeka', 'Teklif almak istiyorum'],
+  campaign: ['Web sitesi fiyatları', 'QR menü fiyatı', 'Reklam yönetimi'],
+  templates: ['Web sitesi fiyatları', 'Kampanya', 'Teklif almak istiyorum'],
+  panel: ['Mobil uygulama', 'Özel yazılım', 'Teklif almak istiyorum'],
+  legal: ['İletişim', 'Kampanya'],
+  qr: ['Web sitesi fiyatları', 'Kampanya', 'Sosyal medya paketi'],
+  ads: ['Sosyal medya paketi', 'Logo tasarımı', 'Kampanya'],
+  social: ['Reklam yönetimi', 'Logo tasarımı', 'Kampanya'],
+  logo: ['Sosyal medya paketi', 'Web sitesi fiyatları', 'Kampanya'],
+  custom: ['Yönetim paneli', 'Yapay zeka', 'Teklif almak istiyorum'],
+  ai: ['Mobil uygulama', 'Web sitesi fiyatları', 'Teklif almak istiyorum'],
+  seo: ['Web sitesi fiyatları', 'Web şablonları', 'Kampanya'],
+  domain: ['Web sitesi fiyatları', 'Teslim süresi', 'Kampanya'],
+  delivery: ['Web sitesi fiyatları', 'Alan adı', 'Kampanya'],
+  projects: ['Mobil uygulama', 'Mobil oyun', 'Web şablonları'],
+  web: ['Web şablonları', 'Kampanya', 'Teslim süresi'],
+  about: ['Kampanya', 'Web şablonları', 'Mobil uygulama'],
+  contact: ['Kampanya', 'Web şablonları', 'Web sitesi fiyatları'],
+};
+const DEFAULT_FOLLOW_UPS = ['Kampanya', 'Web şablonları', 'Mobil uygulama'];
+
+/** Açılış ekranındaki hızlı konu kartları (her etiket asistanın yanıtlayabildiği bir sorudur). */
+export const START_TOPICS = [
+  { label: 'Kampanya', hint: '%35 indirim' },
+  { label: 'Mobil uygulama', hint: 'iOS ve Android' },
+  { label: 'Web şablonları', hint: 'Canlı deneyin' },
+  { label: 'Web sitesi fiyatları', hint: 'Paketler' },
+  { label: 'Reklam yönetimi', hint: 'Google & Meta' },
+  { label: 'Logo tasarımı', hint: '499 ₺' },
+  { label: 'Mobil oyun', hint: 'BB Block' },
+  { label: 'Yönetim paneli', hint: 'Örnek paneller' },
+] as const;
+
+function buildReply(text: string, topicId: string | null, question: string): Reply {
+  const actions = [...(topicId ? (TOPIC_ACTIONS[topicId] ?? []) : [])];
+  actions.push({
+    label: "WhatsApp'tan sor",
+    href: whatsappUrl(`Merhaba, HAYB internet sitesindeki asistandan yazıyorum. ${question.trim()}`.trim()),
+    external: true,
+  });
+  return { text, topicId, actions, followUps: (topicId && TOPIC_FOLLOW_UPS[topicId]) || DEFAULT_FOLLOW_UPS };
+}
+
+export function getReply(input: string): Reply {
   const text = normalize(input);
-  if (!text) return FALLBACK;
+  if (!text) return buildReply(FALLBACK, null, '');
 
   const topic = routeTopic(text);
-  if (topic) return topic.answer();
+  if (topic) return buildReply(topic.answer(), topic.id, input);
 
   // Konu bulunamadıysa: selamlaşma / teşekkür
-  if (GREETING_WORDS.some((g) => matches(text, g))) return GREETING;
-  if (THANKS_WORDS.some((g) => matches(text, g))) return THANKS;
-  return FALLBACK;
+  if (GREETING_WORDS.some((g) => matches(text, g))) return buildReply(GREETING, null, '');
+  if (THANKS_WORDS.some((g) => matches(text, g))) return buildReply(THANKS, null, '');
+  return buildReply(FALLBACK, null, input);
+}
+
+export function getAnswer(input: string): string {
+  return getReply(input).text;
 }

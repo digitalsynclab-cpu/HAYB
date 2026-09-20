@@ -125,3 +125,32 @@ describe('asistan yeni içerikleri bilir', () => {
     expect(getAnswer('Web sitesi fiyatı')).toContain('STARTER');
   });
 });
+
+import { getReply, START_TOPICS } from '@/components/assistant/engine';
+
+describe('asistan cevap yapısı (kısayollar ve öneriler)', () => {
+  it('her cevapta WhatsApp kısayolu ve önerilen sorular vardır', () => {
+    const r = getReply('Kampanya var mı?');
+    expect(r.topicId).toBe('campaign');
+    expect(r.actions.some((a) => a.href.startsWith('/fiyatlandirma'))).toBe(true);
+    const wa = r.actions.find((a) => a.external)!;
+    expect(wa.href).toContain('wa.me');
+    expect(r.followUps.length).toBeGreaterThanOrEqual(2);
+  });
+  it('açılış konu kartlarının her biri anlamlı bir konuya yönlenir', () => {
+    for (const t of START_TOPICS) {
+      const r = getReply(t.label);
+      expect(r.topicId, t.label).not.toBeNull();
+    }
+  });
+  it('önerilen soruların hepsi yanıtlanabilir', () => {
+    for (const q of ['Kampanya', 'Web şablonları', 'Mobil uygulama', 'Teslim süresi', 'Alan adı', 'Özel yazılım', 'Teklif almak istiyorum', 'İletişim']) {
+      expect(getReply(q).topicId, q).not.toBeNull();
+    }
+  });
+  it('konu bulunamazsa nazik yanıt ve varsayılan öneriler döner', () => {
+    const r = getReply('asdf qwer');
+    expect(r.topicId).toBeNull();
+    expect(r.followUps.length).toBeGreaterThan(0);
+  });
+});

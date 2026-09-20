@@ -390,3 +390,11 @@ html.intro-active { overflow: hidden; }
   display: grid; place-items: center; font-size: 0.72rem; font-weight: 800; line-height: 1; color: #fff; background: #ff3b30;
   box-shadow: 0 0 0 2px rgb(var(--hayb-ink-950)); animation: badge-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+/* ─── HAYB Asistan: mobilde alttan kayan tam ekran, masaüstünde açılan kart ─── */
+@keyframes asst-sheet { from { transform: translateY(100%); opacity: 0.6; } to { transform: none; opacity: 1; } }
+@keyframes asst-pop { from { transform: translateY(14px) scale(0.96); opacity: 0; } to { transform: none; opacity: 1; } }
+.asst-in { animation: asst-sheet 0.38s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@media (min-width: 640px) { .asst-in { animation-name: asst-pop; animation-duration: 0.3s; } }
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
