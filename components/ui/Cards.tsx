@@ -6,23 +6,36 @@ import type { IconName } from '@/data/icons';
 import type { ServiceDetail } from '@/data/services';
 import type { Project } from '@/data/projects';
 
-/** Açık zeminde hizmet kartı: 3D icon, başlık, açıklama, CTA. Tüm kart tek bir bağlantıdır. */
-export function ServiceCard({ service, priority = false }: { service: ServiceDetail; priority?: boolean }) {
+/**
+ * Açık zeminde hizmet kartı: 3D icon, başlık, açıklama, CTA. Tüm kart tek bir bağlantıdır.
+ * Mobilde 2'li ızgaraya uygun dikey kompakt kart; wide: büyük ekranda tüm satırı kaplayan yatay kart.
+ */
+export function ServiceCard({ service, priority = false, wide = false }: { service: ServiceDetail; priority?: boolean; wide?: boolean }) {
   return (
-    <article data-spot className="surface-light press group relative flex h-full flex-row items-center gap-4 rounded-card p-4 transition sm:flex-col sm:items-stretch sm:gap-0 sm:p-6 duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_16px_40px_rgb(20_24_16/0.12)]">
-      <Icon3D name={service.icon} size={84} priority={priority} fluid className="h-[4.25rem] w-[4.25rem] shrink-0 sm:-ml-1 sm:h-[var(--sz)] sm:w-[var(--sz)]" />
-      <div className="min-w-0 flex-1 sm:flex sm:flex-col">
-      <h3 className="text-lg font-bold sm:mt-5 sm:text-xl">
-        <Link href={`/hizmetler/${service.slug}`} className="after:absolute after:inset-0 after:rounded-card focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-on-light">
-          {service.title}
-        </Link>
-      </h3>
-      <p className="mt-1 text-[0.95rem] text-on-light-muted sm:mt-2 sm:flex-1 sm:text-base">{service.summary}</p>
-      <span aria-hidden className="mt-5 hidden h-11 w-11 items-center justify-center rounded-full border border-on-light/15 bg-white transition group-hover:border-on-light group-hover:bg-lime sm:inline-flex">
-        <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
-      </span>
+    <article
+      data-spot
+      className={`surface-light press group relative flex h-full flex-col items-start gap-2.5 rounded-card p-3.5 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_16px_40px_rgb(20_24_16/0.12)] sm:items-stretch sm:gap-0 sm:p-6 ${
+        wide ? 'lg:flex-row lg:items-center lg:gap-6' : ''
+      }`}
+    >
+      <Icon3D name={service.icon} size={84} priority={priority} fluid className="h-[3.25rem] w-[3.25rem] shrink-0 sm:-ml-1 sm:h-[var(--sz)] sm:w-[var(--sz)]" />
+      <div className="flex min-w-0 flex-1 flex-col self-stretch">
+        <h3 className={`text-[0.95rem] font-bold leading-tight sm:mt-5 sm:text-xl ${wide ? 'lg:mt-0' : ''}`}>
+          <Link href={`/hizmetler/${service.slug}`} className="after:absolute after:inset-0 after:rounded-card focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-on-light">
+            {service.title}
+          </Link>
+        </h3>
+        <p className="mt-1 line-clamp-3 text-[0.8rem] leading-snug text-on-light-muted sm:mt-2 sm:line-clamp-none sm:flex-1 sm:text-base">{service.summary}</p>
+        <ArrowRight aria-hidden className="mt-auto h-4 w-4 shrink-0 self-end pt-0 text-on-light-muted sm:hidden" />
+        <span aria-hidden className={`mt-5 hidden h-11 w-11 items-center justify-center rounded-full border border-on-light/15 bg-white transition group-hover:border-on-light group-hover:bg-lime sm:inline-flex ${wide ? 'lg:hidden' : ''}`}>
+          <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+        </span>
       </div>
-      <ArrowRight aria-hidden className="h-5 w-5 shrink-0 text-on-light-muted sm:hidden" />
+      {wide && (
+        <span aria-hidden className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full border border-on-light/15 bg-white transition group-hover:border-on-light group-hover:bg-lime lg:inline-flex">
+          <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+        </span>
+      )}
     </article>
   );
 }
