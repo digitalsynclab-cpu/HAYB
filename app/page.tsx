@@ -7,6 +7,17 @@ import { site } from '@/data/site';
 export default function Home() {
   return (
     <>
+      {/* Google arama sonuçlarında site adının "HAYB" olarak görünmesi için */}
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: 'HAYB',
+          alternateName: ['HAYB Dijital Ürün Stüdyosu', 'hayb.com.tr'],
+          url: site.url,
+          inLanguage: 'tr',
+        }}
+      />
       <JsonLd
         data={{
           '@context': 'https://schema.org',
@@ -20,6 +31,7 @@ export default function Home() {
           telephone: `+${site.whatsapp}`,
           areaServed: 'TR',
           inLanguage: 'tr',
+          sameAs: ['https://www.instagram.com/haybcomtr/'],
         }}
       />
       <HomeHero />

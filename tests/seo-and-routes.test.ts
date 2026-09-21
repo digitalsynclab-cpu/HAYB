@@ -79,3 +79,16 @@ describe('sosyal medya içeriği', () => {
     expect(existsSync(join(process.cwd(), 'app/apple-icon.png'))).toBe(true);
   });
 });
+
+import { readFileSync } from 'node:fs';
+
+describe('favicon (Google arama sonuçları)', () => {
+  it('favicon.ico ve 48’in katı boyutlu PNG ikon vardır', () => {
+    expect(existsSync(join(process.cwd(), 'app', 'favicon.ico'))).toBe(true);
+    const png = readFileSync(join(process.cwd(), 'app', 'icon.png'));
+    const w = png.readUInt32BE(16);
+    const h = png.readUInt32BE(20);
+    expect(w).toBe(h);
+    expect(w % 48).toBe(0);
+  });
+});
