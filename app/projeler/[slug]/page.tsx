@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { StoreButtons } from '@/components/ui/StoreButtons';
 import { ScreenGallery } from '@/components/ui/ScreenGallery';
 import { CTASection } from '@/components/sections/CTASection';
+import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { projectById, projects } from '@/data/projects';
 import { serviceBySlug } from '@/data/services';
 import { buildMetadata } from '@/lib/metadata';
@@ -36,6 +37,13 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: 'Ana Sayfa', path: '/' },
+          { name: 'Projeler', path: '/projeler' },
+          { name: p.name, path: `/projeler/${p.id}` },
+        ]}
+      />
       <PageHero
         eyebrow={p.type}
         title={p.name}

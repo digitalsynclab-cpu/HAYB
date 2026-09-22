@@ -9,6 +9,8 @@ import { Reveal } from '@/components/motion/Reveal';
 import { CTASection } from '@/components/sections/CTASection';
 import { ServiceShowcase } from '@/components/sections/ServiceShowcase';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
+import { ORGANIZATION_ID } from '@/components/schema/OrganizationSchema';
 import { Icon3D } from '@/components/ui/Icon3D';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -44,9 +46,16 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
           name: s.title,
           description: s.metaDescription,
           url: absoluteUrl(`/hizmetler/${s.slug}`),
-          provider: { '@type': 'ProfessionalService', name: site.name, url: site.url },
+          provider: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: site.name, url: site.url },
           areaServed: 'TR',
         }}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Ana Sayfa', path: '/' },
+          { name: 'Hizmetler', path: '/hizmetler' },
+          { name: s.title, path: `/hizmetler/${s.slug}` },
+        ]}
       />
       <PageHero
         visualFirst

@@ -1,5 +1,7 @@
 export const site = {
   name: 'HAYB',
+  /** Google/AI sistemlerinde entity kimliği için resmi ad. */
+  officialName: 'HAYB Yunus Emre Başkan',
   url: 'https://www.hayb.com.tr',
   domain: 'HAYB.COM.TR',
   tagline: 'Dijital ürün stüdyosu',
@@ -8,6 +10,29 @@ export const site = {
   locale: 'tr_TR',
   /** Veri sorumlusu / ticari unvan (KVKK, gizlilik, asistan) */
   legalName: 'Dijital Ürün Geliştirme ve Satış Bireysel Hesap Yunus Emre Başkan - HAYB',
+  /** Doğrulanmış kuruluş yılı. */
+  founded: 2025,
+  /** Yayında olan diller. plannedLocales: henüz yayınlanmayan (llms.txt'te belirtilir, hreflang üretilmez). */
+  locales: ['tr'] as string[],
+  plannedLocales: ['en'] as string[],
+  contact: {
+    email: 'hayb@outlook.com.tr',
+    whatsappUrl: 'https://wa.me/905073420661',
+  },
+  /**
+   * Gizlilik nedeniyle yalnızca ilçe/il yayınlanır; sokak seviyesi verilmez.
+   * Tam adres görünür yapılması istenirse streetAddress doldurulur.
+   */
+  address: {
+    streetAddress: '',
+    addressLocality: 'Osmangazi',
+    addressRegion: 'Bursa',
+    postalCode: '',
+    addressCountry: 'TR',
+  },
+  social: {
+    instagram: 'https://www.instagram.com/haybcomtr/',
+  },
 } as const;
 
 export const nav = [

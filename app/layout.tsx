@@ -12,6 +12,10 @@ import { CartPanel } from '@/components/pricing/CartPanel';
 import { SiteChrome } from '@/components/layout/SiteChrome';
 import { CampaignPopup } from '@/components/layout/CampaignPopup';
 import { AssistantLoader } from '@/components/assistant/AssistantLoader';
+import { EntityBlock } from '@/components/schema/EntityBlock';
+
+const googleVerification = process.env['NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION'];
+const bingVerification = process.env['NEXT_PUBLIC_BING_SITE_VERIFICATION'];
 
 // Türkçe karakterler (ş, ğ, ı, İ) için latin-ext zorunlu.
 const inter = Inter({
@@ -47,6 +51,13 @@ export const metadata: Metadata = {
     description: 'Fikirleri gerçek dijital ürünlere dönüştürüyoruz.',
     images: ['/og-image.png'],
   },
+  // Doğrulama etiketleri yalnızca env tanımlıysa basılır (Search Console / Bing Webmaster henüz kurulmadı).
+  ...((googleVerification || bingVerification) && {
+    verification: {
+      ...(googleVerification && { google: googleVerification }),
+      ...(bingVerification && { other: { 'msvalidate.01': bingVerification } }),
+    },
+  }),
 };
 
 export const viewport: Viewport = {
@@ -78,6 +89,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </SiteChrome>
         <main id="icerik">{children}</main>
         <SiteChrome>
+          <EntityBlock />
           <Footer />
           <CookieConsent />
           <CampaignPopup />
