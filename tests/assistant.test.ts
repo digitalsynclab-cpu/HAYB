@@ -154,3 +154,16 @@ describe('asistan cevap yapısı (kısayollar ve öneriler)', () => {
     expect(r.followUps.length).toBeGreaterThan(0);
   });
 });
+
+describe('e-ticaret paketleri', () => {
+  it('üç paket, doğru kampanya fiyatlarıyla yanıtlanır', () => {
+    const a = getAnswer('e ticaret sitesi fiyatları');
+    expect(a).toContain('E-Ticaret Start');
+    expect(a).toContain('29.990 ₺');
+    expect(a).toContain('49.990 ₺');
+    expect(a).toContain('79.990 ₺');
+  });
+  it('sanal pos sorusu e-ticaret konusuna gider', () => {
+    expect(getAnswer('iyzico sanal pos var mı')).toContain('E-ticaret paketlerimiz');
+  });
+});

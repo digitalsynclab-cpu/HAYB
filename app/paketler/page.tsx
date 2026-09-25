@@ -13,6 +13,9 @@ import {
   webPackages,
   webPricingRows,
   pricingPlans,
+  ecommercePackages,
+  ecommerceRows,
+  ecommercePlans,
   socialMediaPlans,
   qrMenuPlans,
   specialProjectFeatures,
@@ -30,14 +33,15 @@ import { buildMetadata } from '@/lib/metadata';
 import { whatsappUrl } from '@/data/site';
 
 export const metadata = buildMetadata({
-  title: 'Paketler: Web Sitesi, Sosyal Medya, QR Menü',
+  title: 'Paketler: Web Sitesi, E-Ticaret, Sosyal Medya, QR Menü',
   description:
-    'Web sitesi paketleri 5.000 ₺’den, QR menü 2.500 ₺’den, sosyal medya paketleri haftalık 3.000 ₺’den başlar. Özel yazılım ve mobil uygulama için teklif alın.',
+    'Web sitesi paketleri 5.000 ₺’den, e-ticaret paketleri 29.990 ₺’den, QR menü 2.500 ₺’den, sosyal medya paketleri haftalık 3.000 ₺’den başlar. Özel yazılım ve mobil uygulama için teklif alın.',
   path: '/paketler',
 });
 
 const anchors = [
   { href: '#web', label: 'Web Sitesi' },
+  { href: '#eticaret', label: 'E-Ticaret' },
   { href: '#sosyal-medya', label: 'Sosyal Medya' },
   { href: '#qr-menu', label: 'QR Menü' },
   { href: '#logo', label: 'Logo Tasarımı' },
@@ -196,7 +200,88 @@ export default function PricingPage() {
         </div>
       </Section>
 
-      <Section tone="dark" labelledBy="sosyal-medya">
+      <Section tone="dark" labelledBy="eticaret">
+        <SectionHeading id="eticaret" eyebrow="E-Ticaret" title="E-ticaret sitesi" accent="paketleri." text="Ürünlerinizi yükleyin, iyzico veya PayTR ile ödeme alın, siparişi, stoğu ve kargoyu tek panelden yönetin. Ürün sayısı, entegrasyon ve tasarım kapsamı pakete göre büyür." />
+        <ul className="grid gap-5 lg:grid-cols-3">
+          {ecommercePackages.map((pkg, i) => {
+            const plan = ecommercePlans.find((p) => p.id === pkg.id)!;
+            const shown = ['Ürün Sayısı', 'Sanal POS (iyzico / PayTR)', 'Kargo Entegrasyonu', 'Teslim Süresi'];
+            return (
+              <li key={pkg.id}>
+                <Reveal delay={i * 60} className="h-full">
+                  <article data-spot className={`surface-light flex h-full flex-col rounded-card p-6 text-on-light ${pkg.recommended ? 'ring-2 ring-lime' : ''}`}>
+                    {pkg.recommended && <p className="mb-3 inline-flex self-start rounded-full bg-lime px-3 py-1 text-xs font-bold uppercase tracking-wider text-ink-950">Önerilen</p>}
+                    <h3 className="text-lg font-bold tracking-wide">{pkg.name}</h3>
+                    <Price price={pkg.price} className="mt-1" />
+                    <p className="mt-3 text-on-light-muted">{pkg.blurb}</p>
+                    <dl className="mt-5 flex-1 space-y-3 text-[0.98rem]">
+                      {shown.map((label) => {
+                        const r = ecommerceRows.find((x) => x.label === label)!;
+                        const v = r[pkg.key];
+                        return (
+                          <div key={label}>
+                            <dt className="text-on-light-muted">{label}</dt>
+                            <dd className="font-semibold">{typeof v === 'string' ? v : v ? 'Var' : 'Yok'}</dd>
+                          </div>
+                        );
+                      })}
+                    </dl>
+                    <div className="mt-6 space-y-2">
+                      <PlanDetails plan={plan} category="E-Ticaret" rows={ecommerceRows.map((r) => ({ label: r.label, value: r[pkg.key] }))} />
+                      <AddToCartButton plan={plan} category="E-Ticaret" />
+                      <a
+                        href={whatsappUrl(`Merhaba, ${pkg.name} e-ticaret paketi hakkında bilgi almak istiyorum.`)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-12 w-full items-center justify-center rounded-xl border border-on-light/20 px-5 font-semibold hover:bg-paper-100"
+                      >
+                        WhatsApp&apos;tan Sor
+                      </a>
+                    </div>
+                  </article>
+                </Reveal>
+              </li>
+            );
+          })}
+        </ul>
+
+        <div className="mt-12 hidden md:block">
+          <h3 className="mb-4 text-xl font-bold">E-ticaret paketlerini karşılaştırın</h3>
+          <div className="relative overflow-x-auto rounded-card border border-white/10 bg-white text-on-light" tabIndex={0} role="region" aria-label="E-ticaret paket karşılaştırma tablosu (kaydırılabilir)">
+            <table className="w-full min-w-[42rem] border-collapse text-left text-[0.95rem]">
+              <caption className="sr-only">E-ticaret paketlerinin özellik karşılaştırması</caption>
+              <thead>
+                <tr className="border-b border-on-light/10 bg-paper-100">
+                  <th scope="col" className="px-4 py-3 font-semibold">Özellik</th>
+                  {ecommercePackages.map((p) => (
+                    <th key={p.id} scope="col" className="px-4 py-3 text-center font-bold">{p.name}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {ecommerceRows.map((r) => (
+                  <tr key={r.label} className="border-b border-on-light/5 last:border-0">
+                    <th scope="row" className="px-4 py-3 font-medium">{r.label}</th>
+                    {ecommercePackages.map((p) => {
+                      const v = r[p.key];
+                      return (
+                        <td key={p.id} className="px-4 py-3 text-center">
+                          {typeof v === 'string' ? <span className="font-medium">{v}</span> : v ? <Yes /> : <No />}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p className="mt-6 rounded-card border border-white/15 p-4 text-[0.97rem] text-fg-muted">
+          Sanal POS onayı ödeme kuruluşunun (iyzico, PayTR) değerlendirmesine bağlıdır; entegrasyon ve kurulumu biz yaparız. Pazaryeri ve ERP entegrasyonlarının kapsamı proje başında birlikte netleştirilir.
+        </p>
+      </Section>
+
+      <Section tone="dark-2" labelledBy="sosyal-medya">
         <SectionHeading id="sosyal-medya" eyebrow="Sosyal Medya" title="Sosyal medya" accent="paketleri." text="Post ve story tasarımları; marka kimliğinize uygun ve düzenli." />
         <ul className="grid gap-5 lg:grid-cols-3">
           {socialMediaPlans.map((p) => (

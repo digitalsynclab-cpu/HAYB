@@ -20,6 +20,7 @@ import {
   SPECIAL_REQUEST_OPTIONS,
   STEPS,
   emptyOrder,
+  isEcommercePackage,
   lockedMessage,
   minimumPackageLabel,
   packageLabel,
@@ -333,6 +334,7 @@ export function WebsiteOrderFormView() {
     scrollToCard();
   };
 
+  const notes = f.specialRequests.filter((r) => REQUEST_PACKAGE_NOTES[r] && !(r === 'Online Ödeme' && isEcommercePackage(f.packageChoice))).map((r) => REQUEST_PACKAGE_NOTES[r]);
   const tpl = f.designMode === 'ready' ? templateBySlugSafe(f.templateSlug) : undefined;
   const step = STEPS[f.step];
   const isLast = f.step === REVIEW_STEP;
@@ -531,6 +533,17 @@ export function WebsiteOrderFormView() {
               <ChoiceGroup id="wo-hasLogo" legend="Logonuz var mı?" value={f.hasLogo} options={[{ value: 'yes', label: 'Var' }, { value: 'no', label: 'Yok' }]} onChange={(v) => patch({ hasLogo: v })} />
               <Hint>Logo, fotoğraf ve ürün görselleriniz gibi dosyalarınız ayrıca proje sürecinde tarafımıza iletilebilir.</Hint>
 
+                <ChoiceGroup
+                  id="wo-package"
+                  legend="Hangi paketi düşünüyorsunuz?"
+                  value={f.packageChoice}
+                  options={[...PACKAGE_OPTIONS.map((p) => ({ value: p.id as PackageChoice, label: p.label })), { value: 'unknown' as PackageChoice, label: 'Henüz karar vermedim' }]}
+                  onChange={(v) => { patch({ packageChoice: v }); setLockedNotice(''); }}
+                  cols="grid-cols-2 sm:grid-cols-3"
+                />
+                <Hint>Hazır tasarımlar Business ve üzeri paketlerde kullanılabilir; Starter pakette seçilemez. Online ödeme için e-ticaret paketi gerekir. Paketleri ve kapsamı <Link href="/paketler#web" target="_blank" rel="noopener" className="font-semibold text-lime underline underline-offset-2">Paketler sayfasında</Link> inceleyebilirsiniz.</Hint>
+
+
               <ChoiceGroup
                 id="wo-designMode"
                 legend="Hazır tasarım kullanmak ister misiniz?"
@@ -541,16 +554,6 @@ export function WebsiteOrderFormView() {
 
               {f.designMode === 'ready' && (
                 <div className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5">
-                  <ChoiceGroup
-                    id="wo-package"
-                    legend="Hangi paketi düşünüyorsunuz?"
-                    value={f.packageChoice}
-                    options={[...PACKAGE_OPTIONS.map((p) => ({ value: p.id as PackageChoice, label: p.label })), { value: 'unknown' as PackageChoice, label: 'Henüz karar vermedim' }]}
-                    onChange={(v) => { patch({ packageChoice: v }); setLockedNotice(''); }}
-                    cols="grid-cols-2 sm:grid-cols-3"
-                  />
-                  <Hint>Hazır tasarımlar Business ve üzeri paketlerde kullanılabilir. Paketleri ve kapsamı <Link href="/paketler#web" target="_blank" rel="noopener" className="font-semibold text-lime underline underline-offset-2">Paketler sayfasında</Link> inceleyebilirsiniz.</Hint>
-
                   {tpl && (
                     <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-lime/40 bg-lime/10 px-4 py-3">
                       <div>
@@ -630,9 +633,9 @@ export function WebsiteOrderFormView() {
                   ))}
                 </div>
               </fieldset>
-              {f.specialRequests.some((r) => REQUEST_PACKAGE_NOTES[r]) && (
+              {notes.length > 0 && (
                 <Hint>
-                  {f.specialRequests.filter((r) => REQUEST_PACKAGE_NOTES[r]).map((r) => REQUEST_PACKAGE_NOTES[r]).join(' ')} Ayrıntılar için{' '}
+                  {notes.join(' ')} Ayrıntılar için{' '}
                   <Link href="/paketler#web" target="_blank" rel="noopener" className="font-semibold text-lime underline underline-offset-2">Paketler sayfasına</Link> bakabilirsiniz.
                 </Hint>
               )}

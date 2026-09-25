@@ -71,6 +71,83 @@ export const webPackages = [
   { id: 'premium',      name: 'PREMIUM',      price: '20.000 ₺', recommended: false},
 ];
 
+// ─── E-Ticaret Paketleri ──────────────────────────────────────────────────────
+export interface EcommerceRow {
+  label: string;
+  start: string | boolean;
+  growth: string | boolean;
+  elite: string | boolean;
+}
+
+export const ecommercePackages = [
+  { id: 'eticaret-start',  key: 'start', label: 'E-Ticaret Start', name: 'E-TİCARET START',  price: '29.990 ₺', recommended: false, blurb: 'İlk online mağazanız: ürünlerinizi yükleyin, ödeme alın, siparişi yönetin.' },
+  { id: 'eticaret-growth', key: 'growth', label: 'E-Ticaret Growth', name: 'E-TİCARET GROWTH', price: '49.990 ₺', recommended: true,  blurb: 'Büyüyen mağazalar için: çoklu ödeme, kargo ve fatura otomasyonu, pazarlama araçları.' },
+  { id: 'eticaret-elite',  key: 'elite', label: 'E-Ticaret Elite', name: 'E-TİCARET ELITE',  price: '79.990 ₺', recommended: false, blurb: 'Ölçeklenen işletmeler için: pazaryeri, bayi (B2B), çoklu dil ve özel tasarım.' },
+] as const;
+
+export const ecommerceRows: EcommerceRow[] = [
+  { label: 'Teslim Süresi',                    start: '10 Gün',                       growth: '15 Gün',                        elite: '25 Gün' },
+  { label: 'Alan Adı (Ücretsiz)',              start: '.com.tr (1 Yıl)',              growth: '.com / .com.tr (1 Yıl)',        elite: '.com / .com.tr (2 Yıl)' },
+  { label: 'Ürün Sayısı',                      start: '100 Ürüne Kadar',              growth: '1.000 Ürüne Kadar',             elite: 'Sınırsız Ürün' },
+  { label: 'Tasarım',                          start: 'Hazır şablon',                 growth: 'Hazır şablon + özelleştirme',   elite: 'Özel tasarım' },
+
+  // Ödeme
+  { label: 'Sanal POS (iyzico / PayTR)',       start: '1 sağlayıcı',                  growth: '2 sağlayıcı',                   elite: 'Sınırsız sağlayıcı' },
+  { label: 'Kredi Kartı, Taksit ve 3D Secure', start: true,  growth: true,  elite: true },
+  { label: 'Havale / EFT ve Kapıda Ödeme',     start: true,  growth: true,  elite: true },
+
+  // Mağaza yönetimi
+  { label: 'Ürün, Kategori ve Stok Yönetimi',  start: true,  growth: true,  elite: true },
+  { label: 'Sipariş ve Müşteri Yönetimi',      start: true,  growth: true,  elite: true },
+  { label: 'Yönetim Paneli (Dashboard)',       start: true,  growth: true,  elite: true },
+  { label: 'Üyelik ve Misafir Alışverişi',     start: true,  growth: true,  elite: true },
+  { label: 'Kupon ve İndirim Kodları',         start: true,  growth: true,  elite: true },
+  { label: 'Ürün Varyantları (Beden / Renk)',  start: false, growth: true,  elite: true },
+  { label: 'Kampanya ve Sepet İndirimleri',    start: false, growth: true,  elite: true },
+  { label: 'Ürün Yorumları ve Favoriler',      start: false, growth: true,  elite: true },
+  { label: 'Sepet Terk E-postası',             start: false, growth: true,  elite: true },
+
+  // Kargo ve fatura
+  { label: 'Kargo Entegrasyonu',               start: 'Manuel takip no',              growth: '1 kargo firması (API)',         elite: 'Çoklu kargo firması (API)' },
+  { label: 'E-Arşiv / E-Fatura Entegrasyonu',  start: false, growth: '1 sağlayıcı',   elite: 'Sınırsız sağlayıcı' },
+  { label: 'ERP / Muhasebe Entegrasyonu',      start: false, growth: false,           elite: true },
+
+  // Satış kanalları
+  { label: 'Pazaryeri Entegrasyonu (Trendyol, Hepsiburada)', start: false, growth: false, elite: true },
+  { label: 'B2B Bayi Paneli ve Bayi Fiyatları', start: false, growth: false, elite: true },
+  { label: 'Çoklu Dil ve Para Birimi',         start: false, growth: false, elite: true },
+
+  // Pazarlama ve SEO
+  { label: 'SEO Uyumlu Altyapı ve Site Haritası', start: true, growth: true, elite: true },
+  { label: 'Google Analytics ve Search Console', start: false, growth: true, elite: true },
+  { label: 'Google Merchant (Ürün Akışı)',     start: false, growth: true,  elite: true },
+  { label: 'Blog Sistemi',                     start: false, growth: true,  elite: true },
+  { label: 'Gelişmiş Raporlama Paneli',        start: false, growth: false, elite: true },
+  { label: 'Yapay Zeka Asistan',               start: false, growth: false, elite: true },
+
+  // Altyapı ve yasal
+  { label: 'SSL, Mobil Uyum ve Hız Optimizasyonu', start: true, growth: true, elite: true },
+  { label: 'KVKK, Mesafeli Satış Sözleşmesi ve İade Politikası Sayfaları', start: true, growth: true, elite: true },
+  { label: 'Sipariş E-posta Bildirimleri',     start: true,  growth: true,  elite: true },
+  { label: 'WhatsApp Sipariş Butonu',          start: true,  growth: true,  elite: true },
+  { label: 'Kullanım Eğitimi',                 start: true,  growth: true,  elite: true },
+  { label: 'Öncelikli Teknik Destek',          start: false, growth: false, elite: true },
+];
+
+export const ecommercePlans: PricingPlan[] = ecommercePackages.map((pkg) => ({
+  id: pkg.id,
+  name: pkg.label,
+  price: pkg.price,
+  recommended: pkg.recommended,
+  ctaLabel: 'Sepete Ekle',
+  features: ecommerceRows
+    .filter((r) => r[pkg.key] !== false)
+    .map((r) => {
+      const v = r[pkg.key];
+      return typeof v === 'string' ? `${r.label}: ${v}` : r.label;
+    }),
+}));
+
 // ─── Özel Proje Paketi ────────────────────────────────────────────────────────
 export const specialProjectFeatures: string[] = [
   'Sosyal ağ platformu geliştirme',

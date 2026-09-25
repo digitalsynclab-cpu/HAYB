@@ -187,3 +187,17 @@ describe('paket kuralları (şablon ve özel istek)', () => {
     expect(REQUEST_PACKAGE_NOTES['Online Ödeme']).toBe('Online ödeme için e-ticaret paketi seçmelisiniz.');
   });
 });
+
+describe('e-ticaret paketleri (sipariş formu)', () => {
+  it('sipariş formunda üç e-ticaret paketi seçilebilir ve online ödeme uyarısı kalkar', async () => {
+    const { PACKAGE_OPTIONS, isEcommercePackage } = await import('@/lib/web-order');
+    const ids = PACKAGE_OPTIONS.map((p) => p.id);
+    expect(ids).toEqual(expect.arrayContaining(['eticaret-start', 'eticaret-growth', 'eticaret-elite']));
+    expect(isEcommercePackage('eticaret-growth')).toBe(true);
+    expect(isEcommercePackage('business')).toBe(false);
+  });
+  it('e-ticaret paketleri kampanya fiyatıyla eklenmiştir', async () => {
+    const { ecommercePackages } = await import('@/data/pricing');
+    expect(ecommercePackages.map((p) => p.price)).toEqual(['29.990 ₺', '49.990 ₺', '79.990 ₺']);
+  });
+});

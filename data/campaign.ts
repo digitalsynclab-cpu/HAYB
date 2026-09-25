@@ -8,7 +8,7 @@ export const campaign = {
   /** Bitiş anı (Türkiye saati) */
   endsAt: '2026-10-31T23:59:59+03:00',
   title: 'Açılış kampanyası',
-  text: 'Web, sosyal medya, QR menü, logo, reklam ve HAYB Data Service paketlerinde geçerli.',
+  text: 'Web, e-ticaret, sosyal medya, QR menü, logo, reklam ve HAYB Data Service paketlerinde geçerli.',
 } as const;
 
 export interface PriceParts {

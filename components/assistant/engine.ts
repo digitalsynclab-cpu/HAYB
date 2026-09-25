@@ -1,5 +1,7 @@
 import { priceWithList } from '@/data/campaign';
 import {
+  ecommercePackages,
+  ecommerceRows,
   webPackages,
   webPricingRows,
   socialMediaPlans,
@@ -51,6 +53,17 @@ const webAnswer = () =>
     })
     .join('\n') +
   '\n\nTüm paketlerde SSL, mobil uyum ve WhatsApp entegrasyonu vardır. Ayrıntılar için Paketler sayfasına bakabilirsiniz.';
+
+const ecommerceAnswer = () =>
+  'E-ticaret paketlerimiz:\n\n' +
+  ecommercePackages
+    .map((p) => {
+      const products = ecommerceRows.find((r) => r.label === 'Ürün Sayısı')![p.key];
+      const days = ecommerceRows.find((r) => r.label === 'Teslim Süresi')![p.key];
+      return `• ${p.label} – ${priceWithList(p.price)}${p.recommended ? ' (Önerilen)' : ''}: ${products}, ${days} teslim.`;
+    })
+    .join('\n') +
+  '\n\nHepsinde iyzico veya PayTR ile kredi kartı, taksit ve 3D Secure ödeme, ürün, stok ve sipariş yönetim paneli bulunur. Growth pakette kargo ve e-fatura entegrasyonu, Elite pakette pazaryeri, B2B bayi paneli ve özel tasarım vardır. Ayrıntılar Paketler sayfasında (/paketler#eticaret).';
 
 const plansAnswer = (title: string, plans: { name: string; price: string; recommended: boolean; features: string[] }[]) =>
   `${title}\n\n` +
@@ -208,6 +221,12 @@ export const TOPICS: Topic[] = [
     strong: ['bursa', 'osmangazi'],
     answer: () =>
       `HAYB, Bursa'nın Osmangazi ilçesinde ${site.founded} yılında kurulmuş bir dijital ürün stüdyosudur.\n\n• E-posta: ${site.contact.email}\n• WhatsApp: 0507 342 06 61\n\nBursa'daki işletmeler için web sitesi, UI/UX, özel yazılım ve mobil uygulama çalışmalarımızı /bursa-web-tasarim sayfasında anlattık.`,
+  },
+  {
+    id: 'ecommerce',
+    keywords: ['e ticaret', 'eticaret', 'online magaza', 'online satis', 'sanal pos', 'iyzico', 'paytr', 'odeme sistemi', 'online odeme'],
+    strong: ['e ticaret', 'eticaret', 'sanal pos'],
+    answer: ecommerceAnswer,
   },
   {
     id: 'web',

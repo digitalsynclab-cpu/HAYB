@@ -9,7 +9,7 @@ import { whatsappUrl } from '@/data/site';
 
 
 export type Tri = 'yes' | 'no' | 'unknown';
-export type PackageId = 'starter' | 'business' | 'professional' | 'premium';
+export type PackageId = 'starter' | 'business' | 'professional' | 'premium' | 'eticaret-start' | 'eticaret-growth' | 'eticaret-elite';
 export type PackageChoice = PackageId | 'unknown' | '';
 
 export interface WebsiteOrderForm {
@@ -83,9 +83,12 @@ export const PACKAGE_OPTIONS: { id: PackageId; label: string }[] = [
   { id: 'business', label: 'Business' },
   { id: 'professional', label: 'Professional' },
   { id: 'premium', label: 'Premium' },
+  { id: 'eticaret-start', label: 'E-Ticaret Start' },
+  { id: 'eticaret-growth', label: 'E-Ticaret Growth' },
+  { id: 'eticaret-elite', label: 'E-Ticaret Elite' },
 ];
 
-const PACKAGE_RANK: Record<PackageId, number> = { starter: 0, business: 1, professional: 2, premium: 3 };
+const PACKAGE_RANK: Record<PackageId, number> = { starter: 0, business: 1, professional: 2, premium: 3, 'eticaret-start': 1, 'eticaret-growth': 2, 'eticaret-elite': 3 };
 const MIN_RANK: Record<MinimumPackage, number> = { business: 1, professional: 2, premium: 3 };
 const MIN_LABEL: Record<MinimumPackage, string> = { business: 'Business', professional: 'Professional', premium: 'Premium' };
 
@@ -107,6 +110,9 @@ export function lockedMessage(min: MinimumPackage, choice: PackageChoice): strin
   if (choice === 'starter') return 'Hazır tasarım seçenekleri Business paketi ve üzerindeki projelerde kullanılabilir.';
   return `Bu tasarım ${MIN_LABEL[min]} paket ve üzeri projelerde kullanılabilir.`;
 }
+
+/** Seçilen paket e-ticaret paketi mi? (Online Ödeme uyarısı için) */
+export const isEcommercePackage = (c: PackageChoice) => c.startsWith('eticaret-');
 
 export const templateBySlugSafe = (slug: string) => templates.find((t) => t.slug === slug);
 
