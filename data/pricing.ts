@@ -80,7 +80,7 @@ export interface EcommerceRow {
 }
 
 export const ecommercePackages = [
-  { id: 'eticaret-start',  key: 'start', label: 'E-Ticaret Start', name: 'E-TİCARET START',  price: '39.990 ₺', recommended: false, blurb: 'İlk online mağazanız: özgün premium tasarım, ödeme, sipariş yönetimi ve tam SEO altyapısı.' },
+  { id: 'eticaret-start',  key: 'start', label: 'E-Ticaret Start', name: 'E-TİCARET START',  price: '39.990 ₺', recommended: false, blurb: 'İlk online mağazanız: özgün premium UI/UX tasarım, ödeme, sipariş yönetimi ve tam SEO altyapısı.' },
   { id: 'eticaret-growth', key: 'growth', label: 'E-Ticaret Growth', name: 'E-TİCARET GROWTH', price: '59.990 ₺', recommended: true,  blurb: 'Büyüyen mağazalar için: hosting, iki sanal POS, çoklu dil, yapay zeka asistan ve 7/24 destek.' },
   { id: 'eticaret-elite',  key: 'elite', label: 'E-Ticaret Elite', name: 'E-TİCARET ELITE',  price: '89.990 ₺', recommended: false, blurb: 'Ölçeklenen işletmeler için: 3 yıl alan adı, 2 yıl hosting, gelişmiş kampanyalar ve hediye satış yazılımı.' },
 ] as const;
@@ -91,7 +91,7 @@ export const ecommerceRows: EcommerceRow[] = [
   { label: 'Alan Adı (Ücretsiz)', start: '.com / .com.tr (1 Yıl)', growth: '.com / .com.tr (2 Yıl)', elite: '.com / .com.tr (3 Yıl)' },
   { label: 'Hosting (Ücretsiz)', start: false, growth: '1 Yıl', elite: '2 Yıl' },
   { label: 'Ürün Sayısı', start: '100 Ürüne Kadar', growth: '1.000 Ürüne Kadar', elite: 'Sınırsız Ürün' },
-  { label: 'Tasarım', start: 'Özgün premium tasarım', growth: 'Özgün premium tasarım', elite: 'Özgün premium tasarım' },
+  { label: 'Tasarım', start: 'Özgün Premium UI/UX Tasarım', growth: 'Özgün Premium UI/UX Tasarım', elite: 'Özgün Premium UI/UX Tasarım' },
 
   // Ödeme
   { label: 'Sanal POS (iyzico / PayTR)', start: '1 sağlayıcı', growth: '2 sağlayıcı', elite: '2 sağlayıcı' },

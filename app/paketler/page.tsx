@@ -226,7 +226,7 @@ export default function PricingPage() {
                         );
                       })}
                     </dl>
-                    {pkg.key === 'elite' && <p className="mt-4 rounded-xl bg-lime px-3 py-2 text-sm font-bold text-ink-950">Hediye: sektöre özel satış odaklı yazılım programı</p>}
+                    {pkg.key === 'elite' && <p className="mt-4 rounded-xl bg-lime px-3 py-2 text-sm font-bold text-ink-950">Hediye: Sektöre Özel Satış Odaklı Yazılım Programı</p>}
                     <div className="mt-6 space-y-2">
                       <PlanDetails plan={plan} category="E-Ticaret" rows={ecommerceRows.map((r) => ({ label: r.label, value: r[pkg.key] }))} />
                       <AddToCartButton plan={plan} category="E-Ticaret" />
