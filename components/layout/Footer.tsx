@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { legalLinks, moreLinks, nav, site } from '@/data/site';
 import { services } from '@/data/services';
 import { Logo } from '@/components/ui/Logo';
-import { CookiePrefsButton } from '@/components/layout/CookieConsent';
 
 const linkCls = 'inline-flex min-h-10 items-center text-fg-muted transition-colors hover:text-lime';
 
@@ -53,9 +52,6 @@ export function Footer() {
                 </Link>
               </li>
             ))}
-            <li>
-              <CookiePrefsButton className={linkCls} />
-            </li>
           </ul>
         </nav>
       </div>

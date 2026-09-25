@@ -10,6 +10,9 @@ import { ProjectImage } from '@/components/ui/Cards';
 import { StoreButtons, LiveAppsShelf } from '@/components/ui/StoreButtons';
 import { Icon3D } from '@/components/ui/Icon3D';
 import { projectById, type Project } from '@/data/projects';
+import { ecommercePackages } from '@/data/pricing';
+import { Price } from '@/components/ui/Price';
+import Link from 'next/link';
 import type { ShowcaseKind } from '@/data/services';
 import type { IconName } from '@/data/icons';
 
@@ -89,6 +92,37 @@ export function ServiceShowcase({ kind }: { kind: ShowcaseKind }) {
                 <Shot project={projectById('websosyal')!} ratio="aspect-[16/9] md:aspect-[21/9]" sizes="(min-width: 1024px) 1100px, 92vw" />
               </div>
             </div>
+          </div>
+        </div>
+      );
+    case 'commerce':
+      return (
+        <div className="space-y-10">
+          <div>
+            <h3 className="mb-4 text-xl font-bold">Bir siparişin yolculuğu</h3>
+            <FlowChain items={['Ürün', 'Sepet', 'Ödeme (iyzico / PayTR)', 'Kargo', 'Fatura']} />
+          </div>
+          <div>
+            <h3 className="mb-1 text-xl font-bold">Canlı deneyebileceğiniz örnek siteler</h3>
+            <p className="mb-4 text-fg-muted">Sepeti, filtreleri ve formları kendi telefonunuzda deneyin.</p>
+            <TemplateMarquee />
+          </div>
+          <div>
+            <h3 className="mb-4 text-xl font-bold">E-ticaret paketleri</h3>
+            <ul className="grid gap-4 md:grid-cols-3">
+              {ecommercePackages.map((p) => (
+                <li key={p.id}>
+                  <Link href="/paketler#eticaret" data-spot className={`press flex h-full flex-col rounded-card border p-5 transition hover:border-lime ${p.recommended ? 'border-lime bg-lime/[0.06]' : 'border-white/12 bg-ink-800'}`}>
+                    <span className="text-sm font-extrabold uppercase tracking-[0.14em] text-lime">{p.name}</span>
+                    <Price price={p.price} tone="dark" size="md" className="mt-3 text-fg" />
+                    <span className="mt-3 flex-1 text-sm text-fg-muted">{p.blurb}</span>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-[0.95rem] font-semibold text-lime">
+                      Paketi incele <ArrowRight aria-hidden className="h-4 w-4" />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       );

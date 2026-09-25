@@ -1,6 +1,6 @@
 import type { IconName } from '@/data/icons';
 
-export type ShowcaseKind = 'web' | 'architecture' | 'dashboard' | 'flow' | 'mobile' | 'game' | 'ai' | 'social' | 'brand' | 'ads' | 'data';
+export type ShowcaseKind = 'web' | 'commerce' | 'architecture' | 'dashboard' | 'flow' | 'mobile' | 'game' | 'ai' | 'social' | 'brand' | 'ads' | 'data';
 
 export interface ServiceDetail {
   slug: string;
@@ -63,6 +63,41 @@ export const services: ServiceDetail[] = [
     ],
     projectIds: ['webevtekstil', 'webinsaat', 'websosyal'],
     pricingNote: 'Web sitesi paketleri 5.000 ₺ ile başlar.',
+  },
+  {
+    slug: 'e-ticaret',
+    title: 'E-Ticaret',
+    short: 'E-Ticaret',
+    icon: 'eticaret',
+    filter: 'Web',
+    summary: 'Ürünlerinizi online satın: iyzico / PayTR ile ödeme, stok, sipariş ve kargo yönetimi.',
+    metaTitle: 'E-Ticaret Sitesi Kurulumu: iyzico ve PayTR Entegrasyonlu',
+    metaDescription:
+      'Online mağazanızı kuruyoruz: iyzico veya PayTR ile kredi kartı ve taksitli ödeme, ürün-stok-sipariş paneli, kargo ve e-fatura entegrasyonu. E-ticaret paketleri 29.990 ₺’den başlar.',
+    heroTitle: 'Online mağazanız',
+    heroAccent: 'satışa hazır.',
+    heroText:
+      'Ürünlerinizi yükleyin, ödemeyi iyzico veya PayTR ile alın; sipariş, stok ve kargo süreçlerini tek panelden yönetin. Tasarımdan yayına kadar kurulumu biz yaparız.',
+    showcase: 'commerce',
+    benefits: [
+      { icon: 'odemesistemleri', title: 'Güvenli ödeme', text: 'Kredi kartı, taksit ve 3D Secure; iyzico veya PayTR sanal POS entegrasyonu.' },
+      { icon: 'yonetimpaneli', title: 'Tek panel', text: 'Ürün, kategori, stok, sipariş ve müşteri yönetimi tek yerden.' },
+      { icon: 'eticaret', title: 'Kargo ve fatura', text: 'Üst paketlerde kargo API ve e-arşiv / e-fatura entegrasyonu.' },
+      { icon: 'dijitalbuyume', title: 'SEO ve pazarlama', text: 'SEO uyumlu altyapı, Google Analytics, Merchant ürün akışı ve sepet terk e-postası.' },
+      { icon: 'mobiluyumlu', title: 'Mobil uyum', text: 'Alışveriş telefonda da hızlı ve kolay; ziyaretçi sepette kalmaz.' },
+      { icon: 'globaluyum', title: 'Büyümeye hazır', text: 'Elite pakette pazaryeri, B2B bayi paneli ve çoklu dil.' },
+    ],
+    stepsTitle: 'E-ticaret sitenizin yolculuğu',
+    steps: [
+      { title: 'Planlama', text: 'Ürün yapınızı, hedef kitlenizi ve satış modelinizi dinleriz.' },
+      { title: 'Tasarım', text: 'Markanıza uygun alışveriş arayüzünü hazırlarız.' },
+      { title: 'Geliştirme', text: 'Ürün, sepet, ödeme ve yönetim panelini kurarız.' },
+      { title: 'Ödeme ve kargo', text: 'iyzico / PayTR ve kargo entegrasyonlarını bağlarız.' },
+      { title: 'Test', text: 'Sipariş ve ödeme akışını baştan sona deneriz.' },
+      { title: 'Yayın ve eğitim', text: 'Siteyi yayına alır, paneli nasıl kullanacağınızı anlatırız.' },
+    ],
+    projectIds: [],
+    pricingNote: 'E-ticaret paketleri 29.990 ₺ ile başlar (Start 29.990 ₺, Growth 49.990 ₺, Elite 79.990 ₺; kampanyalı fiyatlar).',
   },
   {
     slug: 'ozel-yazilim',

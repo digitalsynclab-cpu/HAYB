@@ -83,7 +83,14 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         breadcrumb={[{ label: 'Hizmetler', href: '/hizmetler' }, { label: s.title }]}
         actions={
           <>
-            {s.slug === 'hayb-data-service' ? (
+            {s.slug === 'e-ticaret' ? (
+              <>
+                <Button href="/paketler#eticaret">Paketleri Gör · 29.990 ₺</Button>
+                <Button href="/web-sitesi-siparis" variant="secondary">
+                  Sipariş Formu
+                </Button>
+              </>
+            ) : s.slug === 'hayb-data-service' ? (
               <>
                 <Button href="/paketler#data-service">Fiyatı Gör · 9.999 ₺</Button>
                 <Button href="/iletisim" variant="secondary">
@@ -147,7 +154,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         {s.pricingNote && (
           <p className="mt-8 text-lg">
             {s.pricingNote}{' '}
-            <Link href="/paketler" className="font-semibold underline underline-offset-4 hover:text-on-light-muted">
+            <Link href={s.slug === 'e-ticaret' ? '/paketler#eticaret' : '/paketler'} className="font-semibold underline underline-offset-4 hover:text-on-light-muted">
               Paketlere git
             </Link>
           </p>
