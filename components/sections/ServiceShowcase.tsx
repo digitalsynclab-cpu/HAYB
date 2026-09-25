@@ -100,7 +100,7 @@ export function ServiceShowcase({ kind }: { kind: ShowcaseKind }) {
         <div className="space-y-10">
           <div>
             <h3 className="mb-4 text-xl font-bold">Bir siparişin yolculuğu</h3>
-            <FlowChain items={['Ürün', 'Sepet', 'Ödeme (iyzico / PayTR)', 'Kargo', 'Fatura']} />
+            <FlowChain items={['Ürün', 'Sepet', 'Ödeme (iyzico / PayTR)', 'Sipariş', 'Kargo takip no']} />
           </div>
           <div>
             <h3 className="mb-1 text-xl font-bold">Canlı deneyebileceğiniz örnek siteler</h3>

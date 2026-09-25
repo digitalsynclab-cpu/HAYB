@@ -63,7 +63,7 @@ const ecommerceAnswer = () =>
       return `• ${p.label} – ${priceWithList(p.price)}${p.recommended ? ' (Önerilen)' : ''}: ${products}, ${days} teslim.`;
     })
     .join('\n') +
-  '\n\nHepsinde iyzico veya PayTR ile kredi kartı, taksit ve 3D Secure ödeme, ürün, stok ve sipariş yönetim paneli bulunur. Growth pakette kargo ve e-fatura entegrasyonu, Elite pakette pazaryeri, B2B bayi paneli ve özel tasarım vardır. Ayrıntılar Paketler sayfasında (/paketler#eticaret).';
+  '\n\nHepsinde iyzico veya PayTR ile kredi kartı, taksit ve 3D Secure ödeme, ürün, stok ve sipariş yönetim paneli bulunur. Growth pakette iki sanal POS, varyantlar, kampanyalar ve Google Analytics, Elite pakette sınırsız ürün, özel tasarım, çoklu dil ve gelişmiş raporlama vardır. Kargo, e-fatura ve pazaryeri entegrasyonları paket dışıdır; ihtiyaç olursa ayrıca teklif hazırlanır. Ayrıntılar Paketler sayfasında (/paketler#eticaret).';
 
 const plansAnswer = (title: string, plans: { name: string; price: string; recommended: boolean; features: string[] }[]) =>
   `${title}\n\n` +

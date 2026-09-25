@@ -205,7 +205,7 @@ export default function PricingPage() {
         <ul className="grid gap-5 lg:grid-cols-3">
           {ecommercePackages.map((pkg, i) => {
             const plan = ecommercePlans.find((p) => p.id === pkg.id)!;
-            const shown = ['Ürün Sayısı', 'Sanal POS (iyzico / PayTR)', 'Kargo Entegrasyonu', 'Teslim Süresi'];
+            const shown = ['Ürün Sayısı', 'Sanal POS (iyzico / PayTR)', 'Tasarım', 'Teslim Süresi'];
             return (
               <li key={pkg.id}>
                 <Reveal delay={i * 60} className="h-full">
@@ -277,7 +277,7 @@ export default function PricingPage() {
           </div>
         </div>
         <p className="mt-6 rounded-card border border-white/15 p-4 text-[0.97rem] text-fg-muted">
-          Sanal POS onayı ödeme kuruluşunun (iyzico, PayTR) değerlendirmesine bağlıdır; entegrasyon ve kurulumu biz yaparız. Pazaryeri ve ERP entegrasyonlarının kapsamı proje başında birlikte netleştirilir.
+          Sanal POS onayı ödeme kuruluşunun (iyzico, PayTR) değerlendirmesine bağlıdır; entegrasyon ve kurulumu biz yaparız. Kargo, e-fatura ve pazaryeri gibi ek entegrasyonlar paket kapsamında değildir; ihtiyacınız olursa ayrıca teklif hazırlarız.
         </p>
       </Section>
 

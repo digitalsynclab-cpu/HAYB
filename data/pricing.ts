@@ -81,8 +81,8 @@ export interface EcommerceRow {
 
 export const ecommercePackages = [
   { id: 'eticaret-start',  key: 'start', label: 'E-Ticaret Start', name: 'E-TİCARET START',  price: '39.990 ₺', recommended: false, blurb: 'İlk online mağazanız: ürünlerinizi yükleyin, ödeme alın, siparişi yönetin.' },
-  { id: 'eticaret-growth', key: 'growth', label: 'E-Ticaret Growth', name: 'E-TİCARET GROWTH', price: '59.990 ₺', recommended: true,  blurb: 'Büyüyen mağazalar için: çoklu ödeme, kargo ve fatura otomasyonu, pazarlama araçları.' },
-  { id: 'eticaret-elite',  key: 'elite', label: 'E-Ticaret Elite', name: 'E-TİCARET ELITE',  price: '89.990 ₺', recommended: false, blurb: 'Ölçeklenen işletmeler için: pazaryeri, bayi (B2B), çoklu dil ve özel tasarım.' },
+  { id: 'eticaret-growth', key: 'growth', label: 'E-Ticaret Growth', name: 'E-TİCARET GROWTH', price: '59.990 ₺', recommended: true,  blurb: 'Büyüyen mağazalar için: iki sanal POS, varyantlar, kampanyalar, yorumlar ve SEO araçları.' },
+  { id: 'eticaret-elite',  key: 'elite', label: 'E-Ticaret Elite', name: 'E-TİCARET ELITE',  price: '89.990 ₺', recommended: false, blurb: 'Ölçeklenen işletmeler için: sınırsız ürün, özel tasarım, çoklu dil ve gelişmiş raporlama.' },
 ] as const;
 
 export const ecommerceRows: EcommerceRow[] = [
@@ -92,7 +92,7 @@ export const ecommerceRows: EcommerceRow[] = [
   { label: 'Tasarım',                          start: 'Hazır şablon',                 growth: 'Hazır şablon + özelleştirme',   elite: 'Özel tasarım' },
 
   // Ödeme
-  { label: 'Sanal POS (iyzico / PayTR)',       start: '1 sağlayıcı',                  growth: '2 sağlayıcı',                   elite: 'Sınırsız sağlayıcı' },
+  { label: 'Sanal POS (iyzico / PayTR)',       start: '1 sağlayıcı',                  growth: '2 sağlayıcı',                   elite: '2 sağlayıcı' },
   { label: 'Kredi Kartı, Taksit ve 3D Secure', start: true,  growth: true,  elite: true },
   { label: 'Havale / EFT ve Kapıda Ödeme',     start: true,  growth: true,  elite: true },
 
@@ -105,22 +105,16 @@ export const ecommerceRows: EcommerceRow[] = [
   { label: 'Ürün Varyantları (Beden / Renk)',  start: false, growth: true,  elite: true },
   { label: 'Kampanya ve Sepet İndirimleri',    start: false, growth: true,  elite: true },
   { label: 'Ürün Yorumları ve Favoriler',      start: false, growth: true,  elite: true },
-  { label: 'Sepet Terk E-postası',             start: false, growth: true,  elite: true },
 
-  // Kargo ve fatura
-  { label: 'Kargo Entegrasyonu',               start: 'Manuel takip no',              growth: '1 kargo firması (API)',         elite: 'Çoklu kargo firması (API)' },
-  { label: 'E-Arşiv / E-Fatura Entegrasyonu',  start: false, growth: '1 sağlayıcı',   elite: 'Sınırsız sağlayıcı' },
-  { label: 'ERP / Muhasebe Entegrasyonu',      start: false, growth: false,           elite: true },
+  // Kargo
+  { label: 'Kargo Takip No Girişi ve Müşteriye E-posta', start: true, growth: true, elite: true },
 
   // Satış kanalları
-  { label: 'Pazaryeri Entegrasyonu (Trendyol, Hepsiburada)', start: false, growth: false, elite: true },
-  { label: 'B2B Bayi Paneli ve Bayi Fiyatları', start: false, growth: false, elite: true },
-  { label: 'Çoklu Dil ve Para Birimi',         start: false, growth: false, elite: true },
+  { label: 'Çoklu Dil',                        start: false, growth: false, elite: true },
 
   // Pazarlama ve SEO
   { label: 'SEO Uyumlu Altyapı ve Site Haritası', start: true, growth: true, elite: true },
   { label: 'Google Analytics ve Search Console', start: false, growth: true, elite: true },
-  { label: 'Google Merchant (Ürün Akışı)',     start: false, growth: true,  elite: true },
   { label: 'Blog Sistemi',                     start: false, growth: true,  elite: true },
   { label: 'Gelişmiş Raporlama Paneli',        start: false, growth: false, elite: true },
   { label: 'Yapay Zeka Asistan',               start: false, growth: false, elite: true },
