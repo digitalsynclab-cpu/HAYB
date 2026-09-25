@@ -80,52 +80,86 @@ export interface EcommerceRow {
 }
 
 export const ecommercePackages = [
-  { id: 'eticaret-start',  key: 'start', label: 'E-Ticaret Start', name: 'E-TİCARET START',  price: '39.990 ₺', recommended: false, blurb: 'İlk online mağazanız: ürünlerinizi yükleyin, ödeme alın, siparişi yönetin.' },
-  { id: 'eticaret-growth', key: 'growth', label: 'E-Ticaret Growth', name: 'E-TİCARET GROWTH', price: '59.990 ₺', recommended: true,  blurb: 'Büyüyen mağazalar için: iki sanal POS, varyantlar, kampanyalar, yorumlar ve SEO araçları.' },
-  { id: 'eticaret-elite',  key: 'elite', label: 'E-Ticaret Elite', name: 'E-TİCARET ELITE',  price: '89.990 ₺', recommended: false, blurb: 'Ölçeklenen işletmeler için: sınırsız ürün, özel tasarım, çoklu dil ve gelişmiş raporlama.' },
+  { id: 'eticaret-start',  key: 'start', label: 'E-Ticaret Start', name: 'E-TİCARET START',  price: '39.990 ₺', recommended: false, blurb: 'İlk online mağazanız: özgün premium tasarım, ödeme, sipariş yönetimi ve tam SEO altyapısı.' },
+  { id: 'eticaret-growth', key: 'growth', label: 'E-Ticaret Growth', name: 'E-TİCARET GROWTH', price: '59.990 ₺', recommended: true,  blurb: 'Büyüyen mağazalar için: hosting, iki sanal POS, çoklu dil, yapay zeka asistan ve 7/24 destek.' },
+  { id: 'eticaret-elite',  key: 'elite', label: 'E-Ticaret Elite', name: 'E-TİCARET ELITE',  price: '89.990 ₺', recommended: false, blurb: 'Ölçeklenen işletmeler için: 3 yıl alan adı, 2 yıl hosting, gelişmiş kampanyalar ve hediye satış yazılımı.' },
 ] as const;
 
 export const ecommerceRows: EcommerceRow[] = [
-  { label: 'Teslim Süresi',                    start: '10 Gün',                       growth: '15 Gün',                        elite: '25 Gün' },
-  { label: 'Alan Adı (Ücretsiz)',              start: '.com.tr (1 Yıl)',              growth: '.com / .com.tr (1 Yıl)',        elite: '.com / .com.tr (2 Yıl)' },
-  { label: 'Ürün Sayısı',                      start: '100 Ürüne Kadar',              growth: '1.000 Ürüne Kadar',             elite: 'Sınırsız Ürün' },
-  { label: 'Tasarım',                          start: 'Hazır şablon',                 growth: 'Hazır şablon + özelleştirme',   elite: 'Özel tasarım' },
+  // Temel
+  { label: 'Teslim Süresi', start: '10 Gün', growth: '15 Gün', elite: '25 Gün' },
+  { label: 'Alan Adı (Ücretsiz)', start: '.com / .com.tr (1 Yıl)', growth: '.com / .com.tr (2 Yıl)', elite: '.com / .com.tr (3 Yıl)' },
+  { label: 'Hosting (Ücretsiz)', start: false, growth: '1 Yıl', elite: '2 Yıl' },
+  { label: 'Ürün Sayısı', start: '100 Ürüne Kadar', growth: '1.000 Ürüne Kadar', elite: 'Sınırsız Ürün' },
+  { label: 'Tasarım', start: 'Özgün premium tasarım', growth: 'Özgün premium tasarım', elite: 'Özgün premium tasarım' },
 
   // Ödeme
-  { label: 'Sanal POS (iyzico / PayTR)',       start: '1 sağlayıcı',                  growth: '2 sağlayıcı',                   elite: '2 sağlayıcı' },
-  { label: 'Kredi Kartı, Taksit ve 3D Secure', start: true,  growth: true,  elite: true },
-  { label: 'Havale / EFT ve Kapıda Ödeme',     start: true,  growth: true,  elite: true },
+  { label: 'Sanal POS (iyzico / PayTR)', start: '1 sağlayıcı', growth: '2 sağlayıcı', elite: '2 sağlayıcı' },
+  { label: 'Kredi Kartı, Taksit ve 3D Secure', start: true, growth: true, elite: true },
+  { label: 'Havale / EFT ve Kapıda Ödeme', start: true, growth: true, elite: true },
 
   // Mağaza yönetimi
-  { label: 'Ürün, Kategori ve Stok Yönetimi',  start: true,  growth: true,  elite: true },
-  { label: 'Sipariş ve Müşteri Yönetimi',      start: true,  growth: true,  elite: true },
-  { label: 'Yönetim Paneli (Dashboard)',       start: true,  growth: true,  elite: true },
-  { label: 'Üyelik ve Misafir Alışverişi',     start: true,  growth: true,  elite: true },
-  { label: 'Kupon ve İndirim Kodları',         start: true,  growth: true,  elite: true },
-  { label: 'Ürün Varyantları (Beden / Renk)',  start: false, growth: true,  elite: true },
-  { label: 'Kampanya ve Sepet İndirimleri',    start: false, growth: true,  elite: true },
-  { label: 'Ürün Yorumları ve Favoriler',      start: false, growth: true,  elite: true },
-
-  // Kargo
+  { label: 'Ürün, Kategori ve Stok Yönetimi', start: true, growth: true, elite: true },
+  { label: 'Sipariş ve Müşteri Yönetimi', start: true, growth: true, elite: true },
+  { label: 'Üyelik ve Misafir Alışverişi', start: true, growth: true, elite: true },
+  { label: 'Kupon ve İndirim Kodları', start: true, growth: true, elite: true },
+  { label: 'Ürün Varyantları (Beden / Renk)', start: false, growth: true, elite: true },
+  { label: 'Kampanya ve Sepet İndirimleri', start: false, growth: true, elite: true },
+  { label: 'Genişletilmiş Kampanya Özellikleri', start: false, growth: false, elite: true },
+  { label: 'Ürün Yorumları ve Favoriler', start: false, growth: true, elite: true },
   { label: 'Kargo Takip No Girişi ve Müşteriye E-posta', start: true, growth: true, elite: true },
+  { label: 'Sipariş E-posta Bildirimleri', start: true, growth: true, elite: true },
+  { label: 'Gelişmiş Raporlama Paneli', start: false, growth: false, elite: true },
 
-  // Satış kanalları
-  { label: 'Çoklu Dil',                        start: false, growth: false, elite: true },
+  // Altyapı ve tasarım (Professional web paketindeki özellikler)
+  { label: 'SSL Sertifikası', start: true, growth: true, elite: true },
+  { label: 'Mobil Uyumlu Tasarım', start: true, growth: true, elite: true },
+  { label: 'Tablet Uyumlu Tasarım', start: true, growth: true, elite: true },
+  { label: 'Hız Optimizasyonu', start: true, growth: true, elite: true },
+  { label: 'CDN Performans Sistemi', start: true, growth: true, elite: true },
+  { label: 'Modern UI/UX Tasarım', start: true, growth: true, elite: true },
+  { label: 'Temel Güvenlik Koruması', start: true, growth: true, elite: true },
+  { label: 'Spam Korumalı Formlar', start: true, growth: true, elite: true },
+  { label: '404 Hata Sayfası', start: true, growth: true, elite: true },
 
-  // Pazarlama ve SEO
-  { label: 'SEO Uyumlu Altyapı ve Site Haritası', start: true, growth: true, elite: true },
-  { label: 'Google Analytics ve Search Console', start: false, growth: true, elite: true },
-  { label: 'Blog Sistemi',                     start: false, growth: true,  elite: true },
-  { label: 'Gelişmiş Raporlama Paneli',        start: false, growth: false, elite: true },
-  { label: 'Yapay Zeka Asistan',               start: false, growth: false, elite: true },
+  // Sayfalar ve iletişim
+  { label: 'Ürünler / Hizmetler Sayfası', start: true, growth: true, elite: true },
+  { label: 'Blog Sistemi', start: true, growth: true, elite: true },
+  { label: 'Referanslar Sayfası', start: true, growth: true, elite: true },
+  { label: 'Teklif Formu', start: true, growth: true, elite: true },
+  { label: 'İletişim Formu', start: true, growth: true, elite: true },
+  { label: 'WhatsApp Entegrasyonu', start: true, growth: true, elite: true },
+  { label: 'WhatsApp Sipariş Butonu', start: true, growth: true, elite: true },
+  { label: 'Google Harita Entegrasyonu', start: true, growth: true, elite: true },
+  { label: 'Sosyal Medya Bağlantıları', start: true, growth: true, elite: true },
 
-  // Altyapı ve yasal
-  { label: 'SSL, Mobil Uyum ve Hız Optimizasyonu', start: true, growth: true, elite: true },
-  { label: 'KVKK, Mesafeli Satış Sözleşmesi ve İade Politikası Sayfaları', start: true, growth: true, elite: true },
-  { label: 'Sipariş E-posta Bildirimleri',     start: true,  growth: true,  elite: true },
-  { label: 'WhatsApp Sipariş Butonu',          start: true,  growth: true,  elite: true },
-  { label: 'Kullanım Eğitimi',                 start: true,  growth: true,  elite: true },
-  { label: 'Öncelikli Teknik Destek',          start: false, growth: false, elite: true },
+  // Yönetim
+  { label: 'Dashboard', start: true, growth: true, elite: true },
+  { label: 'Ürün Yönetimi', start: true, growth: true, elite: true },
+  { label: 'Yönetim Paneli', start: true, growth: true, elite: true },
+
+  // SEO ve ölçüm
+  { label: 'Güçlü SEO', start: true, growth: true, elite: true },
+  { label: 'Gelişmiş SEO Optimizasyonu', start: true, growth: true, elite: true },
+  { label: 'XML Site Haritası (Sitemap)', start: true, growth: true, elite: true },
+  { label: 'Google Analytics', start: true, growth: true, elite: true },
+  { label: 'Schema SEO (Yapısal Veri)', start: true, growth: true, elite: true },
+  { label: 'Google Search Console', start: true, growth: true, elite: true },
+
+  // Yasal
+  { label: 'KVKK & Çerez Bildirimi', start: true, growth: true, elite: true },
+  { label: 'Gizlilik Politikası', start: true, growth: true, elite: true },
+  { label: 'Mesafeli Satış Sözleşmesi ve İade Politikası Sayfaları', start: true, growth: true, elite: true },
+
+  // Premium web paketindeki özellikler (Growth ve Elite)
+  { label: 'Çoklu Dil Desteği', start: false, growth: true, elite: true },
+  { label: 'Premium Animasyonlar', start: false, growth: true, elite: true },
+  { label: 'Yapay Zeka Asistan', start: false, growth: true, elite: true },
+  { label: '7/24 Canlı Destek', start: false, growth: true, elite: true },
+
+  // Hediye
+  { label: 'Sektöre Özel Satış Odaklı Yazılım Programı (Hediye)', start: false, growth: false, elite: true },
+  { label: 'Kullanım Eğitimi', start: true, growth: true, elite: true },
 ];
 
 export const ecommercePlans: PricingPlan[] = ecommercePackages.map((pkg) => ({

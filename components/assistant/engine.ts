@@ -63,7 +63,7 @@ const ecommerceAnswer = () =>
       return `• ${p.label} – ${priceWithList(p.price)}${p.recommended ? ' (Önerilen)' : ''}: ${products}, ${days} teslim.`;
     })
     .join('\n') +
-  '\n\nHepsinde iyzico veya PayTR ile kredi kartı, taksit ve 3D Secure ödeme, ürün, stok ve sipariş yönetim paneli bulunur. Growth pakette iki sanal POS, varyantlar, kampanyalar ve Google Analytics, Elite pakette sınırsız ürün, özel tasarım, çoklu dil ve gelişmiş raporlama vardır. Kargo, e-fatura ve pazaryeri entegrasyonları paket dışıdır; ihtiyaç olursa ayrıca teklif hazırlanır. Ayrıntılar Paketler sayfasında (/paketler#eticaret).';
+  '\n\nHepsinde iyzico veya PayTR ile kredi kartı, taksit ve 3D Secure ödeme, ürün, stok ve sipariş yönetim paneli bulunur. Alan adı Start paketinde 1, Growth paketinde 2, Elite paketinde 3 yıl ücretsizdir; Growth ve Elite paketlerine hosting (1 ve 2 yıl), çoklu dil, yapay zeka asistan ve 7/24 destek dahildir. Elite pakette ayrıca genişletilmiş kampanya özellikleri ve sektöre özel satış odaklı yazılım programı hediyedir. Kargo, e-fatura ve pazaryeri entegrasyonları paket dışıdır; ihtiyaç olursa ayrıca teklif hazırlanır. Ayrıntılar Paketler sayfasında (/paketler#eticaret).';
 
 const plansAnswer = (title: string, plans: { name: string; price: string; recommended: boolean; features: string[] }[]) =>
   `${title}\n\n` +

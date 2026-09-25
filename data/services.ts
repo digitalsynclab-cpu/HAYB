@@ -88,7 +88,7 @@ export const services: ServiceDetail[] = [
       { icon: 'eticaret', title: 'Sipariş takibi', text: 'Kargo takip numarasını girin, müşteriniz e-postayla bilgilensin.' },
       { icon: 'dijitalbuyume', title: 'SEO ve pazarlama', text: 'SEO uyumlu altyapı, kampanya ve kupon araçları; üst paketlerde Google Analytics.' },
       { icon: 'mobiluyumlu', title: 'Mobil uyum', text: 'Alışveriş telefonda da hızlı ve kolay; ziyaretçi sepette kalmaz.' },
-      { icon: 'globaluyum', title: 'Büyümeye hazır', text: 'Elite pakette sınırsız ürün, özel tasarım, çoklu dil ve gelişmiş raporlama.' },
+      { icon: 'globaluyum', title: 'Büyümeye hazır', text: 'Elite pakette sınırsız ürün, 3 yıl alan adı, gelişmiş kampanyalar ve hediye satış yazılımı.' },
     ],
     stepsTitle: 'E-ticaret sitenizin yolculuğu',
     steps: [

@@ -201,11 +201,11 @@ export default function PricingPage() {
       </Section>
 
       <Section tone="dark" labelledBy="eticaret">
-        <SectionHeading id="eticaret" eyebrow="E-Ticaret" title="E-ticaret sitesi" accent="paketleri." text="Ürünlerinizi yükleyin, iyzico veya PayTR ile ödeme alın, siparişi, stoğu ve kargoyu tek panelden yönetin. Ürün sayısı, entegrasyon ve tasarım kapsamı pakete göre büyür." />
+        <SectionHeading id="eticaret" eyebrow="E-Ticaret" title="E-ticaret sitesi" accent="paketleri." text="Ürünlerinizi yükleyin, iyzico veya PayTR ile ödeme alın, siparişi ve stoğu tek panelden yönetin. Alan adı, hosting ve ürün sayısı pakete göre büyür." />
         <ul className="grid gap-5 lg:grid-cols-3">
           {ecommercePackages.map((pkg, i) => {
             const plan = ecommercePlans.find((p) => p.id === pkg.id)!;
-            const shown = ['Ürün Sayısı', 'Sanal POS (iyzico / PayTR)', 'Tasarım', 'Teslim Süresi'];
+            const shown = ['Ürün Sayısı', 'Sanal POS (iyzico / PayTR)', 'Alan Adı (Ücretsiz)', 'Hosting (Ücretsiz)', 'Tasarım'].filter((label) => ecommerceRows.find((x) => x.label === label)![pkg.key] !== false);
             return (
               <li key={pkg.id}>
                 <Reveal delay={i * 60} className="h-full">
@@ -220,12 +220,13 @@ export default function PricingPage() {
                         const v = r[pkg.key];
                         return (
                           <div key={label}>
-                            <dt className="text-on-light-muted">{label}</dt>
+                            <dt className="text-on-light-muted">{label.replace(' (Ücretsiz)', ' (ücretsiz)')}</dt>
                             <dd className="font-semibold">{typeof v === 'string' ? v : v ? 'Var' : 'Yok'}</dd>
                           </div>
                         );
                       })}
                     </dl>
+                    {pkg.key === 'elite' && <p className="mt-4 rounded-xl bg-lime px-3 py-2 text-sm font-bold text-ink-950">Hediye: sektöre özel satış odaklı yazılım programı</p>}
                     <div className="mt-6 space-y-2">
                       <PlanDetails plan={plan} category="E-Ticaret" rows={ecommerceRows.map((r) => ({ label: r.label, value: r[pkg.key] }))} />
                       <AddToCartButton plan={plan} category="E-Ticaret" />
