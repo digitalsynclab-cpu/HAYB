@@ -12,6 +12,8 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { ORGANIZATION_ID } from '@/components/schema/OrganizationSchema';
 import { Icon3D } from '@/components/ui/Icon3D';
+import { InsightCard } from '@/components/insights/InsightCard';
+import { insightsForService } from '@/data/insights';
 import Link from 'next/link';
 import Image from 'next/image';
 import { brandLogos } from '@/data/brands';
@@ -36,6 +38,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
   const { slug } = await params;
   const s = serviceBySlug(slug);
   if (!s) notFound();
+  const relatedInsights = insightsForService(s.slug);
 
   return (
     <>
@@ -57,6 +60,20 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
           { name: s.title, path: `/hizmetler/${s.slug}` },
         ]}
       />
+      {s.slug === 'hayb-data-service' && (
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'SoftwareApplication',
+            name: s.title,
+            description: s.metaDescription,
+            url: absoluteUrl(`/hizmetler/${s.slug}`),
+            applicationCategory: 'BusinessApplication',
+            operatingSystem: 'Web',
+            provider: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: site.name, url: site.url },
+          }}
+        />
+      )}
       <PageHero
         visualFirst
         eyebrow={s.title}
@@ -68,14 +85,14 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
           <>
             {s.slug === 'hayb-data-service' ? (
               <>
-                <Button href="/fiyatlandirma#data-service">Fiyatı Gör · 9.999 ₺</Button>
+                <Button href="/paketler#data-service">Fiyatı Gör · 9.999 ₺</Button>
                 <Button href="/iletisim" variant="secondary">
                   Bize Sorun
                 </Button>
               </>
             ) : s.slug === 'marka-tasarimi' ? (
               <>
-                <Button href="/fiyatlandirma#logo">Logo Sipariş Et · 499 ₺</Button>
+                <Button href="/paketler#logo">Logo Sipariş Et · 499 ₺</Button>
                 <Button href="/proje-baslat" variant="secondary">
                   Kimlik İçin Teklif Al
                 </Button>
@@ -130,8 +147,8 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         {s.pricingNote && (
           <p className="mt-8 text-lg">
             {s.pricingNote}{' '}
-            <Link href="/fiyatlandirma" className="font-semibold underline underline-offset-4 hover:text-on-light-muted">
-              Fiyatlandırmaya git
+            <Link href="/paketler" className="font-semibold underline underline-offset-4 hover:text-on-light-muted">
+              Paketlere git
             </Link>
           </p>
         )}
@@ -161,7 +178,30 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         </ol>
       </Section>
 
-      <CTASection tone="dark" />
+      {relatedInsights.length > 0 && (
+        <Section tone="light" labelledBy="ilgili-yazilar">
+          <SectionHeading id="ilgili-yazilar" eyebrow="Insights" title="Bu konuda" accent="okuyabileceğiniz yazılar." />
+          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {relatedInsights.map((p) => (
+              <li key={p.slug}>
+                <InsightCard post={p} />
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
+      {s.slug === 'web-sitesi' ? (
+        <CTASection
+          tone="dark"
+          title="Web sitenizi"
+          accent="birlikte başlatalım."
+          text="İşletmenizi tanıyalım, ihtiyaçlarınızı anlayalım ve size uygun web sitesini birlikte planlayalım."
+          extra={{ href: '/web-sitesi-siparis', label: 'Web Sitesi Siparişini Başlat' }}
+        />
+      ) : (
+        <CTASection tone="dark" />
+      )}
     </>
   );
 }

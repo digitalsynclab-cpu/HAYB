@@ -1,0 +1,111 @@
+/* Yeni nesil şablon motoru (WEB 09+). Kapsam: .v2. Renk ve yazı tipleri tema değişkenlerinden gelir. */
+.v2 {
+  --v2-font-cormorant: var(--f-cormorant), 'Cormorant Garamond', Georgia, serif;
+  --v2-font-instrument: var(--f-instrument), 'Instrument Serif', Georgia, serif;
+  --v2-font-playfair: var(--f-serif), 'Playfair Display', Georgia, serif;
+  --v2-font-manrope: var(--f-manrope), system-ui, sans-serif;
+  --v2-font-archivo: var(--f-archivo), system-ui, sans-serif;
+  --v2-font-barlow: var(--f-barlow), 'Arial Narrow', sans-serif;
+  --v2-font-inter: var(--font-inter), system-ui, sans-serif;
+  --v2-font-caveat: var(--f-script), cursive;
+  min-height: 100dvh;
+  overflow-x: clip;
+  background: var(--v-bg);
+  color: var(--v-ink);
+  font-family: var(--v-body);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.55;
+  padding-bottom: 5.5rem;
+}
+.v2 *, .v2 *::before, .v2 *::after { box-sizing: border-box; }
+.v2 button { font-family: inherit; cursor: pointer; }
+.v2 img { max-width: 100%; }
+
+/* Tonlar */
+.v2 [data-tone='light'] { background: var(--v-bg); color: var(--v-ink); }
+.v2 [data-tone='soft'] { background: var(--v-surface); color: var(--v-ink); }
+.v2 [data-tone='dark'] { background: var(--v-dark); color: var(--v-dark-ink); }
+.v2 [data-tone='accent'] { background: var(--v-accent); color: var(--v-accent-ink); }
+.v2 [data-tone='paper'] { background: var(--v-paper); color: var(--v-paper-ink); }
+.v2 .v2-mute { color: color-mix(in srgb, currentColor 66%, transparent); }
+.v2 .v2-line { border-color: color-mix(in srgb, currentColor 16%, transparent); }
+.v2 .v2-fill { background: color-mix(in srgb, currentColor 8%, transparent); }
+.v2 .v2-accent { color: var(--v-accent); }
+
+/* Başlıklar */
+.v2 .v2-h { font-variant-numeric: lining-nums; font-feature-settings: 'lnum' 1; font-family: var(--v-heading); font-weight: var(--v-hw); letter-spacing: var(--v-ht); text-transform: var(--v-hc); line-height: var(--v-hl); text-wrap: balance; }
+.v2 .v2-h em, .v2 .v2-h .v2-it { font-style: italic; font-weight: inherit; }
+.v2 .v2-kicker { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: color-mix(in srgb, currentColor 62%, transparent); }
+.v2 .v2-script { font-family: var(--v2-font-caveat); font-weight: 500; }
+
+/* Düzen */
+.v2-wrap { width: 100%; max-width: 90rem; margin-inline: auto; padding-inline: 1.25rem; }
+@media (min-width: 640px) { .v2-wrap { padding-inline: 2rem; } }
+@media (min-width: 1024px) { .v2-wrap { padding-inline: 3rem; } }
+.v2-sec { position: relative; scroll-margin-top: 4.5rem; padding-block: 3.5rem; }
+@media (min-width: 768px) { .v2-sec { padding-block: 5.5rem; } }
+.v2 [id] { scroll-margin-top: 4.5rem; }
+
+/* Düğmeler */
+.v2-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 3rem; padding: 0 1.4rem; font-weight: 600; font-size: 0.92rem; line-height: 1; white-space: nowrap; border: 1px solid transparent; transition: transform 0.25s, background 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.25s; border-radius: var(--v-r); }
+.v2-btn:active { transform: scale(0.97); }
+.v2-btn-solid { background: var(--v-btn-bg, var(--v-accent)); color: var(--v-btn-ink, var(--v-accent-ink)); }
+.v2-btn-solid:hover { box-shadow: 0 10px 30px color-mix(in srgb, var(--v-btn-bg, var(--v-accent)) 38%, transparent); transform: translateY(-2px); }
+.v2-btn-ghost { border-color: color-mix(in srgb, currentColor 38%, transparent); color: inherit; background: transparent; }
+.v2-btn-ghost:hover { border-color: currentColor; background: color-mix(in srgb, currentColor 10%, transparent); }
+.v2-btn-light { background: #fff; color: #111; }
+.v2-btn-light:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgb(0 0 0 / 0.25); }
+.v2-btn-text { min-height: 2.5rem; padding: 0; border-bottom: 1px solid color-mix(in srgb, currentColor 45%, transparent); border-radius: 0; }
+.v2-btn-text:hover { border-color: currentColor; }
+.v2-round { display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 9999px; border: 1px solid color-mix(in srgb, currentColor 35%, transparent); transition: background 0.25s, color 0.25s, transform 0.25s; flex: none; }
+.v2-round:hover { background: currentColor; }
+.v2-round:hover > * { color: var(--v-bg); mix-blend-mode: normal; }
+.v2 a:focus-visible, .v2 button:focus-visible, .v2 input:focus-visible, .v2 select:focus-visible, .v2 textarea:focus-visible { outline: 2px solid var(--v-accent); outline-offset: 3px; }
+
+/* Alanlar */
+.v2-field { display: block; min-width: 0; }
+.v2-field > span { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.62; margin-bottom: 0.4rem; }
+.v2-input { width: 100%; min-height: 3rem; padding: 0 0.95rem; background: color-mix(in srgb, currentColor 6%, transparent); color: inherit; border: 1px solid color-mix(in srgb, currentColor 18%, transparent); border-radius: min(var(--v-r), 0.9rem); font: inherit; font-size: 0.95rem; transition: border-color 0.2s, background 0.2s; appearance: none; -webkit-appearance: none; }
+.v2-input:focus { border-color: var(--v-accent); background: color-mix(in srgb, currentColor 9%, transparent); }
+select.v2-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='m1 1 5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.95rem center; padding-right: 2.4rem; }
+select.v2-input option { color: #111; }
+textarea.v2-input { padding-block: 0.8rem; min-height: 7rem; }
+
+/* Yatay kaydırma (mobil): dokunmatik, taşma yok */
+.v2-rail { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 1.25rem; padding-bottom: 0.5rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+.v2-rail::-webkit-scrollbar { display: none; }
+.v2-rail > * { scroll-snap-align: start; flex: none; }
+.v2-bleed { margin-inline: -1.25rem; padding-inline: 1.25rem; }
+@media (min-width: 640px) { .v2-bleed { margin-inline: -2rem; padding-inline: 2rem; } }
+@media (min-width: 1024px) { .v2-bleed { margin-inline: 0; padding-inline: 0; } }
+
+/* Kayan yazı bandı */
+@keyframes v2-marq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.v2-marq { display: flex; width: max-content; animation: v2-marq 38s linear infinite; }
+.v2-marq:hover { animation-play-state: paused; }
+
+/* Görsellere yavaş yakınlaşma ve kart hover */
+@keyframes v2-kb { from { transform: scale(1.02); } to { transform: scale(1.09) translate(-1.2%, -0.8%); } }
+.v2-kb { animation: v2-kb 26s ease-in-out infinite alternate; }
+.v2-zoom img { transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+.v2-zoom:hover img { transform: scale(1.06); }
+.v2-lift { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s; }
+.v2-lift:hover { transform: translateY(-6px); box-shadow: 0 24px 50px rgb(0 0 0 / 0.16); }
+
+/* Araya giren bilgi mesajı */
+@keyframes v2-toast { from { opacity: 0; transform: translate(-50%, -12px) scale(0.97); } to { opacity: 1; transform: translate(-50%, 0); } }
+.v2-toast { animation: v2-toast 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes v2-pop { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: none; } }
+.v2-pop { animation: v2-pop 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes v2-slide { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.v2-slide { animation: v2-slide 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Alt çizgi bağlantı */
+.v2-nl { position: relative; padding-block: 0.4rem; }
+.v2-nl::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+.v2-nl:hover::after, .v2-nl[aria-current='true']::after { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-marq, .v2-kb { animation: none; }
+  .v2-lift:hover, .v2-zoom:hover img { transform: none; }
+}

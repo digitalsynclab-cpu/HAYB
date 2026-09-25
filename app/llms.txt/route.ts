@@ -45,6 +45,7 @@ export function GET() {
     ...section('Key Pages', links(byGroup('core'))),
     ...section('Services', links(byGroup('service'))),
     ...section('Projects', links(byGroup('project'))),
+    ...section('Insights (knowledge & design journal)', links(byGroup('insight'))),
     ...section('Legal', links(byGroup('legal'))),
     ...section('Recommended Citation', [`- EN: ${CITATION_EN}`, `- TR: ${CITATION_TR}`]),
     ...section('Content Languages', [

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/motion/Reveal';
 import { CTASection } from '@/components/sections/CTASection';
 import { services } from '@/data/services';
+import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { buildMetadata } from '@/lib/metadata';
 
 export const metadata = buildMetadata({
@@ -18,6 +19,7 @@ export const metadata = buildMetadata({
 export default function ServicesPage() {
   return (
     <>
+      <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'Hizmetler', path: '/hizmetler' }]} />
       <PageHero
         eyebrow="Hizmetlerimiz"
         title="İhtiyacınız neyse,"
@@ -26,7 +28,7 @@ export default function ServicesPage() {
         actions={
           <>
             <Button href="/proje-baslat">Projenizi Anlatın</Button>
-            <Button href="/fiyatlandirma" variant="secondary">
+            <Button href="/paketler" variant="secondary">
               Fiyatları Gör
             </Button>
           </>

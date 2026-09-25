@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { legalLinks, nav, site } from '@/data/site';
+import { legalLinks, moreLinks, nav, site } from '@/data/site';
 import { services } from '@/data/services';
 import { Logo } from '@/components/ui/Logo';
 import { CookiePrefsButton } from '@/components/layout/CookieConsent';
@@ -20,7 +20,7 @@ export function Footer() {
         <nav aria-label="Site haritası">
           <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-fg">Sayfalar</h2>
           <ul>
-            {nav.map((n) => (
+            {[...nav, ...moreLinks].map((n) => (
               <li key={n.href}>
                 <Link href={n.href} className={linkCls}>
                   {n.label}

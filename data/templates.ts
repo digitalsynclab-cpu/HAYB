@@ -3,6 +3,11 @@
  * Markalar, ürünler ve fiyatlar KURGUSALDIR; şablonun nasıl görünüp çalıştığını göstermek içindir.
  * Görseller, HAYB tarafından hazırlanan tasarım örneklerinden alınmıştır (public/images/templates).
  */
+import type { MinimumPackage, TemplateCategory, TemplateMeta, TemplateV2Def } from '@/data/template-types';
+import { v2Templates } from '@/data/templates-v2';
+
+export type { MinimumPackage, TemplateCategory, TemplateMeta, TemplateV2Def };
+
 export type TIcon =
   | 'coffee' | 'cup' | 'leaf' | 'truck' | 'recycle' | 'cart' | 'bag' | 'heart' | 'user' | 'stethoscope' | 'syringe'
   | 'paw' | 'sparkles' | 'droplets' | 'scissors' | 'home' | 'shield' | 'package' | 'headphones' | 'chef' | 'utensils'
@@ -90,13 +95,7 @@ export interface TFooter {
   newsletter?: boolean;
 }
 
-export interface TemplateDef {
-  slug: string;
-  brand: string;
-  sector: string;
-  /** Galeri kartı ve meta açıklaması */
-  summary: string;
-  features: string[];
+export interface TemplateDef extends TemplateMeta {
   font: 'serif' | 'rounded' | 'grotesk';
   logoIcon: TIcon;
   theme: { bg: string; ink: string; muted: string; accent: string; accentInk: string; accent2?: string; dark: string; darkInk: string; soft: string; card: string };
@@ -108,12 +107,15 @@ export interface TemplateDef {
 }
 
 const img = (n: number, name: string) => `/images/templates/web${n}-${name}.webp`;
-export const templateThumb = (slug: string) => `/images/templates/${slug}-thumb.webp`;
+export { templateThumb, templateUrl } from '@/data/template-paths';
 
-export const templates: TemplateDef[] = [
+const legacyTemplates: TemplateDef[] = [
   // ─────────────────────────── web1: Kahvehan (kahve markası, e-ticaret) ───────────────────────────
   {
     slug: 'web1',
+    code: 'WEB 01',
+    minimumPackage: 'business',
+    category: 'Kafe ve Gıda',
     brand: 'Kahvehan',
     sector: 'Kahve markası',
     summary: 'Butik kahve markası için sıcak, editoryal bir e-ticaret vitrini.',
@@ -144,6 +146,9 @@ export const templates: TemplateDef[] = [
   // ─────────────────────────── web2: Patio Veteriner Kliniği ───────────────────────────
   {
     slug: 'web2',
+    code: 'WEB 02',
+    minimumPackage: 'business',
+    category: 'Sağlık',
     brand: 'Patio',
     sector: 'Veteriner kliniği',
     summary: 'Veteriner klinikleri için güven veren, randevu odaklı sıcak bir site.',
@@ -177,6 +182,9 @@ export const templates: TemplateDef[] = [
   // ─────────────────────────── web3: Evimoda (mobilya e-ticareti) ───────────────────────────
   {
     slug: 'web3',
+    code: 'WEB 03',
+    minimumPackage: 'business',
+    category: 'E-ticaret',
     brand: 'Evimoda',
     sector: 'Mobilya e-ticareti',
     summary: 'Mobilya ve dekorasyon mağazası için kategori, ürün ve sepet akışı.',
@@ -210,6 +218,9 @@ export const templates: TemplateDef[] = [
   // ─────────────────────────── web4: LezzetDurağı (restoran) ───────────────────────────
   {
     slug: 'web4',
+    code: 'WEB 04',
+    minimumPackage: 'business',
+    category: 'Kafe ve Gıda',
     brand: 'LezzetDurağı',
     sector: 'Restoran',
     summary: 'Restoranlar için iştah açan koyu tema, menü vitrini ve rezervasyon formu.',
@@ -238,6 +249,9 @@ export const templates: TemplateDef[] = [
   // ─────────────────────────── web5: NovaEstate (emlak) ───────────────────────────
   {
     slug: 'web5',
+    code: 'WEB 05',
+    minimumPackage: 'business',
+    category: 'Emlak',
     brand: 'NovaEstate',
     sector: 'Emlak ve gayrimenkul',
     summary: 'Emlak ofisleri ve inşaat firmaları için ilan kartları ve iletişim formu.',
@@ -265,6 +279,9 @@ export const templates: TemplateDef[] = [
   // ─────────────────────────── web6: Rift (yaratıcı ajans) ───────────────────────────
   {
     slug: 'web6',
+    code: 'WEB 06',
+    minimumPackage: 'business',
+    category: 'Ajans',
     brand: 'rift.',
     sector: 'Yaratıcı ajans',
     summary: 'Ajanslar için cesur, tipografi odaklı; proje vitrini ve iletişim çağrısı.',
@@ -294,6 +311,9 @@ export const templates: TemplateDef[] = [
   // ─────────────────────────── web7: Purela (doğal kozmetik) ───────────────────────────
   {
     slug: 'web7',
+    code: 'WEB 07',
+    minimumPackage: 'business',
+    category: 'Güzellik ve Bakım',
     brand: 'purela',
     sector: 'Doğal kozmetik',
     summary: 'Doğal bakım markaları için sakin, ürün odaklı e-ticaret vitrini.',
@@ -322,6 +342,9 @@ export const templates: TemplateDef[] = [
   // ─────────────────────────── web8: PatiDost (pet shop) ───────────────────────────
   {
     slug: 'web8',
+    code: 'WEB 08',
+    minimumPackage: 'business',
+    category: 'E-ticaret',
     brand: 'PatiDost',
     sector: 'Evcil hayvan mağazası',
     summary: 'Pet shop ve bakım hizmetleri için neşeli, pastel renkli bir e-ticaret sitesi.',
@@ -355,4 +378,12 @@ export const templates: TemplateDef[] = [
   },
 ];
 
+/** Tüm şablonlar (WEB 01 … ). Yeni nesil şablonlar `site` alanıyla ayrışır. */
+export const templates: (TemplateDef | TemplateV2Def)[] = [...legacyTemplates, ...v2Templates];
+
+export const isV2 = (t: TemplateDef | TemplateV2Def): t is TemplateV2Def => 'site' in t;
+
 export const templateBySlug = (slug: string) => templates.find((t) => t.slug === slug);
+
+/** /template sayfasındaki sektör filtresinin seçenekleri (yalnızca şablonu olan sektörler). */
+export const templateCategories = (): TemplateCategory[] => Array.from(new Set(templates.map((t) => t.category)));

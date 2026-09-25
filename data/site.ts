@@ -41,8 +41,16 @@ export const nav = [
   { label: 'Projeler', href: '/projeler' },
   { label: 'Hakkımızda', href: '/hakkimizda' },
   { label: 'Süreç', href: '/surec' },
-  { label: 'Fiyatlandırma', href: '/fiyatlandirma' },
+  { label: 'Paketler', href: '/paketler' },
   { label: 'İletişim', href: '/iletisim' },
+] as const;
+
+/** Ana menüye sığmayan ama her sayfadan erişilebilir olması gereken sayfalar (alt bilgi). */
+export const moreLinks = [
+  { label: 'Şablonlar', href: '/template' },
+  { label: 'Web Sitesi Siparişi', href: '/web-sitesi-siparis' },
+  { label: 'Insights', href: '/insights' },
+  { label: 'Bursa Web Tasarım', href: '/bursa-web-tasarim' },
 ] as const;
 
 export const legalLinks = [

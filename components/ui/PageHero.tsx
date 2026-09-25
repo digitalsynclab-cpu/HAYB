@@ -64,7 +64,7 @@ export function PageHero({ eyebrow, title, accent, text, actions, visual, breadc
             className="text-balance text-[2.15rem] font-extrabold leading-[1.06] tracking-tight sm:text-5xl lg:text-6xl"
           />
           {text && <p className="rise rise-3 mt-6 max-w-xl text-base text-fg-muted sm:text-xl">{text}</p>}
-          {actions && <div className="rise rise-4 mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row">{actions}</div>}
+          {actions && <div className="rise rise-4 mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center">{actions}</div>}
         </div>
         {visual && <div className={`rise rise-3 relative min-w-0 ${visualFirst ? 'order-first lg:order-none' : ''}`}>{visual}</div>}
       </div>

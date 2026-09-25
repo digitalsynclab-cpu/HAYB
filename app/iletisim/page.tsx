@@ -6,8 +6,10 @@ import { Icon3D } from '@/components/ui/Icon3D';
 import { Button } from '@/components/ui/Button';
 import { ContactForm } from '@/components/forms/ContactForm';
 import { CTASection } from '@/components/sections/CTASection';
-import { whatsappUrl } from '@/data/site';
+import { site, whatsappUrl } from '@/data/site';
 import { webPackages, webPricingRows } from '@/data/pricing';
+import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
+import { FAQSchema } from '@/components/schema/FAQSchema';
 import { buildMetadata } from '@/lib/metadata';
 
 export const metadata = buildMetadata({
@@ -41,6 +43,8 @@ const faq = [
 export default function ContactPage() {
   return (
     <>
+      <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'İletişim', path: '/iletisim' }]} />
+      <FAQSchema items={faq.map((f) => ({ question: f.q, answer: f.a }))} />
       <PageHero
         eyebrow="İletişim"
         title="Bir fikriniz mi var?"
@@ -74,6 +78,28 @@ export default function ContactPage() {
               <p className="text-on-light-muted">Projenizi adım adım anlatın, teklif hazırlayalım.</p>
               <a href="/proje-baslat" className="mt-1 inline-flex min-h-11 items-center font-semibold underline underline-offset-4">
                 Sihirbazı başlat
+              </a>
+            </div>
+          </li>
+          <li className="surface-light flex items-center gap-5 rounded-card p-6">
+            <Icon3D name="iletisim" size={72} />
+            <div>
+              <h3 className="text-xl font-bold">E-posta</h3>
+              <p className="text-on-light-muted">Ayrıntılı sorular ve dosyalar için.</p>
+              <a href={`mailto:${site.contact.email}`} className="mt-1 inline-flex min-h-11 items-center break-all font-semibold underline underline-offset-4">
+                {site.contact.email}
+              </a>
+            </div>
+          </li>
+          <li className="surface-light flex items-center gap-5 rounded-card p-6">
+            <Icon3D name="konumveyerelisletmeler" size={72} />
+            <div>
+              <h3 className="text-xl font-bold">Konum</h3>
+              <p className="text-on-light-muted">
+                {site.address.addressLocality} / {site.address.addressRegion}, Türkiye
+              </p>
+              <a href="/bursa-web-tasarim" className="mt-1 inline-flex min-h-11 items-center font-semibold underline underline-offset-4">
+                Bursa&apos;daki çalışmalarımız
               </a>
             </div>
           </li>

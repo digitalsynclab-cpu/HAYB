@@ -17,7 +17,7 @@ interface Message {
 const clock = () => new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
 const greetingMessage = (): Message => ({ id: 0, role: 'assistant', text: GREETING, time: clock() });
 
-const INTERNAL = /(\/(?:template|fiyatlandirma|hizmetler|projeler|proje-baslat|iletisim|kvkk|gizlilik-politikasi|cerez-politikasi|hakkimizda)[\w/#-]*)/g;
+const INTERNAL = /(\/(?:template|paketler|web-sitesi-siparis|insights|hizmetler|projeler|proje-baslat|iletisim|kvkk|gizlilik-politikasi|cerez-politikasi|hakkimizda)[\w/#-]*)/g;
 const linkCls = 'font-semibold text-lime underline underline-offset-2';
 
 /** Cevaplardaki bağlantıları tıklanabilir yapar: harici (http/https) ve site içi yollar (/template/web1 gibi). */

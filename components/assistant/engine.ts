@@ -13,6 +13,7 @@ import {
 import { projects, GAME } from '@/data/projects';
 import { campaign } from '@/data/campaign';
 import { templates } from '@/data/templates';
+import { insights } from '@/data/insights';
 import { panelSamples } from '@/data/panels';
 import { site, whatsappUrl } from '@/data/site';
 
@@ -49,7 +50,7 @@ const webAnswer = () =>
       return `• ${p.name} – ${priceWithList(p.price)}${p.recommended ? ' (Önerilen)' : ''}: ${days} teslim, ${pages}, ${domain} alan adı.`;
     })
     .join('\n') +
-  '\n\nTüm paketlerde SSL, mobil uyum ve WhatsApp entegrasyonu vardır. Ayrıntılar için Fiyatlandırma sayfasına bakabilirsiniz.';
+  '\n\nTüm paketlerde SSL, mobil uyum ve WhatsApp entegrasyonu vardır. Ayrıntılar için Paketler sayfasına bakabilirsiniz.';
 
 const plansAnswer = (title: string, plans: { name: string; price: string; recommended: boolean; features: string[] }[]) =>
   `${title}\n\n` +
@@ -92,7 +93,7 @@ export const TOPICS: Topic[] = [
     id: 'mobile',
     keywords: ['mobil uygulama', 'mobil', 'uygulama', 'ios', 'android', 'react native', 'iphone', 'taleb', 'ekotakip', 'bebekler soruyor', 'bebeklersoruyor'],
     answer: () =>
-      `Mobil uygulama en çok yaptığımız işlerden biri. iOS ve Android için tasarım, geliştirme ve mağaza yayını dahil:\n\n• Giriş, profil, arama, bildirim gibi temel ekranlar\n• Ödeme entegrasyonu (iyzico, Stripe), harita ve konum servisleri\n• App Store ve Google Play yayını, sonrasında güncelleme ve destek\n\nÖrnekler:\n• BebeklerSoruyor: ebeveynler için soru-cevap topluluğu\n• EkoTakip Pro: bir müşterimiz için özel geliştirdiğimiz, yalnızca kendi cihazında çalışan bireysel ve işletme gelir-gider takip uygulaması (raporlama ve yapay zekâ analizi var)\n• Taleb-e: öğrencilerin burs talebi oluşturduğu, bağışçıların güvenle destek olduğu uygulama\n• Mobil oyunumuz ${GAME.name}\n\nUygulamaların ekran görüntülerini /projeler sayfasında tek tek inceleyebilirsiniz. Fiyat kapsama göre belirlenir; ücretsiz keşif görüşmesi yapılır.`,
+      `Mobil uygulama en çok yaptığımız işlerden biri. iOS ve Android için tasarım, geliştirme ve mağaza yayını dahil:\n\n• Giriş, profil, arama, bildirim gibi temel ekranlar\n• Ödeme entegrasyonu (iyzico, Stripe), harita ve konum servisleri\n• App Store ve Google Play yayını, sonrasında güncelleme ve destek\n\nÖrnekler:\n• BebeklerSoruyor: ebeveynler için soru-cevap topluluğu (App Store: ${projects.find((p) => p.id === 'bebeklersoruyor')?.stores?.appStore})\n• EkoTakip Pro: bir müşterimiz için özel geliştirdiğimiz, yalnızca kendi cihazında çalışan bireysel ve işletme gelir-gider takip uygulaması (raporlama ve yapay zekâ analizi var)\n• Taleb-e: öğrencilerin burs talebi oluşturduğu, bağışçıların güvenle destek olduğu uygulama\n• Mobil oyunumuz ${GAME.name}\n\nUygulamaların ekran görüntülerini /projeler sayfasında tek tek inceleyebilirsiniz. Fiyat kapsama göre belirlenir; ücretsiz keşif görüşmesi yapılır.`,
   },
   {
     id: 'data',
@@ -107,7 +108,7 @@ export const TOPICS: Topic[] = [
     strong: ['indirim', 'kampanyali', 'kampanya var', 'kampanya ne'],
     answer: () => {
       const end = new Date(campaign.endsAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Istanbul' });
-      return `${campaign.title}: web sitesi, sosyal medya, QR menü, logo, reklam yönetimi ve HAYB Data Service paketlerinde %${campaign.rate} indirim vardır. Kampanya ${end} tarihine kadar geçerlidir.\n\nÖrnek: Starter web sitesi ${priceWithList(webPackages[0].price)}.\n\nTüm kampanyalı fiyatlar /fiyatlandirma sayfasında.`;
+      return `${campaign.title}: web sitesi, sosyal medya, QR menü, logo, reklam yönetimi ve HAYB Data Service paketlerinde %${campaign.rate} indirim vardır. Kampanya ${end} tarihine kadar geçerlidir.\n\nÖrnek: Starter web sitesi ${priceWithList(webPackages[0].price)}.\n\nTüm kampanyalı fiyatlar /paketler sayfasında.`;
     },
   },
   {
@@ -115,9 +116,11 @@ export const TOPICS: Topic[] = [
     keywords: ['sablon', 'sablonlari', 'sablonlar', 'template', 'ornek site', 'ornek web', 'demo site', 'canli dene', 'canli test'],
     strong: ['sablon', 'template'],
     answer: () =>
-      'Canlı deneyebileceğiniz 8 örnek web sitesi şablonumuz var (menü, sepet, filtre ve formlar gerçekten çalışır; markalar kurgusaldır):\n\n' +
-      templates.map((t) => `• ${t.brand} (${t.sector}): /template/${t.slug}`).join('\n') +
-      '\n\nHepsini /template sayfasında görebilirsiniz. Beğendiğinizi kendi markanıza uyarlıyoruz.',
+      `Canlı deneyebileceğiniz ${templates.length} örnek web sitesi şablonumuz var (menü, sepet, filtre, randevu ve rezervasyon formları çalışır; markalar kurgusaldır):
+
+` +
+      templates.map((t) => `• ${t.code} · ${t.brand} (${t.sector}): /template/${t.slug}`).join('\n') +
+      '\n\nHepsini /template sayfasında görebilirsiniz. Beğendiğiniz şablondaki "Bu Tasarımı Kullan" düğmesi sizi web sitesi sipariş formuna götürür ve tasarımı önceden seçer. Hazır tasarım seçenekleri Business paketi ve üzerindeki projelerde kullanılabilir.',
   },
   {
     id: 'panel',
@@ -154,7 +157,7 @@ export const TOPICS: Topic[] = [
     id: 'logo',
     keywords: ['logo', 'marka tasarimi', 'kurumsal kimlik', 'marka kimligi', 'ikon tasarimi'],
     answer: () =>
-      `Logo tasarımı: ${priceWithList(logoPlan.price)}.\n\n` + logoPlan.features.map((f) => `• ${f}`).join('\n') + '\n\nÖrnek logolar /hizmetler/marka-tasarimi sayfasında; sipariş için /fiyatlandirma sayfasındaki Logo bölümü. Kurumsal kimlik ve marka rehberi için teklif alabilirsiniz.',
+      `Logo tasarımı: ${priceWithList(logoPlan.price)}.\n\n` + logoPlan.features.map((f) => `• ${f}`).join('\n') + '\n\nÖrnek logolar /hizmetler/marka-tasarimi sayfasında; sipariş için /paketler sayfasındaki Logo bölümü. Kurumsal kimlik ve marka rehberi için teklif alabilirsiniz.',
   },
   {
     id: 'custom',
@@ -184,6 +187,29 @@ export const TOPICS: Topic[] = [
     answer: () => 'Projelerimizden bazıları:\n' + projects.map((p) => `• ${p.name}: ${p.type}`).join('\n') + '\n\nHepsini ve uygulama ekran görüntülerini /projeler sayfasında görebilirsiniz.',
   },
   {
+    id: 'order',
+    keywords: ['siparis formu', 'web sitesi siparis', 'web sitesi siparisi', 'hazir tasarim', 'tasarim sec', 'sablon sec', 'template sec', 'tasarimi kullan'],
+    strong: ['siparis formu', 'web sitesi siparis', 'hazir tasarim'],
+    answer: () =>
+      'Web sitesi siparişi için /web-sitesi-siparis sayfasındaki formu kullanabilirsiniz. Altı kısa adımda işletme bilgilerinizi, alan adı ve hosting durumunuzu, sayfalarınızı ve tasarım tercihinizi girersiniz; isterseniz hazır bir şablon seçersiniz (hazır tasarımlar Business paketi ve üzerinde kullanılabilir). Bilgileriniz düzenli bir WhatsApp mesajına dönüşür; mesajı WhatsApp içinde Gönder\'e basarak siz iletirsiniz.\n\nFormda şifre veya hesap bilgisi istenmez. Girdiğiniz bilgiler yalnızca cihazınızda taslak olarak saklanır, sunucumuza gönderilmez.',
+  },
+  {
+    id: 'insights',
+    keywords: ['insights', 'makale', 'makaleler', 'yazilariniz', 'bilgi yazilari'],
+    strong: ['insights', 'makale'],
+    answer: () =>
+      'HAYB Insights, web, yazılım, ürün ve tasarım kararları üzerine yazdığımız bilgi günlüğüdür:\n\n' +
+      insights.map((i) => `• ${i.title}: /insights/${i.slug}`).join('\n') +
+      '\n\nHepsini /insights sayfasında görebilirsiniz.',
+  },
+  {
+    id: 'location',
+    keywords: ['bursa', 'osmangazi', 'adres', 'nerede', 'konum', 'e posta', 'eposta', 'mail'],
+    strong: ['bursa', 'osmangazi'],
+    answer: () =>
+      `HAYB, Bursa'nın Osmangazi ilçesinde ${site.founded} yılında kurulmuş bir dijital ürün stüdyosudur.\n\n• E-posta: ${site.contact.email}\n• WhatsApp: 0507 342 06 61\n\nBursa'daki işletmeler için web sitesi, UI/UX, özel yazılım ve mobil uygulama çalışmalarımızı /bursa-web-tasarim sayfasında anlattık.`,
+  },
+  {
     id: 'web',
     keywords: ['web sitesi', 'web', 'internet sitesi', 'site', 'starter', 'business', 'professional', 'premium'],
     weak: ['paket', 'fiyat', 'ucret', 'ne kadar'],
@@ -198,7 +224,7 @@ export const TOPICS: Topic[] = [
   {
     id: 'contact',
     keywords: ['iletisim', 'ulas', 'whatsapp', 'telefon', 'gorusme', 'teklif'],
-    answer: () => 'Bize WhatsApp\'tan hemen yazabilir ya da Proje Başlat sayfasından teklif isteyebilirsiniz.',
+    answer: () => `Bize WhatsApp'tan hemen yazabilir, ${site.contact.email} adresine e-posta gönderebilir ya da Proje Başlat sayfasından teklif isteyebilirsiniz. Web sitesi için sipariş formu da hazır: /web-sitesi-siparis.`,
   },
 ];
 
@@ -248,24 +274,27 @@ export interface Reply {
 const TOPIC_ACTIONS: Record<string, ReplyAction[]> = {
   game: [{ label: 'Oyunu incele', href: '/projeler/bbblock' }],
   mobile: [{ label: 'Uygulamaları incele', href: '/hizmetler/mobil-uygulama' }, { label: 'Projeler', href: '/projeler' }],
-  campaign: [{ label: 'Kampanyalı fiyatlar', href: '/fiyatlandirma' }],
+  campaign: [{ label: 'Kampanyalı fiyatlar', href: '/paketler' }],
   templates: [{ label: 'Şablonları gör', href: '/template' }],
   panel: [{ label: 'Örnek paneller', href: '/hizmetler/yonetim-paneli' }],
   legal: [{ label: 'KVKK metni', href: '/kvkk' }, { label: 'Çerez politikası', href: '/cerez-politikasi' }],
-  qr: [{ label: 'QR menü fiyatları', href: '/fiyatlandirma#qr-menu' }, { label: 'Örnek QR menü', href: '/projeler/qrmenu' }],
-  ads: [{ label: 'Reklam paketleri', href: '/fiyatlandirma#reklam' }, { label: 'Hizmeti incele', href: '/hizmetler/reklam-yonetimi' }],
-  social: [{ label: 'Sosyal medya paketleri', href: '/fiyatlandirma#sosyal-medya' }, { label: 'Örnek tasarımlar', href: '/hizmetler/sosyal-medya' }],
-  logo: [{ label: 'Logo paketi', href: '/fiyatlandirma#logo' }, { label: 'Örnek logolar', href: '/hizmetler/marka-tasarimi' }],
+  qr: [{ label: 'QR menü fiyatları', href: '/paketler#qr-menu' }, { label: 'Örnek QR menü', href: '/projeler/qrmenu' }],
+  ads: [{ label: 'Reklam paketleri', href: '/paketler#reklam' }, { label: 'Hizmeti incele', href: '/hizmetler/reklam-yonetimi' }],
+  social: [{ label: 'Sosyal medya paketleri', href: '/paketler#sosyal-medya' }, { label: 'Örnek tasarımlar', href: '/hizmetler/sosyal-medya' }],
+  logo: [{ label: 'Logo paketi', href: '/paketler#logo' }, { label: 'Örnek logolar', href: '/hizmetler/marka-tasarimi' }],
   custom: [{ label: 'Proje başlat', href: '/proje-baslat' }],
   ai: [{ label: 'Yapay zeka hizmeti', href: '/hizmetler/yapay-zeka' }],
-  seo: [{ label: 'Web sitesi paketleri', href: '/fiyatlandirma#web' }],
-  domain: [{ label: 'Web sitesi paketleri', href: '/fiyatlandirma#web' }],
-  delivery: [{ label: 'Web sitesi paketleri', href: '/fiyatlandirma#web' }],
+  seo: [{ label: 'Web sitesi paketleri', href: '/paketler#web' }],
+  domain: [{ label: 'Web sitesi paketleri', href: '/paketler#web' }],
+  delivery: [{ label: 'Web sitesi paketleri', href: '/paketler#web' }],
   projects: [{ label: 'Tüm projeler', href: '/projeler' }],
-  web: [{ label: 'Paketleri gör', href: '/fiyatlandirma#web' }, { label: 'Şablonları dene', href: '/template' }],
+  web: [{ label: 'Paketleri gör', href: '/paketler#web' }, { label: 'Şablonları dene', href: '/template' }],
   about: [{ label: 'Hizmetlerimiz', href: '/hizmetler' }, { label: 'Hakkımızda', href: '/hakkimizda' }],
   contact: [{ label: 'Proje başlat', href: '/proje-baslat' }],
-  data: [{ label: 'Ürünü incele', href: '/hizmetler/hayb-data-service' }, { label: 'Fiyatı gör', href: '/fiyatlandirma#data-service' }],
+  data: [{ label: 'Ürünü incele', href: '/hizmetler/hayb-data-service' }, { label: 'Fiyatı gör', href: '/paketler#data-service' }],
+  order: [{ label: 'Siparişi başlat', href: '/web-sitesi-siparis' }, { label: 'Şablonları gör', href: '/template' }],
+  insights: [{ label: 'Insights', href: '/insights' }],
+  location: [{ label: 'Bursa web tasarım', href: '/bursa-web-tasarim' }, { label: 'İletişim', href: '/iletisim' }],
 };
 
 /** Konuya göre önerilen sonraki sorular (her biri asistanın yanıtlayabildiği bir soru). */
@@ -290,6 +319,9 @@ const TOPIC_FOLLOW_UPS: Record<string, string[]> = {
   about: ['Kampanya', 'Web şablonları', 'Mobil uygulama'],
   contact: ['Kampanya', 'Web şablonları', 'Web sitesi fiyatları'],
   data: ['Reklam yönetimi', 'Web sitesi fiyatları', 'Kampanya'],
+  order: ['Web şablonları', 'Web sitesi fiyatları', 'Kampanya'],
+  insights: ['Web sitesi fiyatları', 'Web şablonları', 'Teklif almak istiyorum'],
+  location: ['Kampanya', 'Web şablonları', 'Teklif almak istiyorum'],
 };
 const DEFAULT_FOLLOW_UPS = ['Kampanya', 'Web şablonları', 'Mobil uygulama'];
 

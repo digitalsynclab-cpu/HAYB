@@ -10,11 +10,21 @@ interface PageMeta {
   path: string;
   noindex?: boolean;
   keywords?: string[];
+  /** Makale sayfaları için: OpenGraph türü "article" olur, yayın tarihi eklenir. */
+  article?: { publishedTime: string; modifiedTime?: string; section?: string };
+}
+
+/** Arama sonuçlarında kesilmemesi için description en fazla 175 karakterdir; aşarsa sözcük sınırında kısaltılır. */
+export function clipDescription(text: string, max = 175): string {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1);
+  return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:.\s]+$/, '')}…`;
 }
 
 /** Her route için benzersiz title, description, canonical, OG ve Twitter üretir. */
-export function buildMetadata({ title, description, path, noindex, keywords }: PageMeta): Metadata {
+export function buildMetadata({ title, description: rawDescription, path, noindex, keywords, article }: PageMeta): Metadata {
   const url = absoluteUrl(path);
+  const description = clipDescription(rawDescription);
   return {
     title,
     description,
@@ -39,7 +49,9 @@ export function buildMetadata({ title, description, path, noindex, keywords }: P
       url,
       siteName: site.name,
       locale: site.locale,
-      type: 'website',
+      ...(article
+        ? { type: 'article' as const, publishedTime: article.publishedTime, ...(article.modifiedTime && { modifiedTime: article.modifiedTime }), ...(article.section && { section: article.section }), authors: [site.url] }
+        : { type: 'website' as const }),
       images: [OG_IMAGE],
     },
     twitter: {

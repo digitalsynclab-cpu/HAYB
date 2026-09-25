@@ -11,6 +11,9 @@ import { StoreButtons } from '@/components/ui/StoreButtons';
 import { ScreenGallery } from '@/components/ui/ScreenGallery';
 import { CTASection } from '@/components/sections/CTASection';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { ORGANIZATION_ID } from '@/components/schema/OrganizationSchema';
+import { absoluteUrl, site } from '@/data/site';
 import { projectById, projects } from '@/data/projects';
 import { serviceBySlug } from '@/data/services';
 import { buildMetadata } from '@/lib/metadata';
@@ -44,6 +47,22 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           { name: p.name, path: `/projeler/${p.id}` },
         ]}
       />
+      {p.stores && (
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'MobileApplication',
+            name: p.name,
+            description: p.description,
+            url: absoluteUrl(`/projeler/${p.id}`),
+            applicationCategory: p.type === 'Mobil Oyun' ? 'GameApplication' : p.type === 'Topluluk Platformu' ? 'SocialNetworkingApplication' : 'MobileApplication',
+            operatingSystem: [p.stores.appStore && 'iOS', p.stores.googlePlay && 'Android'].filter(Boolean).join(', '),
+            installUrl: p.stores.appStore ?? p.stores.googlePlay,
+            sameAs: [p.stores.appStore, p.stores.googlePlay].filter(Boolean),
+            author: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: site.name, url: site.url },
+          }}
+        />
+      )}
       <PageHero
         eyebrow={p.type}
         title={p.name}

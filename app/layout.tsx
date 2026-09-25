@@ -13,6 +13,7 @@ import { SiteChrome } from '@/components/layout/SiteChrome';
 import { CampaignPopup } from '@/components/layout/CampaignPopup';
 import { AssistantLoader } from '@/components/assistant/AssistantLoader';
 import { EntityBlock } from '@/components/schema/EntityBlock';
+import { Analytics } from '@/components/analytics/Analytics';
 
 const googleVerification = process.env['NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION'];
 const bingVerification = process.env['NEXT_PUBLIC_BING_SITE_VERIFICATION'];
@@ -98,6 +99,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </SiteChrome>
         </CartProvider>
         <RevealObserver />
+        <Analytics />
       </body>
     </html>
   );

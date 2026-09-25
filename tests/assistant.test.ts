@@ -132,7 +132,7 @@ describe('asistan cevap yapısı (kısayollar ve öneriler)', () => {
   it('her cevapta WhatsApp kısayolu ve önerilen sorular vardır', () => {
     const r = getReply('Kampanya var mı?');
     expect(r.topicId).toBe('campaign');
-    expect(r.actions.some((a) => a.href.startsWith('/fiyatlandirma'))).toBe(true);
+    expect(r.actions.some((a) => a.href.startsWith('/paketler'))).toBe(true);
     const wa = r.actions.find((a) => a.external)!;
     expect(wa.href).toContain('wa.me');
     expect(r.followUps.length).toBeGreaterThanOrEqual(2);

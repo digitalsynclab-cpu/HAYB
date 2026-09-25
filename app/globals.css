@@ -351,9 +351,10 @@ html.intro-active { overflow: hidden; }
 /* ─── Kampanya penceresi ─── */
 .camp-card { overflow: hidden; border-radius: 1.75rem; padding: 2px; background: #1a1a1a; box-shadow: 0 30px 90px rgb(0 0 0 / 0.65), 0 0 60px rgb(var(--hayb-lime) / 0.18); max-height: calc(100dvh - 2rem); }
 .camp-body {
-  position: relative; overflow-y: auto; max-height: calc(100dvh - 2rem - 4px); border-radius: calc(1.75rem - 2px); padding: 1.5rem 1.25rem 1.25rem; color: #fff;
+  position: relative; overflow-y: auto; max-height: calc(100dvh - 2rem - 4px); border-radius: calc(1.75rem - 2px); padding: 1.1rem 1rem 1rem; color: #fff;
   background: radial-gradient(90% 50% at 50% 0%, rgb(var(--hayb-lime) / 0.22), transparent 70%), linear-gradient(170deg, #151515, #0a0a0a);
 }
+@media (min-width: 640px) { .camp-body { padding: 1.5rem 1.25rem 1.25rem; } }
 .camp-in { animation: camp-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .camp-out { animation: camp-out 0.32s ease-in both; }
 .camp-fade-out { animation: modal-fade 0.32s ease-in reverse both; }
@@ -368,7 +369,8 @@ html.intro-active { overflow: hidden; }
   filter: drop-shadow(0 0 22px rgb(var(--hayb-lime) / 0.45));
 }
 @keyframes camp-shimmer { from { background-position: 150% 0; } to { background-position: -100% 0; } }
-.camp-box { display: flex; flex-direction: column; align-items: center; border-radius: 0.9rem; border: 1px solid rgb(255 255 255 / 0.12); background: rgb(255 255 255 / 0.05); padding: 0.7rem 0.25rem; }
+.camp-box { display: flex; flex-direction: column; align-items: center; border-radius: 0.9rem; border: 1px solid rgb(255 255 255 / 0.12); background: rgb(255 255 255 / 0.05); padding: 0.5rem 0.2rem; }
+@media (min-width: 640px) { .camp-box { padding: 0.7rem 0.25rem; } }
 .camp-cta { position: relative; overflow: hidden; box-shadow: 0 0 0 0 rgb(var(--hayb-lime) / 0.6); animation: camp-ring 2s ease-out 1.2s infinite; }
 .camp-cta::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.55) 50%, transparent 65%); transform: translateX(-120%); animation: camp-sweep 2.8s ease-in-out 1.5s infinite; }
 @keyframes camp-ring { 0% { box-shadow: 0 0 0 0 rgb(var(--hayb-lime) / 0.55); } 100% { box-shadow: 0 0 0 16px rgb(var(--hayb-lime) / 0); } }

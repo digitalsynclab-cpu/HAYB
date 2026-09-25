@@ -6,7 +6,7 @@ import { PageHero } from '@/components/ui/PageHero';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Icon3D } from '@/components/ui/Icon3D';
-import { StoreButtons } from '@/components/ui/StoreButtons';
+import { StoreButtons, LiveAppsShelf } from '@/components/ui/StoreButtons';
 import { ServiceCard, ProjectImage } from '@/components/ui/Cards';
 import { AppCovers, PanelSlider } from '@/components/ui/Sliders';
 import { AiChatDemo } from '@/components/ui/AiChatDemo';
@@ -155,6 +155,7 @@ export function HomeProducts() {
 
         <ProductTile icon="mobiluyumlu" title="Mobil Uygulama" href="/hizmetler/mobil-uygulama" className="lg:col-span-2">
           <AppCovers />
+          <LiveAppsShelf className="mt-5" />
         </ProductTile>
 
         <ProductTile icon="iletisim" title="Sosyal Medya" href="/hizmetler/sosyal-medya" className="lg:col-span-2">

@@ -353,7 +353,7 @@ export const services: ServiceDetail[] = [
     icon: 'veriyonetimi',
     filter: 'Diğer',
     summary: 'Sektörünü yaz, işletme kayıtlarını tek tabloda incele, Excel olarak dışa aktar.',
-    metaTitle: 'HAYB Data Service: İşletme Verilerini Keşfedin ve Excel’e Aktarın',
+    metaTitle: 'HAYB Data Service: İşletme Verilerini Excel’e Aktarın',
     metaDescription:
       'Sektöre göre işletme kayıtlarını (firma, telefon, adres, web sitesi) arayın, filtreleyin ve Excel olarak dışa aktarın. Potansiyel müşteri ve pazar araştırmasını hızlandırın. Tek seferlik 9.999 ₺.',
     heroTitle: 'Potansiyel müşterilerinizi',

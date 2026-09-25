@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { templates, templateThumb } from '@/data/templates';
+import { isV2, templateCategories, templates, type TemplateDef } from '@/data/templates';
+import { templateThumb } from '@/data/template-paths';
 import { brandLogos } from '@/data/brands';
 import { campaign, priceParts, priceWithList } from '@/data/campaign';
 import { pricingPlans } from '@/data/pricing';
@@ -9,13 +10,34 @@ import sitemap from '@/app/sitemap';
 
 const pub = (p: string) => existsSync(join(process.cwd(), 'public', p));
 
+/** Nesnenin her düzeyinde koşula uyan (anahtar, değer) çiftlerinin değerlerini toplar. */
+function collect(node: unknown, test: (key: string, value: unknown) => boolean, key = ''): unknown[] {
+  if (Array.isArray(node)) return node.flatMap((n) => collect(n, test, key));
+  if (node && typeof node === 'object') return Object.entries(node).flatMap(([k, v]) => collect(v, test, k));
+  return test(key, node) ? [node] : [];
+}
+
 describe('şablonlar', () => {
-  it('sekiz benzersiz şablon vardır (web1 … web8)', () => {
-    expect(templates.map((t) => t.slug)).toEqual(['web1', 'web2', 'web3', 'web4', 'web5', 'web6', 'web7', 'web8']);
+  const legacy = templates.filter((t): t is TemplateDef => !isV2(t));
+  const v2 = templates.filter(isV2);
+
+  it('yirmi benzersiz şablon vardır (web1 … web20) ve kodları slug ile eşleşir', () => {
+    expect(templates.map((t) => t.slug)).toEqual(Array.from({ length: 20 }, (_, i) => `web${i + 1}`));
+    for (const t of templates) expect(t.code).toBe(`WEB ${String(Number(t.slug.replace('web', ''))).padStart(2, '0')}`);
   });
-  it('tüm görseller mevcut', () => {
+  it('her şablonun sektör kategorisi, özeti ve özellikleri vardır', () => {
     for (const t of templates) {
-      expect(pub(templateThumb(t.slug)), t.slug).toBe(true);
+      expect(t.category, t.slug).toBeTruthy();
+      expect(t.summary.length, t.slug).toBeGreaterThan(30);
+      expect(t.features.length, t.slug).toBeGreaterThanOrEqual(2);
+    }
+    expect(templateCategories().length).toBeGreaterThanOrEqual(8);
+  });
+  it('tüm önizleme görselleri mevcut', () => {
+    for (const t of templates) expect(pub(templateThumb(t.slug)), t.slug).toBe(true);
+  });
+  it('eski şablonların görselleri mevcut', () => {
+    for (const t of legacy) {
       for (const s of t.sections) {
         const imgs: (string | undefined)[] = [];
         if (s.type === 'hero' || s.type === 'banner') imgs.push(s.image);
@@ -25,8 +47,8 @@ describe('şablonlar', () => {
       }
     }
   });
-  it('menü ve düğmeler var olan bölümlere gider', () => {
-    for (const t of templates) {
+  it('eski şablonlarda menü ve düğmeler var olan bölümlere gider', () => {
+    for (const t of legacy) {
       const ids = new Set(t.sections.map((s) => ('id' in s ? s.id : undefined)).filter(Boolean));
       const targets = [...t.nav.map((n) => n.to), t.cta.to, ...t.footer.columns.flatMap((c) => c.links.map((l) => l.to))].filter(Boolean) as string[];
       for (const to of targets) expect(ids.has(to), `${t.slug} → ${to}`).toBe(true);
@@ -35,6 +57,27 @@ describe('şablonlar', () => {
         if (s.type === 'banner' && s.cta?.to) expect(ids.has(s.cta.to), `${t.slug} banner → ${s.cta.to}`).toBe(true);
       }
     }
+  });
+  it('yeni nesil şablonlarda her görsel diskte vardır', () => {
+    expect(v2.length).toBe(12);
+    for (const t of v2) {
+      const imgs = collect(t.site, (k, v) => typeof v === 'string' && v.startsWith('/images/'));
+      expect(imgs.length, t.slug).toBeGreaterThan(5);
+      for (const i of imgs) expect(pub(String(i)), `${t.slug} ${i}`).toBe(true);
+    }
+  });
+  it('yeni nesil şablonlarda her bağlantı var olan bir bölüme gider ve bölüm kimlikleri benzersizdir', () => {
+    for (const t of v2) {
+      const ids = t.site.blocks.map((b) => b.id).filter(Boolean) as string[];
+      expect(new Set(ids).size, `${t.slug} yinelenen id`).toBe(ids.length);
+      const targets = collect(t.site, (k, v) => k === 'to' && typeof v === 'string' && v !== '');
+      expect(targets.length, t.slug).toBeGreaterThan(3);
+      for (const to of targets) expect(ids, `${t.slug} → ${to}`).toContain(String(to));
+    }
+  });
+  it('yeni nesil şablonlarda yasak içerik yoktur (sahte puan, ödül, gerçek kişi/kurum adı)', () => {
+    const blob = JSON.stringify(v2.map((t) => t.site)).toLocaleLowerCase('tr-TR');
+    expect(blob).not.toMatch(/google puanı|4\.9\/5|ödül|aggregaterating|mutlu (hasta|müşteri)/);
   });
   it('galeri sitemap’te listelenir, demo sayfaları listelenmez', () => {
     const urls = sitemap().map((s) => s.url);

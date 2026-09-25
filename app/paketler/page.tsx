@@ -25,14 +25,15 @@ import {
   dataServicePlan,
 } from '@/data/pricing';
 import type { PricingPlan } from '@/types';
+import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { buildMetadata } from '@/lib/metadata';
 import { whatsappUrl } from '@/data/site';
 
 export const metadata = buildMetadata({
-  title: 'Fiyatlandırma: Web Sitesi, Sosyal Medya, QR Menü',
+  title: 'Paketler: Web Sitesi, Sosyal Medya, QR Menü',
   description:
     'Web sitesi paketleri 5.000 ₺’den, QR menü 2.500 ₺’den, sosyal medya paketleri haftalık 3.000 ₺’den başlar. Özel yazılım ve mobil uygulama için teklif alın.',
-  path: '/fiyatlandirma',
+  path: '/paketler',
 });
 
 const anchors = [
@@ -110,8 +111,9 @@ export default function PricingPage() {
   const rowsShown = ['Teslim Süresi', 'Alan Adı (Ücretsiz)', 'Sayfa Sayısı'];
   return (
     <>
+      <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'Paketler', path: '/paketler' }]} />
       <PageHero
-        eyebrow="Fiyatlandırma"
+        eyebrow="Paketler"
         title="Net paketler,"
         accent="sürpriz yok."
         text="Fiyatlar ve kapsam baştan bellidir. Size uygun paketi seçin ya da özel bir ihtiyaç için teklif isteyin."

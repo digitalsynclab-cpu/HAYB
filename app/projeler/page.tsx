@@ -4,6 +4,7 @@ import { ProjectsExplorer } from '@/components/sections/ProjectsExplorer';
 import { CTASection } from '@/components/sections/CTASection';
 import { ReferenceSites } from '@/components/sections/HomeSections';
 import { Button } from '@/components/ui/Button';
+import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { buildMetadata } from '@/lib/metadata';
 
 export const metadata = buildMetadata({
@@ -16,6 +17,7 @@ export const metadata = buildMetadata({
 export default function ProjectsPage() {
   return (
     <>
+      <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'Projeler', path: '/projeler' }]} />
       <PageHero
         eyebrow="Projelerimiz"
         title="Gerçek işletmeler için"

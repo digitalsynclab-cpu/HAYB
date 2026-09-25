@@ -7,7 +7,7 @@ import { ArrowDown, ArrowRight } from 'lucide-react';
 import { AiChatDemo } from '@/components/ui/AiChatDemo';
 import { SocialTemplates } from '@/components/ui/SocialTemplates';
 import { ProjectImage } from '@/components/ui/Cards';
-import { StoreButtons } from '@/components/ui/StoreButtons';
+import { StoreButtons, LiveAppsShelf } from '@/components/ui/StoreButtons';
 import { Icon3D } from '@/components/ui/Icon3D';
 import { projectById, type Project } from '@/data/projects';
 import type { ShowcaseKind } from '@/data/services';
@@ -118,7 +118,10 @@ export function ServiceShowcase({ kind }: { kind: ShowcaseKind }) {
       );
     case 'mobile':
       return (
-        <AppCovers />
+        <div>
+          <AppCovers />
+          <LiveAppsShelf className="mt-6" />
+        </div>
       );
     case 'game': {
       const g = projectById('bbblock')!;

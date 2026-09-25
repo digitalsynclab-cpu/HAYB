@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/motion/Reveal';
 import { CTASection } from '@/components/sections/CTASection';
 import { processSteps, processPromises } from '@/data/process';
+import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { buildMetadata } from '@/lib/metadata';
 
 export const metadata = buildMetadata({
@@ -19,6 +20,7 @@ export const metadata = buildMetadata({
 export default function ProcessPage() {
   return (
     <>
+      <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'Süreç', path: '/surec' }]} />
       <PageHero
         eyebrow="Nasıl çalışıyoruz?"
         title="Fikirlerinizi adım adım"

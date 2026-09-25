@@ -3,8 +3,11 @@ import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { IconCard } from '@/components/ui/Cards';
 import { Button } from '@/components/ui/Button';
+import Link from 'next/link';
+import { site } from '@/data/site';
 import { Reveal } from '@/components/motion/Reveal';
 import { CTASection } from '@/components/sections/CTASection';
+import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { buildMetadata } from '@/lib/metadata';
 import type { IconName } from '@/data/icons';
 
@@ -32,6 +35,7 @@ const approach = [
 export default function AboutPage() {
   return (
     <>
+      <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'Hakkımızda', path: '/hakkimizda' }]} />
       <PageHero
         eyebrow="Hakkımızda"
         title="Fikirleri çalışan"
@@ -90,6 +94,28 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
+        </div>
+      </Section>
+
+      <Section tone="dark-2" labelledBy="konum">
+        <div className="grid items-start gap-8 lg:grid-cols-2">
+          <SectionHeading id="konum" eyebrow="Nerede?" title="Bursa merkezli," accent="dijital çalışıyoruz." className="lg:mb-0" />
+          <div className="space-y-4 text-lg text-fg-muted">
+            <p>
+              HAYB, {site.address.addressLocality} ilçesinde ({site.address.addressRegion}) {site.founded} yılında kurulmuş bir dijital ürün stüdyosudur. Projelerimizi Bursa&apos;dan yönetiyoruz.
+            </p>
+            <p>
+              Bursa&apos;daki işletmelerin dijitalde neye ihtiyaç duyduğunu{' '}
+              <Link href="/bursa-web-tasarim" className="font-semibold text-lime underline underline-offset-4">
+                Bursa web tasarım sayfamızda
+              </Link>{' '}
+              anlattık; kararlarımızı paylaştığımız yazılar da{' '}
+              <Link href="/insights" className="font-semibold text-lime underline underline-offset-4">
+                Insights
+              </Link>{' '}
+              bölümünde.
+            </p>
+          </div>
         </div>
       </Section>
 

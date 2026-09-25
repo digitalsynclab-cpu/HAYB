@@ -37,7 +37,7 @@ function CountUp({ to }: { to: number }) {
 function Box({ v, label }: { v: number; label: string }) {
   return (
     <div className="camp-box">
-      <span className="text-2xl font-extrabold tabular-nums leading-none sm:text-3xl">{pad(v)}</span>
+      <span className="text-xl font-extrabold tabular-nums leading-none sm:text-3xl">{pad(v)}</span>
       <span className="mt-1 text-[0.65rem] font-semibold uppercase tracking-widest text-white/60">{label}</span>
     </div>
   );
@@ -113,7 +113,7 @@ export function CampaignPopup() {
         aria-modal="true"
         aria-labelledby="kampanya-baslik"
         onClick={(e) => e.stopPropagation()}
-        className={`camp-card relative w-full max-w-md ${leaving ? 'camp-out' : 'camp-in'}`}
+        className={`camp-card relative w-full max-w-[21rem] sm:max-w-md ${leaving ? 'camp-out' : 'camp-in'}`}
       >
         <span aria-hidden className="cookie-glow" />
         <div className="camp-body">
@@ -137,26 +137,26 @@ export function CampaignPopup() {
             {campaign.title}: tüm paketlerde %{campaign.rate} indirim
           </h2>
 
-          <div aria-hidden className="mt-4 flex items-end justify-center gap-2 text-lime">
-            <span className="camp-percent text-[5.4rem] font-black leading-[0.8] tracking-tighter sm:text-[8rem]">
+          <div aria-hidden className="mt-3 flex items-end justify-center gap-2 text-lime sm:mt-4">
+            <span className="camp-percent text-[3.9rem] font-black leading-[0.8] tracking-tighter sm:text-[8rem]">
               %<CountUp to={campaign.rate} />
             </span>
-            <span className="mb-1.5 text-2xl font-extrabold text-white sm:mb-2 sm:text-3xl">
+            <span className="mb-1 text-lg font-extrabold text-white sm:mb-2 sm:text-3xl">
               İNDİRİM
             </span>
           </div>
-          <p className="mt-4 text-center text-base text-white/75">{campaign.text}</p>
+          <p className="mt-3 text-center text-[0.85rem] leading-snug text-white/75 sm:mt-4 sm:text-base">{campaign.text}</p>
 
           {parts && (
-            <p className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm [&_s]:whitespace-nowrap [&_strong]:whitespace-nowrap">
+            <p className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs sm:mt-4 sm:px-4 sm:py-3 sm:text-sm [&_s]:whitespace-nowrap [&_strong]:whitespace-nowrap">
               <span className="text-white/60">Örn. {starter.name.charAt(0) + starter.name.slice(1).toLowerCase()} web sitesi</span>
               <s className="text-white/50">{parts.list}</s>
-              <strong className="text-xl font-extrabold text-lime">{parts.sale}</strong>
+              <strong className="text-lg font-extrabold text-lime sm:text-xl">{parts.sale}</strong>
             </p>
           )}
 
-          <div className="mt-5" role="timer" aria-label="Kampanya bitişine kalan süre">
-            <p className="mb-2 text-center text-xs font-semibold uppercase tracking-[0.18em] text-white/60">Kampanya bitimine</p>
+          <div className="mt-4 sm:mt-5" role="timer" aria-label="Kampanya bitişine kalan süre">
+            <p className="mb-1.5 text-center text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-white/60 sm:mb-2 sm:text-xs">Kampanya bitimine</p>
             <div className="grid grid-cols-4 gap-2">
               <Box v={t.d} label="Gün" />
               <Box v={t.h} label="Saat" />
@@ -165,11 +165,11 @@ export function CampaignPopup() {
             </div>
           </div>
 
-          <div className="mt-5 grid gap-2.5">
+          <div className="mt-4 grid gap-1.5 sm:mt-5 sm:gap-2.5">
             <Link
-              href="/fiyatlandirma"
+              href="/paketler"
               onClick={close}
-              className="press camp-cta inline-flex min-h-13 items-center justify-center rounded-xl bg-lime px-5 py-3.5 text-lg font-extrabold text-ink-950"
+              className="press camp-cta inline-flex min-h-12 items-center justify-center rounded-xl bg-lime px-5 py-3 text-base font-extrabold text-ink-950 sm:min-h-13 sm:py-3.5 sm:text-lg"
             >
               Kampanyalı fiyatları gör
             </Link>

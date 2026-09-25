@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import type { StoreLinks } from '@/data/projects';
+import Link from 'next/link';
+import { projects, type StoreLinks } from '@/data/projects';
 
 /**
  * App Store / Google Play bağlantıları: resmî rozetler (Apple ve Google'ın markalama yönergelerine uygun,
@@ -20,5 +21,30 @@ export function StoreButtons({ stores, className = '' }: { stores: StoreLinks; c
         </a>
       )}
     </div>
+  );
+}
+
+/**
+ * Mağazada yayında olan mobil uygulamalar (oyun dışı; oyun kendi bölümünde gösterilir).
+ * Yalnızca gerçekten yayında olan ve mağaza bağlantısı bulunan projeler listelenir.
+ */
+export function LiveAppsShelf({ className = '' }: { className?: string }) {
+  const apps = projects.filter((p) => p.stores && p.type !== 'Mobil Oyun');
+  if (apps.length === 0) return null;
+  return (
+    <ul className={`grid gap-3 sm:grid-cols-2 ${className}`} aria-label="Mağazada yayındaki uygulamalarımız">
+      {apps.map((p) => (
+        <li key={p.id} className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+          <div className="min-w-0">
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-lime">Yayında</p>
+            <Link href={`/projeler/${p.id}`} className="mt-0.5 block text-lg font-bold hover:text-lime">
+              {p.name}
+            </Link>
+            <p className="text-sm text-fg-muted">{p.type}</p>
+          </div>
+          <StoreButtons stores={p.stores!} />
+        </li>
+      ))}
+    </ul>
   );
 }

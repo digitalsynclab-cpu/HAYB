@@ -1,10 +1,10 @@
 import { services } from '@/data/services';
 import { projects } from '@/data/projects';
-import { templates } from '@/data/templates';
+import { insights } from '@/data/insights';
 
 // TEK ROUTE KAYDI: sitemap.xml ve llms.txt buradan beslenir. Yeni sayfa = buraya bir satır.
 // noindex sayfalar (/template/[slug]) BURAYA KONMAZ.
-export type RouteGroup = 'core' | 'service' | 'project' | 'legal';
+export type RouteGroup = 'core' | 'service' | 'project' | 'insight' | 'legal';
 
 export interface RouteEntry {
   path: string;
@@ -13,6 +13,8 @@ export interface RouteEntry {
   group: RouteGroup;
   priority: number;
   changeFrequency: 'daily' | 'weekly' | 'monthly' | 'yearly';
+  /** YALNIZCA gerçek içerik tarihi (ISO). Yoksa verilmez; build anı gibi sahte tazelik sinyali üretilmez. */
+  lastModified?: string;
 }
 
 const CORE: RouteEntry[] = [
@@ -21,10 +23,13 @@ const CORE: RouteEntry[] = [
   { path: '/projeler', title: 'Projeler', group: 'core', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/hakkimizda', title: 'Hakkımızda', group: 'core', priority: 0.6, changeFrequency: 'monthly' },
   { path: '/surec', title: 'Süreç', group: 'core', priority: 0.6, changeFrequency: 'monthly' },
-  { path: '/fiyatlandirma', title: 'Fiyatlandırma', group: 'core', priority: 0.8, changeFrequency: 'monthly' },
+  { path: '/paketler', title: 'Paketler', group: 'core', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/template', title: 'Web Sitesi Şablonları', group: 'core', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/iletisim', title: 'İletişim', group: 'core', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/proje-baslat', title: 'Proje Başlat', group: 'core', priority: 0.7, changeFrequency: 'monthly' },
+  { path: '/web-sitesi-siparis', title: 'Web Sitesi Siparişi', group: 'core', priority: 0.7, changeFrequency: 'monthly' },
+  { path: '/bursa-web-tasarim', title: 'Bursa Web Tasarım ve Dijital Ürün Stüdyosu', group: 'core', priority: 0.7, changeFrequency: 'monthly' },
+  { path: '/insights', title: 'Insights', group: 'core', priority: 0.7, changeFrequency: 'weekly' },
 ];
 
 const LEGAL: RouteEntry[] = [
@@ -56,9 +61,19 @@ export function getAllRoutes(): RouteEntry[] {
         changeFrequency: 'monthly',
       })
     ),
+    ...insights.map(
+      (i): RouteEntry => ({
+        path: `/insights/${i.slug}`,
+        title: i.title,
+        description: i.description,
+        group: 'insight',
+        priority: 0.6,
+        changeFrequency: 'monthly',
+        lastModified: i.updated ?? i.date,
+      })
+    ),
     ...LEGAL,
   ];
 }
 
 // /template/[slug] sayfaları demo içerik olduğu için noindex'tir; bilinçli olarak sitemap/llms dışında tutulur.
-export const noIndexNote = `/template/${templates[0]?.slug ?? ''} gibi tekil şablon sayfaları noindex'tir.`;

@@ -2,6 +2,7 @@ import { PageHero } from '@/components/ui/PageHero';
 import { Section } from '@/components/ui/Section';
 import { ProjectWizard } from '@/components/forms/ProjectWizard';
 import { IconCard } from '@/components/ui/Cards';
+import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { buildMetadata } from '@/lib/metadata';
 
 export const metadata = buildMetadata({
@@ -13,6 +14,7 @@ export const metadata = buildMetadata({
 export default function StartProjectPage() {
   return (
     <>
+      <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'Proje Başlat', path: '/proje-baslat' }]} />
       <PageHero
         eyebrow="Proje başlat"
         title="Fikrinizi"

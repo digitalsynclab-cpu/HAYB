@@ -12,11 +12,14 @@ export function CTASection({
   accent = 'birlikte hayata geçirelim.',
   text = 'Fikriniz ne olursa olsun, birlikte en doğru çözümü bulalım. Önce dinliyoruz, sonra size en uygun yolu öneriyoruz.',
   tone = 'dark',
+  extra,
 }: {
   title?: string;
   accent?: string;
   text?: string;
   tone?: 'dark' | 'dark-2';
+  /** Ek birincil eylem (ör. Web Sitesi Siparişini Başlat). Verilirse "Teklif Al" ikincil olur. */
+  extra?: { href: string; label: string };
 }) {
   return (
     <Section tone={tone} labelledBy="cta-baslik">
@@ -30,7 +33,10 @@ export function CTASection({
           />
           <p className="mt-5 max-w-xl text-lg text-fg-muted">{text}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button href="/proje-baslat">Teklif Al</Button>
+            {extra && <Button href={extra.href}>{extra.label}</Button>}
+            <Button href="/proje-baslat" variant={extra ? 'secondary' : 'primary'} arrow={!extra}>
+              Teklif Al
+            </Button>
             <Button
               href={whatsappUrl('Merhaba, HAYB internet sitesinden yazıyorum.')}
               variant="secondary"

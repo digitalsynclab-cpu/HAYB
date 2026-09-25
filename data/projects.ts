@@ -65,6 +65,9 @@ export const projects: Project[] = [
     serviceSlugs: ['web-sitesi', 'mobil-uygulama', 'ui-ux'],
     scope: ['Web', 'Mobil', 'UI/UX'],
     liveUrl: 'https://bebeklersoruyor.com',
+    stores: {
+      appStore: 'https://apps.apple.com/tr/app/bebekler-soruyor/id6801300588?l=tr',
+    },
     gallery: shots('bebeklersoruyor', 6),
   },
   {
