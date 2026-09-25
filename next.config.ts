@@ -29,7 +29,14 @@ const nextConfig: NextConfig = {
   // Harici görsel kaynağı kullanılmıyor (eski hizliresim izinleri kaldırıldı).
   images: { formats: ['image/avif', 'image/webp'] },
   async headers() {
-    return [{ source: '/:path*', headers: securityHeaders }];
+    // Değişmeyen görseller tarayıcıda önbelleğe alınır: yavaş bağlantıda her açılışta yeniden doğrulanmaz.
+    const assetCache = [{ key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }];
+    return [
+      { source: '/:path*', headers: securityHeaders },
+      { source: '/brand/:path*', headers: assetCache },
+      { source: '/icon/:path*', headers: assetCache },
+      { source: '/images/:path*', headers: assetCache },
+    ];
   },
   async redirects() {
     return [

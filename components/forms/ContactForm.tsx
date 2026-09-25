@@ -27,7 +27,7 @@ export function ContactForm() {
 
   if (waUrl) {
     return (
-      <div role="status" className="glass rounded-card p-6 text-center sm:p-8">
+      <div role="status" className="border border-white/12 bg-ink-900 shadow-glass rounded-card p-6 text-center sm:p-8">
         <h2 className="text-2xl font-bold">Mesajınız hazır</h2>
         <p className="mt-3 text-fg-muted">
           Bilgileriniz WhatsApp&apos;ta hazırlandı. Göndermek için WhatsApp&apos;ı onaylayın. Açılmadıysa aşağıdaki düğmeye basın.
@@ -40,7 +40,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="glass space-y-4 rounded-card p-5 sm:p-7" aria-labelledby="form-baslik">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="border border-white/12 bg-ink-900 shadow-glass space-y-4 rounded-card p-5 sm:p-7" aria-labelledby="form-baslik">
       <div>
         <h2 id="form-baslik" className="text-2xl font-bold">
           Bize yazın

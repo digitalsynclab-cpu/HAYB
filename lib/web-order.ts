@@ -72,6 +72,7 @@ export const SPECIAL_REQUEST_OPTIONS = ['WhatsApp', 'Randevu', 'Teklif Formu', '
 
 /** Paketler sayfasındaki karşılaştırma tablosuyla tutarlı bilgi notları (özel istek seçildiğinde gösterilir). */
 export const REQUEST_PACKAGE_NOTES: Record<string, string> = {
+  'Online Ödeme': 'Online ödeme için e-ticaret paketi seçmelisiniz.',
   'Çoklu Dil': 'Çoklu dil desteği Premium pakette yer alır.',
   Blog: 'Blog sistemi Business ve üzeri paketlerde yer alır.',
   'Teklif Formu': 'Teklif formu Business ve üzeri paketlerde yer alır.',

@@ -106,7 +106,7 @@ export function ProjectWizard() {
         })}
       </ol>
 
-      <div className="glass rounded-card p-5 sm:p-8" key={step}>
+      <div className="border border-white/12 bg-ink-900 shadow-glass rounded-card p-5 sm:p-8" key={step}>
         <p className="text-sm font-semibold uppercase tracking-[0.16em] text-fg-muted">
           Adım {Math.min(step + 1, 5)} / 5
         </p>

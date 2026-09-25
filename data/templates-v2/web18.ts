@@ -6,7 +6,7 @@ const I = (k: string) => `/images/templates/web18-${k}.webp`;
 export const web18: TemplateV2Def = {
   slug: 'web18',
   code: 'WEB 18',
-  minimumPackage: 'professional',
+  minimumPackage: 'business',
   brand: 'Sera Atelier',
   sector: 'Moda atölyesi',
   category: 'Moda',

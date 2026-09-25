@@ -262,6 +262,12 @@ body {
 .marquee-track { display: flex; width: max-content; gap: 1rem; padding-right: 1rem; animation: marquee-x 55s linear infinite; will-change: transform; }
 .marquee:hover .marquee-track, .marquee:active .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
 
+@keyframes hub-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { #proje-icerik { animation: none !important; } }
+
+/* Dokunmatik: çift dokunma gecikmesi olmasın, dokunma vurgusu sade kalsın */
+a, button, input, select, textarea, label, summary, [role='button'], [role='radio'] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
 /* ─── Açılış animasyonu (özel 3D logo): neon çizgiler, kayarak giriş, parlama, genişleyerek çıkış ─── */
 html.intro-active { overflow: hidden; }
 .intro-seen .intro { display: none; }
@@ -294,6 +300,7 @@ html.intro-active { overflow: hidden; }
   animation: intro-logo-in 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both, intro-glow 0.8s ease-in-out 1.15s both, intro-logo-out 0.55s cubic-bezier(0.7, 0, 0.3, 1) 1.95s forwards;
 }
 .intro-logo img { display: block; width: 100%; height: auto; }
+.intro-plain .intro-shine { display: none; }
 @keyframes intro-logo-in {
   from { opacity: 0; transform: translateX(-60vw) scale(0.78) skewX(-14deg); filter: blur(18px); }
   to   { opacity: 1; transform: none; filter: blur(0); }

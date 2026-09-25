@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const TOTAL_MS = 2500;
 
@@ -12,14 +12,15 @@ const TOTAL_MS = 2500;
 export function IntroSplash() {
   const [show, setShow] = useState(true);
 
-  useEffect(() => {
+  const finish = useCallback(() => {
     const root = document.documentElement;
-    const finish = () => {
-      root.classList.remove('intro-active');
-      root.classList.add('intro-seen');
-      window.dispatchEvent(new Event('hayb:intro-end'));
-      setShow(false);
-    };
+    root.classList.remove('intro-active');
+    root.classList.add('intro-seen');
+    window.dispatchEvent(new Event('hayb:intro-end'));
+    setShow(false);
+  }, []);
+
+  useEffect(() => {
     // Süre, sayfanın açıldığı andan sayılır (yavaş yüklenen cihazda animasyon uzamaz).
     const t = window.setTimeout(finish, Math.max(400, TOTAL_MS - performance.now()));
     const skip = (e: KeyboardEvent) => {
@@ -32,7 +33,7 @@ export function IntroSplash() {
       window.clearTimeout(t);
       window.removeEventListener('keydown', skip);
     };
-  }, []);
+  }, [finish]);
 
   if (!show) return null;
 
@@ -41,13 +42,7 @@ export function IntroSplash() {
       className="intro"
       role="presentation"
       aria-hidden
-      onClick={() => {
-        const root = document.documentElement;
-        root.classList.remove('intro-active');
-        root.classList.add('intro-seen');
-        window.dispatchEvent(new Event('hayb:intro-end'));
-        setShow(false);
-      }}
+      onClick={finish}
     >
       <span className="intro-grid" />
       <span className="intro-beam intro-beam-1" />
@@ -57,8 +52,23 @@ export function IntroSplash() {
         <span className="intro-ring" />
         <span className="intro-ring intro-ring-2" />
         <div className="intro-logo">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/hayb-3d.webp" alt="" width={1000} height={1000} decoding="async" fetchPriority="high" />
+          {/* WebP desteklemeyen eski tarayıcılar PNG alır; görsel hiçbir şekilde yüklenemezse kırık simge göstermek yerine açılış atlanır. */}
+          <picture>
+            <source srcSet="/brand/hayb-3d.webp" type="image/webp" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/hayb-3d.png"
+              alt=""
+              width={720}
+              height={720}
+              decoding="async"
+              fetchPriority="high"
+              onError={finish}
+              onLoad={(e) => {
+                if (!e.currentTarget.currentSrc.endsWith('.webp')) e.currentTarget.closest('.intro')?.classList.add('intro-plain');
+              }}
+            />
+          </picture>
           <span className="intro-shine" />
         </div>
       </div>

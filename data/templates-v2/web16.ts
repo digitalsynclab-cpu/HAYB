@@ -6,7 +6,7 @@ const I = (k: string) => `/images/templates/web16-${k}.webp`;
 export const web16: TemplateV2Def = {
   slug: 'web16',
   code: 'WEB 16',
-  minimumPackage: 'professional',
+  minimumPackage: 'business',
   brand: 'Işıl Estetik',
   sector: 'Estetik kliniği',
   category: 'Güzellik ve Bakım',

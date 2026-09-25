@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { templates, templateUrl } from '@/data/templates';
 import {
   ORDER_TTL_MS,
+  REQUEST_PACKAGE_NOTES,
   buildWebsiteOrderWhatsAppMessage,
   emptyOrder,
   parseStoredOrder,
@@ -165,5 +166,24 @@ describe('taslak saklama', () => {
   });
   it('sayfa seçimi "Diğer" için metni ekler', () => {
     expect(selectedPages(filled({ pages: ['Blog', 'Diğer'], pagesOther: 'Basın' }))).toEqual(['Blog', 'Diğer: Basın']);
+  });
+});
+
+describe('paket kuralları (şablon ve özel istek)', () => {
+  it('yalnızca WEB 09, 12 ve 17 Professional ister; diğerleri Business', () => {
+    const pro = templates.filter((t) => t.minimumPackage === 'professional').map((t) => t.code);
+    expect(pro.sort()).toEqual(['WEB 09', 'WEB 12', 'WEB 17']);
+    expect(templates.every((t) => t.minimumPackage === 'business' || t.minimumPackage === 'professional')).toBe(true);
+  });
+  it('Starter pakette hiçbir hazır tasarım seçilemez; Business Professional şablonları kilitler', () => {
+    for (const t of templates) expect(templateAvailability(t.minimumPackage, 'starter')).toBe('locked');
+    const w9 = templates.find((t) => t.code === 'WEB 09')!;
+    const w10 = templates.find((t) => t.code === 'WEB 10')!;
+    expect(templateAvailability(w9.minimumPackage, 'business')).toBe('locked');
+    expect(templateAvailability(w9.minimumPackage, 'professional')).toBe('available');
+    expect(templateAvailability(w10.minimumPackage, 'business')).toBe('available');
+  });
+  it('Online Ödeme seçimi e-ticaret paketi uyarısı verir', () => {
+    expect(REQUEST_PACKAGE_NOTES['Online Ödeme']).toBe('Online ödeme için e-ticaret paketi seçmelisiniz.');
   });
 });

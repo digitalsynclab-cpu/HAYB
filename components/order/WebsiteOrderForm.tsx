@@ -1,10 +1,11 @@
 'use client';
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Lock, MessageCircle, Plus, Trash2 } from 'lucide-react';
 import { Field, inputProps } from '@/components/forms/Field';
 import { templates } from '@/data/templates';
+import type { MinimumPackage } from '@/data/template-types';
 import { templateThumb, templateUrl } from '@/data/template-paths';
 import { classifyOrigin, previousPath, trackEvent } from '@/lib/analytics';
 import {
@@ -112,6 +113,50 @@ const triOptions: Opt<Tri>[] = [
   { value: 'unknown', label: 'Emin değilim' },
 ];
 
+/** Hazır tasarım ızgarası: yalnızca paket veya seçim değişince yeniden çizilir (form yazarken donma yapmaz). */
+const TemplatePicker = memo(function TemplatePicker({
+  packageChoice,
+  selectedSlug,
+  onPick,
+}: {
+  packageChoice: PackageChoice;
+  selectedSlug: string;
+  onPick: (slug: string, min: MinimumPackage, locked: boolean, pkg: PackageChoice) => void;
+}) {
+  return (
+    <div role="radiogroup" aria-label="Hazır tasarımlar" className="grid grid-cols-2 gap-3 lg:grid-cols-3">
+      {templates.map((t) => {
+        const locked = templateAvailability(t.minimumPackage, packageChoice) === 'locked';
+        const selected = selectedSlug === t.slug;
+        return (
+          <div key={t.slug}>
+            <button
+              type="button"
+              role="radio"
+              aria-checked={selected}
+              aria-disabled={locked || undefined}
+              onClick={() => onPick(t.slug, t.minimumPackage, locked, packageChoice)}
+              className={`press group block w-full overflow-hidden rounded-xl border text-left transition ${selected ? 'border-lime ring-2 ring-lime/60' : 'border-white/15 hover:border-white/40'} ${locked ? 'opacity-55' : ''}`}
+            >
+              <span className="relative block aspect-[900/560] overflow-hidden bg-ink-900">
+                <Image src={templateThumb(t.slug)} alt={`${t.code} ${t.brand} şablonu önizlemesi`} fill sizes="(min-width:1024px) 220px, 44vw" loading="lazy" className="object-cover object-top" />
+                {selected && <span aria-hidden className="absolute right-2 top-2 grid h-7 w-7 place-items-center rounded-full bg-lime text-ink-950"><Check className="h-4 w-4" /></span>}
+                {locked && <span aria-hidden className="absolute right-2 top-2 grid h-7 w-7 place-items-center rounded-full bg-black/70 text-white"><Lock className="h-3.5 w-3.5" /></span>}
+              </span>
+              <span className="block px-3 py-2.5">
+                <span className="block text-[0.7rem] font-extrabold uppercase tracking-[0.14em] text-lime">{t.code}</span>
+                <span className="block truncate text-sm font-bold">{t.brand}</span>
+                <span className="block truncate text-xs text-fg-muted">{t.sector}</span>
+                {t.minimumPackage !== 'business' && <span className="mt-1 block text-[0.7rem] font-semibold text-fg-muted">{minimumPackageLabel(t.minimumPackage)} ve üzeri</span>}
+              </span>
+            </button>
+          </div>
+        );
+      })}
+    </div>
+  );
+});
+
 /* ───────────── Ana bileşen ───────────── */
 
 export function WebsiteOrderFormView() {
@@ -210,6 +255,16 @@ export function WebsiteOrderFormView() {
     }
   }, []);
 
+  const pickTemplate = useCallback((slug: string, min: MinimumPackage, locked: boolean, pkg: PackageChoice) => {
+    if (locked) {
+      setLockedNotice(lockedMessage(min, pkg));
+      return;
+    }
+    setLockedNotice('');
+    patch({ templateSlug: slug });
+    trackEvent('template_selected', { templateId: slug, package: pkg || undefined });
+  }, [patch]);
+
   const scrollToCard = () => {
     cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     window.setTimeout(() => headingRef.current?.focus({ preventScroll: true }), 350);
@@ -286,7 +341,7 @@ export function WebsiteOrderFormView() {
   if (phase === 'done') {
     const url = websiteOrderWhatsAppUrl(f);
     return (
-      <div role="status" className="glass mx-auto max-w-2xl rounded-card p-6 text-center sm:p-9">
+      <div role="status" className="mx-auto max-w-2xl rounded-card border border-white/12 bg-ink-900 p-6 text-center shadow-glass sm:p-9">
         <span aria-hidden className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-lime text-ink-950">
           <Check className="h-7 w-7" />
         </span>
@@ -367,7 +422,7 @@ export function WebsiteOrderFormView() {
           if (isLast) send();
           else next();
         }}
-        className="glass rounded-card p-5 sm:p-8"
+        className="rounded-card border border-white/12 bg-ink-900 p-5 shadow-glass sm:p-8"
       >
         <h2 ref={headingRef} tabIndex={-1} className="text-xl font-extrabold tracking-tight outline-none sm:text-2xl">
           {step.title}
@@ -516,47 +571,7 @@ export function WebsiteOrderFormView() {
                   </div>
                   {errors.templateSlug && <p role="alert" className="text-sm font-medium text-red-300">{errors.templateSlug}</p>}
 
-                  <div role="radiogroup" aria-label="Hazır tasarımlar" className="grid grid-cols-2 gap-3 lg:grid-cols-3">
-                    {templates.map((t) => {
-                      const av = templateAvailability(t.minimumPackage, f.packageChoice);
-                      const selected = f.templateSlug === t.slug;
-                      const locked = av === 'locked';
-                      return (
-                        <div key={t.slug}>
-                          <button
-                            type="button"
-                            role="radio"
-                            aria-checked={selected}
-                            aria-disabled={locked || undefined}
-                            onClick={() => {
-                              if (locked) {
-                                setLockedNotice(lockedMessage(t.minimumPackage, f.packageChoice));
-                                return;
-                              }
-                              setLockedNotice('');
-                              patch({ templateSlug: t.slug });
-                              trackEvent('template_selected', { templateId: t.slug, package: f.packageChoice || undefined });
-                            }}
-                            className={`press group block w-full overflow-hidden rounded-xl border text-left transition ${
-                              selected ? 'border-lime ring-2 ring-lime/60' : 'border-white/15 hover:border-white/40'
-                            } ${locked ? 'opacity-55' : ''}`}
-                          >
-                            <span className="relative block aspect-[900/560] overflow-hidden bg-ink-900">
-                              <Image src={templateThumb(t.slug)} alt={`${t.code} ${t.brand} şablonu önizlemesi`} fill sizes="(min-width:1024px) 220px, 44vw" className="object-cover object-top" />
-                              {selected && <span aria-hidden className="absolute right-2 top-2 grid h-7 w-7 place-items-center rounded-full bg-lime text-ink-950"><Check className="h-4 w-4" /></span>}
-                              {locked && <span aria-hidden className="absolute right-2 top-2 grid h-7 w-7 place-items-center rounded-full bg-black/70 text-white"><Lock className="h-3.5 w-3.5" /></span>}
-                            </span>
-                            <span className="block px-3 py-2.5">
-                              <span className="block text-[0.7rem] font-extrabold uppercase tracking-[0.14em] text-lime">{t.code}</span>
-                              <span className="block truncate text-sm font-bold">{t.brand}</span>
-                              <span className="block truncate text-xs text-fg-muted">{t.sector}</span>
-                              {t.minimumPackage !== 'business' && <span className="mt-1 block text-[0.7rem] font-semibold text-fg-muted">{minimumPackageLabel(t.minimumPackage)} ve üzeri</span>}
-                            </span>
-                          </button>
-                        </div>
-                      );
-                    })}
-                  </div>
+                  <TemplatePicker packageChoice={f.packageChoice} selectedSlug={f.templateSlug} onPick={pickTemplate} />
                   <p role="status" className="min-h-5 text-sm font-medium text-fg-muted">
                     {lockedNotice && (
                       <>

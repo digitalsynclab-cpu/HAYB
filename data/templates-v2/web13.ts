@@ -7,7 +7,7 @@ const J = (k: string) => `/images/templates/web18-${k}.webp`;
 export const web13: TemplateV2Def = {
   slug: 'web13',
   code: 'WEB 13',
-  minimumPackage: 'professional',
+  minimumPackage: 'business',
   brand: 'Nüans',
   sector: 'Moda e-ticaret',
   category: 'Moda',

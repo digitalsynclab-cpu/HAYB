@@ -6,7 +6,7 @@ const I = (k: string) => `/images/templates/web15-${k}.webp`;
 export const web15: TemplateV2Def = {
   slug: 'web15',
   code: 'WEB 15',
-  minimumPackage: 'professional',
+  minimumPackage: 'business',
   brand: 'Mekân Stüdyo',
   sector: 'Mimarlık stüdyosu',
   category: 'İnşaat ve Mimarlık',

@@ -6,7 +6,7 @@ const I = (k: string) => `/images/templates/web11-${k}.webp`;
 export const web11: TemplateV2Def = {
   slug: 'web11',
   code: 'WEB 11',
-  minimumPackage: 'professional',
+  minimumPackage: 'business',
   brand: 'Zeytin Burnu Hotel',
   sector: 'Butik otel',
   category: 'Otel ve Turizm',

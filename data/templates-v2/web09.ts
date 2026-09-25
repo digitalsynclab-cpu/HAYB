@@ -6,7 +6,7 @@ const I = (k: string) => `/images/templates/web9-${k}.webp`;
 export const web09: TemplateV2Def = {
   slug: 'web9',
   code: 'WEB 09',
-  minimumPackage: 'business',
+  minimumPackage: 'professional',
   brand: 'Ada Diş Kliniği',
   sector: 'Diş kliniği',
   category: 'Sağlık',
