@@ -96,7 +96,7 @@ function PlanCard({ plan, category, variant = 'light', example }: { plan: Pricin
         ))}
       </ul>
       <div className="mt-6 space-y-2">
-        <AddToCartButton plan={plan} category={category} />
+        <AddToCartButton plan={plan} category={category} tone={lime ? 'dark' : 'lime'} />
           <a
             href={whatsappUrl(`Merhaba, ${category} - ${plan.name} paketi hakkında bilgi almak istiyorum.`)}
             target="_blank"
