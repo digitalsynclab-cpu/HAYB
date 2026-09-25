@@ -26,6 +26,8 @@ export interface ServiceDetail {
   projectIds: string[];
   /** Fiyatlandırma sayfasında karşılığı varsa bağlantı */
   pricingNote?: string;
+  /** true ise ana sayfa ve Hizmetler listesinde kart olarak gösterilmez (alt bilgi ve ilgili sayfadan ulaşılır) */
+  unlisted?: boolean;
 }
 
 export const services: ServiceDetail[] = [
@@ -66,6 +68,7 @@ export const services: ServiceDetail[] = [
   },
   {
     slug: 'e-ticaret',
+    unlisted: true,
     title: 'E-Ticaret',
     short: 'E-Ticaret',
     icon: 'eticaret',

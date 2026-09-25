@@ -161,6 +161,21 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         )}
       </Section>
 
+      {s.slug === 'web-sitesi' && (
+        <Section tone="dark" labelledBy="eticaret">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-lime">E-Ticaret</p>
+              <h2 id="eticaret" className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">Ürünlerinizi online satmak mı istiyorsunuz?</h2>
+              <p className="mt-2 text-fg-muted">iyzico veya PayTR ile ödeme alan, ürün, stok ve siparişi tek panelden yöneten e-ticaret sitesi kuruyoruz. Paketler 29.990 ₺’den başlar.</p>
+            </div>
+            <Button href="/hizmetler/e-ticaret" arrow>
+              E-Ticaret Hizmetini İncele
+            </Button>
+          </div>
+        </Section>
+      )}
+
       {s.showcase !== 'dashboard' && s.showcase !== 'mobile' && (
         <Section tone="dark" labelledBy="gosterim">
           <SectionHeading id="gosterim" eyebrow="Nasıl görünür?" title="Ürünün" accent="kendisini görün." />

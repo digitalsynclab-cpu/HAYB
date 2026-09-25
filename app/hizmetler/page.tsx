@@ -37,7 +37,7 @@ export default function ServicesPage() {
       <Section tone="light" labelledBy="hizmet-listesi">
         <SectionHeading id="hizmet-listesi" eyebrow="Neler yapıyoruz?" title="Hizmetlerimiz," accent="tek çatı altında." />
         <ul className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
-          {services.map((s, i) => (
+          {services.filter((s) => !s.unlisted).map((s, i) => (
             <li key={s.slug}>
               <Reveal delay={(i % 4) * 60} className="h-full">
                 <ServiceCard service={s} />

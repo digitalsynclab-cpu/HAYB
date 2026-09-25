@@ -54,8 +54,7 @@ export function HomeHero() {
 }
 
 export function HomeServices() {
-  const order = ['web-sitesi', 'mobil-uygulama', 'mobil-oyun', 'ozel-yazilim', 'yonetim-paneli', 'yapay-zeka', 'sosyal-medya', 'marka-tasarimi', 'reklam-yonetimi', 'e-ticaret', 'hayb-data-service'];
-  const main = order.map((slug) => services.find((s) => s.slug === slug)).filter((s): s is NonNullable<typeof s> => Boolean(s));
+  const main = services.filter((s) => ['web-sitesi', 'mobil-uygulama', 'mobil-oyun', 'ozel-yazilim', 'yonetim-paneli', 'yapay-zeka', 'sosyal-medya', 'marka-tasarimi', 'reklam-yonetimi', 'hayb-data-service'].includes(s.slug));
   return (
     <Section tone="light" labelledBy="neler-yapiyoruz">
       <SectionHeading
@@ -72,7 +71,7 @@ export function HomeServices() {
       />
       <ul className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
         {main.map((s, i) => {
-          const wide = s.slug === 'hayb-data-service' || s.slug === 'e-ticaret';
+          const wide = s.slug === 'hayb-data-service';
           return (
             <li key={s.slug} className={wide ? 'lg:col-span-3' : ''}>
               <Reveal delay={(i % 3) * 70} className="h-full">
