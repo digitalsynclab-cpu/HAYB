@@ -35,7 +35,7 @@ import { whatsappUrl } from '@/data/site';
 export const metadata = buildMetadata({
   title: 'Paketler: Web Sitesi, E-Ticaret, Sosyal Medya, QR Menü',
   description:
-    'Web sitesi paketleri 5.000 ₺’den, e-ticaret paketleri 29.990 ₺’den, QR menü 2.500 ₺’den, sosyal medya paketleri haftalık 3.000 ₺’den başlar. Özel yazılım ve mobil uygulama için teklif alın.',
+    'Web sitesi paketleri 5.000 ₺’den, e-ticaret paketleri 39.990 ₺’den, QR menü 2.500 ₺’den, sosyal medya paketleri haftalık 3.000 ₺’den başlar. Özel yazılım ve mobil uygulama için teklif alın.',
   path: '/paketler',
 });
 

@@ -76,7 +76,7 @@ export const services: ServiceDetail[] = [
     summary: 'Ürünlerinizi online satın: iyzico / PayTR ile ödeme, stok, sipariş ve kargo yönetimi.',
     metaTitle: 'E-Ticaret Sitesi Kurulumu: iyzico ve PayTR Entegrasyonlu',
     metaDescription:
-      'Online mağazanızı kuruyoruz: iyzico veya PayTR ile kredi kartı ve taksitli ödeme, ürün-stok-sipariş paneli, kargo ve e-fatura entegrasyonu. E-ticaret paketleri 29.990 ₺’den başlar.',
+      'Online mağazanızı kuruyoruz: iyzico veya PayTR ile kredi kartı ve taksitli ödeme, ürün-stok-sipariş paneli, kargo ve e-fatura entegrasyonu. E-ticaret paketleri 39.990 ₺’den başlar.',
     heroTitle: 'Online mağazanız',
     heroAccent: 'satışa hazır.',
     heroText:
@@ -100,7 +100,7 @@ export const services: ServiceDetail[] = [
       { title: 'Yayın ve eğitim', text: 'Siteyi yayına alır, paneli nasıl kullanacağınızı anlatırız.' },
     ],
     projectIds: [],
-    pricingNote: 'E-ticaret paketleri 29.990 ₺ ile başlar (Start 29.990 ₺, Growth 49.990 ₺, Elite 79.990 ₺; kampanyalı fiyatlar).',
+    pricingNote: 'E-ticaret paketleri 39.990 ₺ ile başlar (Start 39.990 ₺, Growth 59.990 ₺, Elite 89.990 ₺; kampanyalı fiyatlar).',
   },
   {
     slug: 'ozel-yazilim',

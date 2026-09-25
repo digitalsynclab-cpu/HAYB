@@ -159,9 +159,9 @@ describe('e-ticaret paketleri', () => {
   it('üç paket, doğru kampanya fiyatlarıyla yanıtlanır', () => {
     const a = getAnswer('e ticaret sitesi fiyatları');
     expect(a).toContain('E-Ticaret Start');
-    expect(a).toContain('29.990 ₺');
-    expect(a).toContain('49.990 ₺');
-    expect(a).toContain('79.990 ₺');
+    expect(a).toContain('39.990 ₺');
+    expect(a).toContain('59.990 ₺');
+    expect(a).toContain('89.990 ₺');
   });
   it('sanal pos sorusu e-ticaret konusuna gider', () => {
     expect(getAnswer('iyzico sanal pos var mı')).toContain('E-ticaret paketlerimiz');

@@ -198,6 +198,6 @@ describe('e-ticaret paketleri (sipariş formu)', () => {
   });
   it('e-ticaret paketleri kampanya fiyatıyla eklenmiştir', async () => {
     const { ecommercePackages } = await import('@/data/pricing');
-    expect(ecommercePackages.map((p) => p.price)).toEqual(['29.990 ₺', '49.990 ₺', '79.990 ₺']);
+    expect(ecommercePackages.map((p) => p.price)).toEqual(['39.990 ₺', '59.990 ₺', '89.990 ₺']);
   });
 });

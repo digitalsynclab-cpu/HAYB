@@ -80,9 +80,9 @@ export interface EcommerceRow {
 }
 
 export const ecommercePackages = [
-  { id: 'eticaret-start',  key: 'start', label: 'E-Ticaret Start', name: 'E-TİCARET START',  price: '29.990 ₺', recommended: false, blurb: 'İlk online mağazanız: ürünlerinizi yükleyin, ödeme alın, siparişi yönetin.' },
-  { id: 'eticaret-growth', key: 'growth', label: 'E-Ticaret Growth', name: 'E-TİCARET GROWTH', price: '49.990 ₺', recommended: true,  blurb: 'Büyüyen mağazalar için: çoklu ödeme, kargo ve fatura otomasyonu, pazarlama araçları.' },
-  { id: 'eticaret-elite',  key: 'elite', label: 'E-Ticaret Elite', name: 'E-TİCARET ELITE',  price: '79.990 ₺', recommended: false, blurb: 'Ölçeklenen işletmeler için: pazaryeri, bayi (B2B), çoklu dil ve özel tasarım.' },
+  { id: 'eticaret-start',  key: 'start', label: 'E-Ticaret Start', name: 'E-TİCARET START',  price: '39.990 ₺', recommended: false, blurb: 'İlk online mağazanız: ürünlerinizi yükleyin, ödeme alın, siparişi yönetin.' },
+  { id: 'eticaret-growth', key: 'growth', label: 'E-Ticaret Growth', name: 'E-TİCARET GROWTH', price: '59.990 ₺', recommended: true,  blurb: 'Büyüyen mağazalar için: çoklu ödeme, kargo ve fatura otomasyonu, pazarlama araçları.' },
+  { id: 'eticaret-elite',  key: 'elite', label: 'E-Ticaret Elite', name: 'E-TİCARET ELITE',  price: '89.990 ₺', recommended: false, blurb: 'Ölçeklenen işletmeler için: pazaryeri, bayi (B2B), çoklu dil ve özel tasarım.' },
 ] as const;
 
 export const ecommerceRows: EcommerceRow[] = [

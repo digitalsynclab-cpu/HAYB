@@ -85,7 +85,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
           <>
             {s.slug === 'e-ticaret' ? (
               <>
-                <Button href="/paketler#eticaret">Paketleri Gör · 29.990 ₺</Button>
+                <Button href="/paketler#eticaret">Paketleri Gör · 39.990 ₺</Button>
                 <Button href="/web-sitesi-siparis" variant="secondary">
                   Sipariş Formu
                 </Button>
@@ -167,7 +167,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
             <div className="max-w-2xl">
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-lime">E-Ticaret</p>
               <h2 id="eticaret" className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">Ürünlerinizi online satmak mı istiyorsunuz?</h2>
-              <p className="mt-2 text-fg-muted">iyzico veya PayTR ile ödeme alan, ürün, stok ve siparişi tek panelden yöneten e-ticaret sitesi kuruyoruz. Paketler 29.990 ₺’den başlar.</p>
+              <p className="mt-2 text-fg-muted">iyzico veya PayTR ile ödeme alan, ürün, stok ve siparişi tek panelden yöneten e-ticaret sitesi kuruyoruz. Paketler 39.990 ₺’den başlar.</p>
             </div>
             <Button href="/hizmetler/e-ticaret" arrow>
               E-Ticaret Hizmetini İncele
