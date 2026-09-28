@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion, type PanInfo, type Variants } from 'framer-motion';
-import { ArrowRight, Headset, X } from 'lucide-react';
+import { Headset, X } from 'lucide-react';
 import { whatsappUrl } from '@/data/site';
 import { trackEvent } from '@/lib/analytics';
 
@@ -118,22 +118,29 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
               dragElastic={{ top: 0, bottom: 0.5 }}
               onDragEnd={onDragEnd}
             >
-              {/* Üst şerit: yumuşak yeşil ışık ve sarkan kapat düğmesi */}
-              <div className="relative h-24 overflow-hidden rounded-t-[2rem]">
-                <div aria-hidden className="absolute inset-0 bg-[#0d0d0d]" />
-                <div aria-hidden className="absolute -top-16 left-1/2 h-40 w-[120%] -translate-x-1/2 rounded-full bg-lime/40 blur-3xl" />
-                <div aria-hidden className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0d0d0d] to-transparent" />
+              {/* Üst şerit: yumuşak yeşil ışık; altında kapat düğmesinin oturduğu içbükey (U) kavis */}
+              <div className="relative h-28 overflow-hidden rounded-t-[2rem] bg-[#0d0d0d]">
+                <motion.div
+                  aria-hidden
+                  className="absolute -top-20 left-1/2 h-48 w-[130%] -translate-x-1/2 rounded-full bg-lime/45 blur-3xl"
+                  animate={reduce ? undefined : { opacity: [0.7, 1, 0.7], scale: [1, 1.08, 1] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                />
+                <div aria-hidden className="absolute left-[12%] top-6 h-8 w-24 rounded-full bg-white/30 blur-xl" />
+                <svg aria-hidden viewBox="0 0 400 64" preserveAspectRatio="none" className="absolute inset-x-0 bottom-0 h-16 w-full">
+                  <path d="M0 64V26H128C154 26 164 56 200 56S246 26 272 26H400V64Z" fill="#0d0d0d" />
+                </svg>
               </div>
               <button
                 type="button"
                 onClick={onClose}
                 aria-label="Kapat"
-                className="press absolute left-1/2 top-9 z-10 grid h-16 w-16 -translate-x-1/2 place-items-center rounded-full border border-white/10 bg-[#0d0d0d] text-white/85 shadow-[0_0_0_10px_#0d0d0d] transition hover:text-white"
+                className="press absolute left-1/2 top-[2.1rem] z-10 grid h-16 w-16 -translate-x-1/2 place-items-center rounded-full border border-white/10 bg-[#0d0d0d]/90 text-white/85 backdrop-blur transition hover:text-white"
               >
                 <X aria-hidden className="h-6 w-6" />
               </button>
 
-              <div className="max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain rounded-b-none bg-[#0d0d0d] px-6 pb-8 pt-12 sm:rounded-b-[2rem]">
+              <div className="max-h-[calc(100dvh-8rem)] overflow-y-auto overscroll-contain rounded-b-none bg-[#0d0d0d] px-6 pb-8 pt-3 sm:rounded-b-[2rem]">
                 {sentUrl ? (
                   <motion.div role="status" className="text-center" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
                     <h2 id="cfab-title" className="text-2xl font-bold text-white">Mesajınız hazır</h2>
@@ -171,22 +178,18 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
                     </motion.label>
                     {errors.consent && <p role="alert" className="mt-1.5 px-1 text-sm text-red-300">{errors.consent}</p>}
                     <motion.div variants={itemVariants}>
-                      <button type="submit" className="group relative mt-5 inline-flex min-h-14 w-full items-center justify-center overflow-hidden rounded-full bg-lime px-6 text-base font-bold text-ink-950 transition hover:bg-lime-soft">
-                        {/* Üzerine gelince geçen parlama (21st.dev Smooth Drawer düğmesi) */}
-                        <motion.span aria-hidden className="absolute inset-0 -translate-x-[200%] bg-gradient-to-r from-transparent via-white/40 to-transparent" whileHover={{ x: ['-200%', '200%'] }} transition={{ duration: 1.2, ease: 'easeInOut' }} />
-                        <span className="relative inline-flex items-center gap-2">
-                          Gönder
-                          <motion.span animate={reduce ? undefined : { x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 1 }}>
-                            <ArrowRight aria-hidden className="h-5 w-5" />
-                          </motion.span>
-                        </span>
+                      <button type="submit" className="group relative mt-5 inline-flex min-h-14 w-full items-center justify-center overflow-hidden rounded-full border border-white/10 bg-gradient-to-b from-[#1c1c1c] to-[#101010] px-6 text-base font-semibold text-white transition hover:border-lime/60">
+                        <motion.span aria-hidden className="absolute inset-0 -translate-x-[200%] bg-gradient-to-r from-transparent via-white/15 to-transparent" whileHover={{ x: ['-200%', '200%'] }} transition={{ duration: 1.2, ease: 'easeInOut' }} />
+                        <span className="relative">Gönder</span>
                       </button>
                     </motion.div>
 
                     <motion.div variants={itemVariants} className="mt-7 border-t border-white/10 pt-6">
-                      <p className="text-sm font-semibold text-white">Siz mi arayacaksınız?</p>
-                      <p className="mt-1 text-sm text-white/55">Hemen konuşmak isterseniz bizi doğrudan arayabilirsiniz.</p>
-                      <a href={`tel:${PHONE_TEL}`} className="press mt-4 inline-flex min-h-14 w-full items-center justify-center gap-2.5 rounded-full border border-lime/50 bg-lime/10 px-6 text-lg font-semibold text-lime transition hover:bg-lime hover:text-ink-950">
+                      <div className="flex items-end justify-between gap-4">
+                        <p className="text-lg font-semibold leading-tight text-white">Siz mi<br />Arayacaksınız?</p>
+                        <p className="max-w-[10.5rem] text-right text-xs leading-snug text-white/55">Hemen konuşmak isterseniz bizi doğrudan arayabilirsiniz.</p>
+                      </div>
+                      <a href={`tel:${PHONE_TEL}`} className="press mt-4 inline-flex min-h-14 w-full items-center justify-center gap-2.5 rounded-full border border-lime/40 bg-gradient-to-r from-lime to-[#7ee81f] px-6 text-lg font-semibold text-ink-950 transition hover:brightness-105">
                         <Headset aria-hidden className="h-5 w-5" /> {PHONE_DISPLAY}
                       </a>
                     </motion.div>

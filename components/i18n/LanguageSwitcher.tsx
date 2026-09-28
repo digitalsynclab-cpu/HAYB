@@ -1,9 +1,10 @@
 'use client';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import { Globe, X } from 'lucide-react';
 import { useLocale } from '@/components/i18n/LocaleProvider';
 import { LOCALES, type Locale } from '@/lib/i18n/locale';
+import { COUNTRY_MAPS, MAP_VIEWBOX } from '@/data/i18n-maps';
 
 const COPY: Record<Locale, { title: string; text: string; close: string; open: string }> = {
   tr: { title: 'Dilinizi Seçin', text: 'Sitenin dilini değiştirin. Seçiminiz bir sonraki ziyaretinizde de hatırlanır.', close: 'Kapat', open: 'Dil seçimi' },
@@ -11,50 +12,15 @@ const COPY: Record<Locale, { title: string; text: string; close: string; open: s
   de: { title: 'Wählen Sie Ihre Sprache', text: 'Ändern Sie die Sprache der Website. Ihre Auswahl wird beim nächsten Besuch gespeichert.', close: 'Schließen', open: 'Sprache' },
 };
 
-/* Ülke silüetleri: [boylam, enlem] köşe noktalarından basitleştirilmiş taslaklar. */
-const SHAPES: Record<Locale, { name: string; pts: [number, number][]; dot: [number, number] }> = {
-  tr: {
-    name: 'Türkiye',
-    dot: [29.0, 41.0],
-    pts: [[26.04, 40.95], [26.3, 41.7], [28.0, 41.95], [29.0, 41.2], [31.5, 41.15], [33.5, 42.0], [36.0, 41.7], [38.4, 40.9], [41.5, 41.5], [43.5, 41.1], [44.8, 39.7], [44.4, 37.2], [42.3, 37.2], [40.7, 37.1], [38.4, 36.9], [36.7, 36.8], [36.2, 36.0], [35.9, 35.9], [34.0, 36.2], [32.0, 36.6], [30.5, 36.3], [29.0, 36.7], [27.4, 37.0], [26.3, 38.3], [26.5, 39.5], [26.2, 40.0]],
-  },
-  de: {
-    name: 'Deutschland',
-    dot: [6.8, 51.2],
-    pts: [[6.0, 51.0], [6.8, 52.0], [7.0, 53.5], [8.6, 53.9], [8.9, 54.9], [10.0, 54.4], [11.0, 54.4], [13.0, 54.5], [14.3, 53.9], [14.6, 52.4], [15.0, 51.0], [14.3, 50.9], [12.2, 50.3], [13.8, 48.8], [13.0, 47.5], [10.0, 47.5], [7.6, 47.6], [8.2, 49.0], [6.2, 49.5]],
-  },
-  en: {
-    name: 'United Kingdom',
-    dot: [-0.1, 51.5],
-    pts: [[-5.7, 50.0], [-3.5, 50.3], [1.4, 51.1], [1.7, 52.7], [0.4, 53.0], [0.0, 54.0], [-1.5, 55.0], [-2.0, 56.0], [-3.0, 56.0], [-2.0, 57.6], [-3.5, 58.6], [-5.0, 58.6], [-6.2, 57.0], [-5.6, 56.0], [-4.8, 55.0], [-3.0, 54.8], [-3.2, 53.4], [-4.6, 53.3], [-4.2, 52.4], [-5.2, 51.7], [-3.0, 51.4], [-4.2, 51.2]],
-  },
-};
+const NAMES: Record<Locale, string> = { tr: 'Türkiye', de: 'Deutschland', en: 'United Kingdom' };
 
-const W = 150;
-const H = 100;
-
-function project(pts: [number, number][], dot: [number, number]) {
-  const lat0 = (pts.reduce((a, p) => a + p[1], 0) / pts.length) * (Math.PI / 180);
-  const k = Math.cos(lat0);
-  const xy = pts.map(([lo, la]) => [lo * k, -la] as [number, number]);
-  const xs = xy.map((p) => p[0]);
-  const ys = xy.map((p) => p[1]);
-  const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
-  const s = Math.min((W - 8) / (maxX - minX), (H - 8) / (maxY - minY));
-  const ox = (W - (maxX - minX) * s) / 2 - minX * s;
-  const oy = (H - (maxY - minY) * s) / 2 - minY * s;
-  const tp = ([x, y]: [number, number]) => [x * s + ox, y * s + oy] as const;
-  const d = xy.map((p, i) => `${i ? 'L' : 'M'}${tp(p)[0].toFixed(1)},${tp(p)[1].toFixed(1)}`).join('') + 'Z';
-  const dp = tp([dot[0] * k, -dot[1]]);
-  return { d, dot: dp };
-}
-
+/** Gerçek coğrafi veriden (Natural Earth) üretilmiş ülke silüeti ve şehir noktası. */
 function CountryMap({ code, active }: { code: Locale; active: boolean }) {
-  const { d, dot } = useMemo(() => project(SHAPES[code].pts, SHAPES[code].dot), [code]);
+  const m = COUNTRY_MAPS[code];
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} aria-hidden className="h-full w-full" preserveAspectRatio="xMidYMid meet">
-      <path d={d} fill={active ? 'rgba(255,255,255,0.32)' : 'rgba(255,255,255,0.16)'} stroke="none" strokeLinejoin="round" />
-      <circle cx={dot[0]} cy={dot[1]} r="2.6" fill="#fff" />
+    <svg viewBox={MAP_VIEWBOX} aria-hidden className="h-full w-full" preserveAspectRatio="xMidYMid meet">
+      <path d={m.d} fill={active ? 'rgba(255,255,255,0.34)' : 'rgba(255,255,255,0.17)'} stroke="none" fillRule="evenodd" strokeLinejoin="round" />
+      <circle cx={m.dot[0]} cy={m.dot[1]} r="3.4" fill="#fff" />
     </svg>
   );
 }
@@ -196,8 +162,7 @@ export function LanguageModal() {
             <ul className="mt-12 space-y-4">
               {LOCALES.map((l) => {
                 const on = l.code === locale;
-                const shape = SHAPES[l.code];
-                return (
+                                return (
                   <motion.li key={l.code} variants={row}>
                     <motion.button
                       type="button"
@@ -220,7 +185,7 @@ export function LanguageModal() {
                       <span aria-hidden className="pointer-events-none absolute inset-y-2 left-2 w-[46%] opacity-90">
                         <CountryMap code={l.code} active={on} />
                       </span>
-                      <span className="relative z-10 pl-[3.2rem] text-[1.35rem] font-medium text-white sm:text-2xl">{shape.name}</span>
+                      <span className="relative z-10 pl-[3.2rem] text-[1.35rem] font-medium text-white sm:text-2xl">{NAMES[l.code]}</span>
                       <span className="relative z-10 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3.5 py-2 text-sm font-semibold text-white">
                         <Flag code={l.code} />
                         {l.label}
