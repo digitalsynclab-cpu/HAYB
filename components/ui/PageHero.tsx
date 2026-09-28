@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import { Eyebrow } from '@/components/ui/SectionHeading';
@@ -17,12 +18,15 @@ interface PageHeroProps {
   id?: string;
   /** Mobilde görsel başlığın üstünde gösterilir (ilk ekranda marka/ürün görünür) */
   visualFirst?: boolean;
+  /** İsteğe bağlı arka plan görseli (değiştirilmeden, %75 opaklıkta) */
+  backgroundSrc?: string;
 }
 
 /** Tüm iç sayfaların koyu hero bölümü. Bir sonraki bölüm üzerine eğriyle biner. */
-export function PageHero({ eyebrow, title, accent, text, actions, visual, breadcrumb, id = 'sayfa-baslik', visualFirst = false }: PageHeroProps) {
+export function PageHero({ eyebrow, title, accent, text, actions, visual, breadcrumb, id = 'sayfa-baslik', visualFirst = false, backgroundSrc }: PageHeroProps) {
   return (
     <section aria-labelledby={id} className="tone-dark relative overflow-hidden pb-[calc(var(--hayb-curve)+2.5rem)] pt-[calc(var(--hayb-header-h)+2rem)] sm:pt-[calc(var(--hayb-header-h)+3rem)] lg:pt-[calc(var(--hayb-header-h)+4.5rem)]">
+      {backgroundSrc && <Image src={backgroundSrc} alt="" fill priority sizes="100vw" aria-hidden className="pointer-events-none select-none object-cover object-center opacity-75" />}
       <div className={`relative mx-auto grid max-w-page items-center gap-10 px-4 sm:px-6 lg:gap-12 lg:px-8 ${visual ? 'lg:grid-cols-[1.05fr_1fr]' : ''}`}>
         <div className="max-w-2xl">
           {breadcrumb && (

@@ -21,6 +21,7 @@ export function HomeHeroV2() {
     <PageHero
       id="ana-baslik"
       visualFirst
+      backgroundSrc="/brand/hero-bg.webp"
       title="Fikirleri"
       accent="Dijital Gerçeğe Dönüştürüyoruz."
       text="Web siteleri, e-ticaret, mobil uygulamalar ve özel yazılımlarla işinizi dijitale taşıyoruz. Tasarımdan yayına kadar yanınızdayız."
