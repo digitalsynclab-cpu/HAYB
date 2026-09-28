@@ -38,7 +38,7 @@ function Box({ v, label }: { v: number; label: string }) {
   return (
     <div className="camp-box">
       <span className="text-xl font-extrabold tabular-nums leading-none sm:text-3xl">{pad(v)}</span>
-      <span className="mt-1 text-[0.65rem] font-semibold uppercase tracking-widest text-white/60">{label}</span>
+      <span className="mt-1 text-[0.65rem] font-semibold uppercase tracking-widest text-white/85">{label}</span>
     </div>
   );
 }
@@ -145,14 +145,14 @@ export function CampaignPopup() {
 
           {parts && (
             <p className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs sm:mt-4 sm:px-4 sm:py-3 sm:text-sm [&_s]:whitespace-nowrap [&_strong]:whitespace-nowrap">
-              <span className="text-white/60">{`Örn. ${starter.name.charAt(0) + starter.name.slice(1).toLowerCase()} web sitesi`}</span>
-              <s className="text-white/50">{parts.list}</s>
+              <span className="text-white/85">{`Örn. ${starter.name.charAt(0) + starter.name.slice(1).toLowerCase()} web sitesi`}</span>
+              <s className="text-white/85">{parts.list}</s>
               <strong className="text-lg font-extrabold text-lime sm:text-xl">{parts.sale}</strong>
             </p>
           )}
 
           <div className="mt-4 sm:mt-5" role="timer" aria-label="Kampanya bitişine kalan süre">
-            <p className="mb-1.5 text-center text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-white/60 sm:mb-2 sm:text-xs">Kampanya bitimine</p>
+            <p className="mb-1.5 text-center text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-white/85 sm:mb-2 sm:text-xs">Kampanya bitimine</p>
             <div className="grid grid-cols-4 gap-2">
               <Box v={t.d} label="Gün" />
               <Box v={t.h} label="Saat" />
@@ -169,7 +169,7 @@ export function CampaignPopup() {
             >
               Kampanyalı fiyatları gör
             </Link>
-            <button type="button" onClick={close} className="press min-h-11 rounded-xl px-5 text-sm font-semibold text-white/70 hover:text-white">
+            <button type="button" onClick={close} className="press min-h-11 rounded-xl px-5 text-sm font-semibold text-white/90 hover:text-white">
               Şimdi değil
             </button>
           </div>

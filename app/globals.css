@@ -21,10 +21,10 @@
   --hayb-paper-200: 243 243 243;
 
   /* Metin: koyu zeminde / açık zeminde (WCAG AA üstü kontrast) */
-  --hayb-fg: 244 245 240;
-  --hayb-fg-muted: 178 184 170;
-  --hayb-on-light: 20 22 17;
-  --hayb-on-light-muted: 78 84 70;
+  --hayb-fg: 255 255 255;
+  --hayb-fg-muted: 218 222 212;
+  --hayb-on-light: 8 8 8;
+  --hayb-on-light-muted: 40 44 36;
 
   --hayb-border-dark: 255 255 255 / 0.1;
   --hayb-border-light: 20 22 17 / 0.1;

@@ -164,7 +164,7 @@ export function LanguageModal() {
             <motion.h2 variants={row} id="lang-title" className="mt-14 text-center text-2xl font-semibold text-white sm:text-[1.7rem]">
               {copy.title}
             </motion.h2>
-            <motion.p variants={row} className="mx-auto mt-4 max-w-xs text-center text-sm leading-relaxed text-white/55">
+            <motion.p variants={row} className="mx-auto mt-4 max-w-xs text-center text-sm leading-relaxed text-white/85">
               {copy.text}
             </motion.p>
 
@@ -205,7 +205,7 @@ export function LanguageModal() {
                 );
               })}
             </ul>
-            <motion.p variants={row} className="mt-8 text-center text-xs text-white/40">
+            <motion.p variants={row} className="mt-8 text-center text-xs text-white/85">
               {copy.note}
             </motion.p>
           </motion.div>

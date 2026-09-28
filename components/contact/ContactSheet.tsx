@@ -90,7 +90,7 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
   };
 
   const field = (bad?: string) =>
-    `w-full min-h-[3.4rem] rounded-full border bg-white/[0.05] px-6 text-base text-white placeholder:text-white/45 transition focus:border-lime focus:bg-white/[0.08] ${bad ? 'border-red-400/70' : 'border-white/12'}`;
+    `w-full min-h-[3.4rem] rounded-full border bg-white/[0.05] px-6 text-base text-white placeholder:text-white/85 transition focus:border-lime focus:bg-white/[0.08] ${bad ? 'border-red-400/70' : 'border-white/12'}`;
 
   return (
     <AnimatePresence>
@@ -147,11 +147,11 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
                 {sentUrl ? (
                   <motion.div role="status" className="text-center" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
                     <h2 id="cfab-title" className="text-2xl font-bold text-white">Mesajınız hazır</h2>
-                    <p className="mt-3 text-white/70">WhatsApp’ta mesajı gönderin; sizi en kısa sürede arayalım.</p>
+                    <p className="mt-3 text-white/90">WhatsApp’ta mesajı gönderin; sizi en kısa sürede arayalım.</p>
                     <a href={sentUrl} target="_blank" rel="noopener noreferrer" className="press mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-full bg-lime px-6 text-base font-bold text-ink-950">
                       WhatsApp’ı Aç
                     </a>
-                    <button type="button" onClick={onClose} className="press mt-3 min-h-12 w-full rounded-full text-sm font-semibold text-white/60 hover:text-white">
+                    <button type="button" onClick={onClose} className="press mt-3 min-h-12 w-full rounded-full text-sm font-semibold text-white/85 hover:text-white">
                       Kapat
                     </button>
                   </motion.div>
@@ -175,12 +175,12 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
                         <label htmlFor="cfab-phone" className="sr-only">Telefon</label>
                         <div className={`flex min-h-[3.4rem] items-center rounded-full border bg-white/[0.05] px-6 transition focus-within:border-lime focus-within:bg-white/[0.08] ${errors.phone ? 'border-red-400/70' : 'border-white/12'}`}>
                           <span aria-hidden className="pr-2 text-base font-semibold text-white/80">+90</span>
-                          <input id="cfab-phone" type="tel" inputMode="numeric" autoComplete="tel-national" maxLength={10} placeholder="5xx xxx xx xx" value={phone} onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').replace(/^0+/, '').slice(0, 10))} aria-invalid={errors.phone ? true : undefined} className="w-full bg-transparent text-base text-white outline-none placeholder:text-white/45" />
+                          <input id="cfab-phone" type="tel" inputMode="numeric" autoComplete="tel-national" maxLength={10} placeholder="5xx xxx xx xx" value={phone} onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').replace(/^0+/, '').slice(0, 10))} aria-invalid={errors.phone ? true : undefined} className="w-full bg-transparent text-base text-white outline-none placeholder:text-white/85" />
                         </div>
                         {errors.phone && <p role="alert" className="mt-1.5 px-3 text-sm text-red-300">{errors.phone}</p>}
                       </motion.div>
                     </div>
-                    <motion.label variants={itemVariants} className="mt-5 flex cursor-pointer items-start gap-3 text-sm text-white/70">
+                    <motion.label variants={itemVariants} className="mt-5 flex cursor-pointer items-start gap-3 text-sm text-white/90">
                       <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} aria-invalid={errors.consent ? true : undefined} className="mt-0.5 h-5 w-5 shrink-0 accent-[rgb(var(--hayb-lime))]" />
                       <span>
                         Şartları okudum ve kabul ediyorum:{' '}
@@ -198,7 +198,7 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
                     <motion.div variants={itemVariants} className="mt-7 border-t border-white/10 pt-6">
                       <div className="flex items-end justify-between gap-4">
                         <p className="text-lg font-semibold leading-tight text-white">Siz mi<br />Arayacaksınız?</p>
-                        <p className="max-w-[10.5rem] text-right text-xs leading-snug text-white/55">Hemen konuşmak isterseniz bizi doğrudan arayabilirsiniz.</p>
+                        <p className="max-w-[10.5rem] text-right text-xs leading-snug text-white/85">Hemen konuşmak isterseniz bizi doğrudan arayabilirsiniz.</p>
                       </div>
                       <a href={`tel:${PHONE_TEL}`} className="press mt-4 inline-flex min-h-14 w-full items-center justify-center gap-2.5 rounded-full border border-lime/40 bg-gradient-to-r from-lime to-[#7ee81f] px-6 text-lg font-semibold text-ink-950 transition hover:brightness-105">
                         <motion.span aria-hidden className="inline-flex origin-center" animate={{ rotate: [0, -16, 14, -12, 10, -6, 0] }} transition={{ duration: 0.9, repeat: Infinity, repeatDelay: 1.6, ease: 'easeInOut' }}><Phone className="h-5 w-5" fill="currentColor" /></motion.span> {PHONE_DISPLAY}
