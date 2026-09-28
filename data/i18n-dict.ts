@@ -1141,7 +1141,7 @@ export const DICT_EN: Record<string, string> = {
  "Web paketlerini karşılaştırın (kaydırılabilir)": "Compare web packages (scrollable)",
  "Hangi paketin işinize uygun olduğundan emin değil misiniz? Kısaca anlatın, önerelim.": "Not sure which package suits your business? Tell us briefly and we'll recommend one.",
  "Size uygun paketi birlikte seçelim.": "Let's choose the package that suits you, together.",
- "Size uygun paketi": "The package that suits you,",
+ "Size uygun paketi": "Find the package",
  "birlikte seçelim.": "let's choose together.",
  "Sanal POS onayı ödeme kuruluşunun (iyzico, PayTR) değerlendirmesine bağlıdır; entegrasyon ve kurulumu biz yaparız.": "Virtual POS approval depends on the payment institution's (iyzico, PayTR) evaluation; we handle the integration and setup.",
  "Kargo, e-fatura ve pazaryeri gibi ek entegrasyonlar paket kapsamında değildir; ihtiyacınız olursa ayrıca teklif hazırlarız.": "Additional integrations such as shipping, e-invoicing and marketplaces are not included in the package; if you need them, we prepare a separate quote.",
@@ -1186,7 +1186,11 @@ export const DICT_EN: Record<string, string> = {
  "İletişim Sayfası": "Contact Page",
  "Siz mi Arayacaksınız?": "Would you rather call?",
  "Siz mi": "Would you",
- "Arayacaksınız?": "rather call?"
+ "Arayacaksınız?": "rather call?",
+ "Telefonu 5 ile başlayarak 10 haneli yazın (örn. 5xx xxx xx xx).": "Enter 10 digits starting with 5 (e.g. 5xx xxx xx xx).",
+ "bulun.": "that fits you.",
+ "Web sitesi, e-ticaret, sosyal medya ve daha fazlası; fiyatlar ve kapsam net.": "Websites, e-commerce, social media and more; prices and scope are clear.",
+ "Paketlere Göz Atın": "Browse Packages"
 };
 
 export const DICT_DE: Record<string, string> = {
@@ -2328,7 +2332,7 @@ export const DICT_DE: Record<string, string> = {
  "Web paketlerini karşılaştırın (kaydırılabilir)": "Web-Pakete vergleichen (scrollbar)",
  "Hangi paketin işinize uygun olduğundan emin değil misiniz? Kısaca anlatın, önerelim.": "Sie sind nicht sicher, welches Paket zu Ihrem Unternehmen passt? Schildern Sie es kurz, wir empfehlen eines.",
  "Size uygun paketi birlikte seçelim.": "Wählen wir gemeinsam das passende Paket.",
- "Size uygun paketi": "Das passende Paket",
+ "Size uygun paketi": "Finden Sie das passende Paket",
  "birlikte seçelim.": "wählen wir gemeinsam.",
  "Sanal POS onayı ödeme kuruluşunun (iyzico, PayTR) değerlendirmesine bağlıdır; entegrasyon ve kurulumu biz yaparız.": "Die Freigabe des virtuellen POS hängt von der Prüfung des Zahlungsinstituts (iyzico, PayTR) ab; Integration und Einrichtung übernehmen wir.",
  "Kargo, e-fatura ve pazaryeri gibi ek entegrasyonlar paket kapsamında değildir; ihtiyacınız olursa ayrıca teklif hazırlarız.": "Zusätzliche Integrationen wie Versand, E-Rechnung und Marktplätze sind nicht im Paket enthalten; bei Bedarf erstellen wir ein separates Angebot.",
@@ -2373,5 +2377,9 @@ export const DICT_DE: Record<string, string> = {
  "İletişim Sayfası": "Kontaktseite",
  "Siz mi Arayacaksınız?": "Möchten Sie lieber anrufen?",
  "Siz mi": "Möchten Sie",
- "Arayacaksınız?": "lieber anrufen?"
+ "Arayacaksınız?": "lieber anrufen?",
+ "Telefonu 5 ile başlayarak 10 haneli yazın (örn. 5xx xxx xx xx).": "Geben Sie 10 Ziffern ein, beginnend mit 5 (z. B. 5xx xxx xx xx).",
+ "bulun.": "für Sie.",
+ "Web sitesi, e-ticaret, sosyal medya ve daha fazlası; fiyatlar ve kapsam net.": "Websites, E-Commerce, Social Media und mehr; Preise und Umfang sind klar.",
+ "Paketlere Göz Atın": "Pakete ansehen"
 };

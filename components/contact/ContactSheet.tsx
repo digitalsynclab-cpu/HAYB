@@ -10,9 +10,9 @@ const PHONE_DISPLAY = '+90 507 342 06 61';
 const PHONE_TEL = '+905073420661';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-type Errors = { name?: string; email?: string; consent?: string };
+type Errors = { name?: string; email?: string; phone?: string; consent?: string };
 
-export function buildContactMessage(name: string, email: string) {
+export function buildContactMessage(name: string, email: string, phone = '') {
   return `Merhabalar, HAYB hakkında bilgi almak istiyorum. Beni arayabilir misiniz?\n\nAd Soyad: ${name.trim()}\nE-posta: ${email.trim()}`;
 }
 
@@ -34,6 +34,7 @@ const itemVariants: Variants = {
 export default function ContactSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
   const [sentUrl, setSentUrl] = useState<string | null>(null);
@@ -74,10 +75,11 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
     const err: Errors = {};
     if (name.trim().length < 2) err.name = 'Adınızı ve soyadınızı yazın.';
     if (!EMAIL_RE.test(email.trim())) err.email = 'Geçerli bir e-posta adresi girin.';
+    if (!/^5\d{9}$/.test(phone)) err.phone = 'Telefonu 5 ile başlayarak 10 haneli yazın (örn. 5xx xxx xx xx).';
     if (!consent) err.consent = 'Devam etmek için KVKK metnini onaylayın.';
     setErrors(err);
     if (Object.keys(err).length) return;
-    const url = whatsappUrl(buildContactMessage(name, email));
+    const url = whatsappUrl(buildContactMessage(name, email, phone));
     setSentUrl(url);
     trackEvent('whatsapp_click', { location: 'contact_fab' });
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -168,6 +170,14 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
                         <label htmlFor="cfab-email" className="sr-only">E-posta</label>
                         <input id="cfab-email" type="email" autoComplete="email" inputMode="email" maxLength={120} placeholder="E-posta" value={email} onChange={(e) => setEmail(e.target.value)} aria-invalid={errors.email ? true : undefined} className={field(errors.email)} />
                         {errors.email && <p role="alert" className="mt-1.5 px-3 text-sm text-red-300">{errors.email}</p>}
+                      </motion.div>
+                      <motion.div variants={itemVariants}>
+                        <label htmlFor="cfab-phone" className="sr-only">Telefon</label>
+                        <div className={`flex min-h-[3.4rem] items-center rounded-full border bg-white/[0.05] px-6 transition focus-within:border-lime focus-within:bg-white/[0.08] ${errors.phone ? 'border-red-400/70' : 'border-white/12'}`}>
+                          <span aria-hidden className="pr-2 text-base font-semibold text-white/80">+90</span>
+                          <input id="cfab-phone" type="tel" inputMode="numeric" autoComplete="tel-national" maxLength={10} placeholder="5xx xxx xx xx" value={phone} onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').replace(/^0+/, '').slice(0, 10))} aria-invalid={errors.phone ? true : undefined} className="w-full bg-transparent text-base text-white outline-none placeholder:text-white/45" />
+                        </div>
+                        {errors.phone && <p role="alert" className="mt-1.5 px-3 text-sm text-red-300">{errors.phone}</p>}
                       </motion.div>
                     </div>
                     <motion.label variants={itemVariants} className="mt-5 flex cursor-pointer items-start gap-3 text-sm text-white/70">

@@ -162,59 +162,16 @@ export function HomeSteps() {
   );
 }
 
-const row = (label: string) => webPricingRows.find((r) => r.label === label);
-
-/** Paketler özeti: üç öne çıkan paket. Tüm paketler ve kampanya Paketler sayfasında. */
+/** Paketler yönlendirmesi: fiyatlar ve kampanya yalnızca Paketler sayfasında. */
 export function HomePackages() {
-  const web = webPackages.find((p) => p.id === 'business')!;
-  const eco = ecommercePackages.find((p) => p.key === 'growth')!;
-  const social = socialMediaPlans[1];
-  const delivery = (row('Teslim Süresi') as unknown as Record<string, string>)[web.id];
-  const cards = [
-    { key: 'web', kicker: 'Web Sitesi', name: 'Business', price: web.price, points: [`${delivery} teslim`, '5 sayfaya kadar', 'Yönetim paneli ve SEO', 'Ücretsiz alan adı'], href: '/paketler#web' },
-    { key: 'eco', kicker: 'E-Ticaret', name: 'Growth', price: eco.price, points: ['1.000 ürüne kadar', 'İki sanal POS', 'Çoklu dil ve 7/24 destek', 'Hosting dahil'], href: '/paketler#eticaret', recommended: true },
-    { key: 'soc', kicker: 'Sosyal Medya', name: social.name, price: social.price, points: social.features.slice(0, 4), href: '/paketler#sosyal-medya' },
-  ];
   return (
     <Section tone="dark" labelledBy="paket-ozet">
-      <SectionHeading
-        id="paket-ozet"
-        title="Öne çıkan"
-        accent="paketler."
-        text={`Açılış kampanyası: tüm paketlerde %${campaign.rate} indirim. Fiyatlar kampanyalıdır.`}
-        action={
-          <Button href="/paketler" variant="secondary" arrow>
-            Tüm paketler
-          </Button>
-        }
-      />
-      <ul className="grid gap-4 md:grid-cols-3 md:gap-5">
-        {cards.map((c, i) => (
-          <li key={c.key}>
-            <Reveal delay={i * 80} className="h-full">
-              <Link
-                href={c.href}
-                className={`group flex h-full flex-col rounded-[1.6rem] border p-6 transition-colors duration-300 sm:p-7 ${c.recommended ? 'border-lime/60 bg-lime/[0.05] hover:border-lime' : 'border-white/10 bg-white/[0.03] hover:border-white/30'}`}
-              >
-                <p className="text-sm font-semibold text-fg-muted">{c.kicker}</p>
-                <h3 className="mt-1 text-2xl font-bold">{c.name}</h3>
-                <Price price={c.price} tone="dark" size="md" className="mt-4 text-fg" />
-                <ul className="mt-5 flex-1 space-y-2.5">
-                  {c.points.map((p) => (
-                    <li key={p} className="flex gap-2.5 text-[0.95rem] text-fg-muted">
-                      <Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-lime" />
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-                <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-lime">
-                  İncele <ArrowUpRight aria-hidden className="h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </span>
-              </Link>
-            </Reveal>
-          </li>
-        ))}
-      </ul>
+      <div className="flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <SectionHeading id="paket-ozet" className="!mb-0" title="Size uygun paketi" accent="bulun." text="Web sitesi, e-ticaret, sosyal medya ve daha fazlası; fiyatlar ve kapsam net." />
+        <Button href="/paketler" arrow>
+          Paketlere Göz Atın
+        </Button>
+      </div>
     </Section>
   );
 }
