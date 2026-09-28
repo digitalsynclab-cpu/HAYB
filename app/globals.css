@@ -10,24 +10,24 @@
   --hayb-lime-deep: 166 255 65; /* #a6ff41: açık zeminde de aynı vurgu rengi */
 
   /* Dark surface */
-  --hayb-ink-950: 17 17 17; /* #111111 */
-  --hayb-ink-900: 21 21 21; /* #151515 */
-  --hayb-ink-800: 27 27 27; /* #1B1B1B */
-  --hayb-ink-700: 34 34 34; /* #222222 */
+  --hayb-ink-950: 8 8 8; /* #080808 */
+  --hayb-ink-900: 12 12 12; /* #0C0C0C */
+  --hayb-ink-800: 18 18 18; /* #121212 */
+  --hayb-ink-700: 26 26 26; /* #1A1A1A */
 
   /* Light surface */
-  --hayb-paper-50: 255 255 255; /* #FFFFFF */
-  --hayb-paper-100: 247 248 245; /* #F7F8F5 */
-  --hayb-paper-200: 241 243 238; /* #F1F3EE */
+  --hayb-paper-50: 8 8 8; /* siyah (eski açık ton) */
+  --hayb-paper-100: 12 12 12;
+  --hayb-paper-200: 22 22 22;
 
   /* Metin: koyu zeminde / açık zeminde (WCAG AA üstü kontrast) */
-  --hayb-fg: 244 245 240;
-  --hayb-fg-muted: 178 184 170;
-  --hayb-on-light: 20 22 17;
-  --hayb-on-light-muted: 78 84 70;
+  --hayb-fg: 245 245 245;
+  --hayb-fg-muted: 161 161 165;
+  --hayb-on-light: 245 245 245; /* eski açık zeminlerdeki metin: artık açık renk */
+  --hayb-on-light-muted: 161 161 165;
 
   --hayb-border-dark: 255 255 255 / 0.1;
-  --hayb-border-light: 20 22 17 / 0.1;
+  --hayb-border-light: 255 255 255 / 0.1;
 
   --hayb-curve: 2rem;
   --hayb-header-h: 4.5rem;
@@ -123,17 +123,15 @@ body {
       inset 0 1px 0 rgb(255 255 255 / 0.08);
   }
   .surface-light {
-    background: rgb(255 255 255 / 0.85);
-    border: 1px solid rgb(20 22 17 / 0.08);
-    box-shadow: 0 1px 2px rgb(20 24 16 / 0.04), 0 8px 24px rgb(20 24 16 / 0.06);
+    background: rgb(255 255 255 / 0.035);
+    border: 1px solid rgb(255 255 255 / 0.09);
+    box-shadow: none;
   }
 
   /* ── Bölüm eğrisi: bir sonraki bölüm üstten yuvarlanıp öncekinin üzerine biner ── */
   .section-curve {
     position: relative;
-    margin-top: calc(var(--hayb-curve) * -1);
-    border-top-left-radius: var(--hayb-curve);
-    border-top-right-radius: var(--hayb-curve);
+    border-top: 1px solid rgb(255 255 255 / 0.07);
   }
   .section-pad {
     padding-block: 4.5rem;

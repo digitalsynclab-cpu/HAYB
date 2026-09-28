@@ -43,7 +43,7 @@ export default function InsightsPage() {
         </h2>
         <ul aria-label="Kategoriler" className="mb-8 flex flex-wrap gap-2">
           {insightCategories().map((c) => (
-            <li key={c} className="rounded-full border border-on-light/20 bg-white px-4 py-1.5 text-sm font-semibold">
+            <li key={c} className="rounded-full border border-on-light/20 bg-white/[0.05] px-4 py-1.5 text-sm font-semibold">
               {c}
             </li>
           ))}

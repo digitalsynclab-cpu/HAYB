@@ -13,7 +13,7 @@ const variants: Record<Variant, string> = {
   secondary:
     'border border-white/20 bg-white/5 text-fg hover:border-lime/60 hover:bg-white/10 backdrop-blur',
   'secondary-light':
-    'border border-on-light/20 bg-white text-on-light hover:border-on-light/50 hover:bg-paper-100',
+    'border border-on-light/20 bg-white/[0.05] text-on-light hover:border-on-light/50 hover:bg-paper-100',
 };
 
 interface Common {

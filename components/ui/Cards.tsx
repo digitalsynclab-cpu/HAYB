@@ -27,12 +27,12 @@ export function ServiceCard({ service, priority = false, wide = false }: { servi
         </h3>
         <p className="mt-1 line-clamp-3 text-[0.8rem] leading-snug text-on-light-muted sm:mt-2 sm:line-clamp-none sm:flex-1 sm:text-base">{service.summary}</p>
         <ArrowRight aria-hidden className="mt-auto h-4 w-4 shrink-0 self-end pt-0 text-on-light-muted sm:hidden" />
-        <span aria-hidden className={`mt-5 hidden h-11 w-11 items-center justify-center rounded-full border border-on-light/15 bg-white transition group-hover:border-on-light group-hover:bg-lime sm:inline-flex ${wide ? 'lg:hidden' : ''}`}>
+        <span aria-hidden className={`mt-5 hidden h-11 w-11 items-center justify-center rounded-full border border-on-light/15 bg-white/[0.05] transition group-hover:border-on-light group-hover:bg-lime sm:inline-flex ${wide ? 'lg:hidden' : ''}`}>
           <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
         </span>
       </div>
       {wide && (
-        <span aria-hidden className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full border border-on-light/15 bg-white transition group-hover:border-on-light group-hover:bg-lime lg:inline-flex">
+        <span aria-hidden className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full border border-on-light/15 bg-white/[0.05] transition group-hover:border-on-light group-hover:bg-lime lg:inline-flex">
           <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
         </span>
       )}

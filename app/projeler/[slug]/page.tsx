@@ -102,7 +102,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
             <h3 className="text-lg font-bold">Kapsam</h3>
             <ul className="mt-3 flex flex-wrap gap-2">
               {p.scope.map((s) => (
-                <li key={s} className="rounded-full border border-on-light/20 bg-white px-4 py-1.5 text-[0.9375rem] font-medium">
+                <li key={s} className="rounded-full border border-on-light/20 bg-white/[0.05] px-4 py-1.5 text-[0.9375rem] font-medium">
                   {s}
                 </li>
               ))}
@@ -111,7 +111,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           </div>
           <div>
             <h3 className="text-lg font-bold">İlgili hizmetler</h3>
-            <ul className="mt-3 divide-y divide-on-light/10 rounded-card border border-on-light/10 bg-white">
+            <ul className="mt-3 divide-y divide-on-light/10 rounded-card border border-on-light/10 bg-white/[0.05]">
               {services.map((s) => (
                 <li key={s.slug}>
                   <Link href={`/hizmetler/${s.slug}`} className="flex min-h-14 items-center justify-between px-5 font-semibold hover:bg-paper-100">

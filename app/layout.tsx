@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
 import './globals.css';
 import { site } from '@/data/site';
 import { Navbar } from '@/components/layout/Navbar';
@@ -19,7 +19,7 @@ const googleVerification = process.env['NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION'];
 const bingVerification = process.env['NEXT_PUBLIC_BING_SITE_VERIFICATION'];
 
 // Türkçe karakterler (ş, ğ, ı, İ) için latin-ext zorunlu.
-const inter = Inter({
+const inter = Montserrat({
   subsets: ['latin', 'latin-ext'],
   display: 'swap',
   variable: '--font-inter',

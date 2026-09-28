@@ -127,7 +127,7 @@ export default function PricingPage() {
       <Section tone="light" labelledBy="web">
         <nav aria-label="Fiyat bölümleri" className="mb-10 flex flex-wrap gap-2">
           {anchors.map((a) => (
-            <a key={a.href} href={a.href} className="inline-flex min-h-11 items-center rounded-full border border-on-light/20 bg-white px-5 font-semibold hover:border-on-light">
+            <a key={a.href} href={a.href} className="inline-flex min-h-11 items-center rounded-full border border-on-light/20 bg-white/[0.05] px-5 font-semibold hover:border-on-light">
               {a.label}
             </a>
           ))}
@@ -169,7 +169,7 @@ export default function PricingPage() {
 
         <div className="mt-12 hidden md:block">
           <h3 className="mb-4 text-xl font-bold">Paketleri karşılaştırın</h3>
-          <div className="relative overflow-x-auto rounded-card border border-on-light/10 bg-white" tabIndex={0} role="region" aria-label="Paket karşılaştırma tablosu (kaydırılabilir)">
+          <div className="relative overflow-x-auto rounded-card border border-on-light/10 bg-white/[0.05]" tabIndex={0} role="region" aria-label="Paket karşılaştırma tablosu (kaydırılabilir)">
             <table className="w-full min-w-[42rem] border-collapse text-left text-[0.95rem]">
               <caption className="sr-only">Web sitesi paketlerinin özellik karşılaştırması</caption>
               <thead>
@@ -248,7 +248,7 @@ export default function PricingPage() {
 
         <div className="mt-12 hidden md:block">
           <h3 className="mb-4 text-xl font-bold">E-ticaret paketlerini karşılaştırın</h3>
-          <div className="relative overflow-x-auto rounded-card border border-white/10 bg-white text-on-light" tabIndex={0} role="region" aria-label="E-ticaret paket karşılaştırma tablosu (kaydırılabilir)">
+          <div className="relative overflow-x-auto rounded-card border border-white/10 bg-white/[0.05] text-on-light" tabIndex={0} role="region" aria-label="E-ticaret paket karşılaştırma tablosu (kaydırılabilir)">
             <table className="w-full min-w-[42rem] border-collapse text-left text-[0.95rem]">
               <caption className="sr-only">E-ticaret paketlerinin özellik karşılaştırması</caption>
               <thead>
@@ -351,7 +351,7 @@ export default function PricingPage() {
             );
           })}
         </ul>
-        <p className="mt-6 rounded-card border border-on-light/15 bg-white p-4 text-[0.97rem]">
+        <p className="mt-6 rounded-card border border-on-light/15 bg-white/[0.05] p-4 text-[0.97rem]">
           <strong>Reklam bütçesi fiyatlara dahil değildir.</strong> Reklam bütçenizi doğrudan kendi Google veya Meta hesabınızdan ödersiniz; HAYB yalnızca yönetim hizmetini faturalandırır.
         </p>
       </Section>

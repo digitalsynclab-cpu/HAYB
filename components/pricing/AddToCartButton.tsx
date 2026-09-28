@@ -13,7 +13,7 @@ export function AddToCartButton({ plan, category, tone = 'lime' }: { plan: Prici
       onClick={() => addItem(plan, category)}
       aria-label={`${plan.name} paketini sepete ekle`}
       className={`inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl px-5 font-semibold transition ${
-        added ? 'border border-on-light/25 bg-white text-on-light' : tone === 'dark' ? 'bg-on-light text-white hover:bg-on-light/85' : 'bg-lime text-ink-950 hover:bg-lime-soft'
+        added ? 'border border-on-light/25 bg-white/[0.05] text-on-light' : tone === 'dark' ? 'bg-ink-950 text-white hover:bg-ink-800' : 'bg-lime text-ink-950 hover:bg-lime-soft'
       }`}
     >
       <ShoppingCart aria-hidden className="h-5 w-5" />

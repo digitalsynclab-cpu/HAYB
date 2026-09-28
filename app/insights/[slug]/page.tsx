@@ -82,7 +82,7 @@ export default async function InsightPage({ params }: { params: Promise<Params> 
           </div>
 
           {(services.length > 0 || projectsRel.length > 0 || tpls.length > 0) && (
-            <aside aria-label="İlgili bağlantılar" className="mt-12 rounded-2xl border border-on-light/15 bg-white p-5 sm:p-6">
+            <aside aria-label="İlgili bağlantılar" className="mt-12 rounded-2xl border border-on-light/15 bg-white/[0.05] p-5 sm:p-6">
               <p className="text-sm font-extrabold uppercase tracking-[0.14em]">Bu yazıyla ilgili</p>
               <ul className="mt-3 space-y-2.5">
                 {services.map((s) => (
