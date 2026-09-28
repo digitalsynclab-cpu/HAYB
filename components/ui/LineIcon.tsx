@@ -45,7 +45,7 @@ const MAP: Record<IconName, LucideIcon> = {
 };
 
 /**
- * Sade çizgi ikon: yuvarlatılmış kare zemin, ince beyaz çizgi. 3D ikonların yerine geçer.
+ * Sade çizgi ikon: yeşil (lime) yuvarlatılmış kare zemin, koyu çizgi. 3D ikonların yerine geçer.
  * size: kare zeminin kenarı (px). className ile responsive boyut verilebilir.
  */
 export function LineIcon({ name, size = 48, className = '' }: { name: IconName; size?: number; className?: string }) {
@@ -56,8 +56,9 @@ export function LineIcon({ name, size = 48, className = '' }: { name: IconName; 
       style={{
         width: size,
         height: size,
-        borderColor: 'color-mix(in srgb, currentColor 16%, transparent)',
-        background: 'color-mix(in srgb, currentColor 5%, transparent)',
+        borderColor: 'transparent',
+        background: 'rgb(var(--hayb-lime))',
+        color: 'rgb(var(--hayb-ink-950))',
       }}
       className={`inline-flex shrink-0 items-center justify-center rounded-[26%] border ${className}`}
     >
