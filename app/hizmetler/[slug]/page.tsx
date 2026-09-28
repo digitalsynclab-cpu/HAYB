@@ -11,7 +11,6 @@ import { ServiceShowcase } from '@/components/sections/ServiceShowcase';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { ORGANIZATION_ID } from '@/components/schema/OrganizationSchema';
-import { LineIcon } from '@/components/ui/LineIcon';
 import { InsightCard } from '@/components/insights/InsightCard';
 import { insightsForService } from '@/data/insights';
 import Link from 'next/link';
@@ -123,11 +122,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
                 </li>
               ))}
             </ul>
-          ) : (
-            <div className="flex justify-center lg:justify-end">
-              <LineIcon name={s.icon} size={176} className="!rounded-[2.5rem] sm:!h-56 sm:!w-56 lg:!h-72 lg:!w-72" />
-            </div>
-          )
+          ) : undefined
         }
       />
 
@@ -165,7 +160,6 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         <Section tone="dark" labelledBy="eticaret">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
             <div className="max-w-2xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-lime">E-Ticaret</p>
               <h2 id="eticaret" className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">Ürünlerinizi online satmak mı istiyorsunuz?</h2>
               <p className="mt-2 text-fg-muted">iyzico veya PayTR ile ödeme alan, ürün, stok ve siparişi tek panelden yöneten e-ticaret sitesi kuruyoruz. Paketler 39.990 ₺’den başlar.</p>
             </div>

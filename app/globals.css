@@ -108,16 +108,12 @@ body {
 
   /* ── Cam yüzey: yalnızca seçili yerlerde ── */
   .glass {
-    background: rgb(255 255 255 / 0.05);
-    border: 1px solid rgb(255 255 255 / 0.12);
-    box-shadow: 0 10px 40px rgb(0 0 0 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.06);
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
+    background: rgb(255 255 255 / 0.035);
+    border: 1px solid rgb(255 255 255 / 0.09);
+    box-shadow: none;
   }
   .glass-lime {
     border-color: rgb(var(--hayb-lime) / 0.5);
-    box-shadow: 0 10px 40px rgb(0 0 0 / 0.35), 0 0 24px rgb(var(--hayb-lime) / 0.14),
-      inset 0 1px 0 rgb(255 255 255 / 0.08);
   }
   .surface-light {
     background: rgb(255 255 255 / 0.035);
@@ -197,17 +193,8 @@ body {
   .js-reveal .split-words.is-visible .w { animation-delay: calc(var(--i) * 40ms + var(--d, 0ms)); }
 }
 
-/* ─── Spotlight kart: işaretçi/parmak konumunu izleyen ışık (tek global dinleyici) ─── */
+/* İşaretçiyi izleyen ışık efekti kaldırıldı (sade, profesyonel görünüm). */
 [data-spot] { position: relative; isolation: isolate; }
-[data-spot]::before {
-  content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
-  opacity: 0; transition: opacity 0.35s ease;
-  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgb(var(--hayb-lime) / 0.16), transparent 62%);
-}
-[data-spot].spot-on::before { opacity: 1; }
-.tone-light [data-spot]::before {
-  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgb(var(--hayb-lime) / 0.35), transparent 62%);
-}
 
 /* ─── Sayfa üstü kaydırma çubuğu (yalnızca CSS; destek yoksa görünmez) ─── */
 @keyframes progress-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
@@ -366,14 +353,14 @@ html.intro-active { overflow: hidden; }
 @media (min-width: 640px) { .modal-sheet { animation-name: modal-pop; } }
 
 /* ─── Çerez penceresi: dönen neon çerçeve, yuvarlanarak gelen çerez ─── */
-.cookie-card { position: relative; overflow: hidden; border-radius: 1.5rem; padding: 1.5px; background: #1a1a1a; box-shadow: 0 24px 70px rgb(0 0 0 / 0.6); }
+.cookie-card { position: relative; overflow: hidden; border-radius: 1.5rem; padding: 1px; background: rgb(255 255 255 / 0.12); box-shadow: 0 24px 70px rgb(0 0 0 / 0.6); }
 .cookie-glow {
   position: absolute; inset: -150%; pointer-events: none;
   background: conic-gradient(from 0deg, transparent 0 68%, rgb(var(--hayb-lime)) 92%, transparent);
-  animation: cookie-spin 3.5s linear infinite;
+  display: none;
 }
 @keyframes cookie-spin { to { transform: rotate(360deg); } }
-.cookie-body { position: relative; border-radius: calc(1.5rem - 1.5px); background: linear-gradient(160deg, #161616, #0a0a0a); color: #fff; padding: 1.15rem; }
+.cookie-body { position: relative; border-radius: calc(1.5rem - 1.5px); background: #0e0e0e; color: #fff; padding: 1.15rem; }
 .cookie-in { animation: cookie-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .cookie-out { animation: cookie-out 0.38s ease-in both; }
 @keyframes cookie-in { from { opacity: 0; transform: translateY(46px) scale(0.94); } to { opacity: 1; transform: none; } }
@@ -382,10 +369,10 @@ html.intro-active { overflow: hidden; }
 @keyframes cookie-roll { from { opacity: 0; transform: translateX(-4.5rem) rotate(-400deg); } to { opacity: 1; transform: none; } }
 
 /* ─── Kampanya penceresi ─── */
-.camp-card { overflow: hidden; border-radius: 1.75rem; padding: 2px; background: #1a1a1a; box-shadow: 0 30px 90px rgb(0 0 0 / 0.65), 0 0 60px rgb(var(--hayb-lime) / 0.18); max-height: calc(100dvh - 2rem); }
+.camp-card { overflow: hidden; border-radius: 1.75rem; padding: 2px; background: #1a1a1a; box-shadow: 0 30px 90px rgb(0 0 0 / 0.65); max-height: calc(100dvh - 2rem); }
 .camp-body {
   position: relative; overflow-y: auto; max-height: calc(100dvh - 2rem - 4px); border-radius: calc(1.75rem - 2px); padding: 1.1rem 1rem 1rem; color: #fff;
-  background: radial-gradient(90% 50% at 50% 0%, rgb(var(--hayb-lime) / 0.22), transparent 70%), linear-gradient(170deg, #151515, #0a0a0a);
+  background: #0e0e0e;
 }
 @media (min-width: 640px) { .camp-body { padding: 1.5rem 1.25rem 1.25rem; } }
 .camp-in { animation: camp-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) both; }
@@ -396,25 +383,20 @@ html.intro-active { overflow: hidden; }
 .camp-tag { display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 9999px; padding: 0.35rem 0.8rem; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; background: rgb(var(--hayb-lime)); color: #0a0a0a; }
 .camp-pulse { animation: camp-pulse 1.2s ease-in-out infinite; }
 @keyframes camp-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.7); opacity: 0.4; } }
-.camp-percent {
-  display: inline-block; background: linear-gradient(100deg, rgb(var(--hayb-lime)) 30%, #fff 50%, rgb(var(--hayb-lime)) 70%); background-size: 250% 100%;
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: camp-shimmer 3s linear 1.2s infinite;
-  filter: drop-shadow(0 0 22px rgb(var(--hayb-lime) / 0.45));
+.-percent {
+  display: inline-block; color: rgb(var(--hayb-lime));
 }
 @keyframes camp-shimmer { from { background-position: 150% 0; } to { background-position: -100% 0; } }
 .camp-box { display: flex; flex-direction: column; align-items: center; border-radius: 0.9rem; border: 1px solid rgb(255 255 255 / 0.12); background: rgb(255 255 255 / 0.05); padding: 0.5rem 0.2rem; }
 @media (min-width: 640px) { .camp-box { padding: 0.7rem 0.25rem; } }
-.camp-cta { position: relative; overflow: hidden; box-shadow: 0 0 0 0 rgb(var(--hayb-lime) / 0.6); animation: camp-ring 2s ease-out 1.2s infinite; }
-.camp-cta::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.55) 50%, transparent 65%); transform: translateX(-120%); animation: camp-sweep 2.8s ease-in-out 1.5s infinite; }
 @keyframes camp-ring { 0% { box-shadow: 0 0 0 0 rgb(var(--hayb-lime) / 0.55); } 100% { box-shadow: 0 0 0 16px rgb(var(--hayb-lime) / 0); } }
 @keyframes camp-sweep { 0% { transform: translateX(-120%); } 55%, 100% { transform: translateX(120%); } }
-.camp-spark { position: absolute; width: 6px; height: 6px; border-radius: 9999px; background: rgb(var(--hayb-lime)); box-shadow: 0 0 12px 2px rgb(var(--hayb-lime) / 0.8); animation: camp-float 3.2s ease-in-out infinite; pointer-events: none; }
 @keyframes camp-float { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.9; } 50% { transform: translateY(-14px) scale(1.6); opacity: 0.3; } }
 .min-h-13 { min-height: 3.25rem; }
 
 /* ─── Marka logoları: yavaş süzülme (her kart farklı fazda) ─── */
 @keyframes brand-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-.brand-tile { animation: brand-bob 5s ease-in-out infinite; }
+.brand-tile { }
 
 /* ─── Üst menü sepet simgesi: belirir, rozet zıplar ─── */
 @keyframes cart-in { 0% { opacity: 0; transform: scale(0.4) rotate(-20deg); } 60% { transform: scale(1.15) rotate(6deg); } 100% { opacity: 1; transform: none; } }

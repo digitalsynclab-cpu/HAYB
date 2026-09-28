@@ -23,12 +23,6 @@ interface PageHeroProps {
 export function PageHero({ eyebrow, title, accent, text, actions, visual, breadcrumb, id = 'sayfa-baslik', visualFirst = false }: PageHeroProps) {
   return (
     <section aria-labelledby={id} className="tone-dark relative overflow-hidden pb-[calc(var(--hayb-curve)+2.5rem)] pt-[calc(var(--hayb-header-h)+2rem)] sm:pt-[calc(var(--hayb-header-h)+3rem)] lg:pt-[calc(var(--hayb-header-h)+4.5rem)]">
-      {/* Hero ışığı: statik, animasyonsuz */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-32 top-0 h-[36rem] w-[36rem] rounded-full opacity-60"
-        style={{ background: 'radial-gradient(closest-side, rgb(var(--hayb-lime) / 0.14), transparent)' }}
-      />
       <div className={`relative mx-auto grid max-w-page items-center gap-10 px-4 sm:px-6 lg:gap-12 lg:px-8 ${visual ? 'lg:grid-cols-[1.05fr_1fr]' : ''}`}>
         <div className="max-w-2xl">
           {breadcrumb && (

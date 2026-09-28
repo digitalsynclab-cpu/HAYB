@@ -117,9 +117,6 @@ export function CampaignPopup() {
       >
         <span aria-hidden className="cookie-glow" />
         <div className="camp-body">
-          {['left-[8%] top-[14%]', 'right-[10%] top-[26%]', 'left-[16%] bottom-[30%]', 'right-[18%] bottom-[18%]'].map((c, i) => (
-            <span key={c} aria-hidden className={`camp-spark ${c}`} style={{ animationDelay: `${i * 0.5}s` }} />
-          ))}
           <button
             ref={closeRef}
             type="button"
