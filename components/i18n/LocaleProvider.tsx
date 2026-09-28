@@ -44,7 +44,16 @@ function useTranslateDom(locale: Locale, pathname: string) {
       if (active === 'tr') return s;
       const trimmed = s.trim();
       if (!trimmed) return s;
-      const hit = dict[trimmed];
+      let hit = dict[trimmed];
+      if (hit === undefined) {
+        // "Etiket: değer" biçimindeki satırlar (paket özellikleri) iki parça olarak çevrilir
+        const i = trimmed.indexOf(': ');
+        if (i > 0) {
+          const l = dict[trimmed.slice(0, i)];
+          const r = dict[trimmed.slice(i + 2)];
+          if (l !== undefined || r !== undefined) hit = `${l ?? trimmed.slice(0, i)}: ${r ?? trimmed.slice(i + 2)}`;
+        }
+      }
       const base = hit !== undefined ? s.replace(trimmed, hit) : s;
       return convertPrices(base, active);
     };
