@@ -8,6 +8,7 @@ import { Logo } from '@/components/ui/Logo';
 import { Button } from '@/components/ui/Button';
 import { MenuToggleIcon } from '@/components/ui/MenuToggleIcon';
 import { CartButton } from '@/components/layout/CartButton';
+import { LanguageButton } from '@/components/i18n/LanguageSwitcher';
 
 const isActive = (pathname: string, href: string) =>
   href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`);
@@ -112,6 +113,7 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <LanguageButton />
             <CartButton />
             <Button href="/proje-baslat" className="hidden min-h-11 px-5 text-[0.9375rem] sm:inline-flex">
               Teklif Al

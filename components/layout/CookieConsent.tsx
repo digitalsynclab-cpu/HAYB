@@ -99,7 +99,7 @@ export function CookieConsent() {
             </span>
             <div>
               <h2 id="cerez-baslik" className="text-lg font-extrabold leading-tight">
-                Çerezlere <span className="accent-text">ne dersiniz?</span>
+                Çerezlere ne dersiniz?
               </h2>
               <p id="cerez-metin" className="mt-1.5 text-[0.9rem] leading-snug text-white/70">
                 Tercihinizi hatırlamak için küçük bir kayıt tutuyoruz. İsteğe bağlı ölçümleme yalnızca onayınızla çalışır.{' '}

@@ -134,7 +134,7 @@ export function CampaignPopup() {
             <span aria-hidden className="h-2 w-2 rounded-full bg-ink-950 camp-pulse" /> Süreli kampanya
           </p>
           <h2 id="kampanya-baslik" className="sr-only">
-            {campaign.title}: tüm paketlerde %{campaign.rate} indirim
+            {`${campaign.title}: tüm paketlerde %${campaign.rate} indirim`}
           </h2>
 
           <div aria-hidden className="mt-3 flex items-end justify-center gap-2 text-lime sm:mt-4">
@@ -149,7 +149,7 @@ export function CampaignPopup() {
 
           {parts && (
             <p className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs sm:mt-4 sm:px-4 sm:py-3 sm:text-sm [&_s]:whitespace-nowrap [&_strong]:whitespace-nowrap">
-              <span className="text-white/60">Örn. {starter.name.charAt(0) + starter.name.slice(1).toLowerCase()} web sitesi</span>
+              <span className="text-white/60">{`Örn. ${starter.name.charAt(0) + starter.name.slice(1).toLowerCase()} web sitesi`}</span>
               <s className="text-white/50">{parts.list}</s>
               <strong className="text-lg font-extrabold text-lime sm:text-xl">{parts.sale}</strong>
             </p>

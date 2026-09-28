@@ -326,6 +326,37 @@ html.intro-active { overflow: hidden; }
 }
 @keyframes intro-bar { to { transform: scaleX(1); } }
 
+
+/* ─── İletişim düğmesi: dönüşümlü animasyonlu simgeler ve açılan pencere ─── */
+.cfab-i { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; animation: cfab-cycle 9s infinite; }
+.cfab-i1 { animation-delay: 0s; }
+.cfab-i2 { animation-delay: 3s; }
+.cfab-i3 { animation-delay: 6s; }
+@keyframes cfab-cycle { 0% { opacity: 0; transform: scale(0.6); } 5%, 30% { opacity: 1; transform: scale(1); } 34%, 100% { opacity: 0; transform: scale(0.6); } }
+.cfab-i1 svg { transform-origin: 60% 90%; animation: cfab-wave 9s infinite; }
+@keyframes cfab-wave { 0%, 4% { transform: rotate(0); } 8% { transform: rotate(18deg); } 12% { transform: rotate(-14deg); } 16% { transform: rotate(18deg); } 20% { transform: rotate(-10deg); } 24%, 100% { transform: rotate(0); } }
+.cfab-i2 svg { animation: cfab-mail 9s infinite 3s; }
+@keyframes cfab-mail { 0%, 4% { transform: translateY(0); } 9% { transform: translateY(-4px) rotate(-6deg); } 14% { transform: translateY(0) rotate(4deg); } 19% { transform: translateY(-3px) rotate(-3deg); } 24%, 100% { transform: none; } }
+.cfab-i3 svg { animation: cfab-pen 9s infinite 6s; }
+@keyframes cfab-pen { 0%, 4% { transform: translate(0, 0); } 9% { transform: translate(3px, -3px) rotate(6deg); } 14% { transform: translate(-3px, 1px) rotate(-4deg); } 19% { transform: translate(3px, -2px) rotate(5deg); } 24%, 100% { transform: none; } }
+.cfab-ring { position: absolute; inset: 0; border-radius: 9999px; border: 2px solid rgb(var(--hayb-lime)); animation: cfab-ring 2.8s ease-out infinite; pointer-events: none; }
+@keyframes cfab-ring { 0% { transform: scale(1); opacity: 0.55; } 100% { transform: scale(1.6); opacity: 0; } }
+.cs-fade-in { animation: cs-fade 0.28s ease-out both; }
+.cs-fade-out { animation: cs-fade 0.26s ease-in reverse both; }
+@keyframes cs-fade { from { opacity: 0; } to { opacity: 1; } }
+.cs-sheet-in { animation: cs-sheet-in 0.42s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.cs-sheet-out { animation: cs-sheet-out 0.26s cubic-bezier(0.7, 0, 0.84, 0) both; }
+@keyframes cs-sheet-in { from { opacity: 0; transform: translateY(48px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes cs-sheet-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(40px) scale(0.98); } }
+/* Dil penceresi satırları sırayla belirir */
+.lang-row { animation: lang-row 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: calc(0.12s + var(--i, 0) * 0.07s); }
+@keyframes lang-row { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .lang-row { animation-duration: 0.01s !important; }
+  .cfab-i, .cfab-i svg, .cfab-ring, .cs-fade-in, .cs-fade-out, .cs-sheet-in, .cs-sheet-out { animation-duration: 0.01s !important; animation-iteration-count: 1 !important; }
+  .cfab-i1 { opacity: 1; }
+}
+
 /* ─── Pencere (paket detayları) ─── */
 @keyframes modal-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes modal-up { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: none; } }
