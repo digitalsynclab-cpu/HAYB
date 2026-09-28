@@ -20,7 +20,6 @@ export function WebExamples() {
         id="ornek-siteler"
         title="Diğer"
         accent="örnek siteler."
-        text="Şablonlarımızı canlı deneyin; menüsünü, sepetini ve formlarını kendi telefonunuzda kullanın."
         action={
           <Button href="/template" variant="secondary" arrow>
             Tüm şablonlar

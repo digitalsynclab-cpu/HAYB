@@ -49,26 +49,19 @@ export function HomeHeroV2() {
   );
 }
 
-const GROUP_TEXT: Record<string, string> = {
-  'Web ve E-Ticaret': 'Kurumsal siteler, online mağazalar ve arayüz tasarımı.',
-  'Mobil ve Oyun': 'iOS ve Android uygulamaları, mobil oyunlar.',
-  'Yazılım ve Yapay Zeka': 'Özel yazılım, paneller, yapay zeka ve veri ürünü.',
-  'Marka ve Pazarlama': 'Logo, sosyal medya ve reklam yönetimi.',
-};
 
 /** 12 hizmet, 4 grupta. */
 export function HomeGroups() {
   const groups = menu.find((m) => m.label === 'Hizmetler')!.groups!;
   return (
     <Section tone="light" labelledBy="hizmet-gruplari">
-      <SectionHeading id="hizmet-gruplari" title="Ne yapmak" accent="istiyorsunuz?" text="İhtiyacınıza en yakın başlığı seçin." />
+      <SectionHeading id="hizmet-gruplari" title="Ne yapmak" accent="istiyorsunuz?" />
       <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5">
         {groups.map((g, i) => (
           <li key={g.title}>
             <Reveal delay={i * 70} className="h-full">
               <article className="surface-light flex h-full flex-col rounded-[1.6rem] p-6 sm:p-7">
                 <h3 className="text-xl font-bold sm:text-2xl">{g.title}</h3>
-                <p className="mt-1.5 text-on-light-muted">{GROUP_TEXT[g.title ?? '']}</p>
                 <ul className="mt-5 flex-1 divide-y divide-on-light/10 border-t border-on-light/10">
                   {g.links.map((l) => (
                     <li key={l.href}>
@@ -111,7 +104,6 @@ export function HomeWork() {
         id="calismalar"
         title="Canlı deneyebileceğiniz"
         accent="örnek siteler."
-        text="Bir siteye dokunun; menüsünü, sepetini ve formlarını kendi telefonunuzda kullanın."
         action={
           <Button href="/template" variant="secondary" arrow>
             Tüm şablonlar
@@ -127,13 +119,6 @@ export function HomeWork() {
           </li>
         ))}
       </ul>
-      <p className="mt-6 text-sm text-fg-muted">
-        Yayındaki projelerimiz, mobil uygulamalarımız ve yazılım işlerimiz için{' '}
-        <Link href="/projeler" className="font-semibold text-lime underline underline-offset-4">
-          Projeler
-        </Link>{' '}
-        sayfasına bakın.
-      </p>
     </Section>
   );
 }
@@ -177,7 +162,7 @@ export function HomePackages() {
   return (
     <Section tone="dark" labelledBy="paket-ozet">
       <div className="flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
-        <SectionHeading id="paket-ozet" className="!mb-0" title="Size uygun paketi" accent="bulun." text="Web sitesi, e-ticaret, sosyal medya ve daha fazlası; fiyatlar ve kapsam net." />
+        <SectionHeading id="paket-ozet" className="!mb-0" title="Size uygun paketi" accent="bulun." />
         <Button href="/paketler" arrow>
           Paketlere Göz Atın
         </Button>
@@ -198,7 +183,7 @@ export function HomeFaq() {
   return (
     <Section tone="light" labelledBy="sss">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
-        <SectionHeading id="sss" className="!mb-0" title="Merak" accent="ettikleriniz." text="Aradığınızı bulamazsanız bize yazın, yanıtlayalım." />
+        <SectionHeading id="sss" className="!mb-0" title="Merak" accent="ettikleriniz." />
         <div className="divide-y divide-on-light/10 border-y border-on-light/10">
           {FAQ.map((f) => (
             <details key={f.q} className="group py-1">
