@@ -92,9 +92,9 @@ export function HomeGroups() {
 /** Tam genişlik banner: web sitesi ve mobil uygulama/oyun mockup'ları alt alta. */
 export function HomeBanners() {
   return (
-    <section aria-label="Web sitesi, mobil uygulama ve oyun örnekleri" className="bg-black">
-      <Image src="/brand/mockup-web.webp" alt="Dizüstü bilgisayarda açık HAYB web sitesi tasarımı" width={2000} height={776} sizes="100vw" className="h-auto min-h-[15rem] w-full object-cover object-center sm:min-h-0" />
-      <Image src="/brand/mockup-mobil.webp" alt="Telefonlarda HAYB mobil uygulama ve oyun tasarımları" width={2000} height={776} sizes="100vw" className="h-auto min-h-[15rem] w-full object-cover object-center sm:min-h-0" />
+    <section aria-label="Web sitesi, mobil uygulama ve oyun örnekleri" className="flex flex-col gap-8 bg-ink-900 py-8 sm:gap-10 sm:py-10">
+      <Image src="/brand/mockup-web.webp" alt="Dizüstü bilgisayarda açık HAYB web sitesi tasarımı" width={2000} height={776} sizes="100vw" className="h-auto min-h-[15rem] w-full border-y border-white/10 object-cover object-center sm:min-h-0" />
+      <Image src="/brand/mockup-mobil.webp" alt="Telefonlarda HAYB mobil uygulama ve oyun tasarımları" width={2000} height={776} sizes="100vw" className="h-auto min-h-[15rem] w-full border-y border-white/10 object-cover object-center sm:min-h-0" />
     </section>
   );
 }
