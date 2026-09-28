@@ -115,7 +115,6 @@ export function CampaignPopup() {
         onClick={(e) => e.stopPropagation()}
         className={`camp-card relative w-full max-w-[21rem] sm:max-w-md ${leaving ? 'camp-out' : 'camp-in'}`}
       >
-        <span aria-hidden className="cookie-glow" />
         <div className="camp-body">
           <button
             ref={closeRef}

@@ -3,7 +3,6 @@ import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { IconCard } from '@/components/ui/Cards';
 import { Button } from '@/components/ui/Button';
-import Link from 'next/link';
 import { site } from '@/data/site';
 import { Reveal } from '@/components/motion/Reveal';
 import { CTASection } from '@/components/sections/CTASection';
@@ -43,10 +42,7 @@ export default function AboutPage() {
         text="HAYB; tasarımı, teknolojiyi ve stratejiyi bir araya getiren bir dijital ürün stüdyosudur. Web sitesi yapmakla kalmaz, ürünün kendisini tasarlar, geliştirir ve yayına alırız."
         actions={
           <>
-            <Button href="/proje-baslat">Bizimle Tanışın</Button>
-            <Button href="/projeler" variant="secondary">
-              Projelerimiz
-            </Button>
+            <Button href="/iletisim">İletişime Geçin</Button>
           </>
         }
       />
@@ -99,27 +95,14 @@ export default function AboutPage() {
 
       <Section tone="dark-2" labelledBy="konum">
         <div className="grid items-start gap-8 lg:grid-cols-2">
-          <SectionHeading id="konum" eyebrow="Nerede?" title="Bursa merkezli," accent="dijital çalışıyoruz." className="lg:mb-0" />
-          <div className="space-y-4 text-lg text-fg-muted">
-            <p>
-              HAYB, {site.address.addressLocality} ilçesinde ({site.address.addressRegion}) {site.founded} yılında kurulmuş bir dijital ürün stüdyosudur. Projelerimizi Bursa&apos;dan yönetiyoruz.
-            </p>
-            <p>
-              Bursa&apos;daki işletmelerin dijitalde neye ihtiyaç duyduğunu{' '}
-              <Link href="/bursa-web-tasarim" className="font-semibold text-lime underline underline-offset-4">
-                Bursa web tasarım sayfamızda
-              </Link>{' '}
-              anlattık; kararlarımızı paylaştığımız yazılar da{' '}
-              <Link href="/insights" className="font-semibold text-lime underline underline-offset-4">
-                Insights
-              </Link>{' '}
-              bölümünde.
-            </p>
-          </div>
+          <SectionHeading id="konum" title="Bursa merkezli," accent="dijital çalışıyoruz." className="lg:mb-0" />
+          <p className="text-lg text-fg-muted">
+            HAYB, {site.address.addressLocality} ilçesinde ({site.address.addressRegion}) {site.founded} yılında kurulmuş bir dijital ürün stüdyosudur. Projelerimizi Bursa&apos;dan yönetiyor, Türkiye genelinde ve uzaktan çalışıyoruz.
+          </p>
         </div>
       </Section>
 
-      <CTASection />
+      <CTASection title="Tanışmak" accent="ister misiniz?" text="Projenizi anlatın ya da sadece merhaba deyin; size en kısa sürede dönelim." extra={{ href: '/iletisim', label: 'İletişim Sayfası' }} />
     </>
   );
 }

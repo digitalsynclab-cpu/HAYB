@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion, type PanInfo, type Variants } from 'framer-motion';
-import { Headset, X } from 'lucide-react';
+import { Phone, X } from 'lucide-react';
 import { whatsappUrl } from '@/data/site';
 import { trackEvent } from '@/lib/analytics';
 
@@ -39,6 +39,8 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
   const [sentUrl, setSentUrl] = useState<string | null>(null);
   const firstRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
 
   useEffect(() => {
     if (!open) return;
@@ -46,7 +48,7 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
     document.body.style.overflow = 'hidden';
     const t = window.setTimeout(() => firstRef.current?.focus(), 450);
     const key = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') closeRef.current();
       if (e.key === 'Tab' && panelRef.current) {
         const f = Array.from(panelRef.current.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),input'));
         if (!f.length) return;
@@ -65,7 +67,7 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
       document.body.style.overflow = prev;
       document.removeEventListener('keydown', key);
     };
-  }, [open, onClose]);
+  }, [open]);
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -189,7 +191,7 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
                         <p className="max-w-[10.5rem] text-right text-xs leading-snug text-white/55">Hemen konuşmak isterseniz bizi doğrudan arayabilirsiniz.</p>
                       </div>
                       <a href={`tel:${PHONE_TEL}`} className="press mt-4 inline-flex min-h-14 w-full items-center justify-center gap-2.5 rounded-full border border-lime/40 bg-gradient-to-r from-lime to-[#7ee81f] px-6 text-lg font-semibold text-ink-950 transition hover:brightness-105">
-                        <Headset aria-hidden className="h-5 w-5" /> {PHONE_DISPLAY}
+                        <motion.span aria-hidden className="inline-flex origin-center" animate={{ rotate: [0, -16, 14, -12, 10, -6, 0] }} transition={{ duration: 0.9, repeat: Infinity, repeatDelay: 1.6, ease: 'easeInOut' }}><Phone className="h-5 w-5" fill="currentColor" /></motion.span> {PHONE_DISPLAY}
                       </a>
                     </motion.div>
                   </form>

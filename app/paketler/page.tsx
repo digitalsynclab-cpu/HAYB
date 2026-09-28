@@ -2,7 +2,8 @@ import { PageHero } from '@/components/ui/PageHero';
 import { Section } from '@/components/ui/Section';
 import { CTASection } from '@/components/sections/CTASection';
 import { PackagesHub, type PackageTab, type PackageCard } from '@/components/pricing/PackagesHub';
-import { CampaignBar } from '@/components/pricing/CampaignBar';
+import { CampaignPopup } from '@/components/layout/CampaignPopup';
+import { HomeFaq } from '@/components/sections/HomeV2';
 import {
   webPackages,
   webPricingRows,
@@ -137,6 +138,7 @@ const tabs: PackageTab[] = [
 export default function PricingPage() {
   return (
     <>
+      <CampaignPopup />
       <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'Paketler', path: '/paketler' }]} />
       <PageHero
         title="Net paketler,"
@@ -147,11 +149,9 @@ export default function PricingPage() {
         <h2 id="paket-vitrini" className="sr-only">
           Paket kategorileri
         </h2>
-        <div className="mb-10">
-          <CampaignBar />
-        </div>
         <PackagesHub tabs={tabs} />
       </Section>
+      <HomeFaq />
       <CTASection tone="dark-2" title="Size uygun paketi" accent="birlikte seçelim." text="Hangi paketin işinize uygun olduğundan emin değil misiniz? Kısaca anlatın, önerelim." />
     </>
   );

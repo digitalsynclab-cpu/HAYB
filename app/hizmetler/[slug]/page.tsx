@@ -7,6 +7,7 @@ import { IconCard } from '@/components/ui/Cards';
 import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/motion/Reveal';
 import { CTASection } from '@/components/sections/CTASection';
+import { WebExamples } from '@/components/sections/WebExamples';
 import { ServiceShowcase } from '@/components/sections/ServiceShowcase';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
@@ -156,8 +157,10 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         )}
       </Section>
 
+      {s.slug === 'web-sitesi' && <WebExamples />}
+
       {s.slug === 'web-sitesi' && (
-        <Section tone="dark" labelledBy="eticaret">
+        <Section tone="dark-2" labelledBy="eticaret">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
             <div className="max-w-2xl">
               <h2 id="eticaret" className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">Ürünlerinizi online satmak mı istiyorsunuz?</h2>
