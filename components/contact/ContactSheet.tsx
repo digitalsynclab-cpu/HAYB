@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion, useReducedMotion, type PanInfo, type Variants } from 'framer-motion';
+import { AnimatePresence, motion, type PanInfo, type Variants } from 'framer-motion';
 import { Headset, X } from 'lucide-react';
 import { whatsappUrl } from '@/data/site';
 import { trackEvent } from '@/lib/analytics';
@@ -32,7 +32,6 @@ const itemVariants: Variants = {
  * Gönder (WhatsApp mesajı) ve doğrudan arama. Aşağı sürükleyerek de kapanır.
  */
 export default function ContactSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const reduce = useReducedMotion();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [consent, setConsent] = useState(false);
@@ -109,10 +108,10 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
               aria-modal="true"
               aria-labelledby="cfab-title"
               className="pointer-events-auto relative w-full max-w-md"
-              variants={reduce ? undefined : sheetVariants}
-              initial={reduce ? { opacity: 0 } : 'hidden'}
-              animate={reduce ? { opacity: 1 } : 'visible'}
-              exit={reduce ? { opacity: 0 } : 'exit'}
+              variants={sheetVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
               drag="y"
               dragConstraints={{ top: 0, bottom: 0 }}
               dragElastic={{ top: 0, bottom: 0.5 }}
@@ -123,7 +122,7 @@ export default function ContactSheet({ open, onClose }: { open: boolean; onClose
                 <motion.div
                   aria-hidden
                   className="absolute -top-20 left-1/2 h-48 w-[130%] -translate-x-1/2 rounded-full bg-lime/45 blur-3xl"
-                  animate={reduce ? undefined : { opacity: [0.7, 1, 0.7], scale: [1, 1.08, 1] }}
+                  animate={{ opacity: [0.7, 1, 0.7], scale: [1, 1.08, 1] }}
                   transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                 />
                 <div aria-hidden className="absolute left-[12%] top-6 h-8 w-24 rounded-full bg-white/30 blur-xl" />

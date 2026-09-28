@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Mail, PenLine } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 // Pencere yalnızca ilk açılışta yüklenir (ilk boyamayı geciktirmez).
 const ContactSheet = dynamic(() => import('@/components/contact/ContactSheet'), { ssr: false });
@@ -34,6 +34,20 @@ function WavingHand() {
   );
 }
 
+/** Kalem çizgi çizer: uç noktası ilerlerken dalgalı çizgi belirir, sonra silinir ve yeniden başlar. */
+function WritingPen() {
+  const t = { duration: 2.4, ease: 'easeInOut' as const, repeat: Infinity, repeatDelay: 0.3, times: [0, 0.6, 0.85, 1] };
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden className="h-9 w-9 overflow-visible" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+      <motion.path d="M4.5 27.5c3-2.2 5 2.2 8 0s5-2 7.5 0 4 1.6 7.5 0" strokeWidth="2" initial={{ pathLength: 0 }} animate={{ pathLength: [0, 1, 1, 0] }} transition={t} />
+      <motion.g animate={{ x: [0, 22, 22, 0], y: [0, -1, -1, 0], rotate: [0, 0, 0, 0] }} transition={t}>
+        <path d="M4.5 27.5l1.6-5.4L19.6 8.6a2.4 2.4 0 0 1 3.4 3.4L9.6 25.5z" fill="currentColor" stroke="none" />
+        <path d="M18 10.2l3.4 3.4" stroke="#a6ff41" strokeWidth="1.6" />
+      </motion.g>
+    </svg>
+  );
+}
+
 const ICONS = [
   { key: 'hand', node: <WavingHand /> },
   {
@@ -44,14 +58,7 @@ const ICONS = [
       </motion.span>
     ),
   },
-  {
-    key: 'pen',
-    node: (
-      <motion.span className="block" animate={{ x: [0, 4, -3, 4, 0], y: [0, -3, 1, -3, 0], rotate: [0, 8, -4, 8, 0] }} transition={{ duration: 1.7, ease: 'easeInOut', repeat: Infinity, repeatDelay: 0.3 }}>
-        <PenLine strokeWidth={1.9} className="h-7 w-7" />
-      </motion.span>
-    ),
-  },
+  { key: 'pen', node: <WritingPen /> },
 ] as const;
 
 /**
