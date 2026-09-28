@@ -188,8 +188,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
           {s.steps.map((st, i) => (
             <li key={st.title}>
               <Reveal delay={(i % 3) * 60} className="surface-light h-full rounded-card p-5">
-                <span className="inline-flex rounded-full bg-lime px-2.5 py-0.5 text-xs font-extrabold tracking-widest text-ink-950">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="mt-2 text-lg font-bold">{st.title}</h3>
+                <h3 className="text-lg font-bold">{st.title}</h3>
                 <p className="mt-1.5 text-on-light-muted">{st.text}</p>
               </Reveal>
             </li>

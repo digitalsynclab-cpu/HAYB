@@ -53,8 +53,7 @@ export default function AboutPage() {
           {approach.map((a, i) => (
             <li key={a.title}>
               <Reveal delay={i * 70} className="surface-light h-full rounded-card p-6">
-                <span className="inline-flex rounded-full bg-lime px-2.5 py-0.5 text-xs font-extrabold tracking-widest text-ink-950">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="mt-2 text-2xl font-bold">{a.title}</h3>
+                <h3 className="text-2xl font-bold">{a.title}</h3>
                 <p className="mt-2 text-on-light-muted">{a.text}</p>
               </Reveal>
             </li>

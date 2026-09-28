@@ -39,9 +39,6 @@ function ArchitectureFlow() {
       <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {nodes.map((n, i) => (
           <li key={n.title} data-spot className="glass relative flex items-center gap-4 rounded-card p-4">
-            <span aria-hidden className="absolute right-3 top-2 text-xs font-bold tracking-widest text-lime">
-              {String(i + 1).padStart(2, '0')}
-            </span>
             <LineIcon name={n.icon} size={48} />
             <div>
               <p className="font-bold">{n.title}</p>
