@@ -28,7 +28,7 @@ export function HomeHeroV2() {
       actions={
         <>
           <ContactButton>Teklif Al</ContactButton>
-          <Button href="/paketler" variant="secondary">
+          <Button href="/paketler" variant="secondary" className="!border-white !bg-white !text-ink-950 hover:!bg-white/90">
             Paketleri Gör
           </Button>
         </>
