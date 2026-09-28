@@ -6,10 +6,10 @@ import { useLocale } from '@/components/i18n/LocaleProvider';
 import { LOCALES, type Locale } from '@/lib/i18n/locale';
 import { COUNTRY_MAPS, MAP_VIEWBOX } from '@/data/i18n-maps';
 
-const COPY: Record<Locale, { title: string; text: string; close: string; open: string }> = {
-  tr: { title: 'Dilinizi Seçin', text: 'Sitenin dilini değiştirin. Seçiminiz bir sonraki ziyaretinizde de hatırlanır.', close: 'Kapat', open: 'Dil seçimi' },
-  en: { title: 'Choose Your Language', text: 'Change the language of the site. Your choice is remembered on your next visit.', close: 'Close', open: 'Language' },
-  de: { title: 'Wählen Sie Ihre Sprache', text: 'Ändern Sie die Sprache der Website. Ihre Auswahl wird beim nächsten Besuch gespeichert.', close: 'Schließen', open: 'Sprache' },
+const COPY: Record<Locale, { title: string; text: string; close: string; open: string; note: string }> = {
+  tr: { title: 'Dilinizi Seçin', text: 'Sitenin dilini değiştirin. Seçiminiz bir sonraki ziyaretinizde de hatırlanır.', close: 'Kapat', open: 'Dil seçimi', note: 'Seçiminiz bu cihazda saklanır.' },
+  en: { title: 'Choose Your Language', text: 'Change the language of the site. Your choice is remembered on your next visit.', close: 'Close', open: 'Language', note: 'Your choice is stored on this device.' },
+  de: { title: 'Wählen Sie Ihre Sprache', text: 'Ändern Sie die Sprache der Website. Ihre Auswahl wird beim nächsten Besuch gespeichert.', close: 'Schließen', open: 'Sprache', note: 'Ihre Auswahl wird auf diesem Gerät gespeichert.' },
 };
 
 const NAMES: Record<Locale, string> = { tr: 'Türkiye', de: 'Deutschland', en: 'United Kingdom' };
@@ -129,14 +129,23 @@ export function LanguageModal() {
   return (
     <AnimatePresence>
       {pickerOpen && (
-        <motion.div className="fixed inset-0 z-[95] overflow-y-auto bg-[#060608]/95 backdrop-blur-xl" role="presentation" data-no-i18n initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} onClick={closePicker}>
+        <motion.div
+          className="fixed inset-0 z-[95] overflow-y-auto bg-[#060608]"
+          role="presentation"
+          data-no-i18n
+          initial={{ clipPath: 'circle(0px at calc(100% - 3.4rem) 2.4rem)' }}
+          animate={{ clipPath: 'circle(170vmax at calc(100% - 3.4rem) 2.4rem)' }}
+          exit={{ clipPath: 'circle(0px at calc(100% - 3.4rem) 2.4rem)' }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          onClick={closePicker}
+        >
           <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-lime/15 to-transparent" />
           <motion.div
             ref={panelRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby="lang-title"
-            className="relative mx-auto flex min-h-full w-full max-w-md flex-col px-5 pb-10 pt-16"
+            className="relative mx-auto flex min-h-[100dvh] w-full max-w-md flex-col px-5 pb-8 pt-16 sm:max-w-lg"
             variants={panel}
             initial="hidden"
             animate="visible"
@@ -159,11 +168,11 @@ export function LanguageModal() {
               {copy.text}
             </motion.p>
 
-            <ul className="mt-12 space-y-4">
+            <ul className="mt-10 flex flex-1 flex-col gap-4 sm:gap-5">
               {LOCALES.map((l) => {
                 const on = l.code === locale;
                                 return (
-                  <motion.li key={l.code} variants={row}>
+                  <motion.li key={l.code} variants={row} className="flex min-h-[8.5rem] flex-1 sm:min-h-[9.5rem]">
                     <motion.button
                       type="button"
                       onClick={() => {
@@ -172,21 +181,22 @@ export function LanguageModal() {
                       }}
                       aria-pressed={on}
                       whileTap={{ scale: 0.98 }}
-                      className={`relative flex min-h-[7.5rem] w-full items-center justify-between gap-3 overflow-hidden rounded-[1.4rem] px-5 text-left ${on ? 'border border-lime/40' : 'border border-transparent'}`}
+                      className={`relative flex w-full items-center justify-between gap-3 overflow-hidden rounded-[1.6rem] px-4 text-left sm:px-6 ${on ? 'border border-lime/40' : 'border border-transparent'}`}
                     >
                       {on && (
                         <motion.span
-                          layoutId="lang-active"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.3 }}
                           aria-hidden
                           className="absolute inset-0 bg-[linear-gradient(to_top,rgba(166,255,65,0.55),rgba(166,255,65,0.16)_55%,rgba(166,255,65,0.04))]"
-                          transition={{ type: 'spring', stiffness: 350, damping: 32 }}
                         />
                       )}
-                      <span aria-hidden className="pointer-events-none absolute inset-y-2 left-2 w-[46%] opacity-90">
+                      <span aria-hidden className="pointer-events-none absolute inset-y-3 left-3 w-[52%] opacity-95">
                         <CountryMap code={l.code} active={on} />
                       </span>
-                      <span className="relative z-10 pl-[3.2rem] text-[1.35rem] font-medium text-white sm:text-2xl">{NAMES[l.code]}</span>
-                      <span className="relative z-10 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3.5 py-2 text-sm font-semibold text-white">
+                      <span className="relative z-10 min-w-0 pl-[2.4rem] text-[1.2rem] font-semibold leading-tight text-white sm:pl-[3.4rem] sm:text-[1.75rem]">{NAMES[l.code]}</span>
+                      <span className="relative z-10 inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/20 bg-black/40 px-3 py-2 text-[0.8rem] font-semibold text-white sm:gap-2 sm:px-3.5 sm:text-sm">
                         <Flag code={l.code} />
                         {l.label}
                       </span>
@@ -195,6 +205,9 @@ export function LanguageModal() {
                 );
               })}
             </ul>
+            <motion.p variants={row} className="mt-8 text-center text-xs text-white/40">
+              {copy.note}
+            </motion.p>
           </motion.div>
         </motion.div>
       )}

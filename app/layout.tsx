@@ -10,7 +10,6 @@ import { CookieConsent } from '@/components/layout/CookieConsent';
 import { CartProvider } from '@/lib/cart-context';
 import { CartPanel } from '@/components/pricing/CartPanel';
 import { SiteChrome } from '@/components/layout/SiteChrome';
-import { CampaignPopup } from '@/components/layout/CampaignPopup';
 import { ContactFab } from '@/components/contact/ContactFab';
 import { LocaleProvider } from '@/components/i18n/LocaleProvider';
 import { LanguageModal } from '@/components/i18n/LanguageSwitcher';
@@ -104,7 +103,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <EntityBlock />
           <Footer />
           <CookieConsent />
-          <CampaignPopup />
           <CartPanel />
           <ContactFab />
           <LanguageModal />

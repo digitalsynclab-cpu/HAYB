@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Mail } from 'lucide-react';
+import { CONTACT_OPEN_EVENT } from '@/lib/contact-events';
 
 // Pencere yalnızca ilk açılışta yüklenir (ilk boyamayı geciktirmez).
 const ContactSheet = dynamic(() => import('@/components/contact/ContactSheet'), { ssr: false });
@@ -73,6 +74,12 @@ export function ContactFab() {
   useEffect(() => {
     const t = window.setInterval(() => setI((v) => (v + 1) % ICONS.length), 2600);
     return () => window.clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    const on = () => setOpen(true);
+    window.addEventListener(CONTACT_OPEN_EVENT, on);
+    return () => window.removeEventListener(CONTACT_OPEN_EVENT, on);
   }, []);
 
   const close = () => {
