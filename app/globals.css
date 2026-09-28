@@ -16,18 +16,18 @@
   --hayb-ink-700: 26 26 26; /* #1A1A1A */
 
   /* Light surface */
-  --hayb-paper-50: 8 8 8; /* siyah (eski açık ton) */
-  --hayb-paper-100: 12 12 12;
-  --hayb-paper-200: 22 22 22;
+  --hayb-paper-50: 255 255 255; /* #FFFFFF */
+  --hayb-paper-100: 255 255 255; /* gri tonlu açık zemin artık saf beyaz */
+  --hayb-paper-200: 243 243 243;
 
   /* Metin: koyu zeminde / açık zeminde (WCAG AA üstü kontrast) */
-  --hayb-fg: 245 245 245;
-  --hayb-fg-muted: 161 161 165;
-  --hayb-on-light: 245 245 245; /* eski açık zeminlerdeki metin: artık açık renk */
-  --hayb-on-light-muted: 161 161 165;
+  --hayb-fg: 244 245 240;
+  --hayb-fg-muted: 178 184 170;
+  --hayb-on-light: 20 22 17;
+  --hayb-on-light-muted: 78 84 70;
 
   --hayb-border-dark: 255 255 255 / 0.1;
-  --hayb-border-light: 255 255 255 / 0.1;
+  --hayb-border-light: 20 22 17 / 0.1;
 
   --hayb-curve: 2rem;
   --hayb-header-h: 4.5rem;
@@ -44,6 +44,9 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Başlıklar, giriş metni ve düğme/menü etiketleri Montserrat */
+h1, h2, h3, h4, .font-heading, .hero-lead, button, nav a { font-family: var(--font-montserrat), var(--font-inter), ui-sans-serif, system-ui, sans-serif; }
 
 html {
   scroll-behavior: smooth;
@@ -102,7 +105,17 @@ body {
   }
   /* Vurgu rengi: koyu zeminde lime, açık zeminde okunabilir koyu yeşil */
   .accent-text {
-    color: rgb(var(--hayb-fg-muted));
+    color: rgb(var(--hayb-lime));
+  }
+  /* Açık zeminde #a6ff41 metin okunmaz: aynı yeşil, marker (vurgu kalemi) zemini olarak kullanılır */
+  .tone-light .accent-text,
+  .tone-white .accent-text {
+    color: rgb(var(--hayb-ink-950));
+    background: rgb(var(--hayb-lime));
+    border-radius: 0.3em;
+    padding: 0 0.22em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
 
@@ -116,15 +129,17 @@ body {
     border-color: rgb(var(--hayb-lime) / 0.5);
   }
   .surface-light {
-    background: rgb(255 255 255 / 0.035);
-    border: 1px solid rgb(255 255 255 / 0.09);
-    box-shadow: none;
+    background: rgb(255 255 255 / 0.85);
+    border: 1px solid rgb(20 22 17 / 0.08);
+    box-shadow: 0 1px 2px rgb(20 24 16 / 0.04), 0 8px 24px rgb(20 24 16 / 0.06);
   }
 
   /* ── Bölüm eğrisi: bir sonraki bölüm üstten yuvarlanıp öncekinin üzerine biner ── */
   .section-curve {
     position: relative;
-    border-top: 1px solid rgb(255 255 255 / 0.07);
+    margin-top: calc(var(--hayb-curve) * -1);
+    border-top-left-radius: var(--hayb-curve);
+    border-top-right-radius: var(--hayb-curve);
   }
   .section-pad {
     padding-block: 4.5rem;
@@ -315,17 +330,6 @@ html.intro-active { overflow: hidden; }
 
 
 /* ─── İletişim düğmesi: dönüşümlü animasyonlu simgeler ve açılan pencere ─── */
-.cfab-i { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; animation: cfab-cycle 9s infinite; }
-.cfab-i1 { animation-delay: 0s; }
-.cfab-i2 { animation-delay: 3s; }
-.cfab-i3 { animation-delay: 6s; }
-@keyframes cfab-cycle { 0% { opacity: 0; transform: scale(0.6); } 5%, 30% { opacity: 1; transform: scale(1); } 34%, 100% { opacity: 0; transform: scale(0.6); } }
-.cfab-i1 svg { transform-origin: 60% 90%; animation: cfab-wave 9s infinite; }
-@keyframes cfab-wave { 0%, 4% { transform: rotate(0); } 8% { transform: rotate(18deg); } 12% { transform: rotate(-14deg); } 16% { transform: rotate(18deg); } 20% { transform: rotate(-10deg); } 24%, 100% { transform: rotate(0); } }
-.cfab-i2 svg { animation: cfab-mail 9s infinite 3s; }
-@keyframes cfab-mail { 0%, 4% { transform: translateY(0); } 9% { transform: translateY(-4px) rotate(-6deg); } 14% { transform: translateY(0) rotate(4deg); } 19% { transform: translateY(-3px) rotate(-3deg); } 24%, 100% { transform: none; } }
-.cfab-i3 svg { animation: cfab-pen 9s infinite 6s; }
-@keyframes cfab-pen { 0%, 4% { transform: translate(0, 0); } 9% { transform: translate(3px, -3px) rotate(6deg); } 14% { transform: translate(-3px, 1px) rotate(-4deg); } 19% { transform: translate(3px, -2px) rotate(5deg); } 24%, 100% { transform: none; } }
 .cfab-ring { position: absolute; inset: 0; border-radius: 9999px; border: 2px solid rgb(var(--hayb-lime)); animation: cfab-ring 2.8s ease-out infinite; pointer-events: none; }
 @keyframes cfab-ring { 0% { transform: scale(1); opacity: 0.55; } 100% { transform: scale(1.6); opacity: 0; } }
 .cs-fade-in { animation: cs-fade 0.28s ease-out both; }
@@ -340,8 +344,7 @@ html.intro-active { overflow: hidden; }
 @keyframes lang-row { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   .lang-row { animation-duration: 0.01s !important; }
-  .cfab-i, .cfab-i svg, .cfab-ring, .cs-fade-in, .cs-fade-out, .cs-sheet-in, .cs-sheet-out { animation-duration: 0.01s !important; animation-iteration-count: 1 !important; }
-  .cfab-i1 { opacity: 1; }
+  .cs-fade-in, .cs-fade-out, .cs-sheet-in, .cs-sheet-out { animation-duration: 0.01s !important; animation-iteration-count: 1 !important; }
 }
 
 /* ─── Pencere (paket detayları) ─── */

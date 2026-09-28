@@ -47,7 +47,7 @@ export function PlanDetails({ plan, rows, category = 'Web Sitesi' }: { plan: Pri
         type="button"
         onClick={() => setOpen(true)}
         aria-haspopup="dialog"
-        className="press inline-flex min-h-12 w-full items-center justify-center rounded-xl border border-on-light/25 bg-white/[0.05] px-5 font-semibold text-on-light transition hover:border-on-light"
+        className="press inline-flex min-h-12 w-full items-center justify-center rounded-xl border border-on-light/25 bg-white px-5 font-semibold text-on-light transition hover:border-on-light"
       >
         Detayları gör
       </button>
@@ -111,7 +111,7 @@ export function PlanDetails({ plan, rows, category = 'Web Sitesi' }: { plan: Pri
                 )}
               </div>
 
-              <div className="grid gap-2 border-t border-on-light/10 bg-white/[0.05] px-5 py-4 sm:grid-cols-2">
+              <div className="grid gap-2 border-t border-on-light/10 bg-white px-5 py-4 sm:grid-cols-2">
                 <AddToCartButton plan={plan} category={category} />
                 <button
                   type="button"

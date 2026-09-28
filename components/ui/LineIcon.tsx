@@ -53,8 +53,13 @@ export function LineIcon({ name, size = 48, className = '' }: { name: IconName; 
   return (
     <span
       aria-hidden
-      style={{ width: size, height: size }}
-      className={`inline-flex shrink-0 items-center justify-center rounded-[26%] border border-white/12 bg-white/[0.05] text-white ${className}`}
+      style={{
+        width: size,
+        height: size,
+        borderColor: 'color-mix(in srgb, currentColor 16%, transparent)',
+        background: 'color-mix(in srgb, currentColor 5%, transparent)',
+      }}
+      className={`inline-flex shrink-0 items-center justify-center rounded-[26%] border ${className}`}
     >
       <Icon strokeWidth={1.6} style={{ width: size * 0.46, height: size * 0.46 }} />
     </span>

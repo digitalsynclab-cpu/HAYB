@@ -1,0 +1,202 @@
+'use client';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import Link from 'next/link';
+import { AnimatePresence, motion, useReducedMotion, type PanInfo, type Variants } from 'framer-motion';
+import { ArrowRight, Headset, X } from 'lucide-react';
+import { whatsappUrl } from '@/data/site';
+import { trackEvent } from '@/lib/analytics';
+
+const PHONE_DISPLAY = '+90 507 342 06 61';
+const PHONE_TEL = '+905073420661';
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+type Errors = { name?: string; email?: string; consent?: string };
+
+export function buildContactMessage(name: string, email: string) {
+  return `Merhabalar, HAYB hakkında bilgi almak istiyorum. Beni arayabilir misiniz?\n\nAd Soyad: ${name.trim()}\nE-posta: ${email.trim()}`;
+}
+
+/* Yay (spring) ile yükselen ve içeriği sırayla getiren çekmece: 21st.dev "Smooth Drawer" yaklaşımı (kokonutd). */
+const sheetVariants: Variants = {
+  hidden: { y: '100%', opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 300, damping: 30, mass: 0.8, staggerChildren: 0.07, delayChildren: 0.18 } },
+  exit: { y: '100%', opacity: 0, transition: { duration: 0.26, ease: [0.7, 0, 0.84, 0] } },
+};
+const itemVariants: Variants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 300, damping: 30, mass: 0.8 } },
+};
+
+/**
+ * Alttan açılan iletişim penceresi: üstte sarkan kapat düğmesi, "Sizi Arayalım mı?" başlığı, ad soyad, e-posta, KVKK onayı,
+ * Gönder (WhatsApp mesajı) ve doğrudan arama. Aşağı sürükleyerek de kapanır.
+ */
+export default function ContactSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const reduce = useReducedMotion();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [consent, setConsent] = useState(false);
+  const [errors, setErrors] = useState<Errors>({});
+  const [sentUrl, setSentUrl] = useState<string | null>(null);
+  const firstRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const t = window.setTimeout(() => firstRef.current?.focus(), 450);
+    const key = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'Tab' && panelRef.current) {
+        const f = Array.from(panelRef.current.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),input'));
+        if (!f.length) return;
+        if (e.shiftKey && document.activeElement === f[0]) {
+          e.preventDefault();
+          f[f.length - 1].focus();
+        } else if (!e.shiftKey && document.activeElement === f[f.length - 1]) {
+          e.preventDefault();
+          f[0].focus();
+        }
+      }
+    };
+    document.addEventListener('keydown', key);
+    return () => {
+      window.clearTimeout(t);
+      document.body.style.overflow = prev;
+      document.removeEventListener('keydown', key);
+    };
+  }, [open, onClose]);
+
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    const err: Errors = {};
+    if (name.trim().length < 2) err.name = 'Adınızı ve soyadınızı yazın.';
+    if (!EMAIL_RE.test(email.trim())) err.email = 'Geçerli bir e-posta adresi girin.';
+    if (!consent) err.consent = 'Devam etmek için KVKK metnini onaylayın.';
+    setErrors(err);
+    if (Object.keys(err).length) return;
+    const url = whatsappUrl(buildContactMessage(name, email));
+    setSentUrl(url);
+    trackEvent('whatsapp_click', { location: 'contact_fab' });
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  const onDragEnd = (_: unknown, info: PanInfo) => {
+    if (info.offset.y > 110 || info.velocity.y > 600) onClose();
+  };
+
+  const field = (bad?: string) =>
+    `w-full min-h-[3.4rem] rounded-full border bg-white/[0.05] px-6 text-base text-white placeholder:text-white/45 transition focus:border-lime focus:bg-white/[0.08] ${bad ? 'border-red-400/70' : 'border-white/12'}`;
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <div className="fixed inset-0 z-[90]" role="presentation">
+          <motion.div
+            onClick={onClose}
+            aria-hidden
+            className="absolute inset-0 bg-black/75 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center sm:inset-0 sm:items-center sm:p-6">
+            <motion.div
+              ref={panelRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="cfab-title"
+              className="pointer-events-auto relative w-full max-w-md"
+              variants={reduce ? undefined : sheetVariants}
+              initial={reduce ? { opacity: 0 } : 'hidden'}
+              animate={reduce ? { opacity: 1 } : 'visible'}
+              exit={reduce ? { opacity: 0 } : 'exit'}
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={{ top: 0, bottom: 0.5 }}
+              onDragEnd={onDragEnd}
+            >
+              {/* Üst şerit: yumuşak yeşil ışık ve sarkan kapat düğmesi */}
+              <div className="relative h-24 overflow-hidden rounded-t-[2rem]">
+                <div aria-hidden className="absolute inset-0 bg-[#0d0d0d]" />
+                <div aria-hidden className="absolute -top-16 left-1/2 h-40 w-[120%] -translate-x-1/2 rounded-full bg-lime/40 blur-3xl" />
+                <div aria-hidden className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0d0d0d] to-transparent" />
+              </div>
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Kapat"
+                className="press absolute left-1/2 top-9 z-10 grid h-16 w-16 -translate-x-1/2 place-items-center rounded-full border border-white/10 bg-[#0d0d0d] text-white/85 shadow-[0_0_0_10px_#0d0d0d] transition hover:text-white"
+              >
+                <X aria-hidden className="h-6 w-6" />
+              </button>
+
+              <div className="max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain rounded-b-none bg-[#0d0d0d] px-6 pb-8 pt-12 sm:rounded-b-[2rem]">
+                {sentUrl ? (
+                  <motion.div role="status" className="text-center" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+                    <h2 id="cfab-title" className="text-2xl font-bold text-white">Mesajınız hazır</h2>
+                    <p className="mt-3 text-white/70">WhatsApp’ta mesajı gönderin; sizi en kısa sürede arayalım.</p>
+                    <a href={sentUrl} target="_blank" rel="noopener noreferrer" className="press mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-full bg-lime px-6 text-base font-bold text-ink-950">
+                      WhatsApp’ı Aç
+                    </a>
+                    <button type="button" onClick={onClose} className="press mt-3 min-h-12 w-full rounded-full text-sm font-semibold text-white/60 hover:text-white">
+                      Kapat
+                    </button>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={submit} noValidate>
+                    <motion.h2 variants={itemVariants} id="cfab-title" className="text-center text-[1.7rem] font-semibold text-white">
+                      Sizi Arayalım mı?
+                    </motion.h2>
+                    <div className="mt-7 space-y-3">
+                      <motion.div variants={itemVariants}>
+                        <label htmlFor="cfab-name" className="sr-only">Ad Soyad</label>
+                        <input ref={firstRef} id="cfab-name" type="text" autoComplete="name" maxLength={80} placeholder="Ad Soyad" value={name} onChange={(e) => setName(e.target.value)} aria-invalid={errors.name ? true : undefined} className={field(errors.name)} />
+                        {errors.name && <p role="alert" className="mt-1.5 px-3 text-sm text-red-300">{errors.name}</p>}
+                      </motion.div>
+                      <motion.div variants={itemVariants}>
+                        <label htmlFor="cfab-email" className="sr-only">E-posta</label>
+                        <input id="cfab-email" type="email" autoComplete="email" inputMode="email" maxLength={120} placeholder="E-posta" value={email} onChange={(e) => setEmail(e.target.value)} aria-invalid={errors.email ? true : undefined} className={field(errors.email)} />
+                        {errors.email && <p role="alert" className="mt-1.5 px-3 text-sm text-red-300">{errors.email}</p>}
+                      </motion.div>
+                    </div>
+                    <motion.label variants={itemVariants} className="mt-5 flex cursor-pointer items-start gap-3 text-sm text-white/70">
+                      <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} aria-invalid={errors.consent ? true : undefined} className="mt-0.5 h-5 w-5 shrink-0 accent-[rgb(var(--hayb-lime))]" />
+                      <span>
+                        Şartları okudum ve kabul ediyorum:{' '}
+                        <Link href="/kvkk" target="_blank" className="underline underline-offset-2 hover:text-white">KVKK Aydınlatma Metni</Link>
+                      </span>
+                    </motion.label>
+                    {errors.consent && <p role="alert" className="mt-1.5 px-1 text-sm text-red-300">{errors.consent}</p>}
+                    <motion.div variants={itemVariants}>
+                      <button type="submit" className="group relative mt-5 inline-flex min-h-14 w-full items-center justify-center overflow-hidden rounded-full bg-lime px-6 text-base font-bold text-ink-950 transition hover:bg-lime-soft">
+                        {/* Üzerine gelince geçen parlama (21st.dev Smooth Drawer düğmesi) */}
+                        <motion.span aria-hidden className="absolute inset-0 -translate-x-[200%] bg-gradient-to-r from-transparent via-white/40 to-transparent" whileHover={{ x: ['-200%', '200%'] }} transition={{ duration: 1.2, ease: 'easeInOut' }} />
+                        <span className="relative inline-flex items-center gap-2">
+                          Gönder
+                          <motion.span animate={reduce ? undefined : { x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 1 }}>
+                            <ArrowRight aria-hidden className="h-5 w-5" />
+                          </motion.span>
+                        </span>
+                      </button>
+                    </motion.div>
+
+                    <motion.div variants={itemVariants} className="mt-7 border-t border-white/10 pt-6">
+                      <p className="text-sm font-semibold text-white">Siz mi arayacaksınız?</p>
+                      <p className="mt-1 text-sm text-white/55">Hemen konuşmak isterseniz bizi doğrudan arayabilirsiniz.</p>
+                      <a href={`tel:${PHONE_TEL}`} className="press mt-4 inline-flex min-h-14 w-full items-center justify-center gap-2.5 rounded-full border border-lime/50 bg-lime/10 px-6 text-lg font-semibold text-lime transition hover:bg-lime hover:text-ink-950">
+                        <Headset aria-hidden className="h-5 w-5" /> {PHONE_DISPLAY}
+                      </a>
+                    </motion.div>
+                  </form>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+}

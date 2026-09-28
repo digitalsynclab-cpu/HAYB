@@ -11,7 +11,7 @@ export function DashboardMockup({ className = '' }: { className?: string }) {
   ];
   return (
     <figure className={className}>
-      <div aria-hidden className="overflow-hidden rounded-2xl border border-on-light/10 bg-white/[0.05] text-on-light shadow-soft">
+      <div aria-hidden className="overflow-hidden rounded-2xl border border-on-light/10 bg-white text-on-light shadow-soft">
         <div className="flex items-center justify-between border-b border-on-light/10 px-4 py-3 sm:px-5">
           <span className="text-sm font-bold">Panel</span>
           <span className="rounded-full bg-lime/60 px-2.5 py-0.5 text-[0.7rem] font-semibold text-on-light">Demo veri</span>

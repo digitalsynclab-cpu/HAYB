@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Montserrat } from 'next/font/google';
+import { Inter, Montserrat } from 'next/font/google';
 import './globals.css';
 import { site } from '@/data/site';
 import { Navbar } from '@/components/layout/Navbar';
@@ -21,10 +21,18 @@ const googleVerification = process.env['NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION'];
 const bingVerification = process.env['NEXT_PUBLIC_BING_SITE_VERIFICATION'];
 
 // Türkçe karakterler (ş, ğ, ı, İ) için latin-ext zorunlu.
-const inter = Montserrat({
+const inter = Inter({
   subsets: ['latin', 'latin-ext'],
   display: 'swap',
   variable: '--font-inter',
+});
+
+// Başlıklar ve giriş metinleri Montserrat; gövde metni okunaklılık için Inter.
+const montserrat = Montserrat({
+  subsets: ['latin', 'latin-ext'],
+  display: 'swap',
+  variable: '--font-montserrat',
+  weight: ['500', '600', '700', '800'],
 });
 
 export const metadata: Metadata = {
@@ -74,7 +82,7 @@ const revealBootstrap = `(function(d,w){try{var e=d.documentElement;e.classList.
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="tr" className={inter.variable} suppressHydrationWarning>
+    <html lang="tr" className={`${inter.variable} ${montserrat.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: revealBootstrap }} />
       </head>

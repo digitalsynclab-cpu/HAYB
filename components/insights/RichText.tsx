@@ -58,7 +58,7 @@ export function ArticleBody({ blocks }: { blocks: Block[] }) {
             );
           case 'callout':
             return (
-              <aside key={i} className="!mt-8 rounded-2xl border border-on-light/15 bg-white/[0.05] p-5 shadow-sm">
+              <aside key={i} className="!mt-8 rounded-2xl border border-on-light/15 bg-white p-5 shadow-sm">
                 <p className="text-sm font-extrabold uppercase tracking-[0.14em]">{b.title}</p>
                 <p className="mt-1.5 text-[1rem] leading-relaxed sm:text-[1.05rem]">
                   <Inline text={b.text} />
