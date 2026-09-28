@@ -48,7 +48,8 @@
 /* Başlıklar, giriş metni ve düğme/menü etiketleri Montserrat */
 h1, h2, h3, h4, .font-heading, .hero-lead, button, nav a { font-family: var(--font-montserrat), var(--font-inter), ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.01em; }
 body, input, textarea, select, summary, label { font-family: var(--font-montserrat), var(--font-inter), ui-sans-serif, system-ui, sans-serif; }
-h1, h2, h3, h4 { letter-spacing: -0.015em !important; }
+h1, h2, h3, h4 { font-weight: 400 !important; letter-spacing: 0 !important; }
+h1 .accent-text, h2 .accent-text, h3 .accent-text { font-weight: 400 !important; }
 
 html {
   scroll-behavior: smooth;
@@ -420,3 +421,8 @@ html.intro-active { overflow: hidden; }
 @media (min-width: 640px) { .asst-in { animation-name: asst-pop; animation-duration: 0.3s; } }
 .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Kalın yazı yok: kalın/çok kalın ağırlıklar orta ağırlığa indirilir */
+.font-bold, .font-extrabold, .font-black, .font-semibold, strong, b, th, button, nav a { font-weight: 500 !important; }
+/* HAYB logosu değiştirilmez: yazısı eski ağırlığında kalır */
+a[aria-label="HAYB ana sayfa"], a[aria-label="HAYB ana sayfa"] * { font-weight: 800 !important; }
