@@ -97,7 +97,7 @@ export function ContactFab() {
         aria-haspopup="dialog"
         whileTap={{ scale: 0.92 }}
         whileHover={{ scale: 1.06 }}
-        className="fixed bottom-4 right-4 z-40 grid h-16 w-16 place-items-center rounded-full bg-lime text-ink-950 shadow-[0_10px_30px_rgb(0_0_0/0.45)] sm:bottom-6 sm:right-6"
+        className="fixed bottom-4 right-4 z-30 grid h-16 w-16 place-items-center rounded-full bg-lime text-ink-950 shadow-[0_10px_30px_rgb(0_0_0/0.45)] sm:bottom-6 sm:right-6"
       >
         <span aria-hidden className="cfab-ring" />
         <AnimatePresence mode="wait">

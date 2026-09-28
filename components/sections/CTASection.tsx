@@ -4,6 +4,7 @@ import { Reveal } from '@/components/motion/Reveal';
 import { SplitHeading } from '@/components/motion/SplitText';
 import { whatsappUrl } from '@/data/site';
 import { MessageCircle } from 'lucide-react';
+import { ContactButton } from '@/components/contact/ContactButton';
 
 /** Sayfa sonu çağrısı: tek hedef, tek net eylem. */
 export function CTASection({
@@ -33,9 +34,9 @@ export function CTASection({
           <p className="mt-5 max-w-xl text-lg text-fg-muted">{text}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             {extra && <Button href={extra.href}>{extra.label}</Button>}
-            <Button href="/proje-baslat" variant={extra ? 'secondary' : 'primary'} arrow={!extra}>
+            <ContactButton variant={extra ? 'secondary' : 'primary'} arrow={!extra}>
               Teklif Al
-            </Button>
+            </ContactButton>
             <Button
               href={whatsappUrl('Merhaba, HAYB internet sitesinden yazıyorum.')}
               variant="secondary"

@@ -1,4 +1,4 @@
-import { HomeHero, HomeServices, HomeProducts, HomeProcess, HomeTrust } from '@/components/sections/HomeSections';
+import { HomeHeroV2, HomeGroups, HomeWork, HomeSteps, HomePackages, HomeFaq } from '@/components/sections/HomeV2';
 import { CTASection } from '@/components/sections/CTASection';
 import { OrganizationSchema } from '@/components/schema/OrganizationSchema';
 import { WebSiteSchema } from '@/components/schema/WebSiteSchema';
@@ -10,11 +10,12 @@ export default function Home() {
       {/* Tek birleşik işletme entity'si (Organization+LocalBusiness) + WebSite şeması */}
       <OrganizationSchema />
       <WebSiteSchema />
-      <HomeHero />
-      <HomeServices />
-      <HomeProducts />
-      <HomeProcess />
-      <HomeTrust />
+      <HomeHeroV2 />
+      <HomeGroups />
+      <HomeWork />
+      <HomeSteps />
+      <HomePackages />
+      <HomeFaq />
       <CTASection />
     </>
   );
