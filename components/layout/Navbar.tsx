@@ -3,8 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronDown, MessageCircle } from 'lucide-react';
-import { whatsappUrl } from '@/data/site';
+import { ChevronDown } from 'lucide-react';
 import { menu, type MenuItem } from '@/data/menu';
 import { Logo } from '@/components/ui/Logo';
 import { Button } from '@/components/ui/Button';
@@ -268,14 +267,6 @@ export function Navbar() {
               }}
             >
               Teklif Al
-            </Button>
-            <Button
-              href={whatsappUrl('Merhaba, HAYB internet sitesinden yazıyorum.')}
-              variant="secondary"
-              className="w-full"
-              icon={<MessageCircle aria-hidden className="h-5 w-5" />}
-            >
-              WhatsApp ile Yaz
             </Button>
           </div>
         </div>

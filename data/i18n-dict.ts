@@ -1190,7 +1190,8 @@ export const DICT_EN: Record<string, string> = {
  "Telefonu 5 ile başlayarak 10 haneli yazın (örn. 5xx xxx xx xx).": "Enter 10 digits starting with 5 (e.g. 5xx xxx xx xx).",
  "bulun.": "that fits you.",
  "Web sitesi, e-ticaret, sosyal medya ve daha fazlası; fiyatlar ve kapsam net.": "Websites, e-commerce, social media and more; prices and scope are clear.",
- "Paketlere Göz Atın": "Browse Packages"
+ "Paketlere Göz Atın": "Browse Packages",
+ "Bize Ulaşın": "Contact Us"
 };
 
 export const DICT_DE: Record<string, string> = {
@@ -2381,5 +2382,6 @@ export const DICT_DE: Record<string, string> = {
  "Telefonu 5 ile başlayarak 10 haneli yazın (örn. 5xx xxx xx xx).": "Geben Sie 10 Ziffern ein, beginnend mit 5 (z. B. 5xx xxx xx xx).",
  "bulun.": "für Sie.",
  "Web sitesi, e-ticaret, sosyal medya ve daha fazlası; fiyatlar ve kapsam net.": "Websites, E-Commerce, Social Media und mehr; Preise und Umfang sind klar.",
- "Paketlere Göz Atın": "Pakete ansehen"
+ "Paketlere Göz Atın": "Pakete ansehen",
+ "Bize Ulaşın": "Kontakt aufnehmen"
 };

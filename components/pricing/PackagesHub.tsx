@@ -6,7 +6,6 @@ import { ArrowRight, Check, Gift, Globe, Layers, Megaphone, Minus, PenTool, QrCo
 import { Price } from '@/components/ui/Price';
 import { AddToCartButton } from '@/components/pricing/AddToCartButton';
 import { PlanDetails, type DetailRow } from '@/components/pricing/PlanDetails';
-import { whatsappUrl } from '@/data/site';
 import { openContact } from '@/lib/contact-events';
 import type { PricingPlan } from '@/types';
 
@@ -102,14 +101,9 @@ function Card({ c, category, index }: { c: PackageCard; category: string; index:
       <div className="mt-6 space-y-2">
         <AddToCartButton plan={plan} category={category} />
         <PlanDetails plan={plan} rows={c.rows} category={category} />
-        <a
-          href={whatsappUrl(`Merhaba, ${category} - ${plan.name} paketi hakkında bilgi almak istiyorum.`)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex min-h-11 w-full items-center justify-center rounded-xl text-sm font-semibold text-fg-muted transition hover:text-lime"
-        >
-          WhatsApp’tan sor
-        </a>
+        <button type="button" onClick={openContact} className="inline-flex min-h-11 w-full items-center justify-center rounded-xl text-sm font-semibold text-fg-muted transition hover:text-lime">
+          Bize Ulaşın
+        </button>
         {c.example && (
           <Link href={c.example.href} className="inline-flex min-h-11 w-full items-center justify-center gap-1.5 text-sm font-semibold text-lime hover:underline">
             {c.example.label} <ArrowRight aria-hidden className="h-4 w-4" />

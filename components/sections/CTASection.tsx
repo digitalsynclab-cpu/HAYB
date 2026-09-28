@@ -2,8 +2,6 @@ import { Button } from '@/components/ui/Button';
 import { Section } from '@/components/ui/Section';
 import { Reveal } from '@/components/motion/Reveal';
 import { SplitHeading } from '@/components/motion/SplitText';
-import { whatsappUrl } from '@/data/site';
-import { MessageCircle } from 'lucide-react';
 import { ContactButton } from '@/components/contact/ContactButton';
 
 /** Sayfa sonu çağrısı: tek hedef, tek net eylem. */
@@ -35,15 +33,8 @@ export function CTASection({
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             {extra && <Button href={extra.href}>{extra.label}</Button>}
             <ContactButton variant={extra ? 'secondary' : 'primary'} arrow={!extra}>
-              Teklif Al
+              Bize Ulaşın
             </ContactButton>
-            <Button
-              href={whatsappUrl('Merhaba, HAYB internet sitesinden yazıyorum.')}
-              variant="secondary"
-              icon={<MessageCircle aria-hidden className="h-5 w-5" />}
-            >
-              WhatsApp ile Yaz
-            </Button>
           </div>
         </div>
       </Reveal>
