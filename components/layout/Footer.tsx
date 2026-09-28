@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { legalLinks, site } from '@/data/site';
 import { Logo } from '@/components/ui/Logo';
@@ -40,7 +41,10 @@ const COLS: { title: string; links: { label: string; href: string }[] }[] = [
 
 export function Footer() {
   return (
-    <footer className="tone-dark border-t border-white/10">
+    <footer className="tone-dark relative isolate overflow-hidden border-t border-white/10">
+      {/* Arka plan görseli: değiştirilmeden, düşük opaklıkta; içerik okunurluğu için koyu katman */}
+      <Image src="/brand/footer-bg.webp" alt="" fill sizes="100vw" aria-hidden className="pointer-events-none -z-20 select-none object-cover object-center opacity-40" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-ink-950/85 via-ink-950/55 to-ink-950/85" />
       <div className="mx-auto grid max-w-page grid-cols-2 gap-x-6 gap-y-9 px-4 py-12 sm:px-6 sm:py-14 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-10 lg:px-8">
         <div className="col-span-2 lg:col-span-1">
           <Logo />
@@ -68,7 +72,7 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-page flex-col items-center gap-4 px-4 py-6 text-center text-sm text-fg-muted sm:flex-row sm:justify-between sm:px-6 sm:text-left lg:px-8">
           <p>
-            © HAYB. {site.footerLine}
+            © 2026 HAYB. Tüm Hakları Saklıdır.
           </p>
           <p className="hidden tracking-[0.2em] sm:block">{site.domain}</p>
         </div>
