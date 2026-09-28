@@ -46,7 +46,7 @@ const config: Config = {
         '7xl': ['4.2rem', { lineHeight: '1' }],
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-montserrat)', 'var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         heading: ['var(--font-montserrat)', 'var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
