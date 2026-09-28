@@ -89,6 +89,16 @@ export function HomeGroups() {
   );
 }
 
+/** Tam genişlik banner: web sitesi ve mobil uygulama/oyun mockup'ları alt alta. */
+export function HomeBanners() {
+  return (
+    <section aria-label="Web sitesi, mobil uygulama ve oyun örnekleri" className="bg-black">
+      <Image src="/brand/mockup-web.webp" alt="Dizüstü bilgisayarda açık HAYB web sitesi tasarımı" width={2000} height={776} sizes="100vw" className="h-auto min-h-[15rem] w-full object-cover object-center sm:min-h-0" />
+      <Image src="/brand/mockup-mobil.webp" alt="Telefonlarda HAYB mobil uygulama ve oyun tasarımları" width={2000} height={776} sizes="100vw" className="h-auto min-h-[15rem] w-full object-cover object-center sm:min-h-0" />
+    </section>
+  );
+}
+
 const WORK_SLUGS = ['web1', 'web9', 'web11', 'web12', 'web13', 'web19'];
 
 /** Çalışmalar: yalnızca canlı denenebilir altı şablon; gerisi Çalışmalar menüsünde. */

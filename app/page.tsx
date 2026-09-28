@@ -1,4 +1,4 @@
-import { HomeHeroV2, HomeGroups, HomeWork, HomePackages } from '@/components/sections/HomeV2';
+import { HomeHeroV2, HomeGroups, HomeWork, HomeBanners, HomePackages } from '@/components/sections/HomeV2';
 import { CTASection } from '@/components/sections/CTASection';
 import { OrganizationSchema } from '@/components/schema/OrganizationSchema';
 import { WebSiteSchema } from '@/components/schema/WebSiteSchema';
@@ -12,6 +12,7 @@ export default function Home() {
       <WebSiteSchema />
       <HomeHeroV2 />
       <HomeGroups />
+      <HomeBanners />
       <HomeWork />
       <HomePackages />
       <CTASection />
