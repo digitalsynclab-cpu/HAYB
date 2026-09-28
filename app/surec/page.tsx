@@ -57,7 +57,7 @@ export default function ProcessPage() {
           {processPromises.map((p, i) => (
             <li key={p.title}>
               <Reveal delay={i * 60} className="h-full">
-                <IconCard icon={p.icon} title={p.title} text={p.text} tone="dark" />
+                <IconCard icon={p.icon} title={p.title} text={p.text} tone="dark" variant="3d" />
               </Reveal>
             </li>
           ))}

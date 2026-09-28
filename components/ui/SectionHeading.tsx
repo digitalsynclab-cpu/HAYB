@@ -1,13 +1,9 @@
 import type { ReactNode } from 'react';
 import { SplitHeading } from '@/components/motion/SplitText';
 
-export function Eyebrow({ children }: { children: ReactNode }) {
-  return (
-    <p className="mb-4 flex items-center gap-2.5 text-[0.8125rem] font-semibold uppercase tracking-[0.18em] text-muted">
-      <span aria-hidden className="h-2 w-2 rounded-full bg-lime" />
-      {children}
-    </p>
-  );
+/** Nokta + etiket türü başlık üstü yazılar kaldırıldı; bileşen geriye dönük uyumluluk için boş döner. */
+export function Eyebrow(_props: { children?: ReactNode }) {
+  return null;
 }
 
 interface SectionHeadingProps {

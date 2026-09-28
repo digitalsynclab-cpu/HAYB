@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Icon3D } from '@/components/ui/Icon3D';
+import { LineIcon } from '@/components/ui/LineIcon';
 import type { IconName } from '@/data/icons';
 import type { ServiceDetail } from '@/data/services';
 import type { Project } from '@/data/projects';
@@ -18,7 +19,7 @@ export function ServiceCard({ service, priority = false, wide = false }: { servi
         wide ? 'lg:flex-row lg:items-center lg:gap-6' : ''
       }`}
     >
-      <Icon3D name={service.icon} size={84} priority={priority} fluid className="h-[3.25rem] w-[3.25rem] shrink-0 sm:-ml-1 sm:h-[var(--sz)] sm:w-[var(--sz)]" />
+      <LineIcon name={service.icon} size={52} />
       <div className="flex min-w-0 flex-1 flex-col self-stretch">
         <h3 className={`text-[0.95rem] font-bold leading-tight sm:mt-5 sm:text-xl ${wide ? 'lg:mt-0' : ''}`}>
           <Link href={`/hizmetler/${service.slug}`} className="after:absolute after:inset-0 after:rounded-card focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-on-light">
@@ -47,16 +48,23 @@ export function IconCard({
   text,
   tone = 'light',
   size = 68,
+  variant = 'line',
 }: {
   icon: IconName;
   title: string;
   text: string;
   tone?: 'light' | 'dark';
   size?: number;
+  /** 'line': sade çizgi ikon; '3d': yalnızca Hakkımızda, İletişim, Süreç, Proje Başlat gibi sayfalarda 3D ikon */
+  variant?: 'line' | '3d';
 }) {
   return (
     <div data-spot className={`flex h-full items-start gap-4 rounded-card p-4 sm:block sm:p-6 ${tone === 'light' ? 'surface-light' : 'glass'}`}>
-      <Icon3D name={icon} size={size} fluid className="h-14 w-14 shrink-0 sm:-ml-1 sm:h-[var(--sz)] sm:w-[var(--sz)]" />
+      {variant === '3d' ? (
+        <Icon3D name={icon} size={size} fluid className="h-14 w-14 shrink-0 sm:-ml-1 sm:h-[var(--sz)] sm:w-[var(--sz)]" />
+      ) : (
+        <LineIcon name={icon} size={48} />
+      )}
       <div>
       <h3 className="text-lg font-bold sm:mt-4">{title}</h3>
       <p className="mt-1 text-muted sm:mt-1.5">{text}</p>

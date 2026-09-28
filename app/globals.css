@@ -102,12 +102,9 @@ body {
   }
   /* Vurgu rengi: koyu zeminde lime, açık zeminde okunabilir koyu yeşil */
   .accent-text {
-    color: rgb(var(--hayb-lime));
+    color: rgb(var(--hayb-fg-muted));
   }
-  .tone-light .accent-text,
-  .tone-white .accent-text {
-    color: rgb(var(--hayb-lime-deep));
-  }
+
 
   /* ── Cam yüzey: yalnızca seçili yerlerde ── */
   .glass {

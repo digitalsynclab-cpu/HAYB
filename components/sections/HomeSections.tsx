@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { PageHero } from '@/components/ui/PageHero';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { Icon3D } from '@/components/ui/Icon3D';
+import { LineIcon } from '@/components/ui/LineIcon';
 import { StoreButtons, LiveAppsShelf } from '@/components/ui/StoreButtons';
 import { ServiceCard, ProjectImage } from '@/components/ui/Cards';
 import { AppCovers, PanelSlider } from '@/components/ui/Sliders';
@@ -103,7 +103,7 @@ function ProductTile({
     <Reveal className={`flex min-w-0 flex-col ${className}`}>
       <div data-spot className="flex h-full min-w-0 flex-col rounded-card border border-white/10 bg-ink-800 p-4 sm:p-6">
         <Link href={href} className="group mb-4 flex items-center gap-3 rounded-xl sm:mb-5">
-          <Icon3D name={icon} size={48} />
+          <LineIcon name={icon} size={44} />
           <span className="text-lg font-bold sm:text-xl">{title}</span>
           <span
             aria-hidden
@@ -241,7 +241,7 @@ export function HomeTrust() {
           <li key={t.title}>
             <Reveal delay={i * 70} className="h-full">
               <div data-spot className="glass flex h-full items-center gap-4 rounded-card p-5 sm:block sm:p-6">
-                <Icon3D name={t.icon} size={72} fluid className="h-14 w-14 shrink-0 sm:-ml-1 sm:h-[var(--sz)] sm:w-[var(--sz)]" />
+                <LineIcon name={t.icon} size={48} />
                 <div>
                 <h3 className="text-lg font-bold sm:mt-4">{t.title}</h3>
                 <p className="mt-1 text-fg-muted sm:mt-1.5">{t.text}</p>

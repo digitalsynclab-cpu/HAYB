@@ -8,7 +8,7 @@ import { AiChatDemo } from '@/components/ui/AiChatDemo';
 import { SocialTemplates } from '@/components/ui/SocialTemplates';
 import { ProjectImage } from '@/components/ui/Cards';
 import { StoreButtons, LiveAppsShelf } from '@/components/ui/StoreButtons';
-import { Icon3D } from '@/components/ui/Icon3D';
+import { LineIcon } from '@/components/ui/LineIcon';
 import { projectById, type Project } from '@/data/projects';
 import { ecommercePackages } from '@/data/pricing';
 import { Price } from '@/components/ui/Price';
@@ -42,7 +42,7 @@ function ArchitectureFlow() {
             <span aria-hidden className="absolute right-3 top-2 text-xs font-bold tracking-widest text-lime">
               {String(i + 1).padStart(2, '0')}
             </span>
-            <Icon3D name={n.icon} size={56} />
+            <LineIcon name={n.icon} size={48} />
             <div>
               <p className="font-bold">{n.title}</p>
               <p className="text-sm text-fg-muted">{n.text}</p>

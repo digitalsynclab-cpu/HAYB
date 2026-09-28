@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { PageHero } from '@/components/ui/PageHero';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
-import { Icon3D } from '@/components/ui/Icon3D';
+import { LineIcon } from '@/components/ui/LineIcon';
 import type { IconName } from '@/data/icons';
 
 export const metadata = { title: 'Sayfa bulunamadı', robots: { index: false, follow: false } };
@@ -46,7 +46,7 @@ export default function NotFound() {
           {links.map((l) => (
             <li key={l.href}>
               <Link href={l.href} className="glass group flex h-full flex-col gap-2 rounded-card p-5 transition hover:border-lime/50">
-                <Icon3D name={l.icon} size={56} />
+                <LineIcon name={l.icon} size={48} />
                 <span className="text-lg font-bold">{l.title}</span>
                 <span className="flex-1 text-sm text-fg-muted">{l.text}</span>
                 <ArrowRight aria-hidden className="h-5 w-5 transition-transform group-hover:translate-x-1" />

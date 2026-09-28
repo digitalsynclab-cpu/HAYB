@@ -72,7 +72,7 @@ export default function AboutPage() {
           {values.map((v, i) => (
             <li key={v.title}>
               <Reveal delay={i * 60} className="h-full">
-                <IconCard icon={v.icon} title={v.title} text={v.text} tone="dark" size={64} />
+                <IconCard icon={v.icon} title={v.title} text={v.text} tone="dark" size={64} variant="3d" />
               </Reveal>
             </li>
           ))}

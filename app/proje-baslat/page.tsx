@@ -28,8 +28,8 @@ export default function StartProjectPage() {
         <div className="grid items-start gap-8 lg:grid-cols-[1.7fr_1fr]">
           <ProjectWizard />
           <aside aria-label="Bilgi" className="space-y-4">
-            <IconCard icon="iletisim" title="Kısa ve net" text="Sorular kısa; bilmediğiniz bir yeri boş bırakabilir, birlikte netleştirebiliriz." tone="dark" />
-            <IconCard icon="veriguvenligi" title="Bilgileriniz güvende" text="Paylaştığınız bilgiler yalnızca proje talebiniz için kullanılır." tone="dark" />
+            <IconCard icon="iletisim" title="Kısa ve net" text="Sorular kısa; bilmediğiniz bir yeri boş bırakabilir, birlikte netleştirebiliriz." tone="dark" variant="3d" />
+            <IconCard icon="veriguvenligi" title="Bilgileriniz güvende" text="Paylaştığınız bilgiler yalnızca proje talebiniz için kullanılır." tone="dark" variant="3d" />
           </aside>
         </div>
       </Section>

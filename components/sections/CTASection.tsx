@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/Button';
 import { Section } from '@/components/ui/Section';
-import { Icon3D } from '@/components/ui/Icon3D';
 import { Reveal } from '@/components/motion/Reveal';
 import { SplitHeading } from '@/components/motion/SplitText';
 import { whatsappUrl } from '@/data/site';
@@ -45,9 +44,6 @@ export function CTASection({
               WhatsApp ile Yaz
             </Button>
           </div>
-        </div>
-        <div aria-hidden className="hidden justify-center lg:flex">
-          <Icon3D name="yenimusteri" size={220} />
         </div>
       </Reveal>
     </Section>

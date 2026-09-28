@@ -11,7 +11,7 @@ import { ServiceShowcase } from '@/components/sections/ServiceShowcase';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { ORGANIZATION_ID } from '@/components/schema/OrganizationSchema';
-import { Icon3D } from '@/components/ui/Icon3D';
+import { LineIcon } from '@/components/ui/LineIcon';
 import { InsightCard } from '@/components/insights/InsightCard';
 import { insightsForService } from '@/data/insights';
 import Link from 'next/link';
@@ -125,7 +125,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
             </ul>
           ) : (
             <div className="flex justify-center lg:justify-end">
-              <Icon3D name={s.icon} size={300} priority fluid className="h-28 w-28 sm:h-44 sm:w-44 lg:h-[19rem] lg:w-[19rem]" />
+              <LineIcon name={s.icon} size={176} className="!rounded-[2.5rem] sm:!h-56 sm:!w-56 lg:!h-72 lg:!w-72" />
             </div>
           )
         }
