@@ -7,7 +7,7 @@
   /* Accent: HAYB Lime (logo ile aynı aile) */
   --hayb-lime: 166 255 65; /* #a6ff41 */
   --hayb-lime-soft: 200 255 128;
-  --hayb-lime-deep: 166 255 65; /* #a6ff41: açık zeminde de aynı vurgu rengi */
+  --hayb-lime-deep: 79 140 20; /* #4F8C14: açık zeminde okunur koyu yeşil, gölgeyle netleşir */
 
   /* Dark surface */
   --hayb-ink-950: 8 8 8; /* #080808 */
@@ -110,15 +110,11 @@ body {
   .accent-text {
     color: rgb(var(--hayb-lime));
   }
-  /* Açık zeminde #a6ff41 metin okunmaz: aynı yeşil, marker (vurgu kalemi) zemini olarak kullanılır */
+  /* Açık zeminde düz #a6ff41 metin zayıf okunur: koyu gölgeyle netlik ve kontrast artırılır */
   .tone-light .accent-text,
   .tone-white .accent-text {
-    color: rgb(var(--hayb-ink-950));
-    background: rgb(var(--hayb-lime));
-    border-radius: 0.3em;
-    padding: 0 0.22em;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
+    color: rgb(var(--hayb-lime-deep));
+    text-shadow: 0 1px 1px rgb(0 0 0 / 0.35), 0 0 18px rgb(var(--hayb-lime) / 0.25);
   }
 
 

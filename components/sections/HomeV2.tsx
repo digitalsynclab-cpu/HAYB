@@ -55,7 +55,8 @@ export function HomeHeroV2() {
 export function HomeGroups() {
   const groups = menu.find((m) => m.label === 'Hizmetler')!.groups!;
   return (
-    <Section tone="light" labelledBy="hizmet-gruplari">
+    <Section tone="light" labelledBy="hizmet-gruplari" className="relative isolate overflow-hidden">
+      <Image src="/brand/groups-bg.webp" alt="" fill priority={false} sizes="100vw" aria-hidden className="pointer-events-none -z-10 select-none object-cover object-center" />
       <SectionHeading id="hizmet-gruplari" title="Ne yapmak" accent="istiyorsunuz?" />
       <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5">
         {groups.map((g, i) => (

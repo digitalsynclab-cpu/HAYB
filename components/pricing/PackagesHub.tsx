@@ -76,27 +76,27 @@ function Card({ c, category, index }: { c: PackageCard; category: string; index:
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.07, type: 'spring', stiffness: 260, damping: 26 }}
-      className={`relative flex h-full flex-col rounded-[1.6rem] border p-6 sm:p-7 ${rec ? 'border-lime/60 bg-white/[0.05] shadow-[0_0_0_1px_rgb(166_255_65/0.15)] lg:-translate-y-2' : 'border-white/10 bg-white/[0.03]'}`}
+      className={`group relative flex h-full flex-col rounded-[1.75rem] border p-6 transition-all duration-500 sm:p-7 ${rec ? 'border-lime/50 bg-gradient-to-b from-lime/[0.09] to-transparent shadow-[0_8px_40px_-12px_rgb(166_255_65/0.2)] lg:-translate-y-2' : 'border-white/10 bg-white/[0.03] hover:border-white/25'}`}
     >
-      {rec && <span className="absolute -top-3 left-6 rounded-full bg-lime px-3 py-1 text-xs font-bold uppercase tracking-wider text-ink-950">Önerilen</span>}
-      <h3 className="text-xl font-bold tracking-tight">{c.title ?? plan.name}</h3>
+      {rec && <span className="absolute -top-3 left-6 z-10 rounded-full bg-lime px-3 py-1 text-xs font-bold uppercase tracking-wider text-ink-950">Önerilen</span>}
+      <h3 className="text-sm font-medium uppercase tracking-[0.14em] text-fg-muted">{c.title ?? plan.name}</h3>
       {c.blurb && <p className="mt-1.5 text-sm text-fg-muted">{c.blurb}</p>}
-      <Price price={plan.price} tone="dark" className="mt-5 text-fg" />
+      <Price price={plan.price} tone="dark" className="mt-4 text-fg" />
       {c.gift && (
         <p className="mt-4 inline-flex items-start gap-2 self-start rounded-xl bg-lime px-3 py-2 text-sm font-bold text-ink-950">
           <Gift aria-hidden className="mt-0.5 h-4 w-4 shrink-0" /> {c.gift}
         </p>
       )}
-      <ul className="mt-6 flex-1 space-y-2.5 border-t border-white/10 pt-5">
+      <ul className="mt-6 flex-1 space-y-3.5 border-t border-white/10 pt-6">
         {points.map((f) => (
-          <li key={f} className="flex gap-2.5 text-[0.95rem] text-fg/90">
-            <span aria-hidden className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-lime/15 text-lime">
-              <Check className="h-3 w-3" strokeWidth={3} />
+          <li key={f} className="flex items-center gap-3 text-[0.95rem] text-fg/90">
+            <span aria-hidden className={`grid h-5 w-5 shrink-0 place-items-center rounded-full ${rec ? 'text-lime' : 'text-fg'}`}>
+              <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
             </span>
             {f}
           </li>
         ))}
-        {more > 0 && <li className="pl-7 text-sm text-fg-muted">+ {more} özellik daha</li>}
+        {more > 0 && <li className="pl-8 text-sm text-fg-muted">+ {more} özellik daha</li>}
       </ul>
       <div className="mt-6 space-y-2">
         <AddToCartButton plan={plan} category={category} />
