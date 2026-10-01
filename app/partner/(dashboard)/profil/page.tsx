@@ -1,6 +1,8 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { BankInfoForm } from './BankInfoForm';
 
+const PARTNER_STATUS_LABEL: Record<string, string> = { pending: 'Bekliyor', active: 'Aktif', suspended: 'Askıda', inactive: 'Pasif', rejected: 'Reddedildi' };
+
 export default async function PartnerProfilePage() {
   const supabase = await createSupabaseServerClient();
   const {
@@ -18,7 +20,7 @@ export default async function PartnerProfilePage() {
     { label: 'E-posta', value: profile?.email },
     { label: 'Telefon', value: profile?.phone },
     { label: 'Partner Kodu', value: partner?.partner_code },
-    { label: 'Durum', value: partner?.status },
+    { label: 'Durum', value: partner?.status ? (PARTNER_STATUS_LABEL[partner.status] ?? partner.status) : undefined },
     { label: 'Katılım Tarihi', value: partner?.created_at ? new Date(partner.created_at).toLocaleDateString('tr-TR') : undefined },
   ];
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { Field, inputProps } from '@/components/forms/Field';
 import { createTicketAction, replyTicketAction, type SupportActionResult } from './actions';
 
@@ -9,6 +9,10 @@ const initial: SupportActionResult = { ok: false };
 export function NewTicketForm() {
   const [state, formAction, pending] = useActionState(createTicketAction, initial);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (state.ok) setOpen(false);
+  }, [state.ok]);
 
   if (!open) {
     return (
