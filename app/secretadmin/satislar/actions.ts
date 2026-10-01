@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { createSupabaseServerClient, createSupabaseAdminClient } from '@/lib/supabase/server';
 import { calculateCommissionForSale } from '@/lib/partner/commission-engine';
 import { writeAuditLog } from '@/lib/partner/audit';
+import type { Database } from '@/types/supabase';
 
 async function requireAdminId() {
   const supabase = await createSupabaseServerClient();
@@ -39,13 +40,91 @@ export async function createSaleAction(_prev: SaleActionResult, formData: FormDa
     service_id: serviceId,
     package_id: packageId,
     amount,
-    sale_status: 'pending',
+    sale_status: 'submitted',
+    created_by_role: 'admin',
     payment_status: 'unpaid',
     created_by: adminId,
   });
   if (error) return { ok: false, error: error.message };
 
   await writeAuditLog(admin, { actorId: adminId, action: 'sale_created', entityType: 'sale' });
+  revalidatePath('/secretadmin/satislar');
+  return { ok: true };
+}
+
+type SaleStatus = Database['public']['Enums']['sale_status'];
+
+const ADMIN_SALE_TRANSITIONS = ['reviewing', 'approved', 'payment_pending', 'paid', 'project_started', 'in_progress'] as const;
+
+export async function updateSaleStatusAction(saleId: string, nextStatus: (typeof ADMIN_SALE_TRANSITIONS)[number]): Promise<SaleActionResult> {
+  const adminId = await requireAdminId();
+  const admin = createSupabaseAdminClient();
+  if (!ADMIN_SALE_TRANSITIONS.includes(nextStatus)) return { ok: false, error: 'Geçersiz durum.' };
+  const target: SaleStatus = nextStatus;
+
+  const { data: sale } = await admin.from('sales').select('sale_status').eq('id', saleId).single();
+  if (!sale) return { ok: false, error: 'Satış bulunamadı.' };
+
+  await admin.from('sales').update({ sale_status: target }).eq('id', saleId);
+  await admin.from('sale_status_history').insert({ sale_id: saleId, previous_status: sale.sale_status, new_status: target, changed_by: adminId });
+  await writeAuditLog(admin, { actorId: adminId, action: 'sale_status_changed', entityType: 'sale', entityId: saleId, newData: { status: target } });
+
+  revalidatePath('/secretadmin/satislar');
+  return { ok: true };
+}
+
+export async function requestSaleInformationAction(saleId: string, formData: FormData): Promise<SaleActionResult> {
+  const adminId = await requireAdminId();
+  const admin = createSupabaseAdminClient();
+  const message = String(formData.get('message') || '').trim();
+  if (!message) return { ok: false, error: 'Partnere iletilecek bir mesaj girin.' };
+
+  const { data: sale } = await admin.from('sales').select('sale_status, partner_id').eq('id', saleId).single();
+  if (!sale) return { ok: false, error: 'Satış bulunamadı.' };
+
+  await admin.from('sales').update({ sale_status: 'information_required' }).eq('id', saleId);
+  await admin.from('sale_status_history').insert({ sale_id: saleId, previous_status: sale.sale_status, new_status: 'information_required', changed_by: adminId });
+
+  const { data: partner } = await admin.from('partners').select('profile_id').eq('id', sale.partner_id).single();
+  if (partner) {
+    await admin.from('notifications').insert({
+      profile_id: partner.profile_id,
+      title: 'Satışınız için ek bilgi gerekiyor',
+      body: message,
+      type: 'sale_information_required',
+      metadata: { sale_id: saleId },
+    });
+  }
+
+  await writeAuditLog(admin, { actorId: adminId, action: 'sale_information_requested', entityType: 'sale', entityId: saleId, newData: { message } });
+  revalidatePath('/secretadmin/satislar');
+  return { ok: true };
+}
+
+export async function rejectSaleAction(saleId: string, formData: FormData): Promise<SaleActionResult> {
+  const adminId = await requireAdminId();
+  const admin = createSupabaseAdminClient();
+  const reason = String(formData.get('reason') || '').trim();
+  if (!reason) return { ok: false, error: 'Reddetme nedeni zorunludur.' };
+
+  const { data: sale } = await admin.from('sales').select('sale_status, partner_id').eq('id', saleId).single();
+  if (!sale) return { ok: false, error: 'Satış bulunamadı.' };
+
+  await admin.from('sales').update({ sale_status: 'rejected' }).eq('id', saleId);
+  await admin.from('sale_status_history').insert({ sale_id: saleId, previous_status: sale.sale_status, new_status: 'rejected', changed_by: adminId });
+
+  const { data: partner } = await admin.from('partners').select('profile_id').eq('id', sale.partner_id).single();
+  if (partner) {
+    await admin.from('notifications').insert({
+      profile_id: partner.profile_id,
+      title: 'Satışınız reddedildi',
+      body: reason,
+      type: 'sale_rejected',
+      metadata: { sale_id: saleId },
+    });
+  }
+
+  await writeAuditLog(admin, { actorId: adminId, action: 'sale_rejected', entityType: 'sale', entityId: saleId, newData: { reason } });
   revalidatePath('/secretadmin/satislar');
   return { ok: true };
 }

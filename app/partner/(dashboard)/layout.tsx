@@ -8,9 +8,12 @@ export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 const NAV = [
   { href: '/partner/panel', label: 'Panel' },
+  { href: '/partner/satis-olustur', label: 'Satış Oluştur' },
   { href: '/partner/leads', label: "Lead'lerim" },
   { href: '/partner/satislar', label: 'Satışlarım' },
   { href: '/partner/kazanc', label: 'Kazançlarım' },
+  { href: '/partner/materyaller', label: 'Materyaller' },
+  { href: '/partner/destek', label: 'Destek' },
   { href: '/partner/profil', label: 'Profil' },
 ];
 

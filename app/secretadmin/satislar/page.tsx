@@ -1,9 +1,8 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { NewSaleForm } from './NewSaleForm';
-import { MarkCompletedButton } from './SaleActionsClient';
+import { MarkCompletedButton, ApproveSaleButton, RequestInfoButton, RejectSaleButton } from './SaleActionsClient';
 import { StageEmailButton } from '../StageEmailButton';
-
-const STATUS_LABEL: Record<string, string> = { pending: 'Bekliyor', confirmed: 'Onaylandı', cancelled: 'İptal', refunded: 'İade', completed: 'Tamamlandı' };
+import { saleStatusLabel } from '@/lib/partner/sale-status';
 
 const SALE_STAGES: { key: string; label: string; title: string; message: string }[] = [
   { key: 'sale_received', label: 'Sipariş Alındı Maili', title: 'Siparişiniz alındı', message: 'Siparişiniz tarafımıza ulaştı, hazırlık sürecine başlıyoruz.' },
@@ -17,7 +16,7 @@ export default async function AdminSalesPage() {
   const [{ data: sales }, { data: partners }, { data: services }, { data: packages }] = await Promise.all([
     supabase
       .from('sales')
-      .select('id, amount, currency, sale_status, sold_at, partners(partner_code), services(name), leads(contact_name, email)')
+      .select('id, amount, currency, sale_status, created_by_role, sold_at, partners(partner_code), services(name), leads(contact_name, email)')
       .order('sold_at', { ascending: false })
       .limit(100),
     supabase.from('partners').select('id, partner_code').eq('status', 'active').order('partner_code'),
@@ -47,11 +46,23 @@ export default async function AdminSalesPage() {
                     {service?.name} · {Number(s.amount).toLocaleString('tr-TR')} {s.currency}
                   </p>
                   <p className="text-sm text-fg-muted">
-                    {partner?.partner_code} · {STATUS_LABEL[s.sale_status]} · {new Date(s.sold_at).toLocaleDateString('tr-TR')}
+                    {partner?.partner_code} · {saleStatusLabel(s.sale_status)} · {s.created_by_role === 'partner' ? 'Partner satışı' : 'Admin girişi'} · {new Date(s.sold_at).toLocaleDateString('tr-TR')}
                     {lead?.contact_name && ` · Müşteri: ${lead.contact_name}`}
                   </p>
                 </div>
-                {s.sale_status !== 'completed' && <MarkCompletedButton saleId={s.id} />}
+                <div className="flex flex-wrap items-center gap-2">
+                  {(s.sale_status === 'submitted' || s.sale_status === 'reviewing') && (
+                    <>
+                      <ApproveSaleButton saleId={s.id} nextStatus="approved" label="Onayla" />
+                      <RequestInfoButton saleId={s.id} />
+                      <RejectSaleButton saleId={s.id} />
+                    </>
+                  )}
+                  {s.sale_status === 'information_required' && <p className="text-xs text-amber-300">Partnerden yanıt bekleniyor</p>}
+                  {s.sale_status === 'approved' && <ApproveSaleButton saleId={s.id} nextStatus="payment_pending" label="Ödeme Bekleniyor İşaretle" />}
+                  {s.sale_status === 'payment_pending' && <ApproveSaleButton saleId={s.id} nextStatus="paid" label="Ödeme Alındı İşaretle" />}
+                  {(s.sale_status === 'paid' || s.sale_status === 'project_started' || s.sale_status === 'in_progress') && <MarkCompletedButton saleId={s.id} />}
+                </div>
               </div>
               {lead?.email && (
                 <div className="mt-3 flex flex-wrap gap-2 border-t border-white/10 pt-3">

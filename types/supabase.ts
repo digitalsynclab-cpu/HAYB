@@ -337,6 +337,7 @@ export type Database = {
           commission_value: number
           created_at: string
           id: string
+          is_demo: boolean
           paid_at: string | null
           partner_id: string
           rule_id: string | null
@@ -354,6 +355,7 @@ export type Database = {
           commission_value: number
           created_at?: string
           id?: string
+          is_demo?: boolean
           paid_at?: string | null
           partner_id: string
           rule_id?: string | null
@@ -371,6 +373,7 @@ export type Database = {
           commission_value?: number
           created_at?: string
           id?: string
+          is_demo?: boolean
           paid_at?: string | null
           partner_id?: string
           rule_id?: string | null
@@ -506,6 +509,7 @@ export type Database = {
           email: string | null
           estimated_budget: number | null
           id: string
+          is_demo: boolean
           notes: string | null
           package_id: string | null
           partner_id: string
@@ -527,6 +531,7 @@ export type Database = {
           email?: string | null
           estimated_budget?: number | null
           id?: string
+          is_demo?: boolean
           notes?: string | null
           package_id?: string | null
           partner_id: string
@@ -548,6 +553,7 @@ export type Database = {
           email?: string | null
           estimated_budget?: number | null
           id?: string
+          is_demo?: boolean
           notes?: string | null
           package_id?: string | null
           partner_id?: string
@@ -627,6 +633,7 @@ export type Database = {
           body: string | null
           created_at: string
           id: string
+          is_demo: boolean
           is_read: boolean
           metadata: Json
           profile_id: string
@@ -637,6 +644,7 @@ export type Database = {
           body?: string | null
           created_at?: string
           id?: string
+          is_demo?: boolean
           is_read?: boolean
           metadata?: Json
           profile_id: string
@@ -647,6 +655,7 @@ export type Database = {
           body?: string | null
           created_at?: string
           id?: string
+          is_demo?: boolean
           is_read?: boolean
           metadata?: Json
           profile_id?: string
@@ -822,6 +831,7 @@ export type Database = {
           created_at: string
           iban: string | null
           id: string
+          is_demo: boolean
           partner_code: string
           profile_id: string
           status: Database["public"]["Enums"]["partner_status"]
@@ -836,6 +846,7 @@ export type Database = {
           created_at?: string
           iban?: string | null
           id?: string
+          is_demo?: boolean
           partner_code: string
           profile_id: string
           status?: Database["public"]["Enums"]["partner_status"]
@@ -850,6 +861,7 @@ export type Database = {
           created_at?: string
           iban?: string | null
           id?: string
+          is_demo?: boolean
           partner_code?: string
           profile_id?: string
           status?: Database["public"]["Enums"]["partner_status"]
@@ -965,8 +977,10 @@ export type Database = {
           confirmed_at: string | null
           created_at: string
           created_by: string | null
+          created_by_role: string
           currency: string
           id: string
+          is_demo: boolean
           lead_id: string | null
           package_id: string | null
           partner_id: string
@@ -982,8 +996,10 @@ export type Database = {
           confirmed_at?: string | null
           created_at?: string
           created_by?: string | null
+          created_by_role?: string
           currency?: string
           id?: string
+          is_demo?: boolean
           lead_id?: string | null
           package_id?: string | null
           partner_id: string
@@ -999,8 +1015,10 @@ export type Database = {
           confirmed_at?: string | null
           created_at?: string
           created_by?: string | null
+          created_by_role?: string
           currency?: string
           id?: string
+          is_demo?: boolean
           lead_id?: string | null
           package_id?: string | null
           partner_id?: string
@@ -1132,11 +1150,19 @@ export type Database = {
         | "rejected"
       payment_status: "unpaid" | "partial" | "paid" | "refunded"
       sale_status:
-        | "pending"
-        | "confirmed"
+        | "draft"
+        | "submitted"
+        | "reviewing"
+        | "information_required"
+        | "approved"
+        | "payment_pending"
+        | "paid"
+        | "project_started"
+        | "in_progress"
+        | "completed"
+        | "rejected"
         | "cancelled"
         | "refunded"
-        | "completed"
       user_role: "admin" | "reviewer" | "partner" | "user"
     }
     CompositeTypes: {
@@ -1303,11 +1329,19 @@ export const Constants = {
       ],
       payment_status: ["unpaid", "partial", "paid", "refunded"],
       sale_status: [
-        "pending",
-        "confirmed",
+        "draft",
+        "submitted",
+        "reviewing",
+        "information_required",
+        "approved",
+        "payment_pending",
+        "paid",
+        "project_started",
+        "in_progress",
+        "completed",
+        "rejected",
         "cancelled",
         "refunded",
-        "completed",
       ],
       user_role: ["admin", "reviewer", "partner", "user"],
     },

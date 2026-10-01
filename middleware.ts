@@ -1,11 +1,11 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
-const PARTNER_PRIVATE_PREFIX = '/partner/panel';
 const PARTNER_PRIVATE_PATHS = [
   '/partner/panel',
   '/partner/leads',
   '/partner/satislar',
+  '/partner/satis-olustur',
   '/partner/kazanc',
   '/partner/materyaller',
   '/partner/profil',
@@ -70,7 +70,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/partner/giris', request.url));
   }
 
-  if (isPartnerPrivateRoute && pathname.startsWith(PARTNER_PRIVATE_PREFIX) && role === 'partner') {
+  if (isPartnerPrivateRoute && role === 'partner') {
     const { data: partner } = await supabase
       .from('partners')
       .select('status')
@@ -85,5 +85,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/partner/panel/:path*', '/partner/leads/:path*', '/partner/satislar/:path*', '/partner/kazanc/:path*', '/partner/materyaller/:path*', '/partner/profil/:path*', '/partner/destek/:path*', '/secretadmin/:path*'],
+  matcher: ['/partner/panel/:path*', '/partner/leads/:path*', '/partner/satislar/:path*', '/partner/satis-olustur/:path*', '/partner/kazanc/:path*', '/partner/materyaller/:path*', '/partner/profil/:path*', '/partner/destek/:path*', '/secretadmin/:path*'],
 };

@@ -7,6 +7,7 @@ import { ChevronDown, Handshake } from 'lucide-react';
 import { menu, type MenuItem } from '@/data/menu';
 import { Logo } from '@/components/ui/Logo';
 import { Button } from '@/components/ui/Button';
+import { GlassActionButton } from '@/components/ui/GlassActionButton';
 import { LineIcon } from '@/components/ui/LineIcon';
 import { MenuToggleIcon } from '@/components/ui/MenuToggleIcon';
 import { CartButton } from '@/components/layout/CartButton';
@@ -259,21 +260,35 @@ export function Navbar() {
             </ul>
           </nav>
           <div className="menu-item mt-8 grid gap-3" style={{ ['--i' as string]: menu.length }}>
-            <Button
-              className="w-full"
+            <GlassActionButton
+              label="Teklif Al"
+              icon={
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M22 2L11 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              }
               onClick={() => {
                 setOpen(false);
                 window.setTimeout(openContact, 200);
               }}
-            >
-              Teklif Al
-            </Button>
-            <Button href="/partner" variant="secondary-light" arrow={false} icon={<Handshake aria-hidden className="h-5 w-5 text-lime" />} className="w-full">
-              Partner Ol
-            </Button>
-            <Button href="/partner/giris" variant="glass" arrow={false} className="w-full">
-              Partner Giriş
-            </Button>
+            />
+            <GlassActionButton
+              href="/partner"
+              label="Partner Ol"
+              icon={<Handshake aria-hidden className="h-[27px] w-[27px]" strokeWidth={1.8} />}
+            />
+            <GlassActionButton
+              href="/partner/giris"
+              label="Partner Giriş"
+              icon={
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M13 5H19C19.5523 5 20 5.44772 20 6V18C20 18.5523 19.5523 19 19 19H13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  <path d="M4 12H15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  <path d="M11 8L15 12L11 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              }
+            />
           </div>
         </div>
       )}

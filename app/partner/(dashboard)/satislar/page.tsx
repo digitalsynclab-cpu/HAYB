@@ -1,6 +1,6 @@
+import Link from 'next/link';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-
-const STATUS_LABEL: Record<string, string> = { pending: 'Bekliyor', confirmed: 'Onaylandı', cancelled: 'İptal', refunded: 'İade', completed: 'Tamamlandı' };
+import { saleStatusLabel } from '@/lib/partner/sale-status';
 
 export default async function PartnerSalesPage() {
   const supabase = await createSupabaseServerClient();
@@ -16,7 +16,12 @@ export default async function PartnerSalesPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Satışlarım</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-2xl font-bold">Satışlarım</h1>
+        <Link href="/partner/satis-olustur" className="rounded-xl bg-lime px-5 py-2.5 text-sm font-semibold text-ink-950 hover:bg-lime-soft">
+          Yeni Satış
+        </Link>
+      </div>
       <div className="mt-6 overflow-x-auto rounded-2xl border border-white/10">
         <table className="w-full text-left text-sm">
           <thead className="bg-white/5 text-fg-muted">
@@ -36,7 +41,7 @@ export default async function PartnerSalesPage() {
                   <td className="px-4 py-3 text-fg-muted">
                     {Number(s.amount).toLocaleString('tr-TR')} {s.currency}
                   </td>
-                  <td className="px-4 py-3">{STATUS_LABEL[s.sale_status]}</td>
+                  <td className="px-4 py-3">{saleStatusLabel(s.sale_status)}</td>
                   <td className="px-4 py-3 text-fg-muted">{new Date(s.sold_at).toLocaleDateString('tr-TR')}</td>
                 </tr>
               );
@@ -44,7 +49,7 @@ export default async function PartnerSalesPage() {
             {(!sales || sales.length === 0) && (
               <tr>
                 <td colSpan={4} className="px-4 py-10 text-center text-fg-muted">
-                  Henüz tamamlanmış satış bulunmuyor.
+                  Henüz satış oluşturmadınız.
                 </td>
               </tr>
             )}
