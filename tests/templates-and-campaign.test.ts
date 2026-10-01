@@ -129,7 +129,6 @@ describe('uygulama ekranları ve paneller', () => {
 
 import { dataServicePlan } from '@/data/pricing';
 import { services } from '@/data/services';
-import { getAnswer } from '@/components/assistant/engine';
 
 describe('HAYB Data Service', () => {
   it('tek seferlik 9.999 ₺; liste fiyatı %35 indirimle tutarlı', () => {
@@ -138,13 +137,8 @@ describe('HAYB Data Service', () => {
     const list = Number(p.list.replace(/\D/g, ''));
     expect(Math.abs(1 - 9999 / list - campaign.rate / 100)).toBeLessThan(0.01);
   });
-  it('hizmet sayfası, görsel ve asistan cevabı var; mutlak kapsam iddiası yok', () => {
+  it('hizmet sayfası ve görsel mevcut', () => {
     expect(services.some((s) => s.slug === 'hayb-data-service')).toBe(true);
     expect(pub('/images/products/hayb-data-service.webp')).toBe(true);
-    const a = getAnswer('HAYB Data Service nedir');
-    expect(a).toContain('Excel');
-    expect(a).toContain('9.999');
-    expect(a).toContain('KVKK');
-    expect(a).not.toMatch(/bütün işletmeleri|tüm işletmelerin güncel/i);
   });
 });

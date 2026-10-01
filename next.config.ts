@@ -2,9 +2,14 @@ import type { NextConfig } from 'next';
 
 // Yalnızca gerçekten kullanılan kaynaklar. next/font kendi kendine barındırılır; Google alanları yalnızca
 // ölçüm kimliği tanımlıysa ve ziyaretçi çerez onayı verdiyse (lib/analytics.ts) kullanılır.
+// Next.js dev sunucusu (Fast Refresh/HMR) eval() kullanır; bu yalnızca development'ta eklenir, production CSP'si etkilenmez.
+const scriptSrc = process.env.NODE_ENV === 'development'
+  ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com"
+  : "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com";
+
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
+  scriptSrc,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://www.google-analytics.com https://*.google-analytics.com https://*.googletagmanager.com",
   "font-src 'self' data:",
