@@ -7,6 +7,7 @@ const PARTNER_PRIVATE_PATHS = [
   '/partner/satislar',
   '/partner/satis-olustur',
   '/partner/satis-rehberi',
+  '/partner/musteri-datasi',
   '/partner/kazanc',
   '/partner/materyaller',
   '/partner/profil',
@@ -86,5 +87,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/partner/panel/:path*', '/partner/leads/:path*', '/partner/satislar/:path*', '/partner/satis-olustur/:path*', '/partner/satis-rehberi/:path*', '/partner/kazanc/:path*', '/partner/materyaller/:path*', '/partner/profil/:path*', '/partner/destek/:path*', '/secretadmin/:path*'],
+  matcher: ['/partner/panel/:path*', '/partner/leads/:path*', '/partner/satislar/:path*', '/partner/satis-olustur/:path*', '/partner/satis-rehberi/:path*', '/partner/musteri-datasi/:path*', '/partner/kazanc/:path*', '/partner/materyaller/:path*', '/partner/profil/:path*', '/partner/destek/:path*', '/secretadmin/:path*'],
 };
