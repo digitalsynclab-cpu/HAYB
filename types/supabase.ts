@@ -1102,6 +1102,89 @@ export type Database = {
         }
         Relationships: []
       }
+      support_messages: {
+        Row: {
+          author_id: string
+          author_role: string
+          created_at: string
+          id: string
+          message: string
+          ticket_id: string
+        }
+        Insert: {
+          author_id: string
+          author_role: string
+          created_at?: string
+          id?: string
+          message: string
+          ticket_id: string
+        }
+        Update: {
+          author_id?: string
+          author_role?: string
+          created_at?: string
+          id?: string
+          message?: string
+          ticket_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_messages_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "support_messages_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "support_tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      support_tickets: {
+        Row: {
+          created_at: string
+          id: string
+          is_demo: boolean
+          partner_id: string
+          priority: string
+          status: Database["public"]["Enums"]["support_status"]
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_demo?: boolean
+          partner_id: string
+          priority?: string
+          status?: Database["public"]["Enums"]["support_status"]
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_demo?: boolean
+          partner_id?: string
+          priority?: string
+          status?: Database["public"]["Enums"]["support_status"]
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_tickets_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -1163,6 +1246,12 @@ export type Database = {
         | "rejected"
         | "cancelled"
         | "refunded"
+      support_status:
+        | "open"
+        | "in_progress"
+        | "waiting_partner"
+        | "resolved"
+        | "closed"
       user_role: "admin" | "reviewer" | "partner" | "user"
     }
     CompositeTypes: {
@@ -1342,6 +1431,13 @@ export const Constants = {
         "rejected",
         "cancelled",
         "refunded",
+      ],
+      support_status: [
+        "open",
+        "in_progress",
+        "waiting_partner",
+        "resolved",
+        "closed",
       ],
       user_role: ["admin", "reviewer", "partner", "user"],
     },

@@ -14,9 +14,9 @@ const variants: Record<Variant, string> = {
     'border border-white/20 bg-white/5 text-fg hover:border-white/40 hover:bg-white/10',
   'secondary-light':
     'border border-on-light/20 bg-white text-on-light hover:border-on-light/50 hover:bg-paper-100',
-  /** Apple tarzı buzlu cam: yarı saydam beyaz + blur, koyu zeminlerde kullanılır. */
+  /** Apple bildirim tarzı buzlu cam: gerçekten şeffaf, arkası bulanık görünür (iOS notification). */
   glass:
-    'border border-white/40 bg-white/70 text-ink-950 backdrop-blur-xl backdrop-saturate-150 hover:bg-white/85',
+    'border border-white/15 bg-white/10 text-fg backdrop-blur-2xl backdrop-saturate-150 hover:bg-white/15',
 };
 
 interface Common {
