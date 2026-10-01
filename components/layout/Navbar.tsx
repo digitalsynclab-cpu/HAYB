@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronDown, Handshake, LogIn } from 'lucide-react';
+import { ChevronDown, Handshake } from 'lucide-react';
 import { menu, type MenuItem } from '@/data/menu';
 import { Logo } from '@/components/ui/Logo';
 import { Button } from '@/components/ui/Button';
@@ -274,8 +274,7 @@ export function Navbar() {
             <Button
               href="/partner/giris"
               variant="glass"
-              arrow={false}
-              trailingIcon={<LogIn aria-hidden className="h-5 w-5 text-ink-950/70" />}
+              arrow
               className="w-full"
             >
               Partner Giriş
