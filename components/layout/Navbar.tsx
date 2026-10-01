@@ -276,7 +276,7 @@ export function Navbar() {
               variant="glass"
               arrow={false}
               trailingIcon={<LogIn aria-hidden className="h-5 w-5 text-ink-950/70" />}
-              className="w-full justify-between"
+              className="w-full"
             >
               Partner Giriş
             </Button>
