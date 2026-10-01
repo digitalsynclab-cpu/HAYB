@@ -10,7 +10,7 @@ export default async function SalesGuidePage() {
   return (
     <div>
       <h1 className="text-2xl font-bold">Satış Rehberi</h1>
-      <p className="mt-1 text-sm text-fg-muted">Hazır satış cümleleri ve itiraz yanıtları. Kopyala'ya basıp doğrudan müşteriye gönderin.</p>
+      <p className="mt-1 text-sm text-fg-muted">Hazır satış cümleleri ve itiraz yanıtları. &quot;Kopyala&quot; butonuna basıp doğrudan müşteriye gönderin.</p>
 
       {categories.length === 0 && <p className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-8 text-center text-fg-muted">Henüz içerik eklenmedi.</p>}
 

@@ -412,6 +412,117 @@ export type Database = {
           },
         ]
       }
+      dataset_access: {
+        Row: {
+          created_at: string
+          dataset_id: string
+          granted_by: string | null
+          id: string
+          partner_id: string
+        }
+        Insert: {
+          created_at?: string
+          dataset_id: string
+          granted_by?: string | null
+          id?: string
+          partner_id: string
+        }
+        Update: {
+          created_at?: string
+          dataset_id?: string
+          granted_by?: string | null
+          id?: string
+          partner_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dataset_access_dataset_id_fkey"
+            columns: ["dataset_id"]
+            isOneToOne: false
+            referencedRelation: "datasets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dataset_access_granted_by_fkey"
+            columns: ["granted_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dataset_access_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      datasets: {
+        Row: {
+          city: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          district: string | null
+          file_name: string | null
+          file_path: string | null
+          file_size: number | null
+          id: string
+          is_active: boolean
+          is_demo: boolean
+          mime_type: string | null
+          name: string
+          record_count: number | null
+          sector: string | null
+          updated_at: string
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          district?: string | null
+          file_name?: string | null
+          file_path?: string | null
+          file_size?: number | null
+          id?: string
+          is_active?: boolean
+          is_demo?: boolean
+          mime_type?: string | null
+          name: string
+          record_count?: number | null
+          sector?: string | null
+          updated_at?: string
+        }
+        Update: {
+          city?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          district?: string | null
+          file_name?: string | null
+          file_path?: string | null
+          file_size?: number | null
+          id?: string
+          is_active?: boolean
+          is_demo?: boolean
+          mime_type?: string | null
+          name?: string
+          record_count?: number | null
+          sector?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "datasets_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       email_log: {
         Row: {
           created_at: string
