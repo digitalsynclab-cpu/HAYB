@@ -12,9 +12,11 @@ const NAV = [
   { href: '/secretadmin/paketler', label: 'Paketler' },
   { href: '/secretadmin/leads', label: "Lead'ler" },
   { href: '/secretadmin/satislar', label: 'Satışlar' },
+  { href: '/secretadmin/satis-performansi', label: 'Satış Performansı' },
   { href: '/secretadmin/komisyonlar', label: 'Komisyonlar' },
   { href: '/secretadmin/komisyon-kurallari', label: 'Komisyon Kuralları' },
   { href: '/secretadmin/satis-rehberi', label: 'Satış Rehberi' },
+  { href: '/secretadmin/materyaller', label: 'Materyaller' },
   { href: '/secretadmin/destek', label: 'Destek' },
   { href: '/secretadmin/audit-logs', label: 'Audit Log' },
 ];
