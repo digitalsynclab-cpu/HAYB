@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { ComponentProps, ReactNode } from 'react';
 import { ArrowRight } from 'lucide-react';
 
-type Variant = 'primary' | 'secondary' | 'secondary-light';
+type Variant = 'primary' | 'secondary' | 'secondary-light' | 'glass';
 
 const base =
   'group inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl px-6 text-base font-semibold leading-none transition duration-200 ease-out active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50';
@@ -14,6 +14,9 @@ const variants: Record<Variant, string> = {
     'border border-white/20 bg-white/5 text-fg hover:border-white/40 hover:bg-white/10',
   'secondary-light':
     'border border-on-light/20 bg-white text-on-light hover:border-on-light/50 hover:bg-paper-100',
+  /** Apple tarzı buzlu cam: yarı saydam beyaz + blur, koyu zeminlerde kullanılır. */
+  glass:
+    'border border-white/40 bg-white/70 text-ink-950 backdrop-blur-xl backdrop-saturate-150 hover:bg-white/85',
 };
 
 interface Common {

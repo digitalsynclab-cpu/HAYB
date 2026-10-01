@@ -271,6 +271,9 @@ export function Navbar() {
             <Button href="/partner" variant="secondary-light" arrow={false} icon={<Handshake aria-hidden className="h-5 w-5 text-lime" />} className="w-full">
               Partner Ol
             </Button>
+            <Button href="/partner/giris" variant="glass" arrow={false} className="w-full">
+              Partner Giriş
+            </Button>
           </div>
         </div>
       )}
