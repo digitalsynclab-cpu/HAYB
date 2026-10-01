@@ -274,7 +274,7 @@ export function Navbar() {
             <Button
               href="/partner/giris"
               variant="glass"
-              arrow
+              arrow={false}
               className="w-full"
             >
               Partner Giriş

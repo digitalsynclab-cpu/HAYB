@@ -9,6 +9,7 @@ const NAV = [
   { href: '/secretadmin', label: 'Genel Bakış' },
   { href: '/secretadmin/basvurular', label: 'Başvurular' },
   { href: '/secretadmin/partnerler', label: 'Partnerler' },
+  { href: '/secretadmin/paketler', label: 'Paketler' },
   { href: '/secretadmin/leads', label: "Lead'ler" },
   { href: '/secretadmin/satislar', label: 'Satışlar' },
   { href: '/secretadmin/komisyonlar', label: 'Komisyonlar' },
