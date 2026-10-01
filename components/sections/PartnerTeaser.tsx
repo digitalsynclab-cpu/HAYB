@@ -15,10 +15,10 @@ export function PartnerTeaser() {
             <Handshake aria-hidden className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-lg font-bold text-fg sm:text-xl">
+            <p className="text-xl font-bold text-fg sm:text-2xl">
               <span className="text-lime">HAYB Partner</span> olun, getirdiğiniz her satıştan komisyon kazanın.
             </p>
-            <p className="mt-1 text-sm text-fg-muted">Müşteriyi siz bulun, projeyi HAYB geliştirsin, satıştan komisyon kazanın.</p>
+            <p className="mt-2 text-base text-fg-muted">Müşteriyi siz bulun, projeyi HAYB geliştirsin, satıştan komisyon kazanın.</p>
           </div>
         </div>
         <span className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-lime px-5 py-3 text-sm font-semibold text-ink-950 transition group-hover:bg-lime-soft">
