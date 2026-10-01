@@ -14,9 +14,9 @@ const variants: Record<Variant, string> = {
     'border border-white/20 bg-white/5 text-fg hover:border-white/40 hover:bg-white/10',
   'secondary-light':
     'border border-on-light/20 bg-white text-on-light hover:border-on-light/50 hover:bg-paper-100',
-  /** Buzlu cam: parlak üst yansıma + alttan sızan yeşil ışıltı, gerçek cam/akrilik hissi. */
+  /** Apple tarzı buzlu cam: yarı saydam beyaz + blur, koyu zeminlerde kullanılır. */
   glass:
-    'relative overflow-hidden border border-lime/40 bg-gradient-to-b from-white/20 via-white/[0.06] to-lime/10 text-fg backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1.5px_0_0_rgba(255,255,255,0.45),inset_0_-24px_32px_-18px_rgba(166,255,65,0.45),0_0_32px_-6px_rgba(166,255,65,0.55)] hover:border-lime/70 hover:shadow-[inset_0_1.5px_0_0_rgba(255,255,255,0.55),inset_0_-24px_32px_-18px_rgba(166,255,65,0.6),0_0_44px_-4px_rgba(166,255,65,0.75)]',
+    'border border-white/40 bg-white/70 text-ink-950 backdrop-blur-xl backdrop-saturate-150 hover:bg-white/85',
 };
 
 interface Common {
@@ -37,13 +37,10 @@ export function Button(props: LinkProps | ButtonProps) {
   const { variant = 'primary', arrow, icon, trailingIcon, className = '', children } = props;
   const showArrow = arrow ?? variant === 'primary';
   const cls = `${base} ${variants[variant]} ${className}`;
-  const hasTrailing = Boolean(trailingIcon) || showArrow;
   const inner = (
     <>
-      <span className={`flex items-center gap-2.5 ${hasTrailing ? 'mr-auto' : ''}`}>
-        {icon}
-        <span>{children}</span>
-      </span>
+      {icon}
+      <span>{children}</span>
       {trailingIcon}
       {showArrow && (
         <ArrowRight aria-hidden className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
