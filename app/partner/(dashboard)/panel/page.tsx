@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { PartnerRanking } from './PartnerRanking';
+import { PaymentInfoCard } from '../rehber/PaymentInfoCard';
 
 const APPROVED_SALE_STATUSES = ['approved', 'payment_pending', 'paid', 'project_started', 'in_progress', 'completed'] as const;
 
@@ -59,6 +60,13 @@ export default async function PartnerDashboardPage() {
         <Link href="/partner/materyaller" className="rounded-xl border border-white/20 px-6 py-3 text-sm hover:border-white/40">
           Materyaller
         </Link>
+        <Link href="/partner/rehber" className="rounded-xl border border-white/20 px-6 py-3 text-sm hover:border-white/40">
+          Başlangıç Rehberi
+        </Link>
+      </div>
+
+      <div className="mt-8">
+        <PaymentInfoCard />
       </div>
 
       <PartnerRanking rows={ranking.data ?? []} currentPartnerCode={partner?.partner_code} />

@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 
 const PARTNER_DASHBOARD_PREFIXES = [
   '/partner/panel',
+  '/partner/rehber',
   '/partner/leads',
   '/partner/satislar',
   '/partner/satis-olustur',

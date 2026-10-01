@@ -18,6 +18,7 @@ export default async function PartnerPanelLayout({ children }: { children: React
 
   const NAV = [
     { href: '/partner/panel', label: 'Panel' },
+    { href: '/partner/rehber', label: 'Başlangıç Rehberi' },
     { href: '/partner/satis-olustur', label: 'Satış Oluştur' },
     { href: '/partner/leads', label: "Lead'lerim" },
     { href: '/partner/satislar', label: 'Satışlarım' },
