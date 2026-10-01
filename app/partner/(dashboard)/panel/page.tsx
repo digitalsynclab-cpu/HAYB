@@ -1,20 +1,24 @@
 import Link from 'next/link';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { PartnerRanking } from './PartnerRanking';
+
+const APPROVED_SALE_STATUSES = ['approved', 'payment_pending', 'paid', 'project_started', 'in_progress', 'completed'] as const;
 
 export default async function PartnerDashboardPage() {
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const { data: partner } = await supabase.from('partners').select('id, profile_id').eq('profile_id', user!.id).single();
+  const { data: partner } = await supabase.from('partners').select('id, profile_id, partner_code').eq('profile_id', user!.id).single();
   const { data: profile } = await supabase.from('profiles').select('full_name').eq('id', user!.id).single();
 
-  const [activeLeads, pendingSales, approvedSales, totalSales, commissions] = await Promise.all([
+  const [activeLeads, pendingSales, approvedSales, totalSales, commissions, ranking] = await Promise.all([
     supabase.from('leads').select('id', { count: 'exact', head: true }).eq('partner_id', partner!.id).in('status', ['new', 'contacted', 'qualified', 'negotiation', 'proposal']),
     supabase.from('sales').select('id', { count: 'exact', head: true }).eq('partner_id', partner!.id).in('sale_status', ['submitted', 'reviewing', 'information_required']),
-    supabase.from('sales').select('id', { count: 'exact', head: true }).eq('partner_id', partner!.id).in('sale_status', ['approved', 'payment_pending', 'paid', 'project_started', 'in_progress', 'completed']),
+    supabase.from('sales').select('id', { count: 'exact', head: true }).eq('partner_id', partner!.id).in('sale_status', APPROVED_SALE_STATUSES),
     supabase.from('sales').select('id', { count: 'exact', head: true }).eq('partner_id', partner!.id),
     supabase.from('commissions').select('commission_amount, status').eq('partner_id', partner!.id),
+    supabase.rpc('get_partner_ranking', { limit_count: 10 }),
   ]);
 
   const pendingCommission = (commissions.data ?? []).filter((c) => c.status === 'pending' || c.status === 'calculated').reduce((s, c) => s + Number(c.commission_amount), 0);
@@ -56,6 +60,8 @@ export default async function PartnerDashboardPage() {
           Materyaller
         </Link>
       </div>
+
+      <PartnerRanking rows={ranking.data ?? []} currentPartnerCode={partner?.partner_code} />
     </div>
   );
 }

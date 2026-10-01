@@ -1191,6 +1191,14 @@ export type Database = {
     }
     Functions: {
       current_partner_id: { Args: never; Returns: string }
+      get_partner_ranking: {
+        Args: { limit_count?: number }
+        Returns: {
+          partner_code: string
+          sale_count: number
+          total_amount: number
+        }[]
+      }
       is_admin: { Args: never; Returns: boolean }
       is_reviewer_or_admin: { Args: never; Returns: boolean }
       percentage_value_in_range: {

@@ -28,7 +28,7 @@ function renderBrandedEmail(opts: { preheader?: string; heading: string; bodyHtm
                 <table role="presentation" cellpadding="0" cellspacing="0">
                   <tr>
                     <td style="padding-right:10px;">
-                      <img src="${BRAND.markUrl}" alt="" width="28" height="28" style="display:block;" />
+                      <img src="${BRAND.markUrl}" alt="HAYB" width="28" height="28" style="display:block;border:0;outline:none;" />
                     </td>
                     <td style="font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.02em;color:${BRAND.paper};">
                       HAYB<span style="color:${BRAND.lime};">.</span>

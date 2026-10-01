@@ -35,26 +35,62 @@ async function main() {
     return;
   }
 
-  // Foreign key bağımlılık sırasına göre siliniyor: commissions -> sales -> leads -> partners -> profiles/auth users
-  const { count: commissionsDeleted } = await admin.from('commissions').delete({ count: 'exact' }).eq('is_demo', true);
-  const { count: salesDeleted } = await admin.from('sales').delete({ count: 'exact' }).eq('is_demo', true);
-  const { count: leadsDeleted } = await admin.from('leads').delete({ count: 'exact' }).eq('is_demo', true);
-  const { count: notificationsDeleted } = await admin.from('notifications').delete({ count: 'exact' }).eq('is_demo', true);
+  // Foreign key bağımlılık sırasına göre siliniyor: commissions -> sales -> leads ->
+  // support_messages -> support_tickets -> notifications -> partners -> profiles/auth users.
+  // Her adımda hata kontrol edilir; bir adım başarısız olursa script durur, sonraki
+  // adıma (özellikle profile/auth user silmeye) geçmez — orphan kayıt bırakmamak için.
+  async function deleteBy(table, column, value) {
+    const { count, error } = await admin.from(table).delete({ count: 'exact' }).eq(column, value);
+    if (error) {
+      console.error(`HATA: ${table} silinemedi: ${error.message}`);
+      process.exit(1);
+    }
+    return count ?? 0;
+  }
 
-  const { count: partnersDeleted } = await admin.from('partners').delete({ count: 'exact' }).eq('is_demo', true);
+  const { data: demoTickets } = await admin.from('support_tickets').select('id').in('partner_id', partnerIds);
+  const ticketIds = (demoTickets ?? []).map((t) => t.id);
+  let messagesDeleted = 0;
+  if (ticketIds.length > 0) {
+    const { count, error } = await admin.from('support_messages').delete({ count: 'exact' }).in('ticket_id', ticketIds);
+    if (error) {
+      console.error(`HATA: support_messages silinemedi: ${error.message}`);
+      process.exit(1);
+    }
+    messagesDeleted = count ?? 0;
+  }
 
+  const commissionsDeleted = await deleteBy('commissions', 'is_demo', true);
+  const salesDeleted = await deleteBy('sales', 'is_demo', true);
+  const leadsDeleted = await deleteBy('leads', 'is_demo', true);
+  const ticketsDeleted = await deleteBy('support_tickets', 'is_demo', true);
+  const notificationsDeleted = await deleteBy('notifications', 'is_demo', true);
+  const partnersDeleted = await deleteBy('partners', 'is_demo', true);
+
+  let cleanedProfiles = 0;
   for (const profileId of profileIds) {
-    await admin.from('profiles').delete().eq('id', profileId);
-    await admin.auth.admin.deleteUser(profileId).catch(() => {});
+    const { error: profileErr } = await admin.from('profiles').delete().eq('id', profileId);
+    if (profileErr) {
+      console.error(`UYARI: profile ${profileId} silinemedi (${profileErr.message}), auth kullanıcı korunuyor.`);
+      continue;
+    }
+    const { error: authErr } = await admin.auth.admin.deleteUser(profileId);
+    if (authErr) {
+      console.error(`UYARI: auth kullanıcı ${profileId} silinemedi: ${authErr.message}`);
+      continue;
+    }
+    cleanedProfiles++;
   }
 
   console.log('Temizlendi:');
-  console.log(`  commissions: ${commissionsDeleted ?? 0}`);
-  console.log(`  sales: ${salesDeleted ?? 0}`);
-  console.log(`  leads: ${leadsDeleted ?? 0}`);
-  console.log(`  notifications: ${notificationsDeleted ?? 0}`);
-  console.log(`  partners: ${partnersDeleted ?? 0}`);
-  console.log(`  profiles/auth users: ${profileIds.length}`);
+  console.log(`  support_messages: ${messagesDeleted}`);
+  console.log(`  support_tickets: ${ticketsDeleted}`);
+  console.log(`  commissions: ${commissionsDeleted}`);
+  console.log(`  sales: ${salesDeleted}`);
+  console.log(`  leads: ${leadsDeleted}`);
+  console.log(`  notifications: ${notificationsDeleted}`);
+  console.log(`  partners: ${partnersDeleted}`);
+  console.log(`  profiles/auth users: ${cleanedProfiles}/${profileIds.length}`);
 }
 
 main().catch((err) => {
