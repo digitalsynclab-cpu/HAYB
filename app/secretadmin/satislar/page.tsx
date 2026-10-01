@@ -16,7 +16,7 @@ export default async function AdminSalesPage() {
   const [{ data: sales }, { data: partners }, { data: services }, { data: packages }] = await Promise.all([
     supabase
       .from('sales')
-      .select('id, amount, currency, sale_status, created_by_role, sold_at, partners(partner_code), services(name), leads(contact_name, email)')
+      .select('id, amount, currency, sale_status, created_by_role, sold_at, partners(partner_code), services(name), packages(name), leads(contact_name, email, phone, company_name, description)')
       .order('sold_at', { ascending: false })
       .limit(100),
     supabase.from('partners').select('id, partner_code').eq('status', 'active').order('partner_code'),
@@ -37,18 +37,25 @@ export default async function AdminSalesPage() {
         {(sales ?? []).map((s) => {
           const partner = Array.isArray(s.partners) ? s.partners[0] : s.partners;
           const service = Array.isArray(s.services) ? s.services[0] : s.services;
+          const pkg = Array.isArray(s.packages) ? s.packages[0] : s.packages;
           const lead = Array.isArray(s.leads) ? s.leads[0] : s.leads;
           return (
             <div key={s.id} className="rounded-2xl border border-white/10 bg-white/5 p-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <p className="font-semibold">
-                    {service?.name} · {Number(s.amount).toLocaleString('tr-TR')} {s.currency}
+                    {service?.name}
+                    {pkg?.name && ` · ${pkg.name}`} · {Number(s.amount).toLocaleString('tr-TR')} {s.currency}
                   </p>
                   <p className="text-sm text-fg-muted">
                     {partner?.partner_code} · {saleStatusLabel(s.sale_status)} · {s.created_by_role === 'partner' ? 'Partner satışı' : 'Admin girişi'} · {new Date(s.sold_at).toLocaleDateString('tr-TR')}
-                    {lead?.contact_name && ` · Müşteri: ${lead.contact_name}`}
                   </p>
+                  {lead && (lead.contact_name || lead.company_name || lead.phone) && (
+                    <p className="mt-1 text-sm text-fg-muted">
+                      Müşteri: {[lead.contact_name, lead.company_name, lead.phone].filter(Boolean).join(' · ')}
+                    </p>
+                  )}
+                  {lead?.description && <p className="mt-1 text-sm italic text-fg-muted">Not: {lead.description}</p>}
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   {(s.sale_status === 'submitted' || s.sale_status === 'reviewing') && (

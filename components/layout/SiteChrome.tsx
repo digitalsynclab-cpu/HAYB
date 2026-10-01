@@ -2,7 +2,19 @@
 import type { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 
-const PARTNER_DASHBOARD_PREFIXES = ['/partner/panel', '/partner/leads', '/partner/satislar', '/partner/kazanc', '/partner/profil', '/partner/materyaller', '/partner/destek'];
+const PARTNER_DASHBOARD_PREFIXES = [
+  '/partner/panel',
+  '/partner/leads',
+  '/partner/satislar',
+  '/partner/satis-olustur',
+  '/partner/satis-rehberi',
+  '/partner/musteri-datasi',
+  '/partner/bildirimler',
+  '/partner/kazanc',
+  '/partner/profil',
+  '/partner/materyaller',
+  '/partner/destek',
+];
 
 /**
  * Şu sayfalarda HAYB site çerçevesi (menü, alt bilgi, açılış, asistan) gösterilmez:

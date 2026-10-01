@@ -8,6 +8,7 @@ import { MenuToggleIcon } from '@/components/ui/MenuToggleIcon';
 export interface DashboardNavItem {
   href: string;
   label: string;
+  badge?: number;
 }
 
 interface DashboardHeaderProps {
@@ -35,8 +36,9 @@ export function DashboardHeader({ brandLabel, subLabel, navItems, logoutAction }
 
         <nav aria-label="Panel menüsü" className="hidden items-center gap-5 text-sm lg:flex">
           {navItems.map((n) => (
-            <Link key={n.href} href={n.href} aria-current={pathname === n.href ? 'page' : undefined} className={pathname === n.href ? 'font-semibold text-lime' : 'text-fg-muted hover:text-fg'}>
+            <Link key={n.href} href={n.href} aria-current={pathname === n.href ? 'page' : undefined} className={`inline-flex items-center gap-1.5 ${pathname === n.href ? 'font-semibold text-lime' : 'text-fg-muted hover:text-fg'}`}>
               {n.label}
+              {!!n.badge && <span className="rounded-full bg-lime px-1.5 py-0.5 text-[10px] font-bold leading-none text-ink-950">{n.badge}</span>}
             </Link>
           ))}
           <form action={logoutAction}>
@@ -68,9 +70,10 @@ export function DashboardHeader({ brandLabel, subLabel, navItems, logoutAction }
                     href={n.href}
                     onClick={() => setOpen(false)}
                     aria-current={pathname === n.href ? 'page' : undefined}
-                    className={`flex min-h-12 items-center text-[1.05rem] font-semibold ${pathname === n.href ? 'text-lime' : 'text-fg'}`}
+                    className={`flex min-h-12 items-center gap-2 text-[1.05rem] font-semibold ${pathname === n.href ? 'text-lime' : 'text-fg'}`}
                   >
                     {n.label}
+                    {!!n.badge && <span className="rounded-full bg-lime px-2 py-0.5 text-xs font-bold leading-none text-ink-950">{n.badge}</span>}
                   </Link>
                 </li>
               ))}
