@@ -1066,6 +1066,39 @@ export type Database = {
           },
         ]
       }
+      sales_scripts: {
+        Row: {
+          active: boolean
+          category: string
+          content: string
+          created_at: string
+          display_order: number
+          id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          category: string
+          content: string
+          created_at?: string
+          display_order?: number
+          id?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          category?: string
+          content?: string
+          created_at?: string
+          display_order?: number
+          id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           active: boolean

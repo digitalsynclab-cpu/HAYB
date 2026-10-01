@@ -12,6 +12,7 @@ const NAV = [
   { href: '/partner/leads', label: "Lead'lerim" },
   { href: '/partner/satislar', label: 'Satışlarım' },
   { href: '/partner/kazanc', label: 'Kazançlarım' },
+  { href: '/partner/satis-rehberi', label: 'Satış Rehberi' },
   { href: '/partner/materyaller', label: 'Materyaller' },
   { href: '/partner/destek', label: 'Destek' },
   { href: '/partner/profil', label: 'Profil' },
