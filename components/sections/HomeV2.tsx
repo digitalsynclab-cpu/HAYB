@@ -161,7 +161,9 @@ export function HomePackages() {
   return (
     <Section tone="dark" labelledBy="paket-ozet">
       <div className="flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
-        <SectionHeading id="paket-ozet" className="!mb-0" title="Size uygun paketi" accent="bulun." />
+        <h2 id="paket-ozet" className="text-balance text-[1.75rem] font-extrabold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl">
+          Size uygun paketi <span className="accent-text">bulun.</span>
+        </h2>
         <Button href="/paketler" arrow>
           Paketlere Göz Atın
         </Button>
