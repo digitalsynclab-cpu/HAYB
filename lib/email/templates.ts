@@ -53,7 +53,7 @@ function renderBrandedEmail(opts: { preheader?: string; heading: string; bodyHtm
             </tr>
             <tr>
               <td style="padding:24px 32px 32px;">
-                <p style="margin:0;font-size:12px;color:${BRAND.muted};">HAYB — Dijital ürün stüdyosu · <a href="${BRAND.siteUrl}" style="color:${BRAND.muted};">hayb.com.tr</a></p>
+                <p style="margin:0;font-size:12px;color:${BRAND.muted};">HAYB, Dijital ürün stüdyosu · <a href="${BRAND.siteUrl}" style="color:${BRAND.muted};">hayb.com.tr</a></p>
               </td>
             </tr>
           </table>

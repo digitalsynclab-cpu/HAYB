@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Handshake } from 'lucide-react';
 import { menu, type MenuItem } from '@/data/menu';
 import { Logo } from '@/components/ui/Logo';
 import { Button } from '@/components/ui/Button';
@@ -267,6 +267,9 @@ export function Navbar() {
               }}
             >
               Teklif Al
+            </Button>
+            <Button href="/partner" variant="secondary-light" arrow={false} icon={<Handshake aria-hidden className="h-5 w-5 text-lime" />} className="w-full">
+              Partner Ol
             </Button>
           </div>
         </div>

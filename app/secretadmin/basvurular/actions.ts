@@ -30,7 +30,7 @@ export async function approveApplicationAction(applicationId: string): Promise<A
 
   const { data: application, error: appError } = await admin
     .from('partner_applications')
-    .select('id, profile_id, status, profiles!inner(email, full_name)')
+    .select('id, profile_id, status, profiles!partner_applications_profile_id_fkey(email, full_name)')
     .eq('id', applicationId)
     .single();
   if (appError || !application) return { ok: false, error: 'Başvuru bulunamadı.' };
@@ -80,7 +80,7 @@ export async function rejectApplicationAction(applicationId: string, reason: str
 
   const { data: application, error: appError } = await admin
     .from('partner_applications')
-    .select('id, profile_id, status, profiles!inner(email, full_name)')
+    .select('id, profile_id, status, profiles!partner_applications_profile_id_fkey(email, full_name)')
     .eq('id', applicationId)
     .single();
   if (appError || !application) return { ok: false, error: 'Başvuru bulunamadı.' };

@@ -23,7 +23,7 @@ export default async function AdminApplicationsPage() {
   const supabase = await createSupabaseServerClient();
   const { data: applications } = await supabase
     .from('partner_applications')
-    .select('id, status, submitted_at, application_data, profiles!inner(full_name, email, phone)')
+    .select('id, status, submitted_at, application_data, profiles!partner_applications_profile_id_fkey(full_name, email, phone)')
     .order('submitted_at', { ascending: false });
 
   return (

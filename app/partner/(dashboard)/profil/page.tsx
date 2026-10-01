@@ -1,4 +1,5 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { BankInfoForm } from './BankInfoForm';
 
 export default async function PartnerProfilePage() {
   const supabase = await createSupabaseServerClient();
@@ -6,7 +7,11 @@ export default async function PartnerProfilePage() {
     data: { user },
   } = await supabase.auth.getUser();
   const { data: profile } = await supabase.from('profiles').select('full_name, email, phone').eq('id', user!.id).single();
-  const { data: partner } = await supabase.from('partners').select('partner_code, status, created_at').eq('profile_id', user!.id).single();
+  const { data: partner } = await supabase
+    .from('partners')
+    .select('partner_code, status, created_at, iban, account_holder_name')
+    .eq('profile_id', user!.id)
+    .single();
 
   const rows = [
     { label: 'Ad Soyad', value: profile?.full_name },
@@ -28,6 +33,16 @@ export default async function PartnerProfilePage() {
           </div>
         ))}
       </dl>
+
+      {partner?.status === 'active' && (
+        <div className="mt-8">
+          <h2 className="text-lg font-bold">Ödeme Bilgileri</h2>
+          <p className="mt-1 text-sm text-fg-muted">Komisyon ödemeleriniz bu IBAN&apos;a yapılacaktır.</p>
+          <div className="mt-4">
+            <BankInfoForm accountHolderName={partner.account_holder_name ?? ''} iban={partner.iban ?? ''} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

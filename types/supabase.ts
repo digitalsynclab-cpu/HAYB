@@ -815,10 +815,12 @@ export type Database = {
       }
       partners: {
         Row: {
+          account_holder_name: string | null
           application_id: string | null
           approved_at: string | null
           approved_by: string | null
           created_at: string
+          iban: string | null
           id: string
           partner_code: string
           profile_id: string
@@ -827,10 +829,12 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          account_holder_name?: string | null
           application_id?: string | null
           approved_at?: string | null
           approved_by?: string | null
           created_at?: string
+          iban?: string | null
           id?: string
           partner_code: string
           profile_id: string
@@ -839,10 +843,12 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          account_holder_name?: string | null
           application_id?: string | null
           approved_at?: string | null
           approved_by?: string | null
           created_at?: string
+          iban?: string | null
           id?: string
           partner_code?: string
           profile_id?: string

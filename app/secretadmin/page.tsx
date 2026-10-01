@@ -1,5 +1,4 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { adminLogoutAction } from './actions';
 
 async function getCounts() {
   const supabase = await createSupabaseServerClient();
@@ -28,16 +27,9 @@ export default async function AdminDashboardPage() {
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-12">
-      <div className="mb-10 flex items-center justify-between">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-lime">HAYB Admin</p>
-          <h1 className="mt-2 text-2xl font-bold">Genel Bakış</h1>
-        </div>
-        <form action={adminLogoutAction}>
-          <button type="submit" className="rounded-xl border border-white/20 px-4 py-2 text-sm text-fg hover:border-white/40">
-            Çıkış Yap
-          </button>
-        </form>
+      <div className="mb-10">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-lime">HAYB Admin</p>
+        <h1 className="mt-2 text-2xl font-bold">Genel Bakış</h1>
       </div>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         {kpis.map((k) => (

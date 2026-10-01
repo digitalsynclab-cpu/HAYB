@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { LegalPage } from '@/components/sections/LegalPage';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { buildMetadata } from '@/lib/metadata';
-import { site } from '@/data/site';
 
 export const metadata = buildMetadata({
   title: 'Gizlilik Politikası',
@@ -27,7 +26,18 @@ export default function PrivacyPage() {
         { title: 'Güvenlik', body: <p>Site, HTTPS üzerinden sunulur ve güvenlik başlıklarıyla korunur. Bununla birlikte internet üzerinden yapılan hiçbir iletimin tamamen risksiz olduğu garanti edilemez.</p> },
         { title: 'Çocukların gizliliği', body: <p>Sitemiz on sekiz yaşın altındaki kişilere yönelik değildir ve bilerek onlardan kişisel veri toplamayız.</p> },
         { title: 'Değişiklikler', body: <p>Bu politika güncellenebilir. Güncel sürüm her zaman bu sayfada yayınlanır ve sayfanın başındaki tarih değişir.</p> },
-        { title: 'İletişim', body: <p>Veri sorumlusu: <strong>{site.legalName}</strong>. Gizlilikle ilgili sorularınız için <Link href="/iletisim" className="font-semibold underline">İletişim</Link> sayfasındaki kanalları veya WhatsApp hattımızı kullanabilirsiniz.</p> },
+        { title: 'İletişim', body: <p>Gizlilikle ilgili sorularınız için <Link href="/iletisim" className="font-semibold underline">İletişim</Link> sayfasındaki kanalları veya WhatsApp hattımızı kullanabilirsiniz.</p> },
+        {
+          title: 'Hizmet Sağlayıcı',
+          body: (
+            <ul className="space-y-1">
+              <li><strong>Hizmet Sağlayıcı:</strong> HAYB – Yunus Emre Başkan</li>
+              <li><strong>Faaliyet:</strong> Web tasarım, yazılım, dijital hizmetler</li>
+              <li><strong>E-posta:</strong> hayb@outlook.com.tr</li>
+              <li><strong>Vergi durumu:</strong> Gelir Vergisi Kanunu Mükerrer 20/B kapsamında</li>
+            </ul>
+          ),
+        },
       ]}
       />
     </>

@@ -39,7 +39,7 @@ export default async function AdminApplicationDetailPage({ params }: { params: P
   const supabase = await createSupabaseServerClient();
   const { data: application } = await supabase
     .from('partner_applications')
-    .select('id, status, submitted_at, application_data, decision_reason, profiles!inner(full_name, email, phone)')
+    .select('id, status, submitted_at, application_data, decision_reason, profiles!partner_applications_profile_id_fkey(full_name, email, phone)')
     .eq('id', id)
     .single();
 

@@ -7,7 +7,7 @@ export default async function AdminPartnersPage() {
   const supabase = await createSupabaseServerClient();
   const { data: partners } = await supabase
     .from('partners')
-    .select('id, partner_code, status, created_at, profiles(full_name, email)')
+    .select('id, partner_code, status, created_at, iban, account_holder_name, profiles!partners_profile_id_fkey(full_name, email)')
     .order('created_at', { ascending: false });
 
   return (
@@ -27,6 +27,11 @@ export default async function AdminPartnersPage() {
                 <p className="text-sm text-fg-muted">
                   {profile?.email} · {STATUS_LABEL[p.status]} · {new Date(p.created_at).toLocaleDateString('tr-TR')}
                 </p>
+                {p.iban && (
+                  <p className="mt-1 font-mono text-xs text-lime">
+                    {p.account_holder_name} · {p.iban}
+                  </p>
+                )}
               </div>
               <PartnerStatusControls partnerId={p.id} status={p.status} />
             </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import Link from 'next/link';
+import { DashboardHeader } from '@/components/layout/DashboardHeader';
+import { adminLogoutAction } from './actions';
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 
@@ -18,15 +19,7 @@ const NAV = [
 export default function SecretAdminLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-ink-950 text-fg">
-      <nav className="overflow-x-auto border-b border-white/10">
-        <div className="mx-auto flex max-w-6xl gap-1 px-6 py-3 text-sm">
-          {NAV.map((n) => (
-            <Link key={n.href} href={n.href} className="whitespace-nowrap rounded-lg px-3 py-1.5 text-fg-muted hover:bg-white/5 hover:text-fg">
-              {n.label}
-            </Link>
-          ))}
-        </div>
-      </nav>
+      <DashboardHeader brandLabel="HAYB Admin" navItems={NAV} logoutAction={adminLogoutAction} />
       {children}
     </div>
   );

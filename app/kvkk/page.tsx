@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { LegalPage } from '@/components/sections/LegalPage';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { buildMetadata } from '@/lib/metadata';
-import { site } from '@/data/site';
 
 export const metadata = buildMetadata({
   title: 'KVKK Aydınlatma Metni',
@@ -20,7 +19,18 @@ export default function KvkkPage() {
       title="KVKK Aydınlatma Metni"
       intro="6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında, formlarımız ve WhatsApp hattımız üzerinden paylaştığınız verilerin nasıl işlendiğini açıklar."
       sections={[
-        { title: 'Veri sorumlusu', body: <p>Kişisel verileriniz, <strong>{site.legalName}</strong> tarafından veri sorumlusu sıfatıyla işlenir. Bize <Link href="/iletisim" className="font-semibold underline">İletişim</Link> sayfasındaki kanallardan ve WhatsApp hattımızdan ulaşabilirsiniz.</p> },
+        {
+          title: 'Hizmet Sağlayıcı',
+          body: (
+            <ul className="space-y-1">
+              <li><strong>Hizmet Sağlayıcı:</strong> HAYB – Yunus Emre Başkan</li>
+              <li><strong>Faaliyet:</strong> Web tasarım, yazılım, dijital hizmetler</li>
+              <li><strong>E-posta:</strong> hayb@outlook.com.tr</li>
+              <li><strong>Vergi durumu:</strong> Gelir Vergisi Kanunu Mükerrer 20/B kapsamında</li>
+            </ul>
+          ),
+        },
+        { title: 'Veri sorumlusu', body: <p>Kişisel verileriniz, yukarıda belirtilen hizmet sağlayıcı tarafından veri sorumlusu sıfatıyla işlenir. Bize <Link href="/iletisim" className="font-semibold underline">İletişim</Link> sayfasındaki kanallardan ve WhatsApp hattımızdan ulaşabilirsiniz.</p> },
         { title: 'İşlenen kişisel veriler', body: <p>İletişim ve Proje Başlat formlarına yazdığınız ad soyad, telefon numarası, e-posta adresi, seçtiğiniz proje türü, bütçe ve zamanlama bilgisi ile proje açıklamanız; Web Sitesi Sipariş formuna yazdığınız işletme veya marka adı, sektör, işletme tanımı, telefon, e-posta, isteğe bağlı adres ve WhatsApp numarası, mevcut web sitesi, alan adı ve barındırma durumu, istenen sayfalar, hizmet veya ürün bilgisi, tasarım tercihi, örnek web siteleri, özel istekler ve ek notlar. Bunun dışında sitemiz sizden kimlik, ödeme veya konum bilgisi istemez.</p> },
         { title: 'İşleme amaçları', body: <p>Talebinizi değerlendirmek, sizinle iletişime geçmek, teklif ve sözleşme süreçlerini yürütmek ve talebinizle ilgili sorularınızı yanıtlamak.</p> },
         { title: 'Hukuki sebepler', body: <p>Verileriniz, KVKK madde 5/2 kapsamında bir sözleşmenin kurulması için gerekli olması ve veri sorumlusunun meşru menfaati hukuki sebeplerine dayanılarak, talebinizin sizin isteğinizle iletilmesiyle işlenir.</p> },

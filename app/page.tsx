@@ -1,4 +1,5 @@
 import { HomeHeroV2, HomeGroups, HomePackages } from '@/components/sections/HomeV2';
+import { PartnerTeaser } from '@/components/sections/PartnerTeaser';
 import { CTASection } from '@/components/sections/CTASection';
 import { OrganizationSchema } from '@/components/schema/OrganizationSchema';
 import { WebSiteSchema } from '@/components/schema/WebSiteSchema';
@@ -13,6 +14,7 @@ export default function Home() {
       <HomeHeroV2 />
       <HomeGroups />
       <HomePackages />
+      <PartnerTeaser />
       <CTASection />
     </>
   );

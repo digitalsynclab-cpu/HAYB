@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { CheckCircle2, Handshake, Users, Rocket, ShieldCheck, FileSpreadsheet } from 'lucide-react';
 import { buildMetadata } from '@/lib/metadata';
 import { PageHero } from '@/components/ui/PageHero';
@@ -7,7 +8,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'HAYB Partner — Dijital Hizmetleri Müşterilerinize Sunun',
+  title: 'HAYB Partner: Dijital Hizmetleri Müşterilerinize Sunun',
   description: 'Müşteri bulun, HAYB dijital ürünü tasarlasın ve teslim etsin. Gerçekleşen satıştan komisyon kazanın. HAYB Partner ağına başvurun.',
   path: '/partner',
 });
@@ -55,14 +56,22 @@ export default function PartnerLandingPage() {
         eyebrow="HAYB Partner"
         title="Dijital çözümleri"
         accent="müşterilerinize sunun."
-        text="Siz müşteriyi bulun. HAYB dijital ürünü tasarlasın, geliştirsin ve teslim etsin — gerçekleşen satıştan komisyon kazanın."
+        text="Siz müşteriyi bulun. HAYB dijital ürünü tasarlasın, geliştirsin ve teslim etsin. Gerçekleşen satıştan komisyon kazanın."
         actions={
-          <>
-            <Button href="/partner/basvuru">Partner Başvurusu Yap</Button>
-            <Button href="#nasil-calisir" variant="secondary" arrow={false}>
-              Nasıl Çalışır?
-            </Button>
-          </>
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <Button href="/partner/basvuru">Partner Başvurusu Yap</Button>
+              <Button href="#nasil-calisir" variant="secondary" arrow={false}>
+                Nasıl Çalışır?
+              </Button>
+            </div>
+            <p className="text-sm text-fg-muted">
+              Zaten partner misiniz?{' '}
+              <Link href="/partner/giris" className="font-semibold text-lime underline underline-offset-4">
+                Giriş yapın
+              </Link>
+            </p>
+          </div>
         }
       />
 
@@ -107,7 +116,7 @@ export default function PartnerLandingPage() {
       </Section>
 
       <Section>
-        <SectionHeading title="Kimler partner" accent="olabilir?" text="Belirli bir meslek şartı yoktur — HAYB hizmetlerini müşterilerine sunmak isteyen herkes başvurabilir." />
+        <SectionHeading title="Kimler partner" accent="olabilir?" text="Belirli bir meslek şartı yoktur. HAYB hizmetlerini müşterilerine sunmak isteyen herkes başvurabilir." />
         <div className="flex flex-wrap gap-3">
           {whoCanApply.map((t) => (
             <span key={t} className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-fg-muted">
