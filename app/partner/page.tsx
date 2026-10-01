@@ -40,6 +40,8 @@ const whoCanApply = [
   'Yerel işletmelerle bağlantısı olanlar',
   'Ajanslar',
   'Girişimciler',
+  'Öğrenciler',
+  'Ve herkes',
 ];
 
 const advantages = [
