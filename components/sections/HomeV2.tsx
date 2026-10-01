@@ -59,24 +59,22 @@ export function HomeGroups() {
       <Image src="/brand/groups-bg.webp" alt="" fill priority={false} sizes="100vw" aria-hidden className="pointer-events-none -z-10 select-none object-cover object-center" />
       <SectionHeading id="hizmet-gruplari" title="Ne yapmak" accent="istiyorsunuz?" />
       <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5">
-        {groups.map((g, i) => (
+        {groups.map((g) => (
           <li key={g.title}>
-            <Reveal delay={i * 70} className="h-full">
-              <article className="surface-light flex h-full flex-col rounded-[1.6rem] p-6 sm:p-7">
-                <h3 className="text-xl font-bold sm:text-2xl">{g.title}</h3>
-                <ul className="mt-5 flex-1 divide-y divide-on-light/10 border-t border-on-light/10">
-                  {g.links.map((l) => (
-                    <li key={l.href}>
-                      <Link href={l.href} className="group flex min-h-14 items-center gap-3 py-2">
-                        {l.icon && <LineIcon name={l.icon} size={38} />}
-                        <span className="flex-1 text-[1.02rem] font-semibold">{l.label}</span>
-                        <ArrowRight aria-hidden className="h-4 w-4 text-on-light-muted transition group-hover:translate-x-1 group-hover:text-on-light" />
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            </Reveal>
+            <article className="surface-light flex h-full flex-col rounded-[1.6rem] p-6 sm:p-7">
+              <h3 className="text-xl font-bold sm:text-2xl">{g.title}</h3>
+              <ul className="mt-5 flex-1 divide-y divide-on-light/10 border-t border-on-light/10">
+                {g.links.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} className="group flex min-h-14 items-center gap-3 py-2">
+                      {l.icon && <LineIcon name={l.icon} size={38} />}
+                      <span className="flex-1 text-[1.02rem] font-semibold">{l.label}</span>
+                      <ArrowRight aria-hidden className="h-4 w-4 text-on-light-muted transition group-hover:translate-x-1 group-hover:text-on-light" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </article>
           </li>
         ))}
       </ul>
