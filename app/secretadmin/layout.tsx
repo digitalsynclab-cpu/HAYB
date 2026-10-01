@@ -17,6 +17,7 @@ const NAV = [
   { href: '/secretadmin/komisyon-kurallari', label: 'Komisyon Kuralları' },
   { href: '/secretadmin/satis-rehberi', label: 'Satış Rehberi' },
   { href: '/secretadmin/materyaller', label: 'Materyaller' },
+  { href: '/secretadmin/mail-gonder', label: 'Mail Gönder' },
   { href: '/secretadmin/destek', label: 'Destek' },
   { href: '/secretadmin/audit-logs', label: 'Audit Log' },
 ];

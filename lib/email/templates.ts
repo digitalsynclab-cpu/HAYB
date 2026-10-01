@@ -106,3 +106,19 @@ export function stageUpdateEmail(opts: { customerName: string; stageTitle: strin
     bodyHtml: `<p>Merhaba ${opts.customerName},</p><p>${opts.message}</p>`,
   });
 }
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/** Admin panelden serbest metinli, HAYB markalı mail gönderimi için — alıcı/konu/mesaj admin tarafından girilir. */
+export function freeformEmail(opts: { subject: string; message: string }): string {
+  const paragraphs = opts.message
+    .split(/\n{2,}/)
+    .map((p) => `<p>${escapeHtml(p).replace(/\n/g, '<br/>')}</p>`)
+    .join('');
+  return renderBrandedEmail({
+    heading: opts.subject,
+    bodyHtml: paragraphs,
+  });
+}
