@@ -94,6 +94,7 @@ export function GrantAccessForm({ datasetId, partners }: { datasetId: string; pa
       <input type="hidden" name="datasetId" value={datasetId} />
       <select name="partnerId" required className="rounded-lg border border-white/15 bg-black/20 px-3 py-1.5 text-xs">
         <option value="">Partner seç…</option>
+        <option value="all">Tümü (tüm aktif partnerler)</option>
         {partners.map((p) => (
           <option key={p.id} value={p.id}>
             {p.partner_code}

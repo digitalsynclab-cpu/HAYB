@@ -134,6 +134,22 @@ export async function grantDatasetAccessAction(_prev: DatasetActionResult, formD
   const partnerId = String(formData.get('partnerId') || '');
   if (!datasetId || !partnerId) return { ok: false, error: 'Dataset ve partner seçimi zorunlu.' };
 
+  if (partnerId === 'all') {
+    const { data: partners, error: partnersErr } = await admin.from('partners').select('id').eq('status', 'active');
+    if (partnersErr) return { ok: false, error: partnersErr.message };
+    const { data: existing } = await admin.from('dataset_access').select('partner_id').eq('dataset_id', datasetId);
+    const alreadyHas = new Set((existing ?? []).map((e) => e.partner_id));
+    const rows = (partners ?? []).filter((p) => !alreadyHas.has(p.id)).map((p) => ({ dataset_id: datasetId, partner_id: p.id, granted_by: adminId }));
+    if (rows.length === 0) return { ok: false, error: 'Tüm aktif partnerlerin zaten erişimi var.' };
+
+    const { error } = await admin.from('dataset_access').insert(rows);
+    if (error) return { ok: false, error: error.message };
+
+    await writeAuditLog(admin, { actorId: adminId, action: 'dataset_access_granted_all', entityType: 'dataset', entityId: datasetId, newData: { partnerCount: rows.length } });
+    revalidatePath('/secretadmin/musteri-datasi');
+    return { ok: true };
+  }
+
   const { error } = await admin.from('dataset_access').insert({ dataset_id: datasetId, partner_id: partnerId, granted_by: adminId });
   if (error) {
     if (error.code === '23505') return { ok: false, error: 'Bu partnerin zaten erişimi var.' };
