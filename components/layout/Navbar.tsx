@@ -13,6 +13,20 @@ import { CartButton } from '@/components/layout/CartButton';
 import { LanguageButton } from '@/components/i18n/LanguageSwitcher';
 import { openContact } from '@/lib/contact-events';
 
+/** Masaüstü navbar'a özel "Partner" açılır menüsü — mobil akordeon verisini (data/menu.ts) etkilememesi için ayrı tutulur. */
+const PARTNER_MENU_ITEM: MenuItem = {
+  label: 'Partner',
+  href: '/partner',
+  groups: [
+    {
+      links: [
+        { label: 'Partner Girişi', href: '/partner/giris', text: 'Hesabınıza giriş yapın' },
+        { label: 'Partner Ol', href: '/partner', text: 'Başvuru yapın, komisyon kazanın' },
+      ],
+    },
+  ],
+};
+
 const isActive = (pathname: string, href: string) =>
   href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`);
 
@@ -145,25 +159,22 @@ export function Navbar() {
                   </li>
                 );
               })}
+              <li onMouseEnter={() => hoverOpen(PARTNER_MENU_ITEM.label)}>
+                <button
+                  type="button"
+                  aria-expanded={sub === PARTNER_MENU_ITEM.label}
+                  aria-haspopup="true"
+                  onClick={() => setSub(sub === PARTNER_MENU_ITEM.label ? null : PARTNER_MENU_ITEM.label)}
+                  className={`relative inline-flex min-h-11 items-center gap-1 px-3 text-[0.9375rem] font-medium transition-colors duration-200 hover:text-lime ${sub === PARTNER_MENU_ITEM.label ? 'text-lime' : 'text-fg/90'}`}
+                >
+                  {PARTNER_MENU_ITEM.label}
+                  <ChevronDown aria-hidden className={`h-4 w-4 transition-transform duration-200 ${sub === PARTNER_MENU_ITEM.label ? 'rotate-180' : ''}`} />
+                </button>
+              </li>
             </ul>
           </nav>
 
           <div className="flex items-center gap-2">
-            <Link
-              href="/partner/giris"
-              className="hidden min-h-11 items-center px-3 text-[0.9375rem] font-medium text-fg/90 transition-colors duration-200 hover:text-lime xl:inline-flex"
-            >
-              Partner Girişi
-            </Link>
-            <Button
-              href="/partner"
-              variant="secondary-light"
-              arrow={false}
-              icon={<Handshake aria-hidden className="h-4 w-4 text-lime" />}
-              className="hidden min-h-11 px-4 text-[0.9375rem] xl:inline-flex"
-            >
-              Partner Ol
-            </Button>
             <LanguageButton />
             <CartButton />
             <Button onClick={openContact} className="hidden min-h-11 px-5 text-[0.9375rem] sm:inline-flex">
@@ -197,7 +208,7 @@ export function Navbar() {
             onMouseEnter={() => hoverOpen(sub)}
             onMouseLeave={hoverClose}
           >
-            <MegaPanel item={menu.find((m) => m.label === sub)!} onNavigate={() => setSub(null)} />
+            <MegaPanel item={sub === PARTNER_MENU_ITEM.label ? PARTNER_MENU_ITEM : menu.find((m) => m.label === sub)!} onNavigate={() => setSub(null)} />
           </motion.div>
         )}
       </AnimatePresence>
