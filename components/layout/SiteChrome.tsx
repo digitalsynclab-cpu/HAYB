@@ -2,33 +2,30 @@
 import type { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 
-const PARTNER_DASHBOARD_PREFIXES = [
-  '/partner/panel',
-  '/partner/rehber',
-  '/partner/leads',
-  '/partner/satislar',
-  '/partner/satis-olustur',
-  '/partner/satis-rehberi',
-  '/partner/musteri-datasi',
-  '/partner/bildirimler',
-  '/partner/kazanc',
-  '/partner/profil',
-  '/partner/materyaller',
-  '/partner/destek',
-];
+/**
+ * /partner/* altında yalnızca bu sayfalar PUBLIC'tir (HAYB site çerçevesini korur).
+ * Bunların dışındaki HER /partner/... sayfası varsayılan olarak authenticated kabul
+ * edilir ve chrome gizlenir — yeni bir partner panel sayfası eklendiğinde bu listeye
+ * dokunmaya gerek yoktur, otomatik olarak doğru davranır (eski liste-tabanlı yaklaşım
+ * yeni sayfa eklendiğinde unutulup public navbar'ın panelde sızmasına neden oluyordu).
+ */
+const PUBLIC_PARTNER_PREFIXES = ['/partner/basvuru', '/partner/giris'];
+
+function isPublicPartnerPath(pathname: string): boolean {
+  if (pathname === '/partner') return true;
+  return PUBLIC_PARTNER_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+}
 
 /**
  * Şu sayfalarda HAYB site çerçevesi (menü, alt bilgi, açılış, asistan) gösterilmez:
  * - /template/webN şablon demo sayfaları
  * - /secretadmin/* — kendi başlığı/navigasyonu olan admin paneli
- * - /partner panel içi sayfalar (panel, leads, satışlar, kazanç, profil, materyaller, destek)
- *   — kendi başlığı/navigasyonu olan partner paneli. Public /partner, /partner/basvuru,
- *   /partner/giris sayfaları normal site çerçevesini korur.
+ * - /partner/* altında public olmayan HER sayfa — kendi başlığı/navigasyonu olan partner paneli
  */
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   if (/^\/template\/.+/.test(pathname)) return null;
   if (/^\/secretadmin(\/.*)?$/.test(pathname)) return null;
-  if (PARTNER_DASHBOARD_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return null;
+  if (pathname.startsWith('/partner') && !isPublicPartnerPath(pathname)) return null;
   return <>{children}</>;
 }

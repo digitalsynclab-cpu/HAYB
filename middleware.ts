@@ -1,28 +1,22 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
-const PARTNER_PRIVATE_PATHS = [
-  '/partner/panel',
-  '/partner/leads',
-  '/partner/satislar',
-  '/partner/rehber',
-  '/partner/satis-olustur',
-  '/partner/satis-rehberi',
-  '/partner/musteri-datasi',
-  '/partner/bildirimler',
-  '/partner/kazanc',
-  '/partner/materyaller',
-  '/partner/profil',
-  '/partner/destek',
-];
 const ADMIN_PREFIX = '/secretadmin';
+
+// /partner/* altında yalnızca bunlar PUBLIC'tir; geri kalan HER /partner/... sayfası
+// varsayılan olarak authenticated kabul edilir (yeni sayfa eklenince unutma riski olmasın diye).
+const PUBLIC_PARTNER_PREFIXES = ['/partner/basvuru', '/partner/giris'];
+
+function isPublicPartnerPath(pathname: string): boolean {
+  if (pathname === '/partner') return true;
+  return PUBLIC_PARTNER_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+}
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isAdminLoginRoute = pathname === `${ADMIN_PREFIX}/giris`;
-  const isPartnerLoginRoute = pathname === '/partner/giris';
   const isAdminRoute = pathname.startsWith(ADMIN_PREFIX) && !isAdminLoginRoute;
-  const isPartnerPrivateRoute = !isPartnerLoginRoute && PARTNER_PRIVATE_PATHS.some((p) => pathname.startsWith(p));
+  const isPartnerPrivateRoute = pathname.startsWith('/partner') && !isPublicPartnerPath(pathname);
 
   if (!isAdminRoute && !isPartnerPrivateRoute) {
     return NextResponse.next();
@@ -89,5 +83,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/partner/panel/:path*', '/partner/leads/:path*', '/partner/satislar/:path*', '/partner/rehber/:path*', '/partner/satis-olustur/:path*', '/partner/satis-rehberi/:path*', '/partner/musteri-datasi/:path*', '/partner/bildirimler/:path*', '/partner/kazanc/:path*', '/partner/materyaller/:path*', '/partner/profil/:path*', '/partner/destek/:path*', '/secretadmin/:path*'],
+  matcher: ['/partner/:path*', '/secretadmin/:path*'],
 };
