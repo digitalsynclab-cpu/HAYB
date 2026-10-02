@@ -130,6 +130,15 @@ export default async function PartnerDashboardPage() {
         </div>
       </section>
 
+      <section className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5">
+        <p className="text-xs font-semibold uppercase tracking-wide text-lime">Partnerine Özel</p>
+        <p className="mt-1 font-semibold">Kendi dijital markanı oluştur.</p>
+        <p className="mt-1 text-sm text-fg-muted">Partnerlara özel web sitesi ve marka çözümlerini keşfet.</p>
+        <Link href="/partner/avantajlar" className="mt-3 inline-block rounded-lg border border-white/20 px-4 py-2 text-sm font-semibold hover:border-lime/50 hover:text-lime">
+          Avantajları Gör
+        </Link>
+      </section>
+
       <section className="mt-8">
         <PartnerBadgeCard />
       </section>

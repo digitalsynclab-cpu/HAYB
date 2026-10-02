@@ -40,6 +40,7 @@ const NAV_GROUPS = [
       { href: '/secretadmin/satis-rehberi', label: 'Satış Rehberi' },
       { href: '/secretadmin/materyaller', label: 'Materyaller' },
       { href: '/secretadmin/musteri-datasi', label: 'Müşteri Datası' },
+      { href: '/secretadmin/partner-urunleri', label: 'Partnerine Özel Ürünler' },
     ],
   },
   {

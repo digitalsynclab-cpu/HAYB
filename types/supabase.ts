@@ -933,6 +933,90 @@ export type Database = {
           },
         ]
       }
+      partner_product_orders: {
+        Row: {
+          created_at: string
+          form_data: Json
+          id: string
+          partner_id: string
+          price: number
+          product_name: string
+          product_slug: string
+          status: Database["public"]["Enums"]["sale_status"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          form_data?: Json
+          id?: string
+          partner_id: string
+          price: number
+          product_name: string
+          product_slug: string
+          status?: Database["public"]["Enums"]["sale_status"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          form_data?: Json
+          id?: string
+          partner_id?: string
+          price?: number
+          product_name?: string
+          product_slug?: string
+          status?: Database["public"]["Enums"]["sale_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_product_orders_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "partner_product_orders_product_slug_fkey"
+            columns: ["product_slug"]
+            isOneToOne: false
+            referencedRelation: "partner_products"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      partner_products: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          price: number
+          slug: string
+          tagline: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          price: number
+          slug: string
+          tagline: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          price?: number
+          slug?: string
+          tagline?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       partners: {
         Row: {
           account_holder_name: string | null
