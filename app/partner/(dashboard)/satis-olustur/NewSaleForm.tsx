@@ -39,18 +39,10 @@ export function NewSaleForm({ services, packages, commissionRates }: { services:
             </select>
           )}
         </Field>
-        {selectedService && (
-          <Field
-            id="packageId"
-            label="Paket"
-            hint={
-              availablePackages.length === 0
-                ? 'Bu hizmet için net paket fiyatı yok — özel fiyatlandırma gerekir, HAYB ekibiyle görüşün.'
-                : undefined
-            }
-          >
+        {selectedService && availablePackages.length > 0 && (
+          <Field id="packageId" label="Paket">
             {(a) => (
-              <select {...inputProps(a)} name="packageId" required={availablePackages.length > 0} value={packageId} onChange={(e) => setPackageId(e.target.value)} className={a.className}>
+              <select {...inputProps(a)} name="packageId" required value={packageId} onChange={(e) => setPackageId(e.target.value)} className={a.className}>
                 <option value="">Seçiniz</option>
                 {availablePackages.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -60,6 +52,20 @@ export function NewSaleForm({ services, packages, commissionRates }: { services:
               </select>
             )}
           </Field>
+        )}
+        {selectedService && availablePackages.length === 0 && (
+          <div className="mt-3 rounded-xl border border-white/15 bg-white/5 p-4 text-sm leading-relaxed text-fg-muted">
+            <p className="mb-2 font-semibold text-fg">Özel Fiyatlandırmalı İş</p>
+            <p>
+              Mobil Uygulama, Oyun, İşletmeye Özel Programlar, Kişi ve İşletmelere Özel Yazılımlar vb. ürün ve hizmetlerde iş durumu, maliyet hesabı ve
+              hizmet içeriğine göre %&apos;lik komisyon değişir, net bir fiyat yoktur — özel olarak fiyatlandırma yapılır.
+            </p>
+            <p className="mt-2">
+              Bu tarz işlerde partner HAYB ekibine müşteri yönlendirmesi yapar; iş sonucuna göre HAYB ekibi partner ile son durumu konuşarak %&apos;lik
+              komisyonu belirler ve iş bitiminde ödeme teslim edilir.
+            </p>
+            <p className="mt-2 font-medium text-fg">Her zaman süreç güvenilir ve şeffaf ilerlemek zorundadır.</p>
+          </div>
         )}
         {selectedPackage && (
           <div className="mt-3 flex items-center justify-between rounded-xl border border-lime/25 bg-lime/5 px-4 py-3 text-sm">
