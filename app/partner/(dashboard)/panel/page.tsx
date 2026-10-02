@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { saleStatusLabel } from '@/lib/partner/sale-status';
 import { PartnerRanking } from './PartnerRanking';
+import { PartnerBadgeCard } from '@/components/partner/PartnerBadgeGallery';
 
 const REVIEWING_STATUSES = ['submitted', 'reviewing'] as const;
 const IN_PROGRESS_STATUSES = ['approved', 'payment_pending', 'paid', 'project_started', 'in_progress'] as const;
@@ -127,6 +128,10 @@ export default async function PartnerDashboardPage() {
             </p>
           )}
         </div>
+      </section>
+
+      <section className="mt-8">
+        <PartnerBadgeCard />
       </section>
 
       {(ranking.data ?? []).length > 0 && (
