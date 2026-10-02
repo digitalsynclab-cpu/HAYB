@@ -353,6 +353,24 @@ html.intro-active { overflow: hidden; }
 .modal-backdrop { animation: modal-fade 0.25s ease-out both; }
 .modal-sheet { animation: modal-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
 @media (min-width: 640px) { .modal-sheet { animation-name: modal-pop; } }
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop, .modal-sheet { animation-duration: 0.01s !important; }
+}
+
+/* ─── PWA kurulum penceresi (Partner Girişi) ─── */
+.pwa-card { box-shadow: 0 30px 90px rgb(0 0 0 / 0.6); }
+.pwa-sheet-in { animation: pwa-sheet-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.pwa-sheet-out { animation: pwa-sheet-out 0.22s ease-in both; }
+.pwa-backdrop-out { animation: modal-fade 0.22s ease-in reverse both; }
+@keyframes pwa-sheet-in { from { opacity: 0; transform: translateY(32px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes pwa-sheet-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(24px) scale(0.98); } }
+.pwa-tabpanel { animation: pwa-tab-in 0.28s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes pwa-tab-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.pwa-step { animation: pwa-step-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: calc(var(--i, 0) * 0.06s); }
+@keyframes pwa-step-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .pwa-sheet-in, .pwa-sheet-out, .pwa-backdrop-out, .pwa-tabpanel, .pwa-step { animation-duration: 0.01s !important; animation-delay: 0s !important; }
+}
 
 /* ─── Çerez penceresi: dönen neon çerçeve, yuvarlanarak gelen çerez ─── */
 .cookie-card { position: relative; overflow: hidden; border-radius: 1.5rem; padding: 1px; background: rgb(255 255 255 / 0.12); box-shadow: 0 24px 70px rgb(0 0 0 / 0.6); }

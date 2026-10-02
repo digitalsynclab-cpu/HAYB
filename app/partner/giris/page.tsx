@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { buildMetadata } from '@/lib/metadata';
 import { PartnerLoginForm } from './PartnerLoginForm';
+import { PwaInstallCard } from './PwaInstallCard';
 
 export const metadata: Metadata = buildMetadata({ title: 'Partner Girişi', description: 'HAYB Partner paneline giriş yapın.', path: '/partner/giris', noindex: true });
 
@@ -14,6 +15,7 @@ export default function PartnerLoginPage() {
           <h1 className="mt-2 text-2xl font-bold text-fg">Partner Girişi</h1>
         </div>
         <PartnerLoginForm />
+        <PwaInstallCard />
         <p className="mt-6 text-center text-sm text-fg-muted">
           Henüz partner değil misiniz?{' '}
           <Link href="/partner/basvuru" className="text-lime underline">
