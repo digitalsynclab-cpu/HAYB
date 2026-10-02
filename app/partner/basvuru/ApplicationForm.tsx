@@ -28,10 +28,8 @@ const selectCls = 'min-h-12 w-full rounded-xl border border-white/15 bg-ink-950/
 
 /** Hangi step, hangi form alanlarını içeriyor — hata dönünce kullanıcıyı ilgili adıma götürmek için. */
 const STEP_FIELDS = [
-  ['fullName', 'phone', 'email', 'password', 'city', 'district'],
-  ['occupation', 'employmentStatus'],
-  ['motivation', 'targetCustomerGroups', 'interestedServices'],
-  [],
+  ['fullName', 'phone', 'email', 'password', 'city'],
+  ['occupation', 'interestedServices', 'motivation'],
   ['kvkkConsent', 'termsConsent'],
 ];
 
@@ -149,57 +147,20 @@ export function ApplicationForm() {
       ),
     },
     {
-      id: 'profesyonel',
-      label: 'Profesyonel Bilgiler',
-      content: (
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field id="occupation" label="Meslek" error={errors.occupation}>
-            {(a) => <input {...inputProps(a)} name="occupation" required className={a.className} />}
-          </Field>
-          <Field id="employmentStatus" label="Çalışma Durumu" error={errors.employmentStatus}>
-            {(a) => <input {...inputProps(a)} name="employmentStatus" placeholder="Ör. Serbest, Tam zamanlı, Öğrenci" required className={a.className} />}
-          </Field>
-          <div className="sm:col-span-2">
-            <Checkbox name="hasCompany" value="true" label="Bir şirketim var" />
-          </div>
-          <Field id="companyName" label="Şirket Adı (varsa)">
-            {(a) => <input {...inputProps(a)} name="companyName" className={a.className} />}
-          </Field>
-          <Field id="website" label="Web Sitesi (varsa)">
-            {(a) => <input {...inputProps(a)} name="website" className={a.className} />}
-          </Field>
-          <Field id="instagram" label="Instagram (varsa)">
-            {(a) => <input {...inputProps(a)} name="instagram" className={a.className} />}
-          </Field>
-          <Field id="linkedin" label="LinkedIn (varsa)">
-            {(a) => <input {...inputProps(a)} name="linkedin" className={a.className} />}
-          </Field>
-          <Field id="salesExperience" label="Satış / Pazarlama Deneyimi">
-            {(a) => <input {...inputProps(a)} name="salesExperience" className={a.className} />}
-          </Field>
-        </div>
-      ),
-    },
-    {
-      id: 'motivasyon',
-      label: 'Motivasyon',
+      id: 'profil',
+      label: 'Partner Profili',
       content: (
         <div className="space-y-4">
-          <Field id="motivation" label="Neden HAYB Partner olmak istiyorsunuz?" error={errors.motivation}>
-            {(a) => <textarea {...inputProps(a)} name="motivation" required className={textareaCls} />}
+          <p className="text-sm text-fg-muted">Bu adımdaki tüm sorular opsiyoneldir — isterseniz doğrudan son adıma geçebilirsiniz.</p>
+          <Field id="occupation" label="Meslek" hint="Opsiyonel" error={errors.occupation}>
+            {(a) => <input {...inputProps(a)} name="occupation" className={a.className} />}
           </Field>
-          <Field id="targetCustomerGroups" label="HAYB hizmetlerini hangi müşteri gruplarına sunabilirsiniz?" error={errors.targetCustomerGroups}>
-            {(a) => <textarea {...inputProps(a)} name="targetCustomerGroups" required className={textareaCls} />}
-          </Field>
-          <Checkbox name="hasSalesExperienceBefore" value="true" label="Daha önce satış/pazarlama yaptım" />
-          <Field id="sectorsConnected" label="Hangi sektörlerde bağlantılarınız var?">
-            {(a) => <input {...inputProps(a)} name="sectorsConnected" className={a.className} />}
-          </Field>
-          <Field id="estimatedReach" label="Ortalama kaç potansiyel müşteriye ulaşabilirsiniz?">
-            {(a) => <input {...inputProps(a)} name="estimatedReach" className={a.className} />}
+          <Checkbox name="hasCompany" value="true" label="Bir şirketim var" />
+          <Field id="companyName" label="Şirket Adı" hint="Opsiyonel">
+            {(a) => <input {...inputProps(a)} name="companyName" className={a.className} />}
           </Field>
           <fieldset>
-            <legend className="mb-2 text-sm font-semibold">HAYB’den hangi hizmetleri sunmakla ilgileniyorsunuz?</legend>
+            <legend className="mb-2 text-sm font-semibold">HAYB&apos;den hangi hizmetleri sunmakla ilgileniyorsunuz? <span className="font-normal text-fg-muted">(Opsiyonel)</span></legend>
             <div className="flex flex-wrap gap-2">
               {SERVICE_OPTIONS.map((s) => (
                 <label key={s} className="flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-sm text-fg-muted has-[:checked]:border-lime has-[:checked]:text-lime">
@@ -208,27 +169,9 @@ export function ApplicationForm() {
                 </label>
               ))}
             </div>
-            {errors.interestedServices && <p className="mt-2 text-sm font-medium text-red-300">{errors.interestedServices}</p>}
           </fieldset>
-        </div>
-      ),
-    },
-    {
-      id: 'deneyim',
-      label: 'Deneyim',
-      content: (
-        <div className="space-y-4">
-          <Field id="previousProducts" label="Daha önce sattığınız ürün/hizmetler">
-            {(a) => <textarea {...inputProps(a)} name="previousProducts" className={textareaCls} />}
-          </Field>
-          <Field id="digitalExperience" label="Dijital hizmet deneyiminiz">
-            {(a) => <textarea {...inputProps(a)} name="digitalExperience" className={textareaCls} />}
-          </Field>
-          <Field id="customerPortfolio" label="Müşteri portföyünüz">
-            {(a) => <textarea {...inputProps(a)} name="customerPortfolio" className={textareaCls} />}
-          </Field>
-          <Field id="additionalInfo" label="Eklemek istediğiniz bilgi">
-            {(a) => <textarea {...inputProps(a)} name="additionalInfo" className={textareaCls} />}
+          <Field id="motivation" label="Neden HAYB Partner olmak istiyorsunuz?" hint="Opsiyonel, kısaca yeterli" error={errors.motivation}>
+            {(a) => <textarea {...inputProps(a)} name="motivation" className={`${textareaCls} min-h-20`} />}
           </Field>
         </div>
       ),

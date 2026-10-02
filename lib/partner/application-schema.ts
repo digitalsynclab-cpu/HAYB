@@ -1,7 +1,12 @@
 import { z } from 'zod';
 
+/**
+ * Başvuru formu bilinçli olarak kısa tutulur: yalnızca bir partner adayını ilk
+ * değerlendirme için gerekli bilgiler istenir. Detaylı sorular (deneyim, portföy,
+ * hedef kitle vb.) admin görüşmesi sırasında toplanır — bkz. partner_notes tablosu.
+ */
 export const applicationSchema = z.object({
-  // Adım 1 — Hesap ve kişisel bilgiler
+  // Hesap ve kişisel bilgiler — zorunlu
   fullName: z.string().min(3, 'Ad soyad gerekli.'),
   email: z.string().email('Geçerli bir e-posta girin.'),
   password: z.string().min(8, 'Şifre en az 8 karakter olmalı.'),
@@ -9,31 +14,14 @@ export const applicationSchema = z.object({
   city: z.string().min(2, 'Şehir gerekli.'),
   district: z.string().optional(),
 
-  // Adım 2 — Profesyonel bilgiler
-  occupation: z.string().min(2, 'Meslek gerekli.'),
-  employmentStatus: z.string().min(2, 'Çalışma durumu gerekli.'),
+  // Partner profili — opsiyonel, hızlı başvuru için zorunlu değil
+  occupation: z.string().optional(),
   hasCompany: z.boolean(),
   companyName: z.string().optional(),
-  website: z.string().optional(),
-  instagram: z.string().optional(),
-  linkedin: z.string().optional(),
-  salesExperience: z.string().optional(),
+  interestedServices: z.array(z.string()).optional(),
+  motivation: z.string().optional(),
 
-  // Adım 3 — Motivasyon
-  motivation: z.string().min(20, 'Lütfen en az birkaç cümleyle açıklayın.'),
-  targetCustomerGroups: z.string().min(10, 'Hangi müşteri gruplarına ulaşabileceğinizi belirtin.'),
-  hasSalesExperienceBefore: z.boolean(),
-  sectorsConnected: z.string().optional(),
-  estimatedReach: z.string().optional(),
-  interestedServices: z.array(z.string()).min(1, 'En az bir hizmet seçin.'),
-
-  // Adım 4 — Deneyim
-  previousProducts: z.string().optional(),
-  digitalExperience: z.string().optional(),
-  customerPortfolio: z.string().optional(),
-  additionalInfo: z.string().optional(),
-
-  // Adım 5 — Onay
+  // Onay — zorunlu (yasal)
   kvkkConsent: z.literal(true, { errorMap: () => ({ message: 'KVKK aydınlatma metnini onaylamanız gerekir.' }) }),
   termsConsent: z.literal(true, { errorMap: () => ({ message: 'Başvuru koşullarını kabul etmeniz gerekir.' }) }),
 });

@@ -18,7 +18,6 @@ export async function submitPartnerApplicationAction(_prev: SubmitResult, formDa
   const parsed = applicationSchema.safeParse({
     ...raw,
     hasCompany: raw.hasCompany === 'true',
-    hasSalesExperienceBefore: raw.hasSalesExperienceBefore === 'true',
     interestedServices: formData.getAll('interestedServices'),
     kvkkConsent: raw.kvkkConsent === 'true',
     termsConsent: raw.termsConsent === 'true',
