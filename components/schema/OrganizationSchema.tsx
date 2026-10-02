@@ -24,7 +24,18 @@ export function OrganizationSchema() {
         image: absoluteUrl('/og-image.png'),
         foundingDate: String(S.founded),
         description:
-          'HAYB; web siteleri, özel yazılım, yönetim paneli, mobil uygulama, yapay zeka, sosyal medya ve marka tasarımı hizmetleri sunan dijital ürün stüdyosudur.',
+          'HAYB; web siteleri, özel yazılım, yönetim paneli, mobil uygulama, yapay zeka, sosyal medya ve marka tasarımı hizmetleri sunan dijital ürün stüdyosudur. HAYB Partner programıyla müşteri bulan partnerler komisyon kazanır.',
+        knowsAbout: [
+          'Web sitesi tasarımı ve geliştirme',
+          'E-ticaret',
+          'Mobil uygulama geliştirme',
+          'Mobil oyun geliştirme',
+          'Özel yazılım geliştirme',
+          'Yapay zeka çözümleri',
+          'UI/UX tasarım',
+          'Yönetim paneli geliştirme',
+          'Satış ortaklığı / komisyonla kazanç (HAYB Partner programı)',
+        ],
         address: {
           '@type': 'PostalAddress',
           addressLocality: S.address.addressLocality,

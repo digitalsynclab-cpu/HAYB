@@ -6,11 +6,26 @@ import { PageHero } from '@/components/ui/PageHero';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { FAQSchema } from '@/components/schema/FAQSchema';
+import { ORGANIZATION_ID } from '@/components/schema/OrganizationSchema';
+import { absoluteUrl, site } from '@/data/site';
+
+const PATH = '/partner';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'HAYB Partner: Dijital Hizmetleri Müşterilerinize Sunun',
-  description: 'Müşteri bulun, HAYB dijital ürünü tasarlasın ve teslim etsin. Gerçekleşen satıştan komisyon kazanın. HAYB Partner ağına başvurun.',
-  path: '/partner',
+  title: 'HAYB Partner: Müşteri Bul, Komisyonla Kazan',
+  description:
+    'HAYB Partner ağına ücretsiz başvurun; müşteri bulun, web sitesi, mobil uygulama, yapay zeka ve özel yazılım projelerini HAYB teslim etsin, gerçekleşen satıştan komisyon kazanın.',
+  path: PATH,
+  keywords: [
+    'HAYB Partner',
+    'partner olarak para kazanma',
+    'komisyonla ek gelir',
+    'dijital ürün satış ortaklığı',
+    'web sitesi satış ortaklığı',
+    'mobil uygulama satış komisyonu',
+  ],
 });
 
 const steps = [
@@ -44,6 +59,37 @@ const whoCanApply = [
   'Ve herkes',
 ];
 
+/** Görünür SSS ve FAQPage şeması aynı diziden beslenir. Yanıtlar sayfadaki gerçek bilgilerle tutarlıdır; uydurma rakam yoktur. */
+const faqs = [
+  {
+    question: 'HAYB Partner olarak nasıl para kazanırım?',
+    answer:
+      'Dijital hizmete (web sitesi, mobil uygulama, e-ticaret, özel yazılım, yapay zeka vb.) ihtiyacı olan bir müşteri bulup HAYB’ye yönlendirirsiniz. Satış gerçekleştiğinde komisyonunuz hesaplanır ve partner panelinizde görünür.',
+  },
+  {
+    question: 'Partner olmak ücretsiz mi?',
+    answer: 'Evet, HAYB Partner ağına başvuru ve katılım ücretsizdir. Herhangi bir üyelik ücreti alınmaz.',
+  },
+  {
+    question: 'Komisyon oranı ne kadar, ne zaman ödenir?',
+    answer:
+      'Komisyon oranı hizmete, pakete ve döneme göre değişir; garanti gelir veya kazanç taahhüdü verilmez. Oranlar partner panelinde satış oluşturulurken şeffaf şekilde gösterilir, ödeme satış tamamlandıktan sonra yapılır.',
+  },
+  {
+    question: 'Kimler HAYB Partner olabilir?',
+    answer:
+      'Belirli bir meslek şartı yoktur. Dijital pazarlamacılar, freelancerlar, sosyal medya yöneticileri, grafik tasarımcılar, satış profesyonelleri, ajanslar, girişimciler, öğrenciler ve yerel işletmelerle bağlantısı olan herkes başvurabilir.',
+  },
+  {
+    question: 'Hangi projeleri HAYB’ye yönlendirebilirim?',
+    answer: 'Web sitesi, e-ticaret, mobil uygulama, mobil oyun, özel yazılım, yönetim paneli, yapay zeka çözümleri, sosyal medya ve marka tasarımı projelerini yönlendirebilirsiniz; tasarım, geliştirme ve teslimatı HAYB yapar.',
+  },
+  {
+    question: 'Satışı ve hazırlık sürecini kendim mi yapmam gerekiyor?',
+    answer: 'Hayır. Siz müşteriyi bulup bilgilerini partner panelinden iletirsiniz; ihtiyaç analizi, tasarım, geliştirme, teslim ve teknik destek HAYB ekibi tarafından yürütülür.',
+  },
+];
+
 const advantages = [
   { icon: Rocket, title: 'Hazır hizmet altyapısı', text: 'Sunacağınız tüm dijital ürünler HAYB tarafından geliştirilir ve teslim edilir.' },
   { icon: FileSpreadsheet, title: 'Satış materyalleri', text: 'Hazır tanıtım metinleri ve görselleriyle müşteriye sunum yapmanız kolaylaşır.' },
@@ -54,6 +100,22 @@ const advantages = [
 export default function PartnerLandingPage() {
   return (
     <>
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: 'HAYB Partner Programı',
+          description:
+            'Müşteri bulan partnerlerin, HAYB’nin geliştirdiği web sitesi, mobil uygulama, e-ticaret, özel yazılım ve yapay zeka projelerinden komisyon kazandığı satış ortaklığı programı.',
+          url: absoluteUrl(PATH),
+          serviceType: 'Satış ortaklığı / komisyon programı',
+          provider: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: site.name, url: site.url },
+          areaServed: { '@type': 'Country', name: 'Türkiye' },
+          audience: { '@type': 'Audience', audienceType: 'Dijital pazarlamacılar, freelancerlar, satış profesyonelleri, ajanslar, girişimciler' },
+        }}
+      />
+      <FAQSchema items={faqs} />
+
       <PageHero
         eyebrow="HAYB Partner"
         title="Dijital çözümleri"
@@ -142,6 +204,21 @@ export default function PartnerLandingPage() {
         <p className="mt-8 text-sm text-fg-muted">
           Komisyon oranları hizmete, pakete ve döneme göre değişebilir; garanti gelir veya kazanç taahhüdü verilmez.
         </p>
+      </Section>
+
+      <Section tone="dark-2" labelledBy="partner-sss">
+        <SectionHeading id="partner-sss" eyebrow="Sık sorulanlar" title="Partner olmadan önce" accent="merak edilenler." />
+        <div className="mx-auto max-w-3xl space-y-3">
+          {faqs.map((f) => (
+            <details key={f.question} className="glass group rounded-2xl px-5 py-4 open:border-lime/50">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold">
+                {f.question}
+                <span aria-hidden className="text-lime transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p className="mt-2 text-fg-muted">{f.answer}</p>
+            </details>
+          ))}
+        </div>
       </Section>
 
       <Section>

@@ -30,7 +30,7 @@ const CORE: RouteEntry[] = [
   { path: '/web-sitesi-siparis', title: 'Web Sitesi Siparişi', group: 'core', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/bursa-web-tasarim', title: 'Bursa Web Tasarım ve Dijital Ürün Stüdyosu', group: 'core', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/insights', title: 'Insights', group: 'core', priority: 0.7, changeFrequency: 'weekly' },
-  { path: '/partner', title: 'HAYB Partner', group: 'core', priority: 0.7, changeFrequency: 'monthly' },
+  { path: '/partner', title: 'HAYB Partner', group: 'core', priority: 0.85, changeFrequency: 'weekly' },
 ];
 
 const LEGAL: RouteEntry[] = [
