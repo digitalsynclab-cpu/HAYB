@@ -61,10 +61,10 @@ export async function createLeadAction(_prev: LeadActionResult, formData: FormDa
   if (error || !lead) return { ok: false, error: 'Lead oluşturulamadı.' };
 
   await writeAuditLog(supabase, { actorId: user.id, action: 'lead_created', entityType: 'lead', entityId: lead.id });
-  revalidatePath('/partner/leads');
+  revalidatePath('/partner/musteriler');
 
   if (possibleDuplicate) {
-    redirect(`/partner/leads?created=1&duplicate=1`);
+    redirect(`/partner/musteriler?created=1&duplicate=1`);
   }
-  redirect('/partner/leads?created=1');
+  redirect('/partner/musteriler?created=1');
 }

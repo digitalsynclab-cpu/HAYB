@@ -17,23 +17,31 @@ export default async function PartnerPanelLayout({ children }: { children: React
     : { count: 0 };
 
   const NAV = [
-    { href: '/partner/panel', label: 'Panel' },
-    { href: '/partner/rehber', label: 'Başlangıç Rehberi' },
-    { href: '/partner/satis-olustur', label: 'Satış Oluştur' },
-    { href: '/partner/leads', label: "Lead'lerim" },
-    { href: '/partner/satislar', label: 'Satışlarım' },
-    { href: '/partner/kazanc', label: 'Kazançlarım' },
-    { href: '/partner/musteri-datasi', label: 'Müşteri Datası' },
+    { href: '/partner/panel', label: 'Genel Bakış' },
+    { href: '/partner/musteriler', label: 'Müşteriler' },
+    { href: '/partner/satislar', label: 'Satışlar' },
+    { href: '/partner/kazanc', label: 'Kazançlar' },
+    { href: '/partner/destek', label: 'Destek' },
+  ];
+
+  const PROFILE_MENU = [
+    { href: '/partner/profil', label: 'Profil / Ödeme Bilgileri' },
     { href: '/partner/satis-rehberi', label: 'Satış Rehberi' },
     { href: '/partner/materyaller', label: 'Materyaller' },
-    { href: '/partner/bildirimler', label: 'Bildirimler', badge: unreadCount ?? 0 },
-    { href: '/partner/destek', label: 'Destek' },
-    { href: '/partner/profil', label: 'Profil' },
+    { href: '/partner/rehber', label: 'Yardım / Başlangıç Rehberi' },
   ];
 
   return (
     <div className="min-h-screen bg-ink-950 text-fg">
-      <DashboardHeader brandLabel="HAYB Partner" subLabel={partner?.partner_code ?? undefined} navItems={NAV} logoutAction={partnerLogoutAction} />
+      <DashboardHeader
+        brandLabel="HAYB Partner"
+        subLabel={partner?.partner_code ?? undefined}
+        navItems={NAV}
+        logoutAction={partnerLogoutAction}
+        notifications={{ href: '/partner/bildirimler', unreadCount: unreadCount ?? 0 }}
+        profileMenu={PROFILE_MENU}
+        primaryAction={{ href: '/partner/satis-olustur', label: '+ Yeni Satış' }}
+      />
       <div className="mx-auto max-w-6xl px-6 py-10">{children}</div>
     </div>
   );
