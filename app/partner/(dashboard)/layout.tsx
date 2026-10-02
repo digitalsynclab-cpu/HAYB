@@ -11,10 +11,12 @@ export default async function PartnerPanelLayout({ children }: { children: React
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const { data: partner } = user ? await supabase.from('partners').select('partner_code').eq('profile_id', user.id).single() : { data: null };
-  const { count: unreadCount } = user
-    ? await supabase.from('notifications').select('id', { count: 'exact', head: true }).eq('profile_id', user.id).eq('is_read', false)
-    : { count: 0 };
+  const [{ data: partner }, { count: unreadCount }] = user
+    ? await Promise.all([
+        supabase.from('partners').select('partner_code').eq('profile_id', user.id).single(),
+        supabase.from('notifications').select('id', { count: 'exact', head: true }).eq('profile_id', user.id).eq('is_read', false),
+      ])
+    : [{ data: null }, { count: 0 }];
 
   const NAV = [
     { href: '/partner/panel', label: 'Genel Bakış' },
