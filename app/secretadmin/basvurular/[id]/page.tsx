@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { ReviewActions } from './ReviewActions';
+import { DeleteApplicationButton } from '../DeleteApplicationButton';
 
 const LABELS: Record<string, string> = {
   fullName: 'Ad Soyad',
@@ -38,9 +39,12 @@ export default async function AdminApplicationDetailPage({ params }: { params: P
     <main className="mx-auto max-w-3xl px-6 py-12">
       <p className="text-xs font-semibold uppercase tracking-[0.3em] text-lime">Başvuru Detayı</p>
       <h1 className="mt-2 text-2xl font-bold">{profile?.full_name}</h1>
-      <p className="text-fg-muted">
-        {profile?.email} · {profile?.phone}
-      </p>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-fg-muted">
+          {profile?.email} · {profile?.phone}
+        </p>
+        <DeleteApplicationButton applicationId={application.id} redirectTo="/secretadmin/basvurular" />
+      </div>
 
       <div className="mt-8">
         <ReviewActions applicationId={application.id} status={application.status} />

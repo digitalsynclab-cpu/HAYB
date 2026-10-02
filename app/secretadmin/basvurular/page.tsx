@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { DeleteApplicationButton } from './DeleteApplicationButton';
 
 const STATUS_LABEL: Record<string, string> = {
   pending: 'Bekliyor',
@@ -57,9 +58,12 @@ export default async function AdminApplicationsPage() {
                     <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${STATUS_COLOR[a.status]}`}>{STATUS_LABEL[a.status]}</span>
                   </td>
                   <td className="px-4 py-3">
-                    <Link href={`/secretadmin/basvurular/${a.id}`} className="text-lime underline">
-                      İncele
-                    </Link>
+                    <div className="flex items-center justify-end gap-3">
+                      <Link href={`/secretadmin/basvurular/${a.id}`} className="text-lime underline">
+                        İncele
+                      </Link>
+                      <DeleteApplicationButton applicationId={a.id} />
+                    </div>
                   </td>
                 </tr>
               );

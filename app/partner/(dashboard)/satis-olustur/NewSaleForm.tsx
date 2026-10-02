@@ -55,16 +55,15 @@ export function NewSaleForm({ services, packages, commissionRates }: { services:
         )}
         {selectedService && availablePackages.length === 0 && (
           <div className="mt-3 rounded-xl border border-white/15 bg-white/5 p-4 text-sm leading-relaxed text-fg-muted">
-            <p className="mb-2 font-semibold text-fg">Özel Fiyatlandırmalı İş</p>
+            <p className="mb-2 font-semibold text-fg">Bu hizmette fiyatlandırma işe özeldir</p>
             <p>
-              Mobil Uygulama, Oyun, İşletmeye Özel Programlar, Kişi ve İşletmelere Özel Yazılımlar vb. ürün ve hizmetlerde iş durumu, maliyet hesabı ve
-              hizmet içeriğine göre %&apos;lik komisyon değişir, net bir fiyat yoktur — özel olarak fiyatlandırma yapılır.
+              Bu hizmette sabit bir paket fiyatı bulunmaz; komisyon oranı işin kapsamına ve maliyetine göre değişir. Yapmanız gereken tek şey müşteriyi
+              HAYB ekibine yönlendirmek.
             </p>
             <p className="mt-2">
-              Bu tarz işlerde partner HAYB ekibine müşteri yönlendirmesi yapar; iş sonucuna göre HAYB ekibi partner ile son durumu konuşarak %&apos;lik
-              komisyonu belirler ve iş bitiminde ödeme teslim edilir.
+              İş netleştikten sonra HAYB ekibi sizinle görüşerek komisyon oranını birlikte belirler; ödeme iş teslim edildiğinde yapılır. Süreç baştan
+              sona şeffaf yürütülür.
             </p>
-            <p className="mt-2 font-medium text-fg">Her zaman süreç güvenilir ve şeffaf ilerlemek zorundadır.</p>
           </div>
         )}
         {selectedPackage && (

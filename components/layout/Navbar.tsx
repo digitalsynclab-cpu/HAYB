@@ -149,6 +149,21 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <Link
+              href="/partner/giris"
+              className="hidden min-h-11 items-center px-3 text-[0.9375rem] font-medium text-fg/90 transition-colors duration-200 hover:text-lime xl:inline-flex"
+            >
+              Partner Girişi
+            </Link>
+            <Button
+              href="/partner"
+              variant="secondary-light"
+              arrow={false}
+              icon={<Handshake aria-hidden className="h-4 w-4 text-lime" />}
+              className="hidden min-h-11 px-4 text-[0.9375rem] xl:inline-flex"
+            >
+              Partner Ol
+            </Button>
             <LanguageButton />
             <CartButton />
             <Button onClick={openContact} className="hidden min-h-11 px-5 text-[0.9375rem] sm:inline-flex">

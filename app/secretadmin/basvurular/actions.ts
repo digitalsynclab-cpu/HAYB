@@ -106,6 +106,24 @@ export async function rejectApplicationAction(applicationId: string, reason: str
   return { ok: true };
 }
 
+export async function deleteApplicationAction(applicationId: string): Promise<ApplicationActionResult> {
+  const adminId = await requireAdmin();
+  const admin = createSupabaseAdminClient();
+
+  const { data: application } = await admin.from('partner_applications').select('id, status').eq('id', applicationId).single();
+  if (!application) return { ok: false, error: 'Başvuru bulunamadı.' };
+
+  const { error } = await admin.from('partner_applications').delete().eq('id', applicationId);
+  if (error) {
+    if (error.code === '23503') return { ok: false, error: 'Bu başvuru onaylı bir partnere bağlı, önce partneri kaldırmanız gerekir.' };
+    return { ok: false, error: error.message };
+  }
+
+  await writeAuditLog(admin, { actorId: adminId, action: 'application_deleted', entityType: 'partner_application', entityId: applicationId, oldData: { status: application.status } });
+  revalidatePath('/secretadmin/basvurular');
+  return { ok: true };
+}
+
 export async function setApplicationStatusAction(applicationId: string, status: 'reviewing' | 'interview'): Promise<ApplicationActionResult> {
   const adminId = await requireAdmin();
   const admin = createSupabaseAdminClient();
