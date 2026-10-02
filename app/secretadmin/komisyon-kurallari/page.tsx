@@ -1,6 +1,7 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { NewRuleForm } from './NewRuleForm';
 import { RuleToggle } from './RuleToggle';
+import { RuleValueEdit } from './RuleValueEdit';
 
 export default async function AdminCommissionRulesPage() {
   const supabase = await createSupabaseServerClient();
@@ -36,7 +37,10 @@ export default async function AdminCommissionRulesPage() {
                   {partner && ` · ${partner.partner_code}`}
                 </p>
               </div>
-              <RuleToggle ruleId={r.id} isActive={r.is_active} />
+              <div className="flex items-center gap-2">
+                <RuleValueEdit ruleId={r.id} commissionType={r.commission_type} commissionValue={Number(r.commission_value)} />
+                <RuleToggle ruleId={r.id} isActive={r.is_active} />
+              </div>
             </div>
           );
         })}

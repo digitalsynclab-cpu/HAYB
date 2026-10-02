@@ -4,7 +4,7 @@ import { partnerLogoutAction } from '../actions';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { DashboardHeader } from '@/components/layout/DashboardHeader';
 
-export const metadata: Metadata = { robots: { index: false, follow: false } };
+export const metadata: Metadata = { robots: { index: false, follow: false }, manifest: '/partner/manifest.webmanifest' };
 
 export default async function PartnerPanelLayout({ children }: { children: ReactNode }) {
   const supabase = await createSupabaseServerClient();

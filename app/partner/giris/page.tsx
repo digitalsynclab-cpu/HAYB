@@ -4,7 +4,10 @@ import { buildMetadata } from '@/lib/metadata';
 import { PartnerLoginForm } from './PartnerLoginForm';
 import { PwaInstallCard } from './PwaInstallCard';
 
-export const metadata: Metadata = buildMetadata({ title: 'Partner Girişi', description: 'HAYB Partner paneline giriş yapın.', path: '/partner/giris', noindex: true });
+export const metadata: Metadata = {
+  ...buildMetadata({ title: 'Partner Girişi', description: 'HAYB Partner paneline giriş yapın.', path: '/partner/giris', noindex: true }),
+  manifest: '/partner/manifest.webmanifest',
+};
 
 export default function PartnerLoginPage() {
   return (

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Download, Share2, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { PARTNER_BADGES } from '@/lib/partner/partner-badges';
@@ -12,6 +12,7 @@ import { PARTNER_BADGES } from '@/lib/partner/partner-badges';
 export function PartnerBadgeCard() {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
+  const [busy, setBusy] = useState(false);
   const touchStartX = useRef<number | null>(null);
 
   const badge = PARTNER_BADGES[index];
@@ -19,20 +20,37 @@ export function PartnerBadgeCard() {
   const goPrev = () => setIndex((i) => (i - 1 + PARTNER_BADGES.length) % PARTNER_BADGES.length);
   const goNext = () => setIndex((i) => (i + 1) % PARTNER_BADGES.length);
 
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   async function handleDownload() {
-    const res = await fetch(badge.src);
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = badge.fileName;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
+    if (busy) return;
+    setBusy(true);
+    try {
+      const res = await fetch(badge.src);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = badge.fileName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } finally {
+      setBusy(false);
+    }
   }
 
   async function handleShare() {
+    if (busy) return;
+    setBusy(true);
     try {
       const res = await fetch(badge.src);
       const blob = await res.blob();
@@ -50,6 +68,8 @@ export function PartnerBadgeCard() {
       await handleDownload();
     } catch {
       /* kullanıcı paylaşım penceresini iptal etti — sessizce yok say */
+    } finally {
+      setBusy(false);
     }
   }
 
@@ -71,7 +91,7 @@ export function PartnerBadgeCard() {
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex flex-col bg-ink-950/97 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex flex-col bg-ink-950">
           <div className="flex items-center justify-end p-4">
             <button type="button" onClick={() => setOpen(false)} aria-label="Kapat" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-fg hover:border-white/30">
               <X aria-hidden className="h-5 w-5" />
@@ -131,13 +151,13 @@ export function PartnerBadgeCard() {
             </div>
 
             <div className="mt-5 flex justify-center gap-3 pb-[env(safe-area-inset-bottom)]">
-              <button type="button" onClick={handleDownload} className="flex items-center gap-2 rounded-xl border border-white/20 px-5 py-3 text-sm font-semibold hover:border-white/40">
+              <button type="button" disabled={busy} onClick={handleDownload} className="flex items-center gap-2 rounded-xl border border-white/20 px-5 py-3 text-sm font-semibold hover:border-white/40 disabled:opacity-50">
                 <Download aria-hidden className="h-4 w-4" />
                 Görseli İndir
               </button>
-              <button type="button" onClick={handleShare} className="flex items-center gap-2 rounded-xl bg-lime px-5 py-3 text-sm font-semibold text-ink-950 hover:bg-lime-soft">
+              <button type="button" disabled={busy} onClick={handleShare} className="flex items-center gap-2 rounded-xl bg-lime px-5 py-3 text-sm font-semibold text-ink-950 hover:bg-lime-soft disabled:opacity-50">
                 <Share2 aria-hidden className="h-4 w-4" />
-                Paylaş
+                {busy ? 'Hazırlanıyor…' : 'Paylaş'}
               </button>
             </div>
           </div>

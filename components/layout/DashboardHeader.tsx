@@ -45,6 +45,7 @@ export function DashboardHeader({ brandLabel, subLabel, navItems, navGroups, log
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [openMobileGroups, setOpenMobileGroups] = useState<Set<string>>(new Set());
 
@@ -104,12 +105,37 @@ export function DashboardHeader({ brandLabel, subLabel, navItems, navGroups, log
           )}
 
           {notifications && (
-            <Link href={notifications.href} aria-label="Bildirimler" className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/15 hover:border-white/30">
-              <Bell aria-hidden className="h-4 w-4" />
-              {notifications.unreadCount > 0 && (
-                <span className="absolute -right-1 -top-1 rounded-full bg-lime px-1.5 py-0.5 text-[10px] font-bold leading-none text-ink-950">{notifications.unreadCount}</span>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setNotifOpen((v) => !v)}
+                aria-label="Bildirimler"
+                aria-expanded={notifOpen}
+                className="relative z-20 inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/15 hover:border-white/30"
+              >
+                <Bell aria-hidden className="h-4 w-4" />
+                {notifications.unreadCount > 0 && (
+                  <span className="absolute -right-1 -top-1 rounded-full bg-lime px-1.5 py-0.5 text-[10px] font-bold leading-none text-ink-950">{notifications.unreadCount}</span>
+                )}
+              </button>
+              {notifOpen && (
+                <>
+                  <button type="button" aria-hidden tabIndex={-1} className="fixed inset-0 z-10 cursor-default" onClick={() => setNotifOpen(false)} />
+                  <div className="absolute right-0 top-full z-20 mt-2 w-64 rounded-xl border border-white/10 bg-ink-900 p-3 shadow-xl">
+                    <p className="px-1 text-sm font-semibold text-fg">
+                      {notifications.unreadCount > 0 ? `${notifications.unreadCount} okunmamış bildirim` : 'Yeni bildirim yok'}
+                    </p>
+                    <Link
+                      href={notifications.href}
+                      onClick={() => setNotifOpen(false)}
+                      className="mt-2 block rounded-lg px-1 py-1.5 text-sm text-lime hover:underline"
+                    >
+                      Tüm bildirimleri gör
+                    </Link>
+                  </div>
+                </>
               )}
-            </Link>
+            </div>
           )}
 
           {profileMenu ? (
@@ -146,12 +172,37 @@ export function DashboardHeader({ brandLabel, subLabel, navItems, navGroups, log
 
         <div className="flex items-center gap-2 lg:hidden">
           {notifications && (
-            <Link href={notifications.href} aria-label="Bildirimler" className="relative inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/5">
-              <Bell aria-hidden className="h-5 w-5" />
-              {notifications.unreadCount > 0 && (
-                <span className="absolute -right-1 -top-1 rounded-full bg-lime px-1.5 py-0.5 text-[10px] font-bold leading-none text-ink-950">{notifications.unreadCount}</span>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setNotifOpen((v) => !v)}
+                aria-label="Bildirimler"
+                aria-expanded={notifOpen}
+                className="relative z-20 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/5"
+              >
+                <Bell aria-hidden className="h-5 w-5" />
+                {notifications.unreadCount > 0 && (
+                  <span className="absolute -right-1 -top-1 rounded-full bg-lime px-1.5 py-0.5 text-[10px] font-bold leading-none text-ink-950">{notifications.unreadCount}</span>
+                )}
+              </button>
+              {notifOpen && (
+                <>
+                  <button type="button" aria-hidden tabIndex={-1} className="fixed inset-0 z-10 cursor-default" onClick={() => setNotifOpen(false)} />
+                  <div className="absolute right-0 top-full z-20 mt-2 w-60 rounded-xl border border-white/10 bg-ink-900 p-3 shadow-xl">
+                    <p className="px-1 text-sm font-semibold text-fg">
+                      {notifications.unreadCount > 0 ? `${notifications.unreadCount} okunmamış bildirim` : 'Yeni bildirim yok'}
+                    </p>
+                    <Link
+                      href={notifications.href}
+                      onClick={() => setNotifOpen(false)}
+                      className="mt-2 block rounded-lg px-1 py-1.5 text-sm text-lime hover:underline"
+                    >
+                      Tüm bildirimleri gör
+                    </Link>
+                  </div>
+                </>
               )}
-            </Link>
+            </div>
           )}
           <button
             type="button"

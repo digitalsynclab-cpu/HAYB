@@ -5,7 +5,7 @@ const ADMIN_PREFIX = '/secretadmin';
 
 // /partner/* altında yalnızca bunlar PUBLIC'tir; geri kalan HER /partner/... sayfası
 // varsayılan olarak authenticated kabul edilir (yeni sayfa eklenince unutma riski olmasın diye).
-const PUBLIC_PARTNER_PREFIXES = ['/partner/basvuru', '/partner/giris'];
+const PUBLIC_PARTNER_PREFIXES = ['/partner/basvuru', '/partner/giris', '/partner/manifest.webmanifest'];
 
 function isPublicPartnerPath(pathname: string): boolean {
   if (pathname === '/partner') return true;
@@ -50,8 +50,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
+  // Rol + partner durumu tek sorguda alınır (önceden 2 ayrı round-trip'ti, her sayfa geçişinde
+  // gecikmeye yol açıyordu). Güvenlik mantığı aynı — sadece sorgu sayısı azaltıldı.
+  const { data: profile } = await supabase.from('profiles').select('role, partners!partners_profile_id_fkey(status)').eq('id', user.id).single();
   const role = profile?.role;
+  const partnerRow = Array.isArray(profile?.partners) ? profile.partners[0] : profile?.partners;
 
   if (isAdminRoute) {
     if (role !== 'admin') {
@@ -68,15 +71,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/partner/giris', request.url));
   }
 
-  if (isPartnerPrivateRoute && role === 'partner') {
-    const { data: partner } = await supabase
-      .from('partners')
-      .select('status')
-      .eq('profile_id', user.id)
-      .single();
-    if (partner?.status !== 'active') {
-      return NextResponse.redirect(new URL('/partner/basvuru/durum', request.url));
-    }
+  if (isPartnerPrivateRoute && role === 'partner' && partnerRow?.status !== 'active') {
+    return NextResponse.redirect(new URL('/partner/basvuru/durum', request.url));
   }
 
   return response;

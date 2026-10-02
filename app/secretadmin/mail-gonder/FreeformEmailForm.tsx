@@ -6,7 +6,7 @@ import { sendFreeformEmailAction, type FreeformEmailResult } from './actions';
 
 const initial: FreeformEmailResult = { ok: false };
 
-export function FreeformEmailForm() {
+export function FreeformEmailForm({ defaultToEmail, defaultSubject }: { defaultToEmail?: string; defaultSubject?: string }) {
   const [state, formAction, pending] = useActionState(sendFreeformEmailAction, initial);
 
   return (
@@ -15,10 +15,10 @@ export function FreeformEmailForm() {
       {state.ok && <p className="text-sm font-medium text-lime">Mail gönderildi.</p>}
 
       <Field id="toEmail" label="Alıcı E-posta">
-        {(a) => <input {...inputProps(a)} name="toEmail" type="email" required autoFocus className={a.className} />}
+        {(a) => <input {...inputProps(a)} name="toEmail" type="email" required autoFocus defaultValue={defaultToEmail} className={a.className} />}
       </Field>
       <Field id="subject" label="Konu">
-        {(a) => <input {...inputProps(a)} name="subject" required className={a.className} />}
+        {(a) => <input {...inputProps(a)} name="subject" required defaultValue={defaultSubject} className={a.className} />}
       </Field>
       <Field id="message" label="Mesaj" hint="HAYB logolu, markalı e-posta şablonu içine otomatik yerleştirilir.">
         {(a) => <textarea {...inputProps(a)} name="message" required className={`${a.className} min-h-40`} />}

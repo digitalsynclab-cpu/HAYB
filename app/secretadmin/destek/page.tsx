@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { parseTicketSubject } from '@/lib/partner/support-category';
 import { AdminReplyForm, StatusSelect } from './AdminSupportClient';
@@ -8,7 +9,7 @@ export default async function AdminSupportPage() {
   const supabase = await createSupabaseServerClient();
   const { data: tickets } = await supabase
     .from('support_tickets')
-    .select('id, subject, status, created_at, partners(partner_code), support_messages(id, message, author_role, created_at)')
+    .select('id, subject, status, created_at, partners(partner_code, profiles!partners_profile_id_fkey(email)), support_messages(id, message, author_role, created_at)')
     .order('created_at', { ascending: false })
     .limit(100);
 
@@ -26,6 +27,7 @@ export default async function AdminSupportPage() {
       <div className="mt-8 space-y-4">
         {sorted.map((t) => {
           const partner = Array.isArray(t.partners) ? t.partners[0] : t.partners;
+          const partnerProfile = partner ? (Array.isArray(partner.profiles) ? partner.profiles[0] : partner.profiles) : null;
           const { category, title } = parseTicketSubject(t.subject);
           const messages = (t.support_messages ?? []).slice().sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
           return (
@@ -38,7 +40,17 @@ export default async function AdminSupportPage() {
                   </div>
                   <p className="text-xs text-fg-muted">{partner?.partner_code}</p>
                 </div>
-                <StatusSelect ticketId={t.id} status={t.status} />
+                <div className="flex items-center gap-2">
+                  {partnerProfile?.email && (
+                    <Link
+                      href={`/secretadmin/mail-gonder?to=${encodeURIComponent(partnerProfile.email)}&subject=${encodeURIComponent(`Destek talebiniz: ${title}`)}`}
+                      className="rounded-lg border border-white/15 px-3 py-1.5 text-xs font-medium text-fg-muted hover:border-lime hover:text-lime"
+                    >
+                      Mail Gönder
+                    </Link>
+                  )}
+                  <StatusSelect ticketId={t.id} status={t.status} />
+                </div>
               </div>
               <div className="mt-3 space-y-2">
                 {messages.map((m) => (

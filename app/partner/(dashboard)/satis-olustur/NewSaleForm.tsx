@@ -3,7 +3,7 @@
 import { useActionState, useMemo, useState } from 'react';
 import { Field, inputProps } from '@/components/forms/Field';
 import { createPartnerSaleAction, type CreateSaleResult } from './actions';
-import { WebsiteSaleFields } from './WebsiteSaleFields';
+import { WebsiteFormHandoff } from './WebsiteFormHandoff';
 
 type Service = { id: string; name: string; slug: string };
 type Package = { id: string; name: string; service_id: string; price: number | null };
@@ -89,15 +89,17 @@ export function NewSaleForm({ services, packages, commissionRates }: { services:
         </div>
       </div>
 
-      {selectedService?.slug === 'web-sitesi' && (
+      {(selectedService?.slug === 'web-sitesi' || selectedService?.slug === 'e-ticaret') && (
         <div>
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-lime">3. Hizmete Özel Bilgiler</p>
-          <WebsiteSaleFields />
+          <WebsiteFormHandoff serviceName={selectedService.name} />
         </div>
       )}
 
       <div>
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-lime">{selectedService?.slug === 'web-sitesi' ? '4. Ek Not' : '3. Özel İstekler'}</p>
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-lime">
+          {selectedService?.slug === 'web-sitesi' || selectedService?.slug === 'e-ticaret' ? '4. Ek Not' : '3. Özel İstekler'}
+        </p>
         <Field id="notes" label="Not" hint="Opsiyonel">
           {(a) => <textarea {...inputProps(a)} name="notes" className={`${a.className} min-h-24`} />}
         </Field>

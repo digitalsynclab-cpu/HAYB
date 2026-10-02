@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { NewSaleForm } from './NewSaleForm';
 import { MarkCompletedButton, ApproveSaleButton, RequestInfoButton, RejectSaleButton } from './SaleActionsClient';
@@ -55,7 +56,7 @@ export default async function AdminSalesPage() {
                       Müşteri: {[lead.contact_name, lead.company_name, lead.phone].filter(Boolean).join(' · ')}
                     </p>
                   )}
-                  {lead?.description && <p className="mt-1 text-sm italic text-fg-muted">Not: {lead.description}</p>}
+                  {lead?.description && <p className="mt-1 whitespace-pre-line text-sm text-fg-muted">{lead.description}</p>}
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   {(s.sale_status === 'submitted' || s.sale_status === 'reviewing') && (
@@ -73,6 +74,12 @@ export default async function AdminSalesPage() {
               </div>
               {lead?.email && (
                 <div className="mt-3 flex flex-wrap gap-2 border-t border-white/10 pt-3">
+                  <Link
+                    href={`/secretadmin/mail-gonder?to=${encodeURIComponent(lead.email)}&subject=${encodeURIComponent('Siparişiniz hakkında')}`}
+                    className="rounded-lg border border-lime/30 px-3 py-1.5 text-xs font-medium text-lime hover:bg-lime/10"
+                  >
+                    Serbest Mail Gönder
+                  </Link>
                   {SALE_STAGES.map((stage) => (
                     <StageEmailButton
                       key={stage.key}

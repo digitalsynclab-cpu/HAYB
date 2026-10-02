@@ -7,7 +7,7 @@ export default async function AdminCommissionsPage() {
   const supabase = await createSupabaseServerClient();
   const { data: commissions } = await supabase
     .from('commissions')
-    .select('id, commission_amount, status, calculated_at, partners(partner_code), sales(amount)')
+    .select('id, commission_amount, status, calculated_at, partners(partner_code, account_holder_name, iban), sales(amount)')
     .order('calculated_at', { ascending: false })
     .limit(150);
 
@@ -26,6 +26,13 @@ export default async function AdminCommissionsPage() {
                 <p className="text-sm text-fg-muted">
                   {partner?.partner_code} · {STATUS_LABEL[c.status]} · {new Date(c.calculated_at).toLocaleDateString('tr-TR')}
                 </p>
+                {partner?.iban ? (
+                  <p className="mt-1 text-xs text-fg-muted">
+                    <span className="text-fg">{partner.account_holder_name}</span> · <span className="font-mono tracking-wide">{partner.iban}</span>
+                  </p>
+                ) : (
+                  <p className="mt-1 text-xs text-amber-400">IBAN henüz girilmemiş</p>
+                )}
               </div>
               <CommissionActions commissionId={c.id} status={c.status} />
             </div>

@@ -59,10 +59,41 @@ export async function createCommissionRuleAction(_prev: RuleActionResult, formDa
   return { ok: true };
 }
 
+export async function updateCommissionRuleValueAction(_prev: RuleActionResult, formData: FormData): Promise<RuleActionResult> {
+  const adminId = await requireAdminId();
+  const admin = createSupabaseAdminClient();
+
+  const ruleId = String(formData.get('ruleId') || '');
+  const commissionValue = Number(formData.get('commissionValue') || 0);
+  if (!ruleId || !commissionValue || commissionValue < 0) return { ok: false, error: 'Geçerli bir değer girin.' };
+
+  const { data: rule } = await admin.from('commission_rules').select('commission_type').eq('id', ruleId).single();
+  if (!rule) return { ok: false, error: 'Kural bulunamadı.' };
+  if (rule.commission_type === 'percentage' && commissionValue > 100) return { ok: false, error: 'Yüzde değeri 100’ü geçemez.' };
+
+  const { error } = await admin.from('commission_rules').update({ commission_value: commissionValue }).eq('id', ruleId);
+  if (error) return { ok: false, error: error.message };
+
+  await writeAuditLog(admin, { actorId: adminId, action: 'commission_rule_value_updated', entityType: 'commission_rule', entityId: ruleId, newData: { commissionValue } });
+  revalidatePath('/secretadmin/komisyon-kurallari');
+  return { ok: true };
+}
+
 export async function toggleCommissionRuleAction(ruleId: string, isActive: boolean) {
   const adminId = await requireAdminId();
   const admin = createSupabaseAdminClient();
   await admin.from('commission_rules').update({ is_active: isActive }).eq('id', ruleId);
   await writeAuditLog(admin, { actorId: adminId, action: isActive ? 'commission_rule_activated' : 'commission_rule_deactivated', entityType: 'commission_rule', entityId: ruleId });
+  revalidatePath('/secretadmin/komisyon-kurallari');
+}
+
+/** Yalnızca pasif (is_active=false) kurallar silinebilir — aktif bir kural kazara silinemez, önce pasife alınması gerekir. */
+export async function deleteCommissionRuleAction(ruleId: string) {
+  const adminId = await requireAdminId();
+  const admin = createSupabaseAdminClient();
+  const { data: rule } = await admin.from('commission_rules').select('is_active, name').eq('id', ruleId).single();
+  if (!rule || rule.is_active) return;
+  await admin.from('commission_rules').delete().eq('id', ruleId);
+  await writeAuditLog(admin, { actorId: adminId, action: 'commission_rule_deleted', entityType: 'commission_rule', entityId: ruleId, oldData: { name: rule.name } });
   revalidatePath('/secretadmin/komisyon-kurallari');
 }
