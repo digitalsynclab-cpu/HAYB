@@ -28,6 +28,27 @@ export async function createPartnerSaleAction(_prev: CreateSaleResult, formData:
   const companyName = String(formData.get('companyName') || '').trim() || null;
   const notes = String(formData.get('notes') || '').trim() || null;
 
+  // Web Sitesi hizmeti için HAYB'nin gerçek sipariş formuyla (lib/web-order.ts) aynı alanlar.
+  const sector = String(formData.get('sector') || '').trim();
+  const businessDescription = String(formData.get('businessDescription') || '').trim();
+  const hasDomain = String(formData.get('hasDomain') || '');
+  const hasHosting = String(formData.get('hasHosting') || '');
+  const websitePages = String(formData.get('websitePages') || '').trim();
+  const websiteRequests = String(formData.get('websiteRequests') || '').trim();
+  const referenceWebsite = String(formData.get('referenceWebsite') || '').trim();
+
+  const TRI_LABEL: Record<string, string> = { yes: 'Var', no: 'Yok', unknown: 'Bilinmiyor' };
+  const websiteDetailLines = [
+    sector && `Sektör: ${sector}`,
+    businessDescription && `İşletme tanımı: ${businessDescription}`,
+    hasDomain && `Domain: ${TRI_LABEL[hasDomain] ?? hasDomain}`,
+    hasHosting && `Hosting: ${TRI_LABEL[hasHosting] ?? hasHosting}`,
+    websitePages && `İstenen sayfalar: ${websitePages}`,
+    websiteRequests && `Özel istekler: ${websiteRequests}`,
+    referenceWebsite && `Referans site: ${referenceWebsite}`,
+  ].filter(Boolean);
+  const fullDescription = [notes, ...websiteDetailLines].filter(Boolean).join('\n') || null;
+
   if (!serviceId || !contactName || !phone) {
     return { ok: false, error: 'Hizmet, müşteri adı ve telefon zorunludur.' };
   }
@@ -58,7 +79,8 @@ export async function createPartnerSaleAction(_prev: CreateSaleResult, formData:
       email,
       service_id: serviceId,
       package_id: packageId,
-      description: notes,
+      sector: sector || null,
+      description: fullDescription,
       status: 'proposal',
       source: 'partner',
     })

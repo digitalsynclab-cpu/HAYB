@@ -3,18 +3,23 @@
 import { useActionState, useMemo, useState } from 'react';
 import { Field, inputProps } from '@/components/forms/Field';
 import { createPartnerSaleAction, type CreateSaleResult } from './actions';
+import { WebsiteSaleFields } from './WebsiteSaleFields';
 
-type Service = { id: string; name: string };
+type Service = { id: string; name: string; slug: string };
 type Package = { id: string; name: string; service_id: string; price: number | null };
 
 const initial: CreateSaleResult = { ok: false };
 
-export function NewSaleForm({ services, packages }: { services: Service[]; packages: Package[] }) {
+export function NewSaleForm({ services, packages, commissionRates }: { services: Service[]; packages: Package[]; commissionRates: Record<string, number> }) {
   const [state, formAction, pending] = useActionState(createPartnerSaleAction, initial);
   const [serviceId, setServiceId] = useState('');
+  const [packageId, setPackageId] = useState('');
 
   const availablePackages = useMemo(() => packages.filter((p) => p.service_id === serviceId), [packages, serviceId]);
   const selectedService = services.find((s) => s.id === serviceId);
+  const selectedPackage = availablePackages.find((p) => p.id === packageId);
+  const commissionRate = packageId ? commissionRates[packageId] : undefined;
+  const estimatedCommission = selectedPackage?.price && commissionRate ? (Number(selectedPackage.price) * commissionRate) / 100 : null;
 
   return (
     <form action={formAction} className="space-y-5 rounded-2xl border border-white/10 bg-white/5 p-6">
@@ -35,9 +40,17 @@ export function NewSaleForm({ services, packages }: { services: Service[]; packa
           )}
         </Field>
         {selectedService && (
-          <Field id="packageId" label="Paket" hint={availablePackages.length === 0 ? 'Bu hizmet için tanımlı paket yok, admin ile iletişime geçin.' : undefined}>
+          <Field
+            id="packageId"
+            label="Paket"
+            hint={
+              availablePackages.length === 0
+                ? 'Bu hizmet için net paket fiyatı yok — özel fiyatlandırma gerekir, HAYB ekibiyle görüşün.'
+                : undefined
+            }
+          >
             {(a) => (
-              <select {...inputProps(a)} name="packageId" required={availablePackages.length > 0} className={a.className}>
+              <select {...inputProps(a)} name="packageId" required={availablePackages.length > 0} value={packageId} onChange={(e) => setPackageId(e.target.value)} className={a.className}>
                 <option value="">Seçiniz</option>
                 {availablePackages.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -47,6 +60,14 @@ export function NewSaleForm({ services, packages }: { services: Service[]; packa
               </select>
             )}
           </Field>
+        )}
+        {selectedPackage && (
+          <div className="mt-3 flex items-center justify-between rounded-xl border border-lime/25 bg-lime/5 px-4 py-3 text-sm">
+            <span className="text-fg-muted">Tahmini Kazancınız</span>
+            <span className="font-semibold text-lime">
+              {estimatedCommission != null ? `${estimatedCommission.toLocaleString('tr-TR', { maximumFractionDigits: 0 })} ₺ (%${commissionRate})` : 'Komisyon bilgisi henüz tanımlanmadı'}
+            </span>
+          </div>
         )}
       </div>
 
@@ -68,8 +89,15 @@ export function NewSaleForm({ services, packages }: { services: Service[]; packa
         </div>
       </div>
 
+      {selectedService?.slug === 'web-sitesi' && (
+        <div>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-lime">3. Hizmete Özel Bilgiler</p>
+          <WebsiteSaleFields />
+        </div>
+      )}
+
       <div>
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-lime">3. Özel İstekler</p>
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-lime">{selectedService?.slug === 'web-sitesi' ? '4. Ek Not' : '3. Özel İstekler'}</p>
         <Field id="notes" label="Not" hint="Opsiyonel">
           {(a) => <textarea {...inputProps(a)} name="notes" className={`${a.className} min-h-24`} />}
         </Field>
