@@ -17,10 +17,17 @@ export interface ProfileMenuItem {
   label: string;
 }
 
+export interface DashboardNavGroup {
+  label: string;
+  items: DashboardNavItem[];
+}
+
 interface DashboardHeaderProps {
   brandLabel: string;
   subLabel?: string;
   navItems: DashboardNavItem[];
+  /** Ek olarak, dropdown şeklinde gruplanmış nav öğeleri (örn. admin: Operasyon, Finans, İçerik). */
+  navGroups?: DashboardNavGroup[];
   logoutAction: () => void | Promise<void>;
   /** Verilirse header'da zil ikonu + okunmamış sayısı gösterilir (partner bildirimleri). */
   notifications?: { href: string; unreadCount: number };
@@ -34,10 +41,12 @@ interface DashboardHeaderProps {
  * Admin ve partner panelinde ortak başlık: masaüstünde yatay menü, mobilde hamburger ile açılan
  * tam genişlikte liste. Yatay kaydırmalı (overflow-x) bir menü KULLANILMAZ.
  */
-export function DashboardHeader({ brandLabel, subLabel, navItems, logoutAction, notifications, profileMenu, primaryAction }: DashboardHeaderProps) {
+export function DashboardHeader({ brandLabel, subLabel, navItems, navGroups, logoutAction, notifications, profileMenu, primaryAction }: DashboardHeaderProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
+  const [openMobileGroups, setOpenMobileGroups] = useState<Set<string>>(new Set());
 
   return (
     <header className="border-b border-white/10">
@@ -54,6 +63,39 @@ export function DashboardHeader({ brandLabel, subLabel, navItems, logoutAction, 
               {!!n.badge && <span className="rounded-full bg-lime px-1.5 py-0.5 text-[10px] font-bold leading-none text-ink-950">{n.badge}</span>}
             </Link>
           ))}
+
+          {(navGroups ?? []).map((g) => {
+            const groupActive = g.items.some((i) => pathname === i.href || pathname.startsWith(`${i.href}/`));
+            return (
+              <div key={g.label} className="relative">
+                <button
+                  type="button"
+                  onClick={() => setOpenGroup((cur) => (cur === g.label ? null : g.label))}
+                  className={`inline-flex items-center gap-1 ${groupActive ? 'font-semibold text-lime' : 'text-fg-muted hover:text-fg'}`}
+                >
+                  {g.label}
+                  <span aria-hidden className="text-xs">▾</span>
+                </button>
+                {openGroup === g.label && (
+                  <>
+                    <button type="button" aria-hidden tabIndex={-1} className="fixed inset-0 z-10 cursor-default" onClick={() => setOpenGroup(null)} />
+                    <div className="absolute left-0 top-full z-20 mt-2 w-52 rounded-xl border border-white/10 bg-ink-900 p-1.5 shadow-xl">
+                      {g.items.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setOpenGroup(null)}
+                          className={`block rounded-lg px-3 py-2 text-sm ${pathname === item.href ? 'text-lime' : 'text-fg-muted hover:bg-white/5 hover:text-fg'}`}
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+            );
+          })}
 
           {primaryAction && (
             <Link href={primaryAction.href} className="rounded-lg bg-lime px-3 py-1.5 text-sm font-semibold text-ink-950 hover:bg-lime-soft">
@@ -155,6 +197,44 @@ export function DashboardHeader({ brandLabel, subLabel, navItems, logoutAction, 
               ))}
             </ul>
           </nav>
+
+          {(navGroups ?? []).map((g) => {
+            const isOpen = openMobileGroups.has(g.label);
+            return (
+              <div key={g.label} className="border-t border-white/10 py-2">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setOpenMobileGroups((cur) => {
+                      const next = new Set(cur);
+                      if (next.has(g.label)) next.delete(g.label);
+                      else next.add(g.label);
+                      return next;
+                    })
+                  }
+                  className="flex min-h-11 w-full items-center justify-between text-left text-sm font-semibold uppercase tracking-wide text-fg-muted"
+                >
+                  {g.label}
+                  <span aria-hidden>{isOpen ? '−' : '+'}</span>
+                </button>
+                {isOpen && (
+                  <ul className="mt-1 space-y-1 pl-2">
+                    {g.items.map((item) => (
+                      <li key={item.href}>
+                        <Link
+                          href={item.href}
+                          onClick={() => setOpen(false)}
+                          className={`flex min-h-11 items-center text-[1rem] ${pathname === item.href ? 'font-semibold text-lime' : 'text-fg'}`}
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            );
+          })}
           <form action={logoutAction} className="mt-4">
             <button type="submit" className="min-h-12 w-full rounded-xl border border-white/20 text-sm hover:border-white/40">
               Çıkış
