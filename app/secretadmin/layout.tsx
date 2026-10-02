@@ -47,6 +47,7 @@ const NAV_GROUPS = [
     label: 'Sistem',
     items: [
       { href: '/secretadmin/mail-gonder', label: 'Mail Gönder' },
+      { href: '/secretadmin/duyuru-gonder', label: 'Duyuru Gönder' },
       { href: '/secretadmin/audit-logs', label: 'Audit Log' },
     ],
   },
