@@ -1,5 +1,8 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { parseTicketSubject } from '@/lib/partner/support-category';
 import { AdminReplyForm, StatusSelect } from './AdminSupportClient';
+
+const OPEN_STATUSES = ['open', 'in_progress', 'waiting_partner'];
 
 export default async function AdminSupportPage() {
   const supabase = await createSupabaseServerClient();
@@ -9,20 +12,30 @@ export default async function AdminSupportPage() {
     .order('created_at', { ascending: false })
     .limit(100);
 
+  const sorted = (tickets ?? []).slice().sort((a, b) => {
+    const aOpen = OPEN_STATUSES.includes(a.status) ? 0 : 1;
+    const bOpen = OPEN_STATUSES.includes(b.status) ? 0 : 1;
+    return aOpen - bOpen;
+  });
+
   return (
     <main className="mx-auto max-w-5xl px-6 py-12">
       <p className="text-xs font-semibold uppercase tracking-[0.3em] text-lime">HAYB Admin</p>
       <h1 className="mt-2 text-2xl font-bold">Destek Talepleri</h1>
 
       <div className="mt-8 space-y-4">
-        {(tickets ?? []).map((t) => {
+        {sorted.map((t) => {
           const partner = Array.isArray(t.partners) ? t.partners[0] : t.partners;
+          const { category, title } = parseTicketSubject(t.subject);
           const messages = (t.support_messages ?? []).slice().sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
           return (
             <div key={t.id} className="rounded-2xl border border-white/10 bg-white/5 p-5">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <p className="font-semibold">{t.subject}</p>
+                  <div className="flex items-center gap-2">
+                    {category && <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] uppercase tracking-wide text-fg-muted">{category}</span>}
+                    <p className="font-semibold">{title}</p>
+                  </div>
                   <p className="text-xs text-fg-muted">{partner?.partner_code}</p>
                 </div>
                 <StatusSelect ticketId={t.id} status={t.status} />
