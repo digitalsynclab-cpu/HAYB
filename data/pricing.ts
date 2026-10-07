@@ -417,19 +417,30 @@ export function adsPlan(i: number): PricingPlan {
   };
 }
 
-// ─── HAYB Data Service (tek seferlik satın alım) ──────────────────────────────
-export const dataServicePlan: PricingPlan = {
-  id: 'hayb-data-service',
-  name: 'HAYB Data Service',
-  price: '9.999 ₺',
-  recommended: false,
-  ctaLabel: 'Sepete Ekle',
-  features: [
-    'Sektöre göre işletme arama (ör. Restoran, Otel, Diş Kliniği)',
-    'Türkiye geneli veya il / ilçe filtresi',
-    'Firma, telefon, adres ve web sitesi alanları (mevcut olanlar)',
-    'Sonuçları tek tabloda inceleme',
-    'Excel (.xlsx) ve desteklenen formatlarda dışa aktarma',
-    'Tek seferlik satın alım ücreti',
-  ],
-};
+// ─── HAYB Data Service (aylık lisans + süresiz paketler) ─────────────────────
+const dsCore = [
+  'İşletme arama: şehir + sektör, iletişim bilgileriyle',
+  'Website analizi: SEO, hız, güvenlik, kullanıcı deneyimi',
+  'Fırsat skoru, işletme kartı ve rakip kıyası',
+  'Satış panosu, listeler, raporlar, Excel / CSV',
+  'Site Nöbeti (7/24 kesinti + SSL) ve rakip sayfa izleme',
+];
+const dsLimits = (search: string, analyses: string, sentinel: string) =>
+  `Aylık ${search} işletme araması · ${analyses} website analizi · ${sentinel} Site Nöbeti`;
+
+export const dataServicePlans: PricingPlan[] = [
+  { id: 'hayb-data-service-pro-1', name: 'Data Service Pro · 1 Ay', price: '1.499 ₺', recommended: false, ctaLabel: 'Sepete Ekle', features: [...dsCore, dsLimits('150', '500', '10')] },
+  { id: 'hayb-data-service-pro-3', name: 'Data Service Pro · 3 Ay', price: '2.999 ₺', recommended: true, ctaLabel: 'Sepete Ekle', features: [...dsCore, dsLimits('250', '800', '20'), 'Aylık 1.000 ₺’ye denk gelir'] },
+  { id: 'hayb-data-service-pro-9', name: 'Data Service Pro · 9 Ay', price: '5.999 ₺', recommended: false, ctaLabel: 'Sepete Ekle', features: [...dsCore, dsLimits('400', '1.200', '35')] },
+  { id: 'hayb-data-service-unlimited', name: 'Data Service Pro · Sınırsız', price: '9.999 ₺', recommended: false, ctaLabel: 'Sepete Ekle', features: [...dsCore, 'Süresiz kullanım, hiçbir limit yok'] },
+  { id: 'hayb-data-service-unlimited-bp', name: 'Sınırsız Pro + Business Pro', price: '15.000 ₺', recommended: false, ctaLabel: 'Sepete Ekle', features: [...dsCore, 'Süresiz kullanım, hiçbir limit yok', 'Business Pro dahil: derin site denetimi, GEO ve yerel SEO, teklif oluşturucu, şehir taraması'] },
+];
+
+/** Business Pro: any Pro package can add it. */
+export const dataServiceAddons: PricingPlan[] = [
+  { id: 'hayb-business-pro-1', name: 'Business Pro · 1 Ay (ek paket)', price: '999 ₺', recommended: false, ctaLabel: 'Sepete Ekle', features: ['Derin site denetimi (aylık 30)', 'Yapay zekâ aramalarında görünürlük (GEO) ve yerel SEO', 'Hazır çözüm kodları', 'Teklif oluşturucu ve e-postayla gönderim', 'Şehir / Türkiye taraması'] },
+  { id: 'hayb-business-pro-unlimited', name: 'Business Pro · Sınırsız (ek paket)', price: '10.000 ₺', recommended: false, ctaLabel: 'Sepete Ekle', features: ['Business Pro’nun tüm özellikleri', 'Süresiz ve limitsiz'] },
+];
+
+/** Entry plan, kept for places that show a single "from" price. */
+export const dataServicePlan: PricingPlan = dataServicePlans[0]!;

@@ -18,6 +18,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { brandLogos } from '@/data/brands';
 import { serviceBySlug, services } from '@/data/services';
+import { DS_APP_URL, dsBuyUrl } from '@/data/data-service';
 import { absoluteUrl, site } from '@/data/site';
 import { buildMetadata } from '@/lib/metadata';
 
@@ -69,7 +70,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
             description: s.metaDescription,
             url: absoluteUrl(`/hizmetler/${s.slug}`),
             applicationCategory: 'BusinessApplication',
-            operatingSystem: 'Web',
+            operatingSystem: 'Windows, Web, iOS, Android',
             provider: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: site.name, url: site.url },
           }}
         />
@@ -92,9 +93,12 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
               </>
             ) : s.slug === 'hayb-data-service' ? (
               <>
-                <Button href="/paketler#data-service">Fiyatı Gör · 9.999 ₺</Button>
-                <Button href="/iletisim" variant="secondary">
-                  Bize Sorun
+                <Button href={DS_APP_URL}>Giriş Yap</Button>
+                <Button href="#ds-paketler" variant="secondary" arrow={false}>
+                  Paketleri ve Fiyatları Gör
+                </Button>
+                <Button href={dsBuyUrl()} variant="secondary" arrow={false}>
+                  Satın Al
                 </Button>
               </>
             ) : s.slug === 'marka-tasarimi' ? (

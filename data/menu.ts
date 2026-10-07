@@ -44,7 +44,7 @@ export const menu: MenuItem[] = [
           { label: 'Özel Yazılım', href: '/hizmetler/ozel-yazilim', icon: 'ozelyazilim', text: 'İşinize göre uygulamalar' },
           { label: 'Yönetim Paneli', href: '/hizmetler/yonetim-paneli', icon: 'yonetimpaneli', text: 'Verilerinizi tek yerde yönetin' },
           { label: 'Yapay Zeka', href: '/hizmetler/yapay-zeka', icon: 'yapayzeka', text: 'Asistan ve otomasyon' },
-          { label: 'HAYB Data Service', href: '/hizmetler/hayb-data-service', icon: 'veriyonetimi', text: 'İşletme verisi, Excel çıktısı' },
+          { label: 'HAYB Data Service', href: '/hizmetler/hayb-data-service', icon: 'veriyonetimi', text: 'Müşteri bulma, analiz, satış takibi' },
         ],
       },
       {

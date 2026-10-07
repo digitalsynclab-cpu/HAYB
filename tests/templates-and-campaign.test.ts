@@ -127,18 +127,26 @@ describe('uygulama ekranları ve paneller', () => {
   });
 });
 
-import { dataServicePlan } from '@/data/pricing';
+import { dataServicePlan, dataServicePlans, dataServiceAddons } from '@/data/pricing';
 import { services } from '@/data/services';
+import { dsScreens, dsBuyUrl } from '@/data/data-service';
 
 describe('HAYB Data Service', () => {
-  it('tek seferlik 9.999 ₺; liste fiyatı %35 indirimle tutarlı', () => {
-    expect(dataServicePlan.price).toBe('9.999 ₺');
+  it('1 aylık lisanstan başlar; liste fiyatı %35 indirimle tutarlı', () => {
+    expect(dataServicePlan.price).toBe('1.499 ₺');
+    expect(dataServicePlans.map((p) => p.price)).toEqual(['1.499 ₺', '2.999 ₺', '5.999 ₺', '9.999 ₺', '15.000 ₺']);
+    expect(dataServiceAddons.map((p) => p.price)).toEqual(['999 ₺', '10.000 ₺']);
     const p = priceParts(dataServicePlan.price)!;
     const list = Number(p.list.replace(/\D/g, ''));
-    expect(Math.abs(1 - 9999 / list - campaign.rate / 100)).toBeLessThan(0.01);
+    expect(Math.abs(1 - 1499 / list - campaign.rate / 100)).toBeLessThan(0.01);
   });
-  it('hizmet sayfası ve görsel mevcut', () => {
+  it('paket kimlikleri benzersiz (sepet bunlara göre çalışır)', () => {
+    const ids = [...dataServicePlans, ...dataServiceAddons].map((p) => p.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+  it('hizmet sayfası, ekran görüntüleri ve satın al bağlantısı', () => {
     expect(services.some((s) => s.slug === 'hayb-data-service')).toBe(true);
-    expect(pub('/images/products/hayb-data-service.webp')).toBe(true);
+    for (const s of dsScreens) expect(pub(s.src), s.src).toBe(true);
+    expect(dsBuyUrl(dataServicePlan)).toMatch(/^https:\/\/wa\.me\/\d+\?text=.+1\.499/);
   });
 });

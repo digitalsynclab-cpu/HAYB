@@ -19,7 +19,8 @@ import {
   adsTerms,
   adsRows,
   adsPlan,
-  dataServicePlan,
+  dataServicePlans,
+  dataServiceAddons,
 } from '@/data/pricing';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { buildMetadata } from '@/lib/metadata';
@@ -126,8 +127,9 @@ const tabs: PackageTab[] = [
     label: 'Diğer',
     aliases: ['data-service', 'ozel-proje'],
     category: 'Veri Ürünü',
-    intro: 'HAYB Data Service ile işletme verilerine ulaşın; özel yazılım ve mobil uygulama için kapsamınıza göre teklif hazırlıyoruz.',
-    cards: [{ plan: dataServicePlan, blurb: 'Sektörünü seç, işletmeleri keşfet, verilerini dışa aktar.', rows: dataServicePlan.features.map((f) => ({ label: f, value: true })), example: { href: '/hizmetler/hayb-data-service', label: 'Ürünü incele' } }],
+    intro: 'HAYB Data Service: müşteri bulma, site analizi ve satış takibi tek programda. 1 aylık lisanstan başlar; tek seferde yüklü ödeme gerekmez. Özel yazılım ve mobil uygulama için kapsamınıza göre teklif hazırlıyoruz.',
+    cards: [...dataServicePlans, ...dataServiceAddons].map((plan) => ({ plan, rows: plan.features.map((f) => ({ label: f, value: true })), example: { href: '/hizmetler/hayb-data-service', label: 'Ürünü incele' } })),
+    notes: ['Data Service paketleri Windows programı olarak ve tarayıcıdan kullanılabilir. Satın alma sonrası hesabınız aynı gün tanımlanır; giriş bilgileriniz e-postanıza gönderilir.'],
     custom: [
       { title: 'Özel proje kapsamı', text: 'Fiyat, projenin kapsamına göre belirlenir. Ücretsiz keşif görüşmesiyle başlayalım.', features: specialProjectFeatures },
       { title: 'Mobil uygulama kapsamı', text: 'iOS ve Android uygulamaları için tasarım, geliştirme ve yayın.', features: mobileAppFeatures.flatMap((g) => g.items.slice(0, 2)) },

@@ -10,7 +10,8 @@ import { ProjectImage } from '@/components/ui/Cards';
 import { StoreButtons, LiveAppsShelf } from '@/components/ui/StoreButtons';
 import { LineIcon } from '@/components/ui/LineIcon';
 import { projectById, type Project } from '@/data/projects';
-import { ecommercePackages } from '@/data/pricing';
+import { ecommercePackages, dataServicePlans, dataServiceAddons } from '@/data/pricing';
+import { dsScreens, dsBuyUrl } from '@/data/data-service';
 import { Price } from '@/components/ui/Price';
 import Link from 'next/link';
 import type { ShowcaseKind } from '@/data/services';
@@ -181,42 +182,74 @@ export function ServiceShowcase({ kind }: { kind: ShowcaseKind }) {
       return <SocialTemplates />;
     case 'data':
       return (
-        <div className="space-y-8">
-          <figure>
-            <div className="overflow-hidden rounded-card border border-white/10 bg-ink-800 shadow-glass">
-              <Image src="/images/products/hayb-data-service.webp" alt="HAYB Data Service arayüzü: sektör arama, sonuç tablosu ve Excel olarak indirme" width={1200} height={1096} sizes="(min-width: 1024px) 1100px, 92vw" className="h-auto w-full" />
-            </div>
-            <figcaption className="mt-3 text-sm text-fg-muted">Örnek arayüz ve tanıtım görseli. Gösterilen firmalar ve sayılar demo veridir.</figcaption>
-          </figure>
+        <div className="space-y-12">
+          <ul className="grid gap-4 md:grid-cols-3 md:gap-5">
+            {[
+              { t: 'Bilgisayarda', d: 'Windows programı olarak kurun; kendi penceresinde, masaüstü simgesiyle açılır.' },
+              { t: 'Tarayıcıda', d: 'Kurulum gerekmeden app.hayb.com.tr adresinden giriş yapın.' },
+              { t: 'Telefonda', d: 'Ekranlar telefona uyumludur; arama, işletme kartı ve takip yanınızda.' },
+            ].map((c) => (
+              <li key={c.t} data-spot className="glass rounded-card p-5 sm:p-6">
+                <p className="text-lg font-bold text-lime">{c.t}</p>
+                <p className="mt-2 text-[0.97rem] text-fg-muted">{c.d}</p>
+              </li>
+            ))}
+          </ul>
 
-          <div className="grid gap-4 md:grid-cols-2 md:gap-5">
-            <div className="glass rounded-card p-5 sm:p-6">
-              <p className="text-lg font-bold">Elle araştırma</p>
-              <ul className="mt-3 space-y-2 text-[0.97rem] text-fg-muted">
-                {['İşletmeleri tek tek arama', 'Google’da sektör sektör araştırma', 'Bilgileri Excel’e aktarma', 'Telefon ve web sitelerini düzenleme', 'Tekrar eden kayıtları temizleme', 'Satış ekibine liste hazırlama'].map((i) => (
-                  <li key={i} className="flex gap-2">
-                    <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white/40" />
-                    {i}
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-3 text-sm font-semibold">Saatler, hatta günler sürebilir.</p>
-            </div>
-            <div data-spot className="glass rounded-card border-lime/40 p-5 sm:p-6">
-              <p className="text-lg font-bold text-lime">HAYB Data Service ile</p>
-              <p className="mt-3 text-[0.97rem]">Bu süreç tek bir arama ve dışa aktarma akışına iner: sektörü yazın, sonuçları görün, Excel olarak indirin.</p>
-              <p className="mt-3 text-sm font-semibold">Saatlerce işletme aramayın. Veriyi tek yerden bulun.</p>
+          <div>
+            <h3 className="mb-5 text-xl font-bold sm:text-2xl">Programın ekranları</h3>
+            <ul className="grid gap-5 md:grid-cols-2 lg:gap-6">
+              {dsScreens.map((sc, i) => (
+                <li key={sc.src} data-spot className="glass overflow-hidden rounded-card">
+                  <div className="overflow-hidden border-b border-white/10 bg-ink-800">
+                    <Image src={sc.src} alt={`HAYB Data Service: ${sc.title} ekranı`} width={1600} height={1118} sizes="(min-width: 768px) 560px, 92vw" className="h-auto w-full" priority={i < 2} />
+                  </div>
+                  <div className="p-5">
+                    <p className="text-lg font-bold">{sc.title}</p>
+                    <p className="mt-2 text-[0.95rem] text-fg-muted">{sc.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-sm text-fg-muted">Ekranlardaki firmalar ve sayılar örnek veridir.</p>
+          </div>
+
+          <div id="ds-paketler" className="scroll-mt-28">
+            <h3 className="text-xl font-bold sm:text-2xl">Paketler ve fiyatlar</h3>
+            <p className="mt-2 text-[0.97rem] text-fg-muted">1 aylık lisanstan başlar; tek seferde yüklü ödeme yapmadan, cüzi rakamlarla hemen kullanmaya başlayın. Satın aldıktan sonra hesabınız aynı gün tanımlanır, giriş bilgileriniz e-postanıza gelir.</p>
+            <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {dataServicePlans.map((plan) => (
+                <li key={plan.id} data-spot className={`flex flex-col rounded-card border p-5 sm:p-6 ${plan.recommended ? 'border-lime bg-lime/[0.06]' : 'border-white/12 bg-ink-800'}`}>
+                  <p className="font-bold">{plan.name}</p>
+                  <Price price={plan.price} tone="dark" size="md" className="mt-2" />
+                  <ul className="mt-4 flex-1 space-y-2 text-[0.93rem] text-fg-muted">
+                    {plan.features.map((f) => (
+                      <li key={f} className="flex gap-2"><span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-lime" />{f}</li>
+                    ))}
+                  </ul>
+                  <a href={dsBuyUrl(plan)} target="_blank" rel="noopener noreferrer" className="press mt-5 inline-flex min-h-12 items-center justify-center rounded-xl bg-lime px-5 font-semibold text-ink-950 transition hover:bg-lime-soft">Satın Al</a>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              {dataServiceAddons.map((plan) => (
+                <div key={plan.id} data-spot className="glass flex flex-col rounded-card p-5 sm:p-6">
+                  <p className="font-bold">{plan.name}</p>
+                  <Price price={plan.price} tone="dark" size="md" className="mt-2" />
+                  <p className="mt-3 flex-1 text-[0.93rem] text-fg-muted">{plan.features.join(' · ')}</p>
+                  <a href={dsBuyUrl(plan)} target="_blank" rel="noopener noreferrer" className="press mt-4 inline-flex min-h-11 items-center justify-center rounded-xl border border-white/20 bg-white/5 px-5 font-semibold transition hover:border-white/40 hover:bg-white/10">Satın Al</a>
+                </div>
+              ))}
             </div>
           </div>
 
           <div>
-            <h3 className="mb-4 text-xl font-bold">Kimler kullanabilir?</h3>
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <h3 className="mb-4 text-xl font-bold">Kimler için?</h3>
+            <ul className="grid gap-4 sm:grid-cols-3">
               {[
-                { t: 'Dijital pazarlama ajansları', d: '“Bursa’daki restoranlar” aramasıyla potansiyel müşteri listesi oluşturur; web sitesi, SEO, Google ve Meta reklamları, sosyal medya ve marka tasarımı hizmetleri için değerlendirir.' },
-                { t: 'Satış ekipleri', d: '“Türkiye → Otel” gibi seçimlerle işletmeleri listeler ve satış araştırmasını bu liste üzerinden yürütür.' },
-                { t: 'Yeni müşteri arayan ajanslar', d: 'Yalnızca “Güzellik Merkezi” ile çalışmak isteyen bir ajans, ilgili işletmeleri bulup liste çıkarır.' },
-                { t: 'Pazar araştırması', d: '“Bursa → Mobilya Mağazası” veya “Antalya → Otel” gibi aramalarla işletmelerin bölgelere dağılımını inceler.' },
+                { t: 'Üretim yapan ve toptan satanlar', d: 'Şehir şehir bayi, toptancı ve kurumsal müşteri adaylarını iletişim bilgileriyle bulun.' },
+                { t: 'Dijital pazarlamacılar', d: 'Hizmete ihtiyacı olan işletmeleri bulun; kanıtlı rapor ve teklifle satışa çevirin.' },
+                { t: 'Bütün işletmeler', d: 'Sitenizin ve Google görünürlüğünüzün eksiklerini görün, rakiplerinizin önüne geçin.' },
               ].map((c) => (
                 <li key={c.t} data-spot className="glass rounded-card p-5">
                   <p className="font-bold">{c.t}</p>
