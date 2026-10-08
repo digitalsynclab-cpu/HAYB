@@ -1286,6 +1286,10 @@ export const DICT_EN: Record<string, string> = {
  "Data Service paketleri Windows programı olarak ve tarayıcıdan kullanılabilir. Satın alma sonrası hesabınız aynı gün tanımlanır; giriş bilgileriniz e-postanıza gönderilir.": "Data Service packages work as a Windows program and in the browser. Your account is set up the same day after purchase; sign-in details are e-mailed to you.",
  "HAYB Data Service: Müşteri Bulma, Site Analizi ve Satış Takibi": "HAYB Data Service: Lead Finding, Website Analysis and Sales Tracking",
  "Şehir ve sektöre göre işletmeleri iletişim bilgileriyle bulun, web sitelerini analiz edin, teklif gönderin ve satışlarınızı takip edin. Bilgisayarda, tarayıcıda ve telefonda çalışır. 1 aylık lisanstan başlar.": "Find businesses by city and sector with contact details, analyse their websites, send proposals and track your sales. Works on computer, browser and phone. Starts with a 1-month licence.",
+ "Tanıtım videoları": "Promo videos",
+ "Reklam filmi": "Ad film",
+ "Kısa tanıtım": "Short intro",
+ "Neden kullanmalısınız? 5 sebep": "Why use it? 5 reasons",
 };
 
 export const DICT_DE: Record<string, string> = {
@@ -2572,4 +2576,8 @@ export const DICT_DE: Record<string, string> = {
  "Data Service paketleri Windows programı olarak ve tarayıcıdan kullanılabilir. Satın alma sonrası hesabınız aynı gün tanımlanır; giriş bilgileriniz e-postanıza gönderilir.": "Data-Service-Pakete funktionieren als Windows-Programm und im Browser. Ihr Konto wird am Kauftag eingerichtet; die Zugangsdaten kommen per E-Mail.",
  "HAYB Data Service: Müşteri Bulma, Site Analizi ve Satış Takibi": "HAYB Data Service: Kundensuche, Website-Analyse und Vertriebsverfolgung",
  "Şehir ve sektöre göre işletmeleri iletişim bilgileriyle bulun, web sitelerini analiz edin, teklif gönderin ve satışlarınızı takip edin. Bilgisayarda, tarayıcıda ve telefonda çalışır. 1 aylık lisanstan başlar.": "Firmen nach Stadt und Branche mit Kontaktdaten finden, Websites analysieren, Angebote senden und Vertrieb verfolgen. Läuft auf Computer, Browser und Handy. Ab einer 1-Monats-Lizenz.",
+ "Tanıtım videoları": "Promo-Videos",
+ "Reklam filmi": "Werbefilm",
+ "Kısa tanıtım": "Kurzvorstellung",
+ "Neden kullanmalısınız? 5 sebep": "Warum nutzen? 5 Gründe",
 };

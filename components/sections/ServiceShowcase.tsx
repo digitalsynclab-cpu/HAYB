@@ -197,6 +197,24 @@ export function ServiceShowcase({ kind }: { kind: ShowcaseKind }) {
           </ul>
 
           <div>
+            <h3 className="mb-5 text-xl font-bold sm:text-2xl">Tanıtım videoları</h3>
+            <ul className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0">
+              {[
+                { src: '/videos/data-service/reklam-filmi', title: 'Reklam filmi' },
+                { src: '/videos/data-service/hareketli', title: 'Kısa tanıtım' },
+                { src: '/videos/data-service/5-sebep', title: 'Neden kullanmalısınız? 5 sebep' },
+              ].map((v) => (
+                <li key={v.src} className="w-[16rem] shrink-0 snap-start sm:w-auto">
+                  <div className="overflow-hidden rounded-card border border-white/10 bg-ink-800">
+                    <video src={`${v.src}.mp4`} poster={`${v.src}.jpg`} controls playsInline preload="none" className="aspect-[9/16] h-auto w-full bg-black object-cover" aria-label={`HAYB Data Service ${v.title}`} />
+                  </div>
+                  <p className="mt-2 font-semibold">{v.title}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
             <h3 className="mb-5 text-xl font-bold sm:text-2xl">Programın ekranları</h3>
             <ul className="grid gap-5 md:grid-cols-2 lg:gap-6">
               {dsScreens.map((sc, i) => (
