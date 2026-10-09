@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { issueAdminOtp, verifyAdminOtp } from '@/lib/partner/admin-otp';
+import { ADMIN_OTP_COOKIE, ADMIN_OTP_MAX_AGE, createAdminOtpToken } from '@/lib/partner/admin-otp-cookie';
 
 export interface ActionResult {
   ok: boolean;
@@ -45,12 +46,12 @@ export async function adminVerifyOtpAction(_prev: ActionResult, formData: FormDa
   if (!result.ok) return { ok: false, error: result.error };
 
   const cookieStore = await cookies();
-  cookieStore.set('hayb_admin_otp_ok', '1', {
+  cookieStore.set(ADMIN_OTP_COOKIE, await createAdminOtpToken(user.id), {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
-    maxAge: 60 * 60 * 8, // 8 saat
+    maxAge: ADMIN_OTP_MAX_AGE,
   });
 
   return { ok: true };
@@ -60,5 +61,5 @@ export async function adminLogoutAction() {
   const supabase = await createSupabaseServerClient();
   await supabase.auth.signOut();
   const cookieStore = await cookies();
-  cookieStore.delete('hayb_admin_otp_ok');
+  cookieStore.delete(ADMIN_OTP_COOKIE);
 }

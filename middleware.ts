@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import { ADMIN_OTP_COOKIE, verifyAdminOtpToken } from '@/lib/partner/admin-otp-cookie';
 
 const ADMIN_PREFIX = '/secretadmin';
 
@@ -61,7 +62,7 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/secretadmin/giris', request.url));
     }
     // İkinci faktör (e-posta kodu) doğrulanmadan admin alanına giriş yok.
-    const otpVerified = request.cookies.get('hayb_admin_otp_ok')?.value === '1';
+    const otpVerified = await verifyAdminOtpToken(request.cookies.get(ADMIN_OTP_COOKIE)?.value, user.id);
     if (!otpVerified) {
       return NextResponse.redirect(new URL('/secretadmin/giris?step=otp', request.url));
     }
