@@ -1290,6 +1290,9 @@ export const DICT_EN: Record<string, string> = {
  "Reklam filmi": "Ad film",
  "Kısa tanıtım": "Short intro",
  "Neden kullanmalısınız? 5 sebep": "Why use it? 5 reasons",
+ "Tetra Pak ambalaj firelerinden kompozit panel üreten TIGERWOOD için kurumsal web sitesi. Ziyaretçi, atıkları ana sayfada kendisi parçalıyor; parçacıkların preslenip panele, panelin de seçtiği ürüne dönüştüğünü 3B animasyonla izliyor. SEO, yapay zekâ arama görünürlüğü ve güvenlik altyapısı dahil.": "Corporate website for TIGERWOOD, which makes composite panels from Tetra Pak packaging offcuts. Visitors shred the waste themselves on the homepage and watch, in 3D animation, the particles being pressed into a panel and the panel turning into the product they choose. Includes SEO, AI search visibility and security infrastructure.",
+ "TIGERWOOD geri dönüşüm kompozit panel kurumsal web sitesi: masaüstü ve mobil ekranlar": "TIGERWOOD recycled composite panel corporate website: desktop and mobile screens",
+ "3B Etkileşim": "3D Interaction",
 };
 
 export const DICT_DE: Record<string, string> = {
@@ -2580,4 +2583,7 @@ export const DICT_DE: Record<string, string> = {
  "Reklam filmi": "Werbefilm",
  "Kısa tanıtım": "Kurzvorstellung",
  "Neden kullanmalısınız? 5 sebep": "Warum nutzen? 5 Gründe",
+ "Tetra Pak ambalaj firelerinden kompozit panel üreten TIGERWOOD için kurumsal web sitesi. Ziyaretçi, atıkları ana sayfada kendisi parçalıyor; parçacıkların preslenip panele, panelin de seçtiği ürüne dönüştüğünü 3B animasyonla izliyor. SEO, yapay zekâ arama görünürlüğü ve güvenlik altyapısı dahil.": "Unternehmenswebsite für TIGERWOOD, das Verbundplatten aus Tetra-Pak-Verpackungsresten herstellt. Besucher zerkleinern den Abfall auf der Startseite selbst und verfolgen in einer 3D-Animation, wie die Partikel zu einer Platte gepresst werden und die Platte zum gewählten Produkt wird. Inklusive SEO, Sichtbarkeit in KI-Suchen und Sicherheitsinfrastruktur.",
+ "TIGERWOOD geri dönüşüm kompozit panel kurumsal web sitesi: masaüstü ve mobil ekranlar": "TIGERWOOD Recycling-Verbundplatten Unternehmenswebsite: Desktop- und Mobilansichten",
+ "3B Etkileşim": "3D-Interaktion",
 };

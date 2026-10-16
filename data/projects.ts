@@ -112,6 +112,21 @@ export const projects: Project[] = [
     scope: ['Web', 'Mobil', 'Yazılım'],
   },
   {
+    id: 'tigerwood',
+    name: 'TIGERWOOD',
+    type: 'Kurumsal Web Sitesi',
+    filters: ['Web', 'UI/UX'],
+    image: '/images/projects/tigerwood.webp',
+    imageAlt: 'TIGERWOOD geri dönüşüm kompozit panel kurumsal web sitesi: masaüstü ve mobil ekranlar',
+    imageTone: 'cover',
+    description:
+      'Tetra Pak ambalaj firelerinden kompozit panel üreten TIGERWOOD için kurumsal web sitesi. Ziyaretçi, atıkları ana sayfada kendisi parçalıyor; parçacıkların preslenip panele, panelin de seçtiği ürüne dönüştüğünü 3B animasyonla izliyor. SEO, yapay zekâ arama görünürlüğü ve güvenlik altyapısı dahil.',
+    serviceSlugs: ['web-sitesi', 'ui-ux', 'ozel-yazilim'],
+    scope: ['Web Tasarım', '3B Etkileşim', 'SEO', 'Geliştirme'],
+    liveUrl: 'https://tigerwoodrec.com',
+    gallery: shots('tigerwood', 6),
+  },
+  {
     id: 'webevtekstil',
     name: 'Ev Tekstili Web Sitesi',
     type: 'Kurumsal Web Sitesi',
@@ -163,6 +178,7 @@ export const referenceSites = [
   { domain: 'baskanhavlu.com', url: 'https://baskanhavlu.com' },
   { domain: 'bebeklersoruyor.com', url: 'https://bebeklersoruyor.com' },
   { domain: 'taleb-e.com', url: 'https://taleb-e.com' },
+  { domain: 'tigerwoodrec.com', url: 'https://tigerwoodrec.com' },
 ] as const;
 
 export const GAME = {

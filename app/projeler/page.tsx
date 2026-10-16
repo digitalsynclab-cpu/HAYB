@@ -10,7 +10,7 @@ import { buildMetadata } from '@/lib/metadata';
 export const metadata = buildMetadata({
   title: 'Projeler',
   description:
-    'HAYB projeleri: BB Block mobil oyunu, BebeklerSoruyor, EkoTakip Pro, Taleb-e, QR Menü Sistemi ve kurumsal web siteleri. Yayındaki dijital ürünlerimiz.',
+    'HAYB projeleri: BB Block mobil oyunu, BebeklerSoruyor, EkoTakip Pro, Taleb-e, TIGERWOOD, QR Menü Sistemi ve kurumsal web siteleri. Yayındaki dijital ürünlerimiz.',
   path: '/projeler',
 });
 
