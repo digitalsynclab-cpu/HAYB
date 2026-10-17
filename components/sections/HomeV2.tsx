@@ -17,6 +17,7 @@ import { campaign } from '@/data/campaign';
 import { projectById, referenceSites, type Project } from '@/data/projects';
 import { services } from '@/data/services';
 import { FeaturedProjects, type FeaturedItem } from '@/components/sections/FeaturedProjects';
+import { DeviceShowcase, type ShowcaseProject } from '@/components/sections/DeviceShowcase';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 /** Ana sayfa (yeni düzen): tek vaat, tek ana çağrı; ayrıntılar menülerde ve kendi sayfalarında. */
@@ -185,6 +186,16 @@ export function HomePackages() {
   );
 }
 
+/** 3B vitrinde dönen projeler (masaüstü + mobil ekran görüntüsü olanlar). */
+const SHOWCASE: ShowcaseProject[] = [
+  { id: 'tigerwood', name: 'TIGERWOOD', type: 'Kurumsal Web Sitesi', description: 'Atıkları panele dönüştüren 3B deneyimli kurumsal site.' },
+  { id: 'baskanhavlu', name: 'Başkan Havlu Tekstil', type: 'Kurumsal Web Sitesi', description: '1996’dan beri havlu ve bornoz üreticisi. Türkçe ve İngilizce.' },
+  { id: 'gurgentekstil', name: 'Gürgentekstil', type: 'Kurumsal Web Sitesi', description: 'Toptan havlu üreticisi. Ürün kodlu katalog, WhatsApp ile teklif.' },
+  { id: 'msgko', name: 'MSGKO', type: 'Oyun Rehber Platformu', description: 'Knight Online oyuncuları için rehber, video ve galeri platformu.' },
+  { id: 'eyegames', name: 'Eye Games', type: 'Oyun Stüdyosu Sitesi', description: 'BB Block’un geliştiricisi bağımsız oyun stüdyosu.' },
+  { id: 'talebenet', name: 'Taleb-e.net', type: 'Öğrenci Forumu', description: 'Lise ve üniversite öğrencileri için forum ve bilgi paylaşımı.' },
+];
+
 const FEATURED_IDS = ['bbblock', 'hayb-data-service', 'tigerwood', 'baskanhavlu', 'gurgentekstil', 'bebeklersoruyor', 'taleb-e', 'talebenet', 'msgko', 'eyegames'];
 
 const badgeOf = (p: Project) =>
@@ -202,6 +213,8 @@ export function HomeFeatured() {
     { value: START_WEB_DAYS, label: 'en hızlı web sitesi teslimi' },
   ];
   return (
+    <>
+    <DeviceShowcase projects={SHOWCASE} />
     <Section tone="dark" labelledBy="one-cikan-projeler" className="!bg-black">
       <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
@@ -223,6 +236,7 @@ export function HomeFeatured() {
         <FeaturedProjects items={items} />
       </div>
     </Section>
+    </>
   );
 }
 

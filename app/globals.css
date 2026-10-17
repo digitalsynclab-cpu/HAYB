@@ -440,3 +440,12 @@ html.intro-active { overflow: hidden; }
 .font-bold, .font-extrabold, .font-black, .font-semibold, strong, b, th, button, nav a { font-weight: 500 !important; }
 /* HAYB logosu değiştirilmez: yazısı eski ağırlığında kalır */
 a[aria-label="HAYB ana sayfa"], a[aria-label="HAYB ana sayfa"] * { font-weight: 800 !important; }
+
+/* 3B vitrin ipucu ikonları (Apple tarzı, hafif hareket) */
+@keyframes hayb-hint-x { 0%, 100% { transform: translateX(-1.5px); } 50% { transform: translateX(1.5px); } }
+@keyframes hayb-hint-y { 0%, 100% { transform: translateY(-1.5px); } 50% { transform: translateY(1.5px); } }
+@keyframes hayb-hint-s { 0%, 100% { transform: scale(0.9); } 50% { transform: scale(1.08); } }
+.hint-x { animation: hayb-hint-x 2.2s ease-in-out infinite; }
+.hint-y { animation: hayb-hint-y 2.2s ease-in-out infinite; }
+.hint-s { animation: hayb-hint-s 2.2s ease-in-out infinite; transform-origin: center; }
+@media (prefers-reduced-motion: reduce) { .hint-x, .hint-y, .hint-s { animation: none; } }
