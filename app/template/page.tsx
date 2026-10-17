@@ -13,7 +13,7 @@ const count = templates.length;
 const sectors = new Set(templates.map((t) => t.category)).size;
 
 export const metadata = buildMetadata({
-  title: 'Web Sitesi Şablonları: Canlı Deneyin',
+  title: 'Örnek Web Siteleri ve Hazır Web Sitesi Şablonları: Canlı Deneyin',
   description: `Kafe, restoran, klinik, otel, otomotiv, moda, inşaat, spor ve daha fazlası için hazırladığımız ${count} örnek web sitesi şablonu. Sektöre göre filtreleyin, canlı deneyin.`,
   path: '/template',
 });
@@ -26,6 +26,7 @@ export default function TemplatesPage() {
       <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'Web Sitesi Şablonları', path: '/template' }]} />
       <PageHero
         eyebrow="Şablonlar"
+        heading="Örnek Web Siteleri ve Hazır Web Sitesi Şablonları"
         title="Web sitenizi satın almadan"
         accent="önce canlı deneyin."
         text={`${sectors} farklı sektör için tasarladığımız ${count} örnek siteyi açın; menüyü, sepeti, filtreleri, randevu ve rezervasyon formlarını kendi telefonunuzda kullanın. Markalar ve içerikler kurgusaldır, tasarım ve kalite gerçektir.`}

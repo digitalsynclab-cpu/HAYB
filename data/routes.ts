@@ -1,10 +1,11 @@
 import { services } from '@/data/services';
 import { projects } from '@/data/projects';
 import { insights } from '@/data/insights';
+import { keywordPages } from '@/data/keyword-pages';
 
 // TEK ROUTE KAYDI: sitemap.xml ve llms.txt buradan beslenir. Yeni sayfa = buraya bir satır.
 // noindex sayfalar (/template/[slug]) BURAYA KONMAZ.
-export type RouteGroup = 'core' | 'service' | 'project' | 'insight' | 'legal';
+export type RouteGroup = 'core' | 'topic' | 'service' | 'project' | 'insight' | 'legal';
 
 export interface RouteEntry {
   path: string;
@@ -42,6 +43,16 @@ const LEGAL: RouteEntry[] = [
 export function getAllRoutes(): RouteEntry[] {
   return [
     ...CORE,
+    ...keywordPages.map(
+      (k): RouteEntry => ({
+        path: `/${k.slug}`,
+        title: k.metaTitle,
+        description: k.metaDescription,
+        group: 'topic',
+        priority: 0.85,
+        changeFrequency: 'monthly',
+      })
+    ),
     ...services.map(
       (s): RouteEntry => ({
         path: `/hizmetler/${s.slug}`,

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { legalLinks, site } from '@/data/site';
+import { keywordPages } from '@/data/keyword-pages';
 import { Logo } from '@/components/ui/Logo';
 
 const linkCls = 'inline-flex min-h-10 items-center text-fg-muted transition-colors hover:text-lime';
@@ -29,6 +30,10 @@ const COLS: { title: string; links: { label: string; href: string }[] }[] = [
     ],
   },
   {
+    title: 'Rehberler',
+    links: keywordPages.map((k) => ({ label: k.heading, href: `/${k.slug}` })),
+  },
+  {
     title: 'Şirket',
     links: [
       { label: 'Hakkımızda', href: '/hakkimizda' },
@@ -45,7 +50,7 @@ export function Footer() {
       {/* Arka plan görseli: değiştirilmeden, düşük opaklıkta; içerik okunurluğu için koyu katman */}
       <Image src="/brand/footer-bg-2.webp" alt="" fill sizes="100vw" aria-hidden className="pointer-events-none -z-20 select-none object-cover object-[center_88%] opacity-100" />
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-black/50 via-black/40 to-black/55" />
-      <div className="mx-auto grid max-w-page grid-cols-2 gap-x-6 gap-y-9 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-10 lg:px-8">
+      <div className="mx-auto grid max-w-page grid-cols-2 gap-x-6 gap-y-9 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] lg:gap-10 lg:px-8">
         <div className="col-span-2 lg:col-span-1">
           <Logo />
           <p className="mt-4 max-w-xs text-fg-muted">
@@ -54,7 +59,7 @@ export function Footer() {
         </div>
 
         {COLS.map((c) => (
-          <nav key={c.title} aria-label={c.title} className={c.title === 'Şirket' ? 'col-span-2 lg:col-span-1' : ''}>
+          <nav key={c.title} aria-label={c.title} className="min-w-0">
             <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-fg">{c.title}</h2>
             <ul>
               {c.links.map((l) => (

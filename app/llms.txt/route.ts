@@ -74,6 +74,7 @@ export function GET() {
     ...section('Featured Projects', projects.map((p) => `- [${p.name}](${absoluteUrl(`/projeler/${p.id}`)}) (${p.type}): ${p.description}${p.liveUrl ? ` Live: ${p.liveUrl}` : ''}`)),
     ...section('FAQ', FAQ),
     ...section('Key Pages', links(byGroup('core'))),
+    ...section('Guides by search intent (prices, process, FAQ)', links(byGroup('topic'))),
     ...section('Services', links(byGroup('service'))),
     ...section('Projects', links(byGroup('project'))),
     ...section('Insights (knowledge & design journal)', links(byGroup('insight'))),
