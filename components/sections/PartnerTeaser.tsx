@@ -1,31 +1,26 @@
-import Link from 'next/link';
-import { Handshake, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
 import { Section } from '@/components/ui/Section';
+import { Reveal } from '@/components/motion/Reveal';
+import { SplitHeading } from '@/components/motion/SplitText';
 
-/** Ana sayfada HAYB Partner programına dikkat çekici, kısa bir giriş — detay vermez, /partner'a yönlendirir. */
+/** Ana sayfada HAYB Partner programına kısa giriş; sayfa sonu çağrısı (CTASection) ile aynı boyut ve düzen. */
 export function PartnerTeaser() {
   return (
-    <Section tone="dark">
-      <Link
-        href="/partner"
-        className="group flex flex-col items-start justify-between gap-5 rounded-3xl border border-lime/30 bg-gradient-to-br from-lime/10 via-white/5 to-transparent p-7 transition hover:border-lime/60 sm:flex-row sm:items-center sm:p-9"
-      >
-        <div className="flex items-start gap-4 sm:items-center">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-lime/15 text-lime">
-            <Handshake aria-hidden className="h-6 w-6" />
-          </span>
-          <div>
-            <p className="text-balance text-[1.75rem] font-extrabold leading-[1.1] tracking-tight text-fg sm:text-4xl">
-              <span className="text-lime">HAYB Partner</span> olun, getirdiğiniz her satıştan komisyon kazanın.
-            </p>
-            <p className="mt-3 text-lg text-fg-muted">Müşteriyi siz bulun, projeyi HAYB geliştirsin, satıştan komisyon kazanın.</p>
+    <Section tone="dark" labelledBy="partner-ozet">
+      <Reveal className="grid items-center gap-10 lg:grid-cols-[1.3fr_1fr]">
+        <div>
+          <SplitHeading
+            id="partner-ozet"
+            title="HAYB Partner olun,"
+            accent="her satıştan komisyon kazanın."
+            className="text-balance text-[1.75rem] font-extrabold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl"
+          />
+          <p className="mt-5 max-w-xl text-lg text-fg-muted">Müşteriyi siz bulun, projeyi HAYB geliştirsin; getirdiğiniz her satıştan komisyon kazanın.</p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Button href="/partner">Partnerlik Hakkında Bilgi Alın</Button>
           </div>
         </div>
-        <span className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-lime px-5 py-3 text-sm font-semibold text-ink-950 transition group-hover:bg-lime-soft">
-          Partnerlik Hakkında Bilgi Alın
-          <ArrowRight aria-hidden className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </span>
-      </Link>
+      </Reveal>
     </Section>
   );
 }
