@@ -97,7 +97,7 @@ export const keywordPages: KeywordPage[] = [
       { q: 'Siteyi sonra kendim güncelleyebilir miyim?', a: 'Business ve üstü paketlerde yönetim paneli vardır; ürün, hizmet ve içerikleri kendiniz güncelleyebilirsiniz.' },
       { q: 'Bursa dışındayım, çalışabilir miyiz?', a: 'Evet. Bursa merkezliyiz, Türkiye genelinde uzaktan çalışıyoruz; tüm süreç WhatsApp ve görüntülü görüşmeyle ilerler.' },
     ],
-    projectIds: ['tigerwood', 'bebeklersoruyor', 'webevtekstil'],
+    projectIds: ['tigerwood', 'baskanhavlu', 'bebeklersoruyor'],
     related: [
       { label: 'Web sitesi fiyatları', href: '/web-sitesi-fiyatlari' },
       { label: 'Kurumsal web sitesi', href: '/kurumsal-web-sitesi' },
@@ -138,7 +138,7 @@ export const keywordPages: KeywordPage[] = [
       { q: 'Yıllık ücret ödüyor muyum?', a: 'Paket fiyatı site tasarımı ve geliştirmesi içindir. Alan adı ilk 1–2 yıl ücretsizdir; sonrasındaki yenileme ücretini baştan paylaşırız.' },
       { q: 'Fiyatlar neden indirimli görünüyor?', a: 'Sitede gösterilen fiyatlar açılış kampanyası fiyatlarıdır; kampanya bitiş tarihi Paketler sayfasında yazar.' },
     ],
-    projectIds: ['tigerwood', 'webinsaat', 'websosyal'],
+    projectIds: ['baskanhavlu', 'tigerwood', 'msgko'],
     related: [
       { label: 'Tüm paketler', href: '/paketler' },
       { label: 'Web sitesi yaptırmak', href: '/web-sitesi-yaptirmak' },
@@ -216,7 +216,7 @@ export const keywordPages: KeywordPage[] = [
       { q: 'Kargo ve e-fatura entegrasyonu var mı?', a: 'Kargo, e-fatura ve pazaryeri entegrasyonları paket kapsamında değildir; ihtiyacınız olursa ayrıca teklif hazırlarız.' },
       { q: 'Ürünleri kim yükleyecek?', a: 'Yönetim panelinden ürünleri kendiniz kolayca ekleyebilirsiniz; ilk kurulumda yardımcı oluyoruz.' },
     ],
-    projectIds: ['tigerwood', 'webevtekstil', 'qrmenu'],
+    projectIds: ['baskanhavlu', 'tigerwood', 'qrmenu'],
     related: [
       { label: 'E-ticaret hizmeti', href: '/hizmetler/e-ticaret' },
       { label: 'Web sitesi fiyatları', href: '/web-sitesi-fiyatlari' },
@@ -284,7 +284,7 @@ export const keywordPages: KeywordPage[] = [
       { q: 'Çok dilli kurumsal site yapıyor musunuz?', a: 'Evet. Çoklu dil desteği Premium pakette dahildir.' },
       { q: 'Site Google’da çıkacak mı?', a: 'Business ve üstü paketlerde SEO, site haritası; Professional ve üstünde Google Analytics, Search Console ve yapısal veri kurulumu dahildir.' },
     ],
-    projectIds: ['tigerwood', 'webinsaat', 'webevtekstil'],
+    projectIds: ['tigerwood', 'baskanhavlu', 'eyegames'],
     related: [
       { label: 'Web sitesi fiyatları', href: '/web-sitesi-fiyatlari' },
       { label: 'Bursa web tasarım', href: '/bursa-web-tasarim' },
@@ -353,7 +353,7 @@ export const keywordPages: KeywordPage[] = [
       { q: 'Mobil oyun yaptırmak ne kadar?', a: 'Oyunun türüne, seviye sayısına ve görsel kapsamına göre değişir. Görüşmeden sonra net teklif hazırlıyoruz.' },
       { q: 'Oyunu mağazaya siz mi yüklüyorsunuz?', a: 'Evet. App Store ve Google Play yayınını biz yapıyoruz.' },
     ],
-    projectIds: ['bbblock'],
+    projectIds: ['bbblock', 'eyegames'],
     related: [
       { label: 'Mobil oyun hizmeti', href: '/hizmetler/mobil-oyun' },
       { label: 'Mobil uygulama yaptırmak', href: '/mobil-uygulama-yaptirmak' },

@@ -36,6 +36,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   const p = projectById(slug);
   if (!p) notFound();
   const services = p.serviceSlugs.map((s) => serviceBySlug(s)).filter((s): s is NonNullable<typeof s> => Boolean(s));
+  const isApp = p.filters.includes('Mobil');
   const others = projects.filter((x) => x.id !== p.id).slice(0, 3);
 
   return (
@@ -106,8 +107,8 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 
       {p.gallery && (
         <Section tone="dark-2" labelledBy="ekranlar">
-          <SectionHeading id="ekranlar" eyebrow="Uygulama ekranları" title={`${p.name}`} accent="ekran ekran inceleyin." />
-          <ScreenGallery name={p.name} images={p.gallery} />
+          <SectionHeading id="ekranlar" eyebrow={isApp ? 'Uygulama ekranları' : 'Mobil ekranlar'} title={`${p.name}`} accent={isApp ? 'ekran ekran inceleyin.' : 'telefonda nasıl görünüyor?'} />
+          <ScreenGallery name={p.name} images={p.gallery} kind={isApp ? 'uygulaması' : 'web sitesi mobil'} />
         </Section>
       )}
 

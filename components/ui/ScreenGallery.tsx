@@ -8,7 +8,8 @@ import { ChevronLeft, ChevronRight, X } from 'lucide-react';
  * Uygulama ekran görüntüleri: yatay kaydırılabilir şerit + büyütme penceresi.
  * Pencere dışına dokunarak, X ile veya Escape ile kapanır; oklar ve klavye okları ile gezilir.
  */
-export function ScreenGallery({ name, images }: { name: string; images: string[] }) {
+/** kind: alt metinde ne olduğunu söyler ("uygulaması" / "web sitesi mobil"). */
+export function ScreenGallery({ name, images, kind = 'uygulaması' }: { name: string; images: string[]; kind?: string }) {
   const [open, setOpen] = useState<number | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const lastFocus = useRef<HTMLElement | null>(null);
@@ -47,7 +48,7 @@ export function ScreenGallery({ name, images }: { name: string; images: string[]
               aria-label={`${name} ekran ${i + 1}, büyüt`}
               className="press group relative block aspect-[9/19.5] w-full overflow-hidden rounded-2xl border border-white/10 bg-ink-800 shadow-glass transition hover:-translate-y-1 hover:border-lime/60"
             >
-              <Image src={src} alt={`${name} uygulaması ekran görüntüsü ${i + 1}`} fill sizes="(min-width:1024px) 180px, 200px" className="object-cover object-top transition duration-500 group-hover:scale-[1.03]" />
+              <Image src={src} alt={`${name} ${kind} ekran görüntüsü ${i + 1}`} fill sizes="(min-width:1024px) 180px, 200px" className="object-cover object-top transition duration-500 group-hover:scale-[1.03]" />
             </button>
           </li>
         ))}
@@ -60,7 +61,7 @@ export function ScreenGallery({ name, images }: { name: string; images: string[]
             <div aria-hidden className="modal-backdrop absolute inset-0 bg-ink-950/90 backdrop-blur-sm" />
             <div role="dialog" aria-modal="true" aria-label={`${name} ekran görüntüsü ${open + 1} / ${images.length}`} className="modal-sheet relative flex max-h-full w-full max-w-md flex-col items-center" onClick={(e) => e.stopPropagation()}>
               <div className="relative h-[80dvh] w-full max-w-[24rem]">
-                <Image key={images[open]} src={images[open]} alt={`${name} uygulaması ekran görüntüsü ${open + 1}`} fill sizes="400px" className="object-contain" priority />
+                <Image key={images[open]} src={images[open]} alt={`${name} ${kind} ekran görüntüsü ${open + 1}`} fill sizes="400px" className="object-contain" priority />
               </div>
               <div className="mt-3 flex items-center gap-3">
                 <button type="button" onClick={() => step(-1)} aria-label="Önceki ekran" className="press grid h-12 w-12 place-items-center rounded-full border border-white/20 text-white hover:border-lime hover:text-lime">
