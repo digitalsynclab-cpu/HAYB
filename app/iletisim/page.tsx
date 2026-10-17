@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { MessageCircle } from 'lucide-react';
 import { PageHero } from '@/components/ui/PageHero';
 import { Section } from '@/components/ui/Section';
@@ -77,9 +78,9 @@ export default function ContactPage() {
             <div>
               <h3 className="text-xl font-bold">Proje başlatın</h3>
               <p className="text-on-light-muted">Projenizi adım adım anlatın, teklif hazırlayalım.</p>
-              <a href="/proje-baslat" className="mt-1 inline-flex min-h-11 items-center font-semibold underline underline-offset-4">
+              <Link href="/proje-baslat" className="mt-1 inline-flex min-h-11 items-center font-semibold underline underline-offset-4">
                 Sihirbazı başlat
-              </a>
+              </Link>
             </div>
           </li>
           <li className="surface-light flex items-center gap-5 rounded-card p-6">
@@ -99,9 +100,9 @@ export default function ContactPage() {
               <p className="text-on-light-muted">
                 {site.address.addressLocality} / {site.address.addressRegion}, Türkiye
               </p>
-              <a href="/bursa-web-tasarim" className="mt-1 inline-flex min-h-11 items-center font-semibold underline underline-offset-4">
+              <Link href="/bursa-web-tasarim" className="mt-1 inline-flex min-h-11 items-center font-semibold underline underline-offset-4">
                 Bursa&apos;daki çalışmalarımız
-              </a>
+              </Link>
             </div>
           </li>
         </ul>
