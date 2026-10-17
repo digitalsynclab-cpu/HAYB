@@ -115,6 +115,7 @@ export default function BursaPage() {
 
       <PageHero
         eyebrow="Bursa"
+        heading="Bursa Web Tasarım ve Yazılım"
         title="Bursa’da dijital ürünlerinizi"
         accent="birlikte geliştirelim."
         text="HAYB, Bursa’nın Osmangazi ilçesinde 2025’te kurulmuş bir dijital ürün stüdyosudur. Web sitesi, UI/UX tasarım, özel yazılım ve mobil uygulama çalışmalarını Bursa’dan yürütürüz."

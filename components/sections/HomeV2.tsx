@@ -14,6 +14,10 @@ import { menu } from '@/data/menu';
 import { templates } from '@/data/templates';
 import { webPackages, ecommercePackages, socialMediaPlans, webPricingRows } from '@/data/pricing';
 import { campaign } from '@/data/campaign';
+import { projectById, referenceSites, type Project } from '@/data/projects';
+import { services } from '@/data/services';
+import { ProjectCard } from '@/components/ui/Cards';
+import { FAQSchema } from '@/components/schema/FAQSchema';
 
 /** Ana sayfa (yeni düzen): tek vaat, tek ana çağrı; ayrıntılar menülerde ve kendi sayfalarında. */
 export function HomeHeroV2() {
@@ -156,14 +160,23 @@ export function HomeSteps() {
   );
 }
 
-/** Paketler yönlendirmesi: fiyatlar ve kampanya yalnızca Paketler sayfasında. */
+const START_WEB = webPackages[0].price;
+const START_ECO = ecommercePackages[0].price;
+const START_WEB_DAYS = String(webPricingRows.find((r) => r.label === 'Teslim Süresi')?.starter ?? '');
+
+/** Paketler yönlendirmesi + başlangıç fiyatları (ayrıntı ve kampanya Paketler sayfasında). */
 export function HomePackages() {
   return (
     <Section tone="dark" labelledBy="paket-ozet">
       <div className="flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
-        <h2 id="paket-ozet" className="text-balance text-[1.75rem] font-extrabold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl">
-          Size uygun paketi <span className="accent-text">bulun.</span>
-        </h2>
+        <div>
+          <h2 id="paket-ozet" className="text-balance text-[1.75rem] font-extrabold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl">
+            Size uygun paketi <span className="accent-text">bulun.</span>
+          </h2>
+          <p className="mt-4 max-w-2xl text-base text-fg-muted sm:text-lg">
+            Web siteleri <strong className="text-fg">{START_WEB}</strong>’den, e-ticaret siteleri <strong className="text-fg">{START_ECO}</strong>’den başlayan fiyatlarla. Starter web sitesi {START_WEB_DAYS.toLocaleLowerCase('tr')}de teslim; alan adı, SSL ve mobil uyum dahil.
+          </p>
+        </div>
         <Button href="/paketler" arrow>
           Paketlere Göz Atın
         </Button>
@@ -172,7 +185,52 @@ export function HomePackages() {
   );
 }
 
+const FEATURED_IDS = ['bbblock', 'tigerwood', 'bebeklersoruyor', 'taleb-e'];
+
+/** Öne çıkan gerçek projeler + yalnızca sitedeki veriden sayılan (uydurma olmayan) rakamlar. */
+export function HomeFeatured() {
+  const list = FEATURED_IDS.map(projectById).filter((p): p is Project => Boolean(p));
+  const facts = [
+    { value: String(referenceSites.length), label: 'canlı referans site' },
+    { value: 'iOS + Android', label: 'App Store ve Google Play’de yayında mobil oyun' },
+    { value: String(services.length), label: 'hizmet tek çatı altında' },
+    { value: START_WEB_DAYS, label: 'Starter web sitesi teslim süresi' },
+  ];
+  return (
+    <Section tone="dark-2" labelledBy="one-cikan-projeler">
+      <SectionHeading
+        id="one-cikan-projeler"
+        title="Yayında olan"
+        accent="gerçek projelerimiz."
+        action={
+          <Button href="/projeler" variant="secondary" arrow>
+            Tüm projeler
+          </Button>
+        }
+      />
+      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {list.map((p, i) => (
+          <li key={p.id}>
+            <Reveal delay={(i % 4) * 70} className="h-full">
+              <ProjectCard project={p} />
+            </Reveal>
+          </li>
+        ))}
+      </ul>
+      <dl className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {facts.map((f) => (
+          <div key={f.label} className="flex flex-col-reverse rounded-card border border-white/10 p-5">
+            <dt className="mt-1 text-sm text-fg-muted">{f.label}</dt>
+            <dd className="text-2xl font-extrabold tracking-tight text-lime sm:text-3xl">{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </Section>
+  );
+}
+
 const FAQ = [
+  { q: 'Bursa’da web sitesi yaptırmak ne kadar?', a: `HAYB’de web sitesi paketleri ${START_WEB}’den, e-ticaret paketleri ${START_ECO}’den başlar. Alan adı, SSL ve mobil uyum paketlere dahildir.` },
   { q: 'Web sitesi ne kadar sürede teslim edilir?', a: 'Pakete göre değişir: Starter 3, Business 4, Professional 5, Premium 7 gündür. E-ticaret paketlerinde 10 ile 25 gün arasıdır.' },
   { q: 'Alan adı (domain) fiyata dahil mi?', a: 'Evet. Web sitesi paketlerinde ilk 1 veya 2 yıl alan adı ücretsizdir; e-ticaret paketlerinde 1 ile 3 yıl, üst paketlerde hosting de dahildir.' },
   { q: 'Mobil uygulama ve özel yazılım fiyatı nasıl belirlenir?', a: 'Projenin kapsamına göre belirlenir. Önce ücretsiz bir keşif görüşmesi yapar, ardından net bir teklif hazırlarız.' },
@@ -180,9 +238,11 @@ const FAQ = [
   { q: 'Fiyatlar kampanyalı mı?', a: `Evet, açılış kampanyasında paketlerde %${campaign.rate} indirim vardır. Güncel fiyatlar ve bitiş tarihi Paketler sayfasında yer alır.` },
 ];
 
+/** Görünen SSS ve FAQPage şeması aynı diziden üretilir. */
 export function HomeFaq() {
   return (
     <Section tone="light" labelledBy="sss">
+      <FAQSchema items={FAQ.map((f) => ({ question: f.q, answer: f.a }))} />
       <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
         <SectionHeading id="sss" className="!mb-0" title="Merak" accent="ettikleriniz." />
         <div className="divide-y divide-on-light/10 border-y border-on-light/10">

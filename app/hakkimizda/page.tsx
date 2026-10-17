@@ -13,7 +13,7 @@ import type { IconName } from '@/data/icons';
 export const metadata = buildMetadata({
   title: 'Hakkımızda',
   description:
-    'HAYB, tasarım, teknoloji ve stratejiyi bir araya getiren bir dijital ürün stüdyosudur. Çalışma biçimimizi, değerlerimizi ve yaklaşımımızı tanıyın.',
+    'HAYB, Yunus Emre Başkan’ın 2025’te Bursa’da kurduğu dijital ürün stüdyosudur. 10 yıllık tekstil ve perakende tecrübesini yazılımla birleştiren kurucuyu ve çalışma biçimimizi tanıyın.',
   path: '/hakkimizda',
 });
 
@@ -36,6 +36,7 @@ export default function AboutPage() {
     <>
       <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'Hakkımızda', path: '/hakkimizda' }]} />
       <PageHero
+        heading="Hakkımızda: HAYB ve Kurucusu Yunus Emre Başkan"
         eyebrow="Hakkımızda"
         title="Fikirleri çalışan"
         accent="dijital ürünlere dönüştürüyoruz."
@@ -46,6 +47,33 @@ export default function AboutPage() {
           </>
         }
       />
+
+      <Section tone="white" labelledBy="kurucu">
+        <div className="grid items-start gap-8 lg:grid-cols-[auto_1fr] lg:gap-14">
+          <div aria-hidden className="grid h-28 w-28 place-items-center rounded-[2rem] bg-ink-950 text-4xl font-extrabold text-lime sm:h-36 sm:w-36 sm:text-5xl">
+            YB
+          </div>
+          <div className="max-w-3xl">
+            <SectionHeading id="kurucu" eyebrow="Kurucu" title={site.founder.name} accent="· Kurucu" className="!mb-5" />
+            <div className="space-y-4 text-lg">
+              <p>
+                HAYB’yi {site.founded} yılında Bursa’da kurdum. Yazılıma gelmeden önce yaklaşık 10 yıl tekstil üretimi ve perakendede çalıştım; üretim planı, stok, satış ve müşteri tarafını bizzat yaşadım.
+              </p>
+              <p>
+                Bu yüzden bir işletme sahibi “web sitesi” ya da “uygulama” dediğinde, aslında daha fazla müşteri, daha az el işi ve daha net takip istediğini bilirim. HAYB’de her projeyi bu gözle kuruyorum: önce işin derdini anlıyor, sonra tasarlayıp geliştiriyorum.
+              </p>
+              <p className="text-on-light-muted">
+                Web siteleri, e-ticaret, mobil uygulamalar ve App Store ile Google Play’de yayında olan BB Block oyunu bu yaklaşımla geliştirildi.
+              </p>
+            </div>
+            {site.founder.linkedin && (
+              <a href={site.founder.linkedin} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex min-h-11 items-center font-semibold underline underline-offset-4">
+                LinkedIn profili
+              </a>
+            )}
+          </div>
+        </div>
+      </Section>
 
       <Section tone="light" labelledBy="yaklasim">
         <SectionHeading id="yaklasim" eyebrow="Yaklaşımımız" title="Sadece hizmet değil," accent="gerçek bir ortaklık." text="İşe bir teslim tarihiyle değil, sizin hedefinizle başlarız." />

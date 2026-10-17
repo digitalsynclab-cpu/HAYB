@@ -46,6 +46,7 @@ export default function ContactPage() {
       <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'İletişim', path: '/iletisim' }]} />
       <FAQSchema items={faq.map((f) => ({ question: f.q, answer: f.a }))} />
       <PageHero
+        heading="İletişim: HAYB Bursa Web Tasarım ve Yazılım"
         eyebrow="İletişim"
         title="Bir fikriniz mi var?"
         accent="Konuşalım."

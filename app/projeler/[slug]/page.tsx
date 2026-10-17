@@ -63,6 +63,22 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           }}
         />
       )}
+      {!p.stores && (
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'CreativeWork',
+            name: p.name,
+            description: p.description,
+            url: absoluteUrl(`/projeler/${p.id}`),
+            image: absoluteUrl(p.image),
+            genre: p.type,
+            keywords: p.scope.join(', '),
+            ...(p.liveUrl && { sameAs: [p.liveUrl] }),
+            creator: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: site.name, url: site.url },
+          }}
+        />
+      )}
       <PageHero
         eyebrow={p.type}
         title={p.name}

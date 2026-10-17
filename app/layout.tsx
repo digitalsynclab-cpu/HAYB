@@ -36,19 +36,19 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  // Ana sayfa başlığı ve açıklaması mevcut indekslenmiş değerlerle aynı tutuldu.
+  // Ana sayfa başlığı: aranan kelimeler (Bursa, web tasarım, e-ticaret) + başlangıç fiyatı.
   title: {
-    default: 'HAYB | Dijital Ürün Stüdyosu',
+    default: 'HAYB | Bursa Web Tasarım, E-Ticaret ve Yazılım Stüdyosu',
     template: '%s | HAYB',
   },
   description:
-    'Web sistemleri, mobil uygulamalar, yapay zeka çözümleri ve özel yazılım ürünleri geliştiriyoruz. Premium dijital ürün stüdyosu.',
+    'Bursa’da web sitesi, e-ticaret, mobil uygulama ve özel yazılım. Web sitesi paketleri 5.000 ₺’den başlar, 3 günde teslim. Ücretsiz teklif alın.',
   applicationName: site.name,
   robots: { index: true, follow: true },
   alternates: { canonical: site.url },
   openGraph: {
-    title: 'HAYB | Dijital Ürün Stüdyosu',
-    description: 'Fikirleri gerçek dijital ürünlere dönüştürüyoruz. Web, mobil, AI ve özel yazılım geliştirme.',
+    title: 'HAYB | Bursa Web Tasarım, E-Ticaret ve Yazılım Stüdyosu',
+    description: 'Bursa’da web sitesi, e-ticaret, mobil uygulama ve özel yazılım. Web sitesi paketleri 5.000 ₺’den başlar, 3 günde teslim. Ücretsiz teklif alın.',
     url: site.url,
     siteName: site.name,
     locale: site.locale,
@@ -57,8 +57,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'HAYB | Dijital Ürün Stüdyosu',
-    description: 'Fikirleri gerçek dijital ürünlere dönüştürüyoruz.',
+    title: 'HAYB | Bursa Web Tasarım, E-Ticaret ve Yazılım Stüdyosu',
+    description: 'Bursa’da web sitesi, e-ticaret, mobil uygulama ve özel yazılım. Web sitesi paketleri 5.000 ₺’den başlar, 3 günde teslim. Ücretsiz teklif alın.',
     images: ['/og-image.png'],
   },
   // Doğrulama etiketleri yalnızca env tanımlıysa basılır (Search Console / Bing Webmaster henüz kurulmadı).

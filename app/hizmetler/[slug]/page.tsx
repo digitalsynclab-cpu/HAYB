@@ -78,6 +78,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
       <PageHero
         visualFirst
         eyebrow={s.title}
+        heading={s.metaTitle}
         title={s.heroTitle}
         accent={s.heroAccent}
         text={s.heroText}

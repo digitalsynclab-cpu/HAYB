@@ -10,6 +10,16 @@ export const site = {
   locale: 'tr_TR',
   /** Veri sorumlusu / ticari unvan (KVKK, gizlilik, asistan) */
   legalName: 'Dijital Ürün Geliştirme ve Satış Bireysel Hesap Yunus Emre Başkan - HAYB',
+  /**
+   * Kurucu (E-E-A-T). Hikâye sahibin kendi notundan alındı.
+   * linkedin / photo boş: gerçek bağlantı ve fotoğraf gelince doldurun (uydurma bağlantı eklenmez).
+   */
+  founder: {
+    name: 'Yunus Emre Başkan',
+    jobTitle: 'Kurucu, Yazılım Geliştirici',
+    linkedin: '',
+    photo: '',
+  },
   /** Doğrulanmış kuruluş yılı. */
   founded: 2025,
   /** Yayında olan diller. plannedLocales: henüz yayınlanmayan (llms.txt'te belirtilir, hreflang üretilmez). */

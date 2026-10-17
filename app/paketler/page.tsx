@@ -24,6 +24,10 @@ import {
 } from '@/data/pricing';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { buildMetadata } from '@/lib/metadata';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { ORGANIZATION_ID } from '@/components/schema/OrganizationSchema';
+import { campaign, priceParts } from '@/data/campaign';
+import { absoluteUrl, site } from '@/data/site';
 
 export const metadata = buildMetadata({
   title: 'Paketler: Web Sitesi, E-Ticaret, Sosyal Medya, QR Menü',
@@ -137,12 +141,46 @@ const tabs: PackageTab[] = [
   },
 ];
 
+/** Her paket için Service + Offer (sayfada görünen fiyatın aynısı; kampanya bitişi priceValidUntil). */
+function packagesSchema() {
+  const validUntil = campaign.endsAt.slice(0, 10);
+  const graph = tabs.flatMap((tab) =>
+    tab.cards.flatMap((card) => {
+      const parts = priceParts(card.plan.price);
+      if (!parts) return [];
+      const price = parts.sale.replace(/[^\d]/g, '');
+      return [
+        {
+          '@type': 'Service',
+          name: `${tab.category} Paketi: ${card.title ?? card.plan.name}`,
+          serviceType: tab.category,
+          provider: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: site.name, url: site.url },
+          areaServed: 'TR',
+          ...(card.plan.features.length > 0 && { description: card.plan.features.slice(0, 6).join(', ') }),
+          offers: {
+            '@type': 'Offer',
+            price,
+            priceCurrency: 'TRY',
+            priceValidUntil: validUntil,
+            availability: 'https://schema.org/InStock',
+            url: absoluteUrl(`/paketler#${tab.id}`),
+            ...(parts.suffix && { priceSpecification: { '@type': 'UnitPriceSpecification', price, priceCurrency: 'TRY', unitText: parts.suffix.replace(/^\/\s*/, '') } }),
+          },
+        },
+      ];
+    }),
+  );
+  return { '@context': 'https://schema.org', '@graph': graph };
+}
+
 export default function PricingPage() {
   return (
     <>
       <CampaignPopup />
+      <JsonLd data={packagesSchema()} />
       <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'Paketler', path: '/paketler' }]} />
       <PageHero
+        heading="Web Sitesi ve E-Ticaret Paketleri ve Fiyatları"
         title="Net paketler,"
         accent="sürpriz yok."
         text="Fiyatlar ve kapsam baştan bellidir. Kategoriyi seçin, size uygun paketi sepete ekleyin ya da özel bir ihtiyaç için teklif isteyin."

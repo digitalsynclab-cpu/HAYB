@@ -22,6 +22,7 @@ export default function ProcessPage() {
     <>
       <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'Süreç', path: '/surec' }]} />
       <PageHero
+        heading="Web Sitesi ve Yazılım Geliştirme Sürecimiz"
         eyebrow="Nasıl çalışıyoruz?"
         title="Fikirlerinizi adım adım"
         accent="gerçeğe dönüştürüyoruz."

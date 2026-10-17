@@ -13,6 +13,7 @@ import { insightBySlug, insights, readingMinutes } from '@/data/insights';
 import { projectById } from '@/data/projects';
 import { serviceBySlug } from '@/data/services';
 import { templateBySlug } from '@/data/templates';
+import { site } from '@/data/site';
 import { buildMetadata } from '@/lib/metadata';
 
 type Params = { slug: string };
@@ -67,7 +68,10 @@ export default async function InsightPage({ params }: { params: Promise<Params> 
           </nav>
           <h1 id="makale-baslik" className="text-balance text-[1.8rem] font-extrabold leading-[1.12] tracking-tight sm:text-4xl">{post.title}</h1>
           <p className="mt-4 text-sm text-fg-muted">
-            <time dateTime={post.date}>{formatDate(post.date)}</time> · {readingMinutes(post)} dk okuma · HAYB
+            <time dateTime={post.date}>{formatDate(post.date)}</time> · {readingMinutes(post)} dk okuma ·{' '}
+            <Link href="/hakkimizda" rel="author" className="hover:text-lime">
+              {site.founder.name}
+            </Link>
           </p>
         </div>
       </header>

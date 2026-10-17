@@ -8,6 +8,11 @@ import { SplitHeading } from '@/components/motion/SplitText';
 interface PageHeroProps {
   /** İsteğe bağlı: ana sayfada gösterilmez */
   eyebrow?: string;
+  /**
+   * SEO başlığı: verilirse H1 olarak sayfanın konusunu söyler (ör. "Web Sitesi Tasarımı ve Geliştirme"),
+   * büyük slogan (title + accent) görsel olarak aynı kalır ama H1 değil, alt başlık olur.
+   */
+  heading?: string;
   title: string;
   accent?: string;
   text?: ReactNode;
@@ -23,7 +28,7 @@ interface PageHeroProps {
 }
 
 /** Tüm iç sayfaların koyu hero bölümü. Bir sonraki bölüm üzerine eğriyle biner. */
-export function PageHero({ eyebrow, title, accent, text, actions, visual, breadcrumb, id = 'sayfa-baslik', visualFirst = false, backgroundSrc }: PageHeroProps) {
+export function PageHero({ eyebrow, heading, title, accent, text, actions, visual, breadcrumb, id = 'sayfa-baslik', visualFirst = false, backgroundSrc }: PageHeroProps) {
   return (
     <section aria-labelledby={id} className="tone-dark relative overflow-hidden pb-[calc(var(--hayb-curve)+2.5rem)] pt-[calc(var(--hayb-header-h)+2rem)] sm:pt-[calc(var(--hayb-header-h)+3rem)] lg:pt-[calc(var(--hayb-header-h)+4.5rem)]">
       {backgroundSrc && <Image src={backgroundSrc} alt="" fill priority sizes="100vw" aria-hidden className="pointer-events-none select-none object-cover object-center opacity-75" />}
@@ -54,9 +59,14 @@ export function PageHero({ eyebrow, title, accent, text, actions, visual, breadc
               <Eyebrow>{eyebrow}</Eyebrow>
             </div>
           )}
+          {heading && (
+            <h1 id={id} className="rise mb-4 text-sm font-bold uppercase tracking-[0.14em] text-lime sm:text-base">
+              {heading}
+            </h1>
+          )}
           <SplitHeading
-            as="h1"
-            id={id}
+            as={heading ? 'p' : 'h1'}
+            id={heading ? undefined : id}
             title={title}
             accent={accent}
             className="text-balance text-[2.15rem] font-extrabold leading-[1.06] tracking-tight sm:text-5xl lg:text-6xl"

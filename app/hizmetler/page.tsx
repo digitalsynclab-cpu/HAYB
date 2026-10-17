@@ -21,6 +21,7 @@ export default function ServicesPage() {
     <>
       <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'Hizmetler', path: '/hizmetler' }]} />
       <PageHero
+        heading="Hizmetlerimiz: Web Sitesi, E-Ticaret, Mobil Uygulama ve Yazılım"
         eyebrow="Hizmetlerimiz"
         title="İhtiyacınız neyse,"
         accent="dijital çözümünü tasarlıyoruz."

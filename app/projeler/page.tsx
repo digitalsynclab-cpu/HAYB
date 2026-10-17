@@ -19,6 +19,7 @@ export default function ProjectsPage() {
     <>
       <BreadcrumbSchema items={[{ name: 'Ana Sayfa', path: '/' }, { name: 'Projeler', path: '/projeler' }]} />
       <PageHero
+        heading="Projelerimiz ve Referanslarımız"
         eyebrow="Projelerimiz"
         title="Gerçek işletmeler için"
         accent="geliştirdiğimiz ürünler."

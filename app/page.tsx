@@ -1,10 +1,10 @@
-import { HomeHeroV2, HomeGroups, HomePackages } from '@/components/sections/HomeV2';
+import { HomeHeroV2, HomeGroups, HomeFeatured, HomePackages, HomeFaq } from '@/components/sections/HomeV2';
 import { PartnerTeaser } from '@/components/sections/PartnerTeaser';
 import { CTASection } from '@/components/sections/CTASection';
 import { OrganizationSchema } from '@/components/schema/OrganizationSchema';
 import { WebSiteSchema } from '@/components/schema/WebSiteSchema';
 
-// Ana sayfa title/description/canonical layout.tsx içindeki (mevcut) değerleri kullanır.
+// Ana sayfa title/description/canonical layout.tsx içindeki değerleri kullanır.
 export default function Home() {
   return (
     <>
@@ -13,7 +13,9 @@ export default function Home() {
       <WebSiteSchema />
       <HomeHeroV2 />
       <HomeGroups />
+      <HomeFeatured />
       <HomePackages />
+      <HomeFaq />
       <PartnerTeaser />
       <CTASection />
     </>

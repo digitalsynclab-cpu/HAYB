@@ -28,7 +28,7 @@ export function ArticleSchema({ title, description, path, datePublished, dateMod
         datePublished,
         dateModified: dateModified ?? datePublished,
         image: absoluteUrl('/og-image.png'),
-        author: org,
+        author: { '@type': 'Person', name: S.founder.name, jobTitle: S.founder.jobTitle, url: absoluteUrl('/hakkimizda'), worksFor: org },
         publisher: { ...org, logo: { '@type': 'ImageObject', url: absoluteUrl('/og-image.png') } },
         inLanguage: 'tr',
         ...(category && { articleSection: category }),
