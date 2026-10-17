@@ -188,12 +188,11 @@ export function HomePackages() {
 
 /** 3B vitrinde dönen projeler (masaüstü + mobil ekran görüntüsü olanlar). */
 const SHOWCASE: ShowcaseProject[] = [
-  { id: 'tigerwood', name: 'TIGERWOOD', type: 'Kurumsal Web Sitesi', description: 'Atıkları panele dönüştüren 3B deneyimli kurumsal site.' },
   { id: 'baskanhavlu', name: 'Başkan Havlu Tekstil', type: 'Kurumsal Web Sitesi', description: '1996’dan beri havlu ve bornoz üreticisi. Türkçe ve İngilizce.' },
-  { id: 'gurgentekstil', name: 'Gürgentekstil', type: 'Kurumsal Web Sitesi', description: 'Toptan havlu üreticisi. Ürün kodlu katalog, WhatsApp ile teklif.' },
-  { id: 'msgko', name: 'MSGKO', type: 'Oyun Rehber Platformu', description: 'Knight Online oyuncuları için rehber, video ve galeri platformu.' },
+  { id: 'tigerwood', name: 'TIGERWOOD', type: 'Kurumsal Web Sitesi', description: 'Atıkları panele dönüştüren 3B deneyimli kurumsal site.' },
   { id: 'eyegames', name: 'Eye Games', type: 'Oyun Stüdyosu Sitesi', description: 'BB Block’un geliştiricisi bağımsız oyun stüdyosu.' },
-  { id: 'talebenet', name: 'Taleb-e.net', type: 'Öğrenci Forumu', description: 'Lise ve üniversite öğrencileri için forum ve bilgi paylaşımı.' },
+  { id: 'taleb-e', name: 'Taleb-e', type: 'Burs Platformu', description: 'Öğrencileri bağışçılarla doğrudan buluşturan, komisyonsuz burs platformu.', desktop: '/images/showcase/taleb-e-d.webp', mobile: '/images/showcase/taleb-e-m.webp' },
+  { id: 'msgko', name: 'MSGKO', type: 'Oyun Rehber Platformu', description: 'Knight Online oyuncuları için rehber, video ve galeri platformu.' },
 ];
 
 const FEATURED_IDS = ['bbblock', 'hayb-data-service', 'tigerwood', 'baskanhavlu', 'gurgentekstil', 'bebeklersoruyor', 'taleb-e', 'talebenet', 'msgko', 'eyegames'];

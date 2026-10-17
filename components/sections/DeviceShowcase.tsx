@@ -10,6 +10,9 @@ export interface ShowcaseProject {
   name: string;
   type: string;
   description: string;
+  /** Varsayılan proje görseli yerine vitrine özel ekran görüntüsü (ör. uygulama değil web sitesi) */
+  desktop?: string;
+  mobile?: string;
 }
 
 type Hint = 'rotate' | 'zoom' | 'scroll';
@@ -86,8 +89,8 @@ export function DeviceShowcase({ projects }: { projects: ShowcaseProject[] }) {
             if (cancelled || handleRef.current) return;
             handleRef.current = mountShowcase({
               canvas,
-              desktopImages: projects.map((p) => `/images/projects/${p.id}.webp`),
-              mobileImages: projects.map((p) => `/images/apps/${p.id}/1.webp`),
+              desktopImages: projects.map((p) => p.desktop ?? `/images/projects/${p.id}.webp`),
+              mobileImages: projects.map((p) => p.mobile ?? `/images/apps/${p.id}/1.webp`),
               getProgress,
               onProject: setIndex,
               onReady: () => setReady(true),
@@ -150,7 +153,7 @@ export function DeviceShowcase({ projects }: { projects: ShowcaseProject[] }) {
           <div className="absolute inset-x-4 top-[30%] bottom-[34%] mx-auto max-w-3xl">
             <Image
               key={p.id}
-              src={`/images/projects/${p.id}.webp`}
+              src={p.desktop ?? `/images/projects/${p.id}.webp`}
               alt={`${p.name} web sitesi ekran görüntüsü`}
               fill
               sizes="(min-width: 768px) 768px, 92vw"
