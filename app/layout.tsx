@@ -16,7 +16,8 @@ import { LanguageModal } from '@/components/i18n/LanguageSwitcher';
 import { EntityBlock } from '@/components/schema/EntityBlock';
 import { Analytics } from '@/components/analytics/Analytics';
 
-const googleVerification = process.env['NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION'];
+// Search Console doğrulama kodu herkese açıktır (sayfa kaynağında görünür); env tanımlıysa o kullanılır.
+const googleVerification = process.env['NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION'] || 'KgvAc16VDQQPQuv7H1Vb4EkKrFooCxfcmRqugcfqBvM';
 const bingVerification = process.env['NEXT_PUBLIC_BING_SITE_VERIFICATION'];
 
 // Türkçe karakterler (ş, ğ, ı, İ) için latin-ext zorunlu.
@@ -61,7 +62,7 @@ export const metadata: Metadata = {
     description: 'Bursa’da web sitesi, e-ticaret, mobil uygulama ve özel yazılım. Web sitesi paketleri 5.000 ₺’den başlar, 3 günde teslim. Ücretsiz teklif alın.',
     images: ['/og-image.png'],
   },
-  // Doğrulama etiketleri yalnızca env tanımlıysa basılır (Search Console / Bing Webmaster henüz kurulmadı).
+  // Search Console doğrulaması (Bing Webmaster, Search Console'dan içe aktarılabilir).
   ...((googleVerification || bingVerification) && {
     verification: {
       ...(googleVerification && { google: googleVerification }),
