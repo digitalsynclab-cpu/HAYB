@@ -14,6 +14,7 @@ export interface ShowcaseOptions {
   getProgress: () => number;
   onProject: (index: number) => void;
   onReady: () => void;
+  onError: () => void;
   onGesture: (kind: 'rotate' | 'zoom') => void;
   reduceMotion: boolean;
 }
@@ -90,19 +91,31 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
   const rubber = new THREE.MeshStandardMaterial({ color: '#111', roughness: 0.9 });
 
   const loader = new THREE.TextureLoader();
-  let pending = 0;
-  const tex = (src: string) => {
-    pending++;
-    const t = loader.load(src, () => {
-      pending--;
-      if (pending === 0) o.onReady();
+  const n = o.desktopImages.length;
+  // Görsel inene kadar ekran siyah değil, koyu gri kalır
+  const placeholder = new THREE.DataTexture(new Uint8Array([18, 18, 20, 255]), 1, 1);
+  placeholder.needsUpdate = true;
+  const desk: THREE.Texture[] = Array.from({ length: n }, () => placeholder);
+  const mob: THREE.Texture[] = Array.from({ length: n }, () => placeholder);
+  const loaded: boolean[] = Array.from({ length: n }, () => false);
+  let disposed = false;
+  const load = (src: string) =>
+    loader.loadAsync(src).then((t) => {
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      return t;
     });
-    t.colorSpace = THREE.SRGBColorSpace;
-    t.anisotropy = renderer.capabilities.getMaxAnisotropy();
-    return t;
+  const loadPair = async (i: number) => {
+    const [d, m] = await Promise.all([load(o.desktopImages[i]!), load(o.mobileImages[i]!)]);
+    if (disposed) {
+      d.dispose();
+      m.dispose();
+      return;
+    }
+    desk[i] = d;
+    mob[i] = m;
+    loaded[i] = true;
   };
-  const desk = o.desktopImages.map(tex);
-  const mob = o.mobileImages.map(tex);
 
   const screenMat = (t: THREE.Texture, aspect: number, radius: number, imgAspect: number, notch: number) =>
     new THREE.ShaderMaterial({
@@ -177,7 +190,7 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
   lid.add(lidFront);
   const sw = W - 0.16;
   const shh = LH - 0.16;
-  const lapMat = screenMat(desk[0]!, sw / shh, 0.02, 1400 / 933, 1);
+  const lapMat = screenMat(placeholder, sw / shh, 0.02, 1400 / 933, 1);
   const lapScreen = new THREE.Mesh(new THREE.PlaneGeometry(sw, shh), lapMat);
   lapScreen.position.set(0, LH / 2 + 0.02, 0.011);
   lid.add(lapScreen);
@@ -194,7 +207,7 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
   const front = new THREE.Mesh(new RoundedBoxGeometry(PW - 0.03, PH - 0.03, 0.01, 10, 0.004), glassBlack);
   front.position.z = PD / 2 - 0.002;
   phone.add(front);
-  const phMat = screenMat(mob[0]!, (PW - 0.09) / (PH - 0.09), 0.065, 720 / 1560, 0.5);
+  const phMat = screenMat(placeholder, (PW - 0.09) / (PH - 0.09), 0.065, 720 / 1560, 0.5);
   const phScreen = new THREE.Mesh(new THREE.PlaneGeometry(PW - 0.09, PH - 0.09), phMat);
   phScreen.position.z = PD / 2 + 0.0045;
   phone.add(phScreen);
@@ -296,19 +309,36 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
   window.addEventListener('pointermove', onHover);
 
   /* Proje geçişi */
-  let current = -1;
-  const goTo = (i: number) => {
-    if (i === current) return;
-    const prev = current < 0 ? i : current;
-    current = i;
+  let current = 0;
+  let lastStep = -10;
+  const show = (i: number, from: number) => {
     for (const [m, arr] of [[lapMat, desk], [phMat, mob]] as const) {
-      m.uniforms.a!.value = arr[prev];
+      m.uniforms.a!.value = arr[from];
       m.uniforms.b!.value = arr[i];
-      m.uniforms.mixv!.value = prev === i ? 1 : 0;
+      m.uniforms.mixv!.value = from === i ? 1 : 0;
     }
+    current = i;
     o.onProject(i);
   };
-  goTo(0);
+  // İlk proje inince sahne görünür; diğerleri arkadan sırayla iner
+  void loadPair(0)
+    .then(() => {
+      if (disposed) return;
+      show(0, 0);
+      o.onReady();
+      return (async () => {
+        for (let i = 1; i < n && !disposed; i++) await loadPair(i);
+      })();
+    })
+    .catch(() => o.onError());
+  const STEP_GAP = 0.65;
+  const stepToward = (target: number, now: number) => {
+    if (target === current || now - lastStep < STEP_GAP) return;
+    const next = current + Math.sign(target - current);
+    if (!loaded[next]) return;
+    lastStep = now;
+    show(next, current);
+  };
 
   const resize = () => {
     const w = cv.clientWidth;
@@ -337,7 +367,7 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
     const p = o.getProgress();
     const intro = Math.min(1, p / 0.08);
     const rest = Math.max(0, (p - 0.08) / 0.92);
-    goTo(Math.min(steps - 1, Math.floor(rest * steps * 0.9999)));
+    if (loaded[0]) stepToward(Math.min(steps - 1, Math.floor(rest * steps * 0.9999)), t);
 
     openT = Math.min(1, openT + dt * 0.55);
     lid.rotation.x = THREE.MathUtils.lerp(Math.PI / 2 - 0.02, -0.28, ease(Math.max(openT, intro)));
@@ -389,6 +419,7 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
       } else cancelAnimationFrame(raf);
     },
     destroy() {
+      disposed = true;
       cancelAnimationFrame(raf);
       ro.disconnect();
       cv.removeEventListener('pointerdown', onDown);
@@ -405,7 +436,7 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
         if (Array.isArray(mat)) mat.forEach((m) => m.dispose());
         else mat?.dispose();
       });
-      [...desk, ...mob, kt, contactTex, envTex].forEach((t) => t.dispose());
+      new Set([...desk, ...mob, placeholder, kt, contactTex, envTex]).forEach((t) => t.dispose());
       pmrem.dispose();
       renderer.dispose();
     },

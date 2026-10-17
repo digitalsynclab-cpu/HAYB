@@ -17,6 +17,9 @@ export interface ShowcaseProject {
 
 type Hint = 'rotate' | 'zoom' | 'scroll';
 
+/** Proje başına kaydırma mesafesi (ekran yüksekliği yüzdesi). */
+const STEP_VH = 85;
+
 /** WebGL yoksa (eski tarayıcı / kapalı donanım hızlandırma) 3B sahne açılmaz, sabit görsel gösterilir. */
 function hasWebGL(): boolean {
   try {
@@ -80,41 +83,61 @@ export function DeviceShowcase({ projects }: { projects: ShowcaseProject[] }) {
     }
     let cancelled = false;
     let visible = false;
-    const io = new IntersectionObserver(
-      async ([entry]) => {
-        visible = Boolean(entry?.isIntersecting);
-        if (visible && !handleRef.current && !cancelled) {
-          try {
-            const { mountShowcase } = await import('@/lib/three/device-showcase');
-            if (cancelled || handleRef.current) return;
-            handleRef.current = mountShowcase({
-              canvas,
-              desktopImages: projects.map((p) => p.desktop ?? `/images/projects/${p.id}.webp`),
-              mobileImages: projects.map((p) => p.mobile ?? `/images/apps/${p.id}/1.webp`),
-              getProgress,
-              onProject: setIndex,
-              onReady: () => setReady(true),
-              onGesture: markDone,
-              reduceMotion: reduce,
-            });
-            setMode('3d');
-          } catch {
-            setMode('static');
-            return;
-          }
-        }
-        handleRef.current?.setActive(visible);
-      },
-      { rootMargin: '400px 0px' },
-    );
-    io.observe(section);
+    let mounting: Promise<void> | null = null;
+    // Sahne ziyaretçi gelmeden hazırlanır: sayfa açıldıktan sonra boşta kalınca ya da bölüme ~2 ekran kala
+    const mount = () => {
+      if (mounting || cancelled) return mounting;
+      mounting = import('@/lib/three/device-showcase')
+        .then(({ mountShowcase }) => {
+          if (cancelled || handleRef.current) return;
+          handleRef.current = mountShowcase({
+            canvas,
+            desktopImages: projects.map((p) => p.desktop ?? `/images/projects/${p.id}.webp`),
+            mobileImages: projects.map((p) => p.mobile ?? `/images/apps/${p.id}/1.webp`),
+            getProgress,
+            onProject: setIndex,
+            onReady: () => setReady(true),
+            onError: () => setMode('static'),
+            onGesture: markDone,
+            reduceMotion: reduce,
+          });
+          setMode('3d');
+          handleRef.current.setActive(visible);
+        })
+        .catch(() => setMode('static'));
+      return mounting;
+    };
+    const near = new IntersectionObserver(([e]) => { if (e?.isIntersecting) void mount(); }, { rootMargin: '200% 0px' });
+    const onScreen = new IntersectionObserver(([e]) => {
+      visible = Boolean(e?.isIntersecting);
+      handleRef.current?.setActive(visible);
+    });
+    near.observe(section);
+    onScreen.observe(section);
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number; cancelIdleCallback?: (id: number) => void };
+    const idleId = w.requestIdleCallback ? w.requestIdleCallback(() => void mount(), { timeout: 4000 }) : window.setTimeout(() => void mount(), 2500);
     return () => {
       cancelled = true;
-      io.disconnect();
+      near.disconnect();
+      onScreen.disconnect();
+      if (w.cancelIdleCallback) w.cancelIdleCallback(idleId);
+      else window.clearTimeout(idleId);
       handleRef.current?.destroy();
       handleRef.current = null;
     };
   }, [projects, getProgress, markDone]);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const root = document.documentElement;
+    const io = new IntersectionObserver(([e]) => root.classList.toggle('showcase-snapping', Boolean(e?.isIntersecting)), { threshold: 0.01 });
+    io.observe(section);
+    return () => {
+      io.disconnect();
+      root.classList.remove('showcase-snapping');
+    };
+  }, []);
 
   // Kaydırma: başlık gizlenir, kaydırma ipucu tamamlanır; statik modda proje kaydırmayla seçilir
   useEffect(() => {
@@ -146,8 +169,12 @@ export function DeviceShowcase({ projects }: { projects: ShowcaseProject[] }) {
       ref={sectionRef}
       aria-labelledby="vitrin-baslik"
       className="relative bg-black"
-      style={{ height: `${Math.round(100 + projects.length * 55)}vh` }}
+      style={{ height: `${100 + projects.length * STEP_VH}vh` }}
     >
+      {/* Her proje için yumuşak durak noktası: hızlı kaydırmada bile her projede hafifçe durur */}
+      {[0, ...projects.map((_, i) => 0.08 + ((i + 0.5) / projects.length) * 0.92)].map((f, i) => (
+        <span key={i} aria-hidden className="showcase-snap pointer-events-none absolute left-0 h-px w-px" style={{ top: `${(f * projects.length * STEP_VH).toFixed(2)}vh` }} />
+      ))}
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-[radial-gradient(60%_55%_at_50%_52%,#1d1d1f_0%,#0a0a0a_55%,#000_100%)]">
         {mode === 'static' ? (
           <div className="absolute inset-x-4 top-[30%] bottom-[34%] mx-auto max-w-3xl">
@@ -161,11 +188,18 @@ export function DeviceShowcase({ projects }: { projects: ShowcaseProject[] }) {
             />
           </div>
         ) : (
+          <>
+          {!ready && (
+            <div aria-hidden className="absolute inset-x-6 top-[34%] bottom-[36%] mx-auto max-w-2xl animate-pulse">
+              <Image src={projects[0]!.desktop ?? `/images/projects/${projects[0]!.id}.webp`} alt="" fill sizes="(min-width: 768px) 672px, 88vw" className="rounded-xl object-contain opacity-60" priority={false} />
+            </div>
+          )}
           <canvas
             ref={canvasRef}
             aria-hidden
             className={`absolute inset-0 h-full w-full cursor-grab touch-pan-y transition-opacity duration-700 active:cursor-grabbing ${ready ? 'opacity-100' : 'opacity-0'}`}
           />
+          </>
         )}
 
         {/* Apple tarzı soluk ipuçları: hareket yapılınca kaybolur */}
