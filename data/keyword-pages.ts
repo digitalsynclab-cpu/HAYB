@@ -138,7 +138,7 @@ export const keywordPages: KeywordPage[] = [
       { q: 'Yıllık ücret ödüyor muyum?', a: 'Paket fiyatı site tasarımı ve geliştirmesi içindir. Alan adı ilk 1–2 yıl ücretsizdir; sonrasındaki yenileme ücretini baştan paylaşırız.' },
       { q: 'Fiyatlar neden indirimli görünüyor?', a: 'Sitede gösterilen fiyatlar açılış kampanyası fiyatlarıdır; kampanya bitiş tarihi Paketler sayfasında yazar.' },
     ],
-    projectIds: ['baskanhavlu', 'tigerwood', 'msgko'],
+    projectIds: ['baskanhavlu', 'gurgentekstil', 'tigerwood'],
     related: [
       { label: 'Tüm paketler', href: '/paketler' },
       { label: 'Web sitesi yaptırmak', href: '/web-sitesi-yaptirmak' },
@@ -321,7 +321,7 @@ export const keywordPages: KeywordPage[] = [
       { q: 'Yazılımın kaynak kodu kime ait olur?', a: 'Sahiplik ve teslim koşullarını teklif ve sözleşmede açıkça yazıyoruz.' },
       { q: 'Sadece Bursa’da mı hizmet veriyorsunuz?', a: 'Hayır. Bursa merkezliyiz; Türkiye genelinde uzaktan çalışıyoruz.' },
     ],
-    projectIds: ['ekotakippro', 'taleb-e', 'qrmenu'],
+    projectIds: ['hayb-data-service', 'ekotakippro', 'talebenet'],
     related: [
       { label: 'Özel yazılım hizmeti', href: '/hizmetler/ozel-yazilim' },
       { label: 'Yönetim paneli', href: '/hizmetler/yonetim-paneli' },

@@ -185,7 +185,7 @@ export function HomePackages() {
   );
 }
 
-const FEATURED_IDS = ['bbblock', 'tigerwood', 'baskanhavlu', 'bebeklersoruyor', 'taleb-e', 'msgko', 'eyegames', 'ekotakippro'];
+const FEATURED_IDS = ['bbblock', 'hayb-data-service', 'tigerwood', 'baskanhavlu', 'gurgentekstil', 'bebeklersoruyor', 'taleb-e', 'talebenet', 'msgko', 'eyegames'];
 
 const badgeOf = (p: Project) =>
   p.stores ? [p.stores.appStore && 'App Store', p.stores.googlePlay && 'Google Play'].filter(Boolean).join(' · ') : p.liveUrl ? 'Canlı site' : p.scope.slice(0, 2).join(' · ');

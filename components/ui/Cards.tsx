@@ -110,7 +110,10 @@ export function ProjectCard({ project, priority = false }: { project: Project; p
     <article data-spot className="group relative flex h-full flex-col overflow-hidden rounded-card border border-white/10 bg-ink-800 transition duration-300 ease-out hover:-translate-y-1 hover:border-lime/50">
       <ProjectImage project={project} priority={priority} sizes="(min-width: 1024px) 380px, (min-width: 640px) 46vw, 92vw" className="aspect-[4/3]" />
       <div className="flex flex-1 flex-col p-6">
-        <p className="text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-lime">{project.type}</p>
+        <p className="text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-lime">
+          {project.type}
+          {project.sample && <span className="ml-2 rounded-full border border-white/20 px-2 py-0.5 text-[0.7rem] tracking-[0.08em] text-fg-muted">Örnek tasarım</span>}
+        </p>
         <h3 className="mt-2 text-xl font-bold">
           <Link href={`/projeler/${project.id}`} className="after:absolute after:inset-0">
             {project.name}

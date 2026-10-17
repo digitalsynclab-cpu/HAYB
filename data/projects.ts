@@ -25,9 +25,15 @@ export interface Project {
   scope: string[];
   liveUrl?: string;
   stores?: StoreLinks;
+  /** Örnek / şablon çalışma (gerçek müşteri işi değil): kartta ve sayfada "Örnek tasarım" etiketi */
+  sample?: boolean;
+  /** Masaüstü ekran görüntüleri (yazılım ürünleri için yatay galeri) */
+  desktopShots?: { src: string; title: string }[];
   /** Uygulama ekran görüntüleri (ilki kapaktır) */
   gallery?: string[];
 }
+
+import { DS_APP_URL, dsScreens } from '@/data/data-service';
 
 const shots = (slug: string, n: number) => Array.from({ length: n }, (_, i) => `/images/apps/${slug}/${i + 1}.webp`);
 
@@ -173,41 +179,89 @@ export const projects: Project[] = [
     gallery: shots('msgko', 5),
   },
   {
+    id: 'hayb-data-service',
+    name: 'HAYB Data Service',
+    type: 'Yazılım Ürünü',
+    filters: ['Yazılım', 'Dashboard'],
+    image: '/images/projects/hayb-data-service.webp',
+    imageAlt: 'HAYB Data Service müşteri adayları ekranı: işletmeler fırsat skoru ve iletişim bilgileriyle listeleniyor',
+    imageTone: 'cover',
+    description:
+      'Kendi geliştirdiğimiz müşteri bulma, site analizi ve satış takibi programı. Şehir ve sektöre göre işletmeleri iletişim bilgileriyle listeler, web sitelerini SEO, hız ve güvenlik açısından puanlar, bulgulardan teklif hazırlar ve satışları panoda takip eder. Windows programı olarak ve tarayıcıdan çalışır.',
+    serviceSlugs: ['hayb-data-service', 'ozel-yazilim', 'yonetim-paneli'],
+    scope: ['Windows', 'Web Uygulaması', 'Veri', 'Satış Takibi'],
+    liveUrl: DS_APP_URL,
+    desktopShots: dsScreens.map(({ src, title }) => ({ src, title })),
+  },
+  {
+    id: 'gurgentekstil',
+    name: 'Gürgentekstil',
+    type: 'Kurumsal Web Sitesi',
+    filters: ['Web', 'UI/UX'],
+    image: '/images/projects/gurgentekstil.webp',
+    imageAlt: 'Gürgentekstil toptan havlu üreticisi kurumsal web sitesi ana sayfası',
+    imageTone: 'cover',
+    description:
+      'Denizli’de toptan havlu üretimi ve tedariki yapan Gürgentekstil için kurumsal web sitesi. El, yüz, banyo ve otel havlusu ürün grupları, ürün kodlu katalog, hazır stok ve özel üretim bilgisi, WhatsApp ile teklif ve Türkçe/İngilizce dil desteği.',
+    serviceSlugs: ['web-sitesi', 'ui-ux'],
+    scope: ['Kurumsal Web', 'Ürün Kataloğu', 'Çoklu Dil', 'SEO'],
+    liveUrl: 'https://gürgentekstil.com',
+    gallery: shots('gurgentekstil', 5),
+  },
+  {
+    id: 'talebenet',
+    name: 'Taleb-e.net',
+    type: 'Öğrenci Forumu',
+    filters: ['Web', 'Yazılım'],
+    image: '/images/projects/talebenet.webp',
+    imageAlt: 'Taleb-e.net lise ve üniversite öğrencileri forumu ana sayfası',
+    imageTone: 'cover',
+    description:
+      'Lise ve üniversite öğrencilerinin eğitim, sınavlar, üniversite, kariyer ve öğrenci hayatı hakkında konu açıp bilgi paylaştığı forum. Kategori ve alt forumlar, üyelik, mesajlaşma, popüler konular, forum istatistikleri ve mobilde uygulama gibi alt menü.',
+    serviceSlugs: ['web-sitesi', 'ozel-yazilim', 'ui-ux'],
+    scope: ['Forum Yazılımı', 'Üyelik', 'Mesajlaşma', 'Mobil Uyum'],
+    liveUrl: 'https://taleb-e.net',
+    gallery: shots('talebenet', 5),
+  },
+  {
     id: 'webevtekstil',
+    sample: true,
     name: 'Ev Tekstili Web Sitesi',
     type: 'Kurumsal Web Sitesi',
     filters: ['Web', 'UI/UX'],
     image: '/images/projects/webevtekstil.webp',
-    imageAlt: 'Ev tekstili markası web sitesi ana sayfa tasarımı',
+    imageAlt: 'Ev tekstili sektörü için örnek web sitesi ana sayfa tasarımı',
     imageTone: 'transparent',
     description:
-      'Ev tekstili markası için modern, ürün odaklı kurumsal web sitesi. Koleksiyon sayfaları, marka kimliği ve iletişim altyapısı.',
+      'Örnek tasarım: ev tekstili sektörü için hazırladığımız modern, ürün odaklı kurumsal web sitesi. Koleksiyon sayfaları, marka kimliği ve iletişim altyapısı. Marka ve içerik kurgusaldır.',
     serviceSlugs: ['web-sitesi', 'ui-ux'],
     scope: ['Web Tasarım', 'UI/UX', 'Geliştirme'],
   },
   {
     id: 'webinsaat',
+    sample: true,
     name: 'İnşaat & Yapı Web Sitesi',
     type: 'Kurumsal Web Sitesi',
     filters: ['Web', 'UI/UX'],
     image: '/images/projects/webinsaat.webp',
-    imageAlt: 'İnşaat ve yapı firması web sitesi ana sayfa tasarımı',
+    imageAlt: 'İnşaat ve yapı sektörü için örnek web sitesi ana sayfa tasarımı',
     imageTone: 'transparent',
     description:
-      'İnşaat ve yapı firması için proje vitrinli, referans portföylü kurumsal web sitesi. Güven odaklı tasarım ve mobil uyumlu altyapı.',
+      'Örnek tasarım: inşaat ve yapı sektörü için hazırladığımız proje vitrinli, referans portföylü kurumsal web sitesi. Güven odaklı tasarım ve mobil uyumlu altyapı. Marka ve içerik kurgusaldır.',
     serviceSlugs: ['web-sitesi', 'ui-ux'],
     scope: ['Web Tasarım', 'UI/UX', 'Geliştirme'],
   },
   {
     id: 'websosyal',
+    sample: true,
     name: 'Sosyal Medya Ajansı Web Sitesi',
     type: 'Kurumsal Web Sitesi',
     filters: ['Web', 'UI/UX'],
     image: '/images/projects/websosyal.webp',
-    imageAlt: 'Sosyal medya ajansı web sitesi ana sayfa tasarımı',
+    imageAlt: 'Sosyal medya ajansları için örnek web sitesi ana sayfa tasarımı',
     imageTone: 'transparent',
     description:
-      'Dijital pazarlama ve sosyal medya ajansı için hizmet odaklı, dinamik kurumsal web sitesi. Hizmet paketleri ve müşteri kazanım odaklı tasarım.',
+      'Örnek tasarım: dijital pazarlama ve sosyal medya ajansları için hazırladığımız hizmet odaklı, dinamik kurumsal web sitesi. Hizmet paketleri ve müşteri kazanım odaklı tasarım. Marka ve içerik kurgusaldır.',
     serviceSlugs: ['web-sitesi', 'sosyal-medya'],
     scope: ['Web Tasarım', 'UI/UX', 'Geliştirme'],
   },
@@ -225,6 +279,7 @@ export const referenceSites = [
   { domain: 'bebeklersoruyor.com', url: 'https://bebeklersoruyor.com' },
   { domain: 'taleb-e.com', url: 'https://taleb-e.com' },
   { domain: 'tigerwoodrec.com', url: 'https://tigerwoodrec.com' },
+  { domain: 'taleb-e.net', url: 'https://taleb-e.net' },
 ] as const;
 
 export const GAME = {

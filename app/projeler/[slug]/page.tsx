@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
@@ -89,13 +90,19 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           <>
             {p.liveUrl && (
               <Button href={p.liveUrl} external>
-                Canlı Siteyi Aç
+                {p.desktopShots ? 'Programa Giriş Yap' : 'Canlı Siteyi Aç'}
               </Button>
             )}
             {p.stores && <StoreButtons stores={p.stores} />}
-            <Button href="/proje-baslat" variant={p.liveUrl || p.stores ? 'secondary' : 'primary'}>
-              Benzer Bir Proje İstiyorum
-            </Button>
+            {p.desktopShots ? (
+              <Button href="/hizmetler/hayb-data-service" variant="secondary">
+                Paketleri ve Fiyatları Gör
+              </Button>
+            ) : (
+              <Button href="/proje-baslat" variant={p.liveUrl || p.stores ? 'secondary' : 'primary'}>
+                Benzer Bir Proje İstiyorum
+              </Button>
+            )}
           </>
         }
         visual={
@@ -109,6 +116,22 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         <Section tone="dark-2" labelledBy="ekranlar">
           <SectionHeading id="ekranlar" eyebrow={isApp ? 'Uygulama ekranları' : 'Mobil ekranlar'} title={`${p.name}`} accent={isApp ? 'ekran ekran inceleyin.' : 'telefonda nasıl görünüyor?'} />
           <ScreenGallery name={p.name} images={p.gallery} kind={isApp ? 'uygulaması' : 'web sitesi mobil'} />
+        </Section>
+      )}
+
+      {p.desktopShots && (
+        <Section tone="dark-2" labelledBy="ekranlar">
+          <SectionHeading id="ekranlar" eyebrow="Program ekranları" title={p.name} accent="ekran ekran inceleyin." />
+          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {p.desktopShots.map((d) => (
+              <li key={d.src}>
+                <figure className="overflow-hidden rounded-card border border-white/10 bg-ink-800">
+                  <Image src={d.src} alt={`${p.name}: ${d.title} ekranı`} width={1600} height={1118} sizes="(min-width:1024px) 380px, (min-width:640px) 46vw, 92vw" className="h-auto w-full" />
+                  <figcaption className="px-4 py-3 text-sm font-semibold">{d.title}</figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
         </Section>
       )}
 
