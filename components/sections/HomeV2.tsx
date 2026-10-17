@@ -16,7 +16,7 @@ import { webPackages, ecommercePackages, socialMediaPlans, webPricingRows } from
 import { campaign } from '@/data/campaign';
 import { projectById, referenceSites, type Project } from '@/data/projects';
 import { services } from '@/data/services';
-import { ProjectCard } from '@/components/ui/Cards';
+import { FeaturedProjects, type FeaturedItem } from '@/components/sections/FeaturedProjects';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 /** Ana sayfa (yeni düzen): tek vaat, tek ana çağrı; ayrıntılar menülerde ve kendi sayfalarında. */
@@ -185,46 +185,43 @@ export function HomePackages() {
   );
 }
 
-const FEATURED_IDS = ['bbblock', 'tigerwood', 'bebeklersoruyor', 'taleb-e'];
+const FEATURED_IDS = ['bbblock', 'tigerwood', 'bebeklersoruyor', 'taleb-e', 'ekotakippro', 'qrmenu'];
 
-/** Öne çıkan gerçek projeler + yalnızca sitedeki veriden sayılan (uydurma olmayan) rakamlar. */
+const badgeOf = (p: Project) =>
+  p.stores ? [p.stores.appStore && 'App Store', p.stores.googlePlay && 'Google Play'].filter(Boolean).join(' · ') : p.liveUrl ? 'Canlı site' : p.scope.slice(0, 2).join(' · ');
+
+/** Öne çıkan gerçek projeler (kompakt liste) + yalnızca sitedeki veriden sayılan rakamlar. Zemin tam siyah. */
 export function HomeFeatured() {
-  const list = FEATURED_IDS.map(projectById).filter((p): p is Project => Boolean(p));
+  const items: FeaturedItem[] = FEATURED_IDS.map(projectById)
+    .filter((p): p is Project => Boolean(p))
+    .map((p) => ({ id: p.id, name: p.name, type: p.type, description: p.description, image: p.image, imageAlt: p.imageAlt, imageTone: p.imageTone, badge: badgeOf(p) }));
   const facts = [
     { value: String(referenceSites.length), label: 'canlı referans site' },
-    { value: 'iOS + Android', label: 'App Store ve Google Play’de yayında mobil oyun' },
+    { value: 'iOS + Android', label: 'mağazalarda yayında oyun' },
     { value: String(services.length), label: 'hizmet tek çatı altında' },
-    { value: START_WEB_DAYS, label: 'Starter web sitesi teslim süresi' },
+    { value: START_WEB_DAYS, label: 'en hızlı web sitesi teslimi' },
   ];
   return (
-    <Section tone="dark-2" labelledBy="one-cikan-projeler">
-      <SectionHeading
-        id="one-cikan-projeler"
-        title="Yayında olan"
-        accent="gerçek projelerimiz."
-        action={
-          <Button href="/projeler" variant="secondary" arrow>
+    <Section tone="dark" labelledBy="one-cikan-projeler" className="!bg-black">
+      <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <h2 id="one-cikan-projeler" className="text-balance text-[1.75rem] font-extrabold leading-[1.1] tracking-tight sm:text-4xl">
+            Yayında olan <span className="accent-text">gerçek projelerimiz.</span>
+          </h2>
+          <dl className="mt-7 grid grid-cols-2 gap-x-6 gap-y-5">
+            {facts.map((f) => (
+              <div key={f.label} className="flex flex-col-reverse">
+                <dt className="mt-0.5 text-xs text-fg-muted sm:text-sm">{f.label}</dt>
+                <dd className="text-xl font-extrabold tracking-tight text-lime sm:text-2xl">{f.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <Button href="/projeler" variant="secondary" arrow className="mt-8">
             Tüm projeler
           </Button>
-        }
-      />
-      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {list.map((p, i) => (
-          <li key={p.id}>
-            <Reveal delay={(i % 4) * 70} className="h-full">
-              <ProjectCard project={p} />
-            </Reveal>
-          </li>
-        ))}
-      </ul>
-      <dl className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {facts.map((f) => (
-          <div key={f.label} className="flex flex-col-reverse rounded-card border border-white/10 p-5">
-            <dt className="mt-1 text-sm text-fg-muted">{f.label}</dt>
-            <dd className="text-2xl font-extrabold tracking-tight text-lime sm:text-3xl">{f.value}</dd>
-          </div>
-        ))}
-      </dl>
+        </div>
+        <FeaturedProjects items={items} />
+      </div>
     </Section>
   );
 }
