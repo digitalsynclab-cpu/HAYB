@@ -51,8 +51,10 @@ export function DeviceShowcase({ projects }: { projects: ShowcaseProject[] }) {
 
   const markDone = useCallback((h: Hint) => setDone((d) => (d[h] ? d : { ...d, [h]: true })), []);
 
-  const choose = (i: number) => {
+  const choose = (i: number, el?: HTMLElement) => {
     setSelected(i);
+    // Seçilen buton yatay listede ortalanır (sağ alttaki iletişim butonunun altında kalmaz)
+    el?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     if (handleRef.current) handleRef.current.select(i);
     else setIndex(i);
   };
@@ -195,7 +197,7 @@ export function DeviceShowcase({ projects }: { projects: ShowcaseProject[] }) {
               Projeyi inceleyin ›
             </Link>
           </div>
-          <div role="tablist" aria-label="Projeler" className="-mx-4 mt-3 flex snap-x gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-auto sm:max-w-fit sm:justify-center [&::-webkit-scrollbar]:hidden">
+          <div role="tablist" aria-label="Projeler" className="-mx-4 mt-3 flex snap-x scroll-px-4 gap-2 overflow-x-auto pb-1 pl-4 pr-24 [scrollbar-width:none] sm:mx-auto sm:max-w-fit sm:justify-center sm:px-4 [&::-webkit-scrollbar]:hidden">
             {projects.map((x, i) => {
               const on = i === selected;
               return (
@@ -204,7 +206,7 @@ export function DeviceShowcase({ projects }: { projects: ShowcaseProject[] }) {
                   type="button"
                   role="tab"
                   aria-selected={on}
-                  onClick={() => choose(i)}
+                  onClick={(e) => choose(i, e.currentTarget)}
                   className={`flex min-h-11 shrink-0 snap-start items-center gap-2 rounded-full border px-4 text-sm font-semibold transition duration-300 ${
                     on ? 'border-white bg-white text-black' : 'border-white/15 bg-white/[0.06] text-white/75 hover:border-white/35 hover:text-white'
                   }`}

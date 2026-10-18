@@ -106,7 +106,17 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
       t.anisotropy = renderer.capabilities.getMaxAnisotropy();
       return t;
     });
-  const loadPair = async (i: number) => {
+  // Aynı proje iki kez indirilmez (sıralı yükleme + dokunulunca öne alma aynı sözü paylaşır)
+  const pairs = new Map<number, Promise<void>>();
+  const loadPair = (i: number) => {
+    let pr = pairs.get(i);
+    if (!pr) {
+      pr = fetchPair(i);
+      pairs.set(i, pr);
+    }
+    return pr;
+  };
+  const fetchPair = async (i: number) => {
     const [d, m] = await Promise.all([load(o.desktopImages[i]!), load(o.mobileImages[i]!)]);
     if (disposed) {
       d.dispose();
@@ -420,6 +430,8 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
     // Ekran dışındayken çizim durur (pil ve işlemci tasarrufu)
     select(index) {
       requested = Math.max(0, Math.min(n - 1, index));
+      // Dokunulan projenin görseli sırayı beklemeden hemen iner
+      if (!loaded[requested]) void loadPair(requested).catch(() => undefined);
     },
     setActive(visible) {
       if (visible === active) return;
