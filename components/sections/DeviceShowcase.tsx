@@ -35,7 +35,7 @@ const mobileOf = (p: ShowcaseProject) => p.mobile ?? `/images/apps/${p.id}/1.web
  * Proje alttaki butonlarla değişir (kaydırmaya bağlı değil).
  * - three.js giriş animasyonu bittikten sonra ve bölüme yaklaşınca yüklenir (açılış donmaz).
  * - 3B hazır olana kadar ilk projenin görseli gösterilir (siyah ekran yok); ekran dışında çizim durur.
- * - "Hareketi azalt" açık cihazlarda ve WebGL olmayan tarayıcılarda sabit görsel kullanılır.
+ * - WebGL olmayan tarayıcılarda sabit görsel kullanılır; "hareketi azalt" açıksa 3B sakin modda çalışır.
  * - Proje adı, açıklaması ve bağlantıları normal HTML'dir (Google ve yapay zekalar okur).
  */
 export function DeviceShowcase({ projects }: { projects: ShowcaseProject[] }) {
@@ -66,7 +66,8 @@ export function DeviceShowcase({ projects }: { projects: ShowcaseProject[] }) {
     const coarse = window.matchMedia('(pointer: coarse)').matches;
     setTouch(coarse);
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce || !hasWebGL()) {
+    // "Hareketi azalt" açıksa 3B yine açılır ama sakin modda (süzülme/sallanma yok); sabit görsel yalnızca WebGL yoksa
+    if (!hasWebGL()) {
       setMode('static');
       return;
     }
