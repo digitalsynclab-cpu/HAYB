@@ -4,23 +4,25 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 
 /**
  * Ana sayfa 3B cihaz vitrini: MacBook + iPhone, ekranlarda gerçek proje görüntüleri.
- * Kaydırma ilerlemesi (0..1) projeyi seçer; sürükleme çevirir; iki parmak / çift tık / Ctrl+tekerlek yakınlaştırır.
+ * Proje butonlarla seçilir (select); sürükleme çevirir; iki parmak / çift tık / Ctrl+tekerlek yakınlaştırır.
  * React her karede yeniden çizilmez: sahne kendi döngüsünde çalışır, yalnızca proje değişince onProject çağrılır.
+ * lowPower (telefon): gerçek gölge kapalı, çözünürlük sınırlı; görünüm neredeyse aynı, yük çok daha az.
  */
 export interface ShowcaseOptions {
   canvas: HTMLCanvasElement;
   desktopImages: string[];
   mobileImages: string[];
-  getProgress: () => number;
   onProject: (index: number) => void;
   onReady: () => void;
   onError: () => void;
   onGesture: (kind: 'rotate' | 'zoom') => void;
   reduceMotion: boolean;
+  lowPower: boolean;
 }
 
 export interface ShowcaseHandle {
   setActive: (visible: boolean) => void;
+  select: (index: number) => void;
   destroy: () => void;
 }
 
@@ -54,13 +56,13 @@ const SCREEN_FS = `
   }`;
 
 export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
-  const narrowStart = o.canvas.clientWidth / Math.max(1, o.canvas.clientHeight) < 0.8;
-  const renderer = new THREE.WebGLRenderer({ canvas: o.canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  const low = o.lowPower;
+  const renderer = new THREE.WebGLRenderer({ canvas: o.canvas, antialias: true, alpha: true, powerPreference: low ? 'default' : 'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, low ? 1.5 : 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
-  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.enabled = !low;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   const scene = new THREE.Scene();
@@ -73,9 +75,8 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
   scene.add(new THREE.HemisphereLight('#ffffff', '#222222', 0.35));
   const keyL = new THREE.DirectionalLight('#ffffff', 2.2);
   keyL.position.set(2.5, 6, 4.5);
-  keyL.castShadow = true;
-  const sm = narrowStart ? 1024 : 2048;
-  keyL.shadow.mapSize.set(sm, sm);
+  keyL.castShadow = !low;
+  keyL.shadow.mapSize.set(2048, 2048);
   keyL.shadow.radius = 6;
   Object.assign(keyL.shadow.camera, { left: -5, right: 5, top: 5, bottom: -5, near: 1, far: 20 });
   keyL.shadow.bias = -0.0004;
@@ -310,7 +311,7 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
 
   /* Proje geçişi */
   let current = 0;
-  let lastStep = -10;
+  let requested = 0;
   const show = (i: number, from: number) => {
     for (const [m, arr] of [[lapMat, desk], [phMat, mob]] as const) {
       m.uniforms.a!.value = arr[from];
@@ -320,8 +321,16 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
     current = i;
     o.onProject(i);
   };
-  // İlk proje inince sahne görünür; diğerleri arkadan sırayla iner
-  void loadPair(0)
+  // Shader'lar arka planda, sayfayı kilitlemeden derlenir (KHR_parallel_shader_compile); bitene kadar çizim yapılmaz
+  let compiled = false;
+  const compiling = renderer
+    .compileAsync(scene, camera)
+    .catch(() => undefined)
+    .then(() => {
+      compiled = true;
+    });
+  // İlk proje inince (ve derleme bitince) sahne görünür; diğerleri arkadan sırayla iner
+  void Promise.all([loadPair(0), compiling])
     .then(() => {
       if (disposed) return;
       show(0, 0);
@@ -331,13 +340,11 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
       })();
     })
     .catch(() => o.onError());
-  const STEP_GAP = 0.65;
-  const stepToward = (target: number, now: number) => {
-    if (target === current || now - lastStep < STEP_GAP) return;
-    const next = current + Math.sign(target - current);
-    if (!loaded[next]) return;
-    lastStep = now;
-    show(next, current);
+  // Yeni geçiş, önceki bitmeden başlamaz (görüntü yarıda bozulmaz); son seçilen proje sırada bekler
+  const tryShowRequested = () => {
+    if (requested === current || !loaded[requested]) return;
+    if (lapMat.uniforms.mixv!.value < 1) return;
+    show(requested, current);
   };
 
   const resize = () => {
@@ -352,25 +359,24 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
   resize();
 
   const ease = (x: number) => 1 - Math.pow(1 - x, 3);
+  const easeIO = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
   const clock = new THREE.Clock();
   const reduce = o.reduceMotion;
   let openT = reduce ? 1 : 0;
   let camZ: number | null = null;
   let raf = 0;
   let active = false;
-  const steps = o.desktopImages.length;
 
   const frameLoop = () => {
     raf = requestAnimationFrame(frameLoop);
+    if (!compiled) return;
     const dt = Math.min(clock.getDelta(), 0.05);
     const t = clock.elapsedTime;
-    const p = o.getProgress();
-    const intro = Math.min(1, p / 0.08);
-    const rest = Math.max(0, (p - 0.08) / 0.92);
-    if (loaded[0]) stepToward(Math.min(steps - 1, Math.floor(rest * steps * 0.9999)), t);
+    if (loaded[0]) tryShowRequested();
 
-    openT = Math.min(1, openT + dt * 0.55);
-    lid.rotation.x = THREE.MathUtils.lerp(Math.PI / 2 - 0.02, -0.28, ease(Math.max(openT, intro)));
+    // Kapak, ilk proje görseli inince yavaşça (~3,2 sn) açılır; ziyaretçi açılışı görür
+    if (loaded[0]) openT = Math.min(1, openT + dt * 0.31);
+    lid.rotation.x = THREE.MathUtils.lerp(Math.PI / 2 - 0.02, -0.28, easeIO(openT));
     for (const m of [lapMat, phMat]) {
       m.uniforms.mixv!.value = Math.min(1, m.uniforms.mixv!.value + dt * 1.4);
       if (m.uniforms.mixv!.value >= 1) m.uniforms.a!.value = m.uniforms.b!.value;
@@ -383,12 +389,12 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
     }
     spx += (px - spx) * 0.05;
     spy += (py - spy) * 0.05;
-    const local = (rest * steps) % 1;
-    const sway = reduce ? 0 : Math.sin(local * Math.PI) * 0.12 * (current % 2 ? 1 : -1);
+    const sway = reduce ? 0 : Math.sin(t * 0.35) * 0.06;
     devices.rotation.y = -0.32 + dragX + spx * 0.1 + sway;
     devices.rotation.x = spy * 0.03;
 
-    const narrow = camera.aspect < 0.8;
+    // Dar alan (telefon): iPhone laptopun önüne gelir. Kamera mesafesi alanı dolduracak şekilde hesaplanır
+    const narrow = camera.aspect < 1.25;
     // Telefonda iPhone laptopun önüne ve sağına gelir; ikisi de büyük ve ekranın içinde kalır
     const phx = narrow ? 1.5 : 2.05;
     const phz = narrow ? 1.3 : 0.85;
@@ -398,18 +404,23 @@ export function mountShowcase(o: ShowcaseOptions): ShowcaseHandle {
 
     devices.position.set(narrow ? 0.2 : -0.35, narrow ? -0.6 : -0.95, 0);
     zoom += (zoomT - zoom) * 0.12;
-    const baseZ = (narrow ? 18 : 13.6) + (1 - ease(Math.max(openT, intro))) * 2.2 - (reduce ? 0 : Math.sin(local * Math.PI) * 0.5);
+    // fov 30°: görünen yükseklik ≈ 0.536·z, genişlik ≈ 0.536·z·aspect → hem yükseklik hem genişlik sığar
+    const fitZ = Math.max(narrow ? 6.6 : 6.5, (narrow ? 9.4 : 11.2) / camera.aspect);
+    const baseZ = fitZ * (1 + (1 - ease(openT)) * 0.18);
     const targetZ = baseZ / zoom;
     camZ = camZ === null ? targetZ : camZ + (targetZ - camZ) * 0.08;
     const lookX = 0.3;
-    camera.position.set(lookX, (narrow ? 2.4 : 2.3) / Math.sqrt(zoom), camZ);
-    camera.lookAt(lookX, narrow ? 0.45 : 0.42, 0);
+    camera.position.set(lookX, (narrow ? 2.0 : 1.9) / Math.sqrt(zoom), camZ);
+    camera.lookAt(lookX, narrow ? 0.35 : 0.12, 0);
 
     renderer.render(scene, camera);
   };
 
   return {
     // Ekran dışındayken çizim durur (pil ve işlemci tasarrufu)
+    select(index) {
+      requested = Math.max(0, Math.min(n - 1, index));
+    },
     setActive(visible) {
       if (visible === active) return;
       active = visible;

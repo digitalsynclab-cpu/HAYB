@@ -450,6 +450,7 @@ a[aria-label="HAYB ana sayfa"], a[aria-label="HAYB ana sayfa"] * { font-weight: 
 .hint-s { animation: hayb-hint-s 2.2s ease-in-out infinite; transform-origin: center; }
 @media (prefers-reduced-motion: reduce) { .hint-x, .hint-y, .hint-s { animation: none; } }
 
-/* 3B vitrin durakları: yalnızca vitrin ekrandayken yumuşak snap (proximity) */
-html.showcase-snapping { scroll-snap-type: y proximity; }
-.showcase-snap { scroll-snap-align: start; scroll-snap-stop: always; scroll-margin-top: calc((var(--hayb-header-h) + 1rem) * -1); }
+/* 3B vitrin: proje değişince bilgi yumuşakça belirir */
+@keyframes hayb-showcase-fade { from { opacity: 0; transform: translateY(8px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+.showcase-fade { animation: hayb-showcase-fade .45s cubic-bezier(.2,.8,.2,1) both; }
+@media (prefers-reduced-motion: reduce) { .showcase-fade { animation: none; } }
